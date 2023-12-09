@@ -1,5 +1,5 @@
 // import { Outlet } from "@remix-run/react";
-// import bcrypt from "bcryptjs";
+
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import getUserStore from "~/utils/mongostore";
@@ -9,6 +9,7 @@ import getUserStore from "~/utils/mongostore";
 export const action = async ({ request }: ActionFunctionArgs) => {
   const form = await request.formData();
   const pass = form.get("pass");
+  const pass2 = form.get("pass2");
   const username = form.get("user");
   // we do this type check to be extra sure and to make TypeScript happy
   // we'll explore validation next!
@@ -16,11 +17,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     throw new Error("Form not submitted correctly.");
   }
   const users = await getUserStore();
-  const isCorrectPassword = await users.checkUser(username, pass);
-  if (!isCorrectPassword) {
-    return redirect(`/login`);
-  }
-  return redirect(`/sandw`);
+  const user = await users.getUser(username);
+  if (user || pass != pass2) return redirect("/signup");
+  console.log(username, pass);
+  users.addUser(username, pass);
+  return redirect(`/login`);
 
   //const fields = { content, name };
 
@@ -36,7 +37,7 @@ export default function JokesRoute() {
       <main className="login-main">
         <div className="container">
           <div>
-            <p>Login</p>
+            <p>Register</p>
             <form method="post">
               <div>
                 <label>
@@ -46,6 +47,9 @@ export default function JokesRoute() {
               <div>
                 <label>
                   Password: <input min="8" name="pass" type="password" />
+                </label>
+                <label>
+                  Password: <input min="8" name="pass2" type="password" />
                 </label>
               </div>
               <div>
