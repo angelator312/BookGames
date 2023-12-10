@@ -1,10 +1,20 @@
 // import { Outlet } from "@remix-run/react";
 
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LinksFunction,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import getUserStore from "~/utils/mongostore";
+import { getUserId } from "~/utils/session.server";
+import stylesUrl from "~/styles/login.css";
 
 // import { db } from "~/utils/db.server";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: stylesUrl },
+];
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const form = await request.formData();
@@ -27,12 +37,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   //const joke = await db.joke.create({ data: fields });
 };
-
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const u = await getUserId(request);
+  if (u) return redirect("/");
+  return true;
+};
 export default function JokesRoute() {
   return (
     <div>
       <h1 className="home-link">
-        <span className="logo">Login</span>
+        <span className="logo">Register</span>
       </h1>
       <main className="login-main">
         <div className="container">

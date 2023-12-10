@@ -1,9 +1,19 @@
 // import { Outlet } from "@remix-run/react";
 // import bcrypt from "bcryptjs";
-import type { ActionFunctionArgs } from "@remix-run/node";
+import { createUserSession } from "~/utils/session.server";
+import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+// import  { User } from "~/utils/mongostore";
 import getUserStore from "~/utils/mongostore";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { useSearchParams } from "@remix-run/react";
+
+import stylesUrl from "~/styles/login.css";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: stylesUrl },
+];
 // import { db } from "~/utils/db.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -16,18 +26,28 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     throw new Error("Form not submitted correctly.");
   }
   const users = await getUserStore();
-  const isCorrectPassword = await users.checkUser(username, pass);
-  if (!isCorrectPassword) {
+  const userCheck = await users.checkUser(username, pass);
+  if (!userCheck) {
     return redirect(`/login`);
   }
-  return redirect(`/sandw`);
+  // type UserWId=Omit(User,"_id",);
+
+  const url = request.url;
+  const searchParams = new URLSearchParams(url);
+
+  return createUserSession(
+    userCheck.user,
+    searchParams.get("redirectTo") ?? "/"
+  );
 
   //const fields = { content, name };
 
   //const joke = await db.joke.create({ data: fields });
 };
 
-export default function JokesRoute() {
+export default function LoginRoute() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [searchParams] = useSearchParams();
   return (
     <div>
       <h1 className="home-link">
@@ -38,21 +58,25 @@ export default function JokesRoute() {
           <div>
             <p>Login</p>
             <form method="post">
+              <input
+                type="hidden"
+                name="redirectTo"
+                value={searchParams.get("redirectTo") || "/sandw"}
+              />
+
               <div>
-                <label>
-                  Username: <input min="4" type="text" name="user" />
-                </label>
+                <label htmlFor="username-input">Username</label>
+                <input type="text" id="username-input" name="user" />
               </div>
+
               <div>
-                <label>
-                  Password: <input min="8" name="pass" type="password" />
-                </label>
+                <label htmlFor="password-input">Password</label>
+                <input id="password-input" name="pass" type="password" />
               </div>
-              <div>
-                <button type="submit" className="button">
-                  Add
-                </button>
-              </div>
+
+              <button type="submit" className="button">
+                Submit
+              </button>
             </form>
           </div>
         </div>
