@@ -3,6 +3,7 @@ import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 export interface User {
   _id?: ObjectId;
+  glavi?: any;
   user: string;
   passH: string;
 }
@@ -32,13 +33,32 @@ export class UserStore {
     const v: User = {
       user,
       passH,
+      glavi:{}
     };
-    const i = await this.collection.insertOne(v);
-    v._id = i.insertedId;
+    const i=await this.collection.replaceOne({user: user }, v, { upsert: true });
+    v._id = i.upsertedId;
+    return v;
+  }
+  async editUserSGlava(user: string,id:string,glava:string): Promise<User|null> {
+    const data=await this.getUser(user);
+    if (!data)return null;
+
+    let v: User = {
+      user,
+      passH:data.passH,
+      glavi:data.glavi
+      
+    };
+    v.glavi[id]=glava;
+    const i = await this.collection.replaceOne({user},v);
+    v._id = i.upsertedId;
     return v;
   }
   async getUser(user: string): Promise<User | null> {
     const data = await this.collection.findOne({ user: user });
+    // .catch(() => {
+    //   console.log(this.collection);
+    // });
     if (!data) {
       return null;
     }

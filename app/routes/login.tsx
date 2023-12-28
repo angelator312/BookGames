@@ -4,12 +4,13 @@ import { createUserSession } from "~/utils/session.server";
 import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 // import  { User } from "~/utils/mongostore";
-import getUserStore from "~/utils/mongostore";
+
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useSearchParams } from "@remix-run/react";
 
 import stylesUrl from "~/styles/login.css";
+import getUserStore from "~/utils/mongostore";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },

@@ -5,7 +5,7 @@ export default function Intro() {
   return (
     <div>
       <h1 style={{ padding: 15.4 }}>Welcome to e-books</h1>
-      <h3 className="logo">Hello 😆UnNamed😆 Who are you🧐?</h3>
+      <h3 className="logo">Hello Anonymous Who are you?</h3>
       <span>We have book: Голямото приключение and many more</span>
       <br />
       <h2>

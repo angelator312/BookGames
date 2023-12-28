@@ -1,5 +1,5 @@
 import type { LinksFunction } from "@remix-run/node";
-import { Links, LiveReload, Outlet } from "@remix-run/react";
+import { Links, LiveReload, Meta, Outlet, Scripts, useRouteError } from "@remix-run/react";
 
 import globalLargeStylesUrl from "~/styles/global-large.css";
 import globalMediumStylesUrl from "~/styles/global-medium.css";
@@ -31,6 +31,24 @@ export default function App() {
       <body>
         <Outlet />
         <LiveReload />
+      </body>
+    </html>
+  );
+}
+export function ErrorBoundary() {
+  const error = useRouteError();
+  console.error(error);
+  return (
+    <html>
+      <head>
+        <title>Oh no!</title>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        Something went wrong
+        {/* add the UI you want your users to see */}
+        <Scripts />
       </body>
     </html>
   );

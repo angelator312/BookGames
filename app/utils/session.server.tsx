@@ -11,11 +11,12 @@ const storage = createCookieSessionStorage({
     // normally you want this to be `secure: true`
     // but that doesn't work on localhost for Safari
     // https://web.dev/when-to-use-local-https/
-    secure: process.env.NODE_ENV === "production",
+    // secure: process.env.NODE_ENV === "production",
+    secure: false,
     secrets: [sessionSecret],
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24 * 30,
+    maxAge: 60 * 60 * 2,
     httpOnly: true,
   },
 });
@@ -68,4 +69,24 @@ export async function logout(request: Request) {
       "Set-Cookie": await storage.destroySession(session),
     },
   });
+}
+
+export async function createGorB(key: string, value: string, request: Request) {
+  const session = await storage.getSession();
+  session.set(key, value);
+  return redirect(request.url, {
+    headers: {
+      "Set-Cookie": await storage.commitSession(session),
+    },
+  });
+}
+
+export async function getGorB(key: string) {
+  const session = await storage.getSession();
+  let e = session.get(key);
+  console.log(e);
+  // if (typeof e !=="string") {
+  //   e=e.toString();
+  // }
+  return e ;
 }

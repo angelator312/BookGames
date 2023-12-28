@@ -28,7 +28,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
   const users = await getUserStore();
   const user = await users.getUser(username);
-  if (user || pass != pass2) return redirect("/signup");
+  if (user && pass != pass2) return redirect("/signup");
   console.log(username, pass);
   users.addUser(username, pass);
   return redirect(`/login`);
