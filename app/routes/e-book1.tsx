@@ -1,4 +1,11 @@
-import { redirect, type ActionFunctionArgs, type LoaderFunctionArgs } from "@remix-run/node";
+import {
+  redirect,
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
+} from "@remix-run/node";
+// import Container from "react-bootstrap/cjs/Container.js";
+// import Row from "react-bootstrap/cjs/Row.js";
+// import Col from "react-bootstrap/cjs/Col.js";
 // import { useLoaderData } from "@remix-run/react";
 import Book from "~/components/book";
 import getTextStore from "~/utils/mongostore-texts";
@@ -15,13 +22,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (!glava) glava = "1";
   // let b = await getGorB("book");
   // console.log(b);
-  
+
   const userStore = await getUserStore();
   const uId = await getUserId(request);
   // console.log("Glava:",glava);
-  
+
   // @ts-ignore Заради uId:string|null
-  console.log(await userStore.editUserSGlava(uId,`Book-${b}`,glava))
+  console.log(await userStore.editUserSGlava(uId, `Book-${b}`, glava));
   // if (!glava) glava = "1";
   // const b = await textStore.getBook(book);
   // let text = await textStore.getText(`${b}-${glava}`);
@@ -39,11 +46,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userStore = await getUserStore();
   const uId = await getUserId(request);
   // console.log(Special.length);
-  
+
   // @ts-ignore Заради uId:string|null
   const user = await userStore.getUser(uId);
   if (!user) {
-    return redirect("/login")
+    return redirect("/login");
   }
   let glava = (await getGorB("glava")) ?? user?.glavi[`Book-${b}`];
   if (!glava) glava = "1";
@@ -60,12 +67,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function Book1() {
-  // const book2 = useLoaderData<string>();
+  // const book2 = useLoaderData<string>(); style={{ padding: 15.4 }}
   console.log(book);
   return (
     <>
-      <h1 style={{ padding: 15.4 }}>{book} </h1>
-      <Book n={1}/>
+      <h1 className="p-1 text-dark">{book} </h1>
+      <Book n={1} />
     </>
   );
 }

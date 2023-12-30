@@ -1,11 +1,17 @@
 import type { LinksFunction } from "@remix-run/node";
 import { Links, LiveReload, Meta, Outlet, Scripts, useRouteError } from "@remix-run/react";
-
+import { cssBundleHref } from "@remix-run/css-bundle";
 import globalLargeStylesUrl from "~/styles/global-large.css";
 import globalMediumStylesUrl from "~/styles/global-medium.css";
 import globalStylesUrl from "~/styles/global.css";
+import bootstrapStyles from "~/styles/bootstrap.css";
+import myStyles from "~/styles/myStyle.css";
 
+// import styles from "./tailwind.css";
 export const links: LinksFunction = () => [
+  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: myStyles },
+  { rel: "stylesheet", href: bootstrapStyles },
   { rel: "stylesheet", href: globalStylesUrl },
   {
     rel: "stylesheet",
@@ -17,15 +23,16 @@ export const links: LinksFunction = () => [
     href: globalLargeStylesUrl,
     media: "screen and (min-width: 1024px)",
   },
+  // { rel: "stylesheet", href: styles },
 ];
 
 export default function App() {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-white">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Remix: So great, it's funny!</title>
+        <title>BookGames Книги игри</title>
         <Links />
       </head>
       <body>

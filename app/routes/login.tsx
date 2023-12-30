@@ -7,7 +7,7 @@ import { redirect } from "@remix-run/node";
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useSearchParams } from "@remix-run/react";
+import { Link, useSearchParams } from "@remix-run/react";
 
 import stylesUrl from "~/styles/login.css";
 import getUserStore from "~/utils/mongostore";
@@ -50,14 +50,13 @@ export default function LoginRoute() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchParams] = useSearchParams();
   return (
-    <div>
-      <h1 className="home-link">
+    <div className="text-center">
+      <h1 className="text-slate-500 font-medium logo text-primary p-3 home-link">
         <span className="logo">Login</span>
       </h1>
-      <main className="login-main">
+      <main className="text-slate-500 font-medium logo text-dark text-bold p-3 login-main">
         <div className="container">
           <div>
-            <p>Login</p>
             <form method="post">
               <input
                 type="hidden"
@@ -67,18 +66,35 @@ export default function LoginRoute() {
 
               <div>
                 <label htmlFor="username-input">Username</label>
-                <input type="text" id="username-input" name="user" />
+                <input
+                  className="text-bold inp-bl"
+                  type="text"
+                  id="username-input"
+                  name="user"
+                />
               </div>
 
               <div>
                 <label htmlFor="password-input">Password</label>
-                <input id="password-input" name="pass" type="password" />
+                <input
+                  className="text-bold inp-bl"
+                  id="password-input"
+                  name="pass"
+                  type="password"
+                />
               </div>
 
               <button type="submit" className="button">
                 Submit
               </button>
             </form>
+            <br />
+            <Link to="/signup">
+              <span className="button text-slate-500 font-medium logo text-primary p-3 logo-medium">
+                {" "}
+                Sign up{" "}
+              </span>
+            </Link>
           </div>
         </div>
       </main>

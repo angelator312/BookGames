@@ -15,14 +15,18 @@ export default function LogoutRoute() {
   //   eslint-disable-next-line @typescript-eslint/no-unused-vars
   //   const [searchParams] = useSearchParams();
   return (
-    <div>
-      <h1 className="home-link">
-        <span className="logo">Logout</span>
+    <div className="bg-white">
+      <h1 className="home-link ">
+        <span className="text-slate-500 font-medium logo text-bold text-dark">
+          Logout
+        </span>
       </h1>
       <main className="login-main">
         <div className="container">
           <div>
-            <h2>Are you sure you want to log out??</h2>
+            <h2 className="text-slate-500 font-medium logo text-bold text-dark">
+              Are you sure you want to log out??
+            </h2>
             <form method="post">
               {/* <div>
                 <label htmlFor="username-input">Username</label>
@@ -34,12 +38,20 @@ export default function LogoutRoute() {
                 <input id="password-input" name="pass" type="password" />
               </div> */}
 
-              <button type="submit" style={{ width: 45 }} className="button">
+              <button
+                type="submit"
+                style={{ width: 45 }}
+                className="button text-slate-500 font-medium logo text-bold text-dark"
+              >
                 Yes
               </button>
             </form>
             <Link to="/">
-              <button type="submit" style={{ width: 45 }} className="button">
+              <button
+                type="submit"
+                style={{ width: 45 }}
+                className="button text-slate-500 font-medium logo text-bold text-dark"
+              >
                 No
               </button>
             </Link>

@@ -1,0 +1,27 @@
+.p-1{
+    padding: 1em;
+}
+.p-3{
+    padding: 3em;
+}
+.text-j{
+    text-align: justify;
+}
+.in-2{
+    text-indent: 1.5em;
+}
+.in-1{
+    text-indent: 1em;
+}
+.text-bold{
+    font-weight: bold;
+}
+.text-1bold{
+    font-weight: 800;
+}
+.text-1bold{
+    font-weight: 900;
+}
+input.inp-bl {
+  color:black;
+}

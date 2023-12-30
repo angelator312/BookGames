@@ -9,6 +9,7 @@ import { redirect } from "@remix-run/node";
 import getUserStore from "~/utils/mongostore";
 import { getUserId } from "~/utils/session.server";
 import stylesUrl from "~/styles/login.css";
+import { Link } from "@remix-run/react";
 
 // import { db } from "~/utils/db.server";
 
@@ -28,7 +29,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
   const users = await getUserStore();
   const user = await users.getUser(username);
-  if (user && pass != pass2) return redirect("/signup");
+  if (user || pass != pass2) return redirect("/signup");
   console.log(username, pass);
   users.addUser(username, pass);
   return redirect(`/login`);
@@ -44,34 +45,61 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 export default function JokesRoute() {
   return (
-    <div>
-      <h1 className="home-link">
+    <div className="text-center">
+      <h1 className="text-slate-500 font-medium logo text-primary p-3 home-link">
         <span className="logo">Register</span>
       </h1>
-      <main className="login-main">
+      <main className="text-slate-500 font-medium logo text-dark text-bold p-3 login-main">
         <div className="container">
           <div>
-            <p>Register</p>
             <form method="post">
               <div>
                 <label>
-                  Username: <input min="4" type="text" name="user" />
+                  Username:{" "}
+                  <input
+                    className="text-bold inp-bl"
+                    minLength={4}
+                    type="text"
+                    name="user"
+                    required
+                  />
                 </label>
               </div>
               <div>
                 <label>
-                  Password: <input min="8" name="pass" type="password" />
+                  Password:{" "}
+                  <input
+                    className="text-bold inp-bl"
+                    minLength={8}
+                    name="pass"
+                    type="password"
+                    required
+                  />
                 </label>
+                <br />
                 <label>
-                  Password: <input min="8" name="pass2" type="password" />
+                  Password:{" "}
+                  <input
+                    className="text-bold inp-bl"
+                    minLength={8}
+                    name="pass2"
+                    type="password"
+                    required
+                  />
                 </label>
               </div>
               <div>
                 <button type="submit" className="button">
-                  Add
+                  Add User
                 </button>
               </div>
             </form>
+            <br />
+            <Link to="/login">
+              <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium button">
+                Login
+              </span>
+            </Link>
           </div>
         </div>
       </main>
