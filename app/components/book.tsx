@@ -50,7 +50,7 @@ export default function Book({ n }: { n: number }) {
           {text2Lines.map((e, i) => (
             <div key={i}>
               {i % 2 == 0 ? (
-                <p className=" p-3 text-bold text-j in-1 text-dark" key={i}>
+                <p className="p-3 text-bold text-j in-1 text-dark" key={i}>
                   {" "}
                   {e}
                 </p>
@@ -61,8 +61,8 @@ export default function Book({ n }: { n: number }) {
                   method="POST"
                 >
                   <input type="hidden" name="to" value={e} />
-                  <button type="submit" className="logo">
-                    (Глава {e})
+                  <button type="submit" className="logo text-">
+                    Глава {e}
                   </button>
                 </form>
               )}

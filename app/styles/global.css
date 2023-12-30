@@ -143,8 +143,8 @@ h6 {
 /* buttons */
 
 .button {
-  --shadow-color: hsl(var(--hs-links) 30%);
-  --shadow-size: 3px;
+  /* --shadow-color: hsl(var(--hs-links) 30%);
+  --shadow-size: 3px; */
   -webkit-appearance: none;
   -moz-appearance: none;
   cursor: pointer;
@@ -152,8 +152,8 @@ h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-links);
-  color: var(--color-background);
+  /* background-color: var(--color-links); */
+  /* color: var(--color-background); */
   font-family: var(--font-display);
   font-weight: bold;
   line-height: 1;
@@ -162,7 +162,7 @@ h6 {
   padding: 0.625em 1em;
   border: 0;
   border-radius: 4px;
-  box-shadow: 0 var(--shadow-size) 0 0 var(--shadow-color);
+  /* box-shadow: 0 var(--shadow-size) 0 0 var(--shadow-color); */
   outline-offset: 2px;
   transform: translateY(0);
   transition: background-color 50ms ease-out, box-shadow 50ms ease-out,
@@ -171,17 +171,17 @@ h6 {
 
 .button:hover {
   --raise: 1px;
-  color: var(--color-background);
+  /* color: var(--color-background); */
   text-decoration: none;
-  box-shadow: 0 calc(var(--shadow-size) + var(--raise)) 0 0 var(--shadow-color);
+  /* box-shadow: 0 calc(var(--shadow-size) + var(--raise)) 0 0 var(--shadow-color); */
   transform: translateY(calc(var(--raise) * -1));
 }
 
 .button:active {
   --press: 1px;
-  box-shadow: 0 calc(var(--shadow-size) - var(--press)) 0 0 var(--shadow-color);
+  /* box-shadow: 0 calc(var(--shadow-size) - var(--press)) 0 0 var(--shadow-color); */
   transform: translateY(var(--press));
-  background-color: var(--color-links-hover);
+  /* background-color: var(--color-links-hover); */
 }
 
 .button[disabled],

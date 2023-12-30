@@ -17,11 +17,24 @@
     font-weight: bold;
 }
 .text-1bold{
-    font-weight: 800;
+    font-weight: 800 !important;
 }
-.text-1bold{
-    font-weight: 900;
+.text-2bold{
+    font-weight: 900 !important;
 }
 input.inp-bl {
   color:black;
+}
+.f-white{
+    color: white;
+    
+}
+.f-primary{
+    color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) ;
+}
+.bg-smkW{
+    background-color: rgba(218, 213, 213, 0.795);
+}
+.m-l-3{
+    margin-left: 3em;
 }

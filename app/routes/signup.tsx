@@ -89,14 +89,17 @@ export default function JokesRoute() {
                 </label>
               </div>
               <div>
-                <button type="submit" className="button">
+                <button
+                  type="submit"
+                  className="text-2bold button bg-primary f-white"
+                >
                   Add User
                 </button>
               </div>
             </form>
             <br />
             <Link to="/login">
-              <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium button">
+              <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium button f-primary ">
                 Login
               </span>
             </Link>

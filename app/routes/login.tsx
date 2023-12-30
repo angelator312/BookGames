@@ -67,6 +67,7 @@ export default function LoginRoute() {
               <div>
                 <label htmlFor="username-input">Username</label>
                 <input
+                  minLength={4}
                   className="text-bold inp-bl"
                   type="text"
                   id="username-input"
@@ -77,6 +78,7 @@ export default function LoginRoute() {
               <div>
                 <label htmlFor="password-input">Password</label>
                 <input
+                  minLength={8}
                   className="text-bold inp-bl"
                   id="password-input"
                   name="pass"
@@ -84,13 +86,16 @@ export default function LoginRoute() {
                 />
               </div>
 
-              <button type="submit" className="button">
+              <button
+                type="submit"
+                className="text-2bold button bg-primary f-white"
+              >
                 Submit
               </button>
             </form>
             <br />
             <Link to="/signup">
-              <span className="button text-slate-500 font-medium logo text-primary p-3 logo-medium">
+              <span className="button text-slate-500 font-medium logo text-primary p-3 logo-medium f-primary ">
                 {" "}
                 Sign up{" "}
               </span>
