@@ -4,6 +4,9 @@
 .p-3{
     padding: 3em;
 }
+.p-r-3{
+    padding-right: 3em;
+}
 .text-j{
     text-align: justify;
 }
@@ -36,5 +39,26 @@ input.inp-bl {
     background-color: rgba(218, 213, 213, 0.795);
 }
 .m-l-3{
-    margin-left: 3em;
+    margin-left: 3em !important;
+}
+.m-r-3{
+    margin-right: 3em !important;
+}
+/* .img-v {
+    display: none; 
+    visibility:hidden;
+}
+@media screen and (min-width: 800px) {
+  .img-v {
+    display: block ;
+    visibility: visible ;
+  }
+} */
+
+.centered{
+    /* position: absolute; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }

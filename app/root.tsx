@@ -6,7 +6,6 @@ import globalMediumStylesUrl from "~/styles/global-medium.css";
 import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "~/styles/bootstrap.css";
 import myStyles from "~/styles/myStyle.css";
-
 // import styles from "./tailwind.css";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -34,6 +33,7 @@ export default function App() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>BookGames Книги игри</title>
         <Links />
+        <Scripts />
       </head>
       <body>
         <Outlet />

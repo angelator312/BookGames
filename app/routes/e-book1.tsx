@@ -71,8 +71,8 @@ export default function Book1() {
   console.log(book);
   return (
     <>
-      <h1 className="p-1 text-dark m-l-3">{book} </h1>
-      <Book n={1} />
+      <h1 className="p-1 text-dark text-center">{book} </h1>
+      <Book n={1}  />
     </>
   );
 }
