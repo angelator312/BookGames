@@ -70,9 +70,9 @@ export default function Book1() {
   // const book2 = useLoaderData<string>(); style={{ padding: 15.4 }}
   console.log(book);
   return (
-    <>
+    <div>
       <h1 className="p-1 text-dark text-center">{book} </h1>
-      <Book n={1}  />
-    </>
+      <Book n={1} title={book} almP={`img/${b}-`}  />
+    </div>
   );
 }

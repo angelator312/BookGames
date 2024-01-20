@@ -1,48 +1,53 @@
-.p-1{
-    padding: 1em;
+.p-1 {
+  padding: 1em;
 }
-.p-3{
-    padding: 3em;
+.p-3 {
+  padding: 3em;
 }
-.p-r-3{
-    padding-right: 3em;
+.p-r-3 {
+  padding-right: 3em;
 }
-.text-j{
-    text-align: justify;
+.text-j {
+  text-align: justify;
 }
-.in-2{
-    text-indent: 1.5em;
+.in-2 {
+  text-indent: 1.5em;
 }
-.in-1{
-    text-indent: 1em;
+.in-1 {
+  text-indent: 1em;
 }
-.text-bold{
-    font-weight: bold;
+.text-bold {
+  color: var(--black) !important;
+  font-weight: bold;
 }
-.text-1bold{
-    font-weight: 800 !important;
+.text-1bold {
+  color: var(--black) !important;
+  font-weight: 800 !important;
 }
-.text-2bold{
-    font-weight: 900 !important;
+.text-2bold {
+  color: var(--black) !important;
+  font-weight: 900 !important;
 }
 input.inp-bl {
-  color:black;
+  color: var(--black);
 }
-.f-white{
-    color: white;
-    
+.f-white {
+  color:var(--smoke-white);
 }
-.f-primary{
-    color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) ;
+.f-primary {
+  color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity));
 }
-.bg-smkW{
-    background-color: rgba(218, 213, 213, 0.795);
+.bg-smkW {
+  background-color:var(--smoke-white);
 }
-.m-l-3{
-    margin-left: 3em !important;
+.m-l-3 {
+  margin-left: 3em !important;
 }
-.m-r-3{
-    margin-right: 3em !important;
+.m-l-15\% {
+  margin-left: 15% !important;
+}
+.m-r-3 {
+  margin-right: 3em !important;
 }
 /* .img-v {
     display: none; 
@@ -55,10 +60,26 @@ input.inp-bl {
   }
 } */
 
-.centered{
-    /* position: absolute; */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+.centered {
+  /* position: absolute; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.btn-menu-my {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.bg-i {
+  background-image: url("/img/pageDecoration.jpg");
+  background-position:0 -10em;
+  background-size: contain;
+  background-repeat: repeat;
+}
+:root
+{
+  --smoke-white: rgba(218, 213, 213, 0.795);
+  --black: rgb(1, 2, 70);
 }

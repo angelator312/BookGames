@@ -1,16 +1,18 @@
 // import { Outlet } from "@remix-run/react";
 // import bcrypt from "bcryptjs";
+import { useState } from "react";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { createUserSession } from "~/utils/session.server";
 import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 // import  { User } from "~/utils/mongostore";
 
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Link, useSearchParams } from "@remix-run/react";
+// import { Link, useSearchParams } from "@remix-run/react";
 
 import stylesUrl from "~/styles/login.css";
 import getUserStore from "~/utils/mongostore";
+import { Link } from "@remix-run/react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
@@ -46,63 +48,80 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   //const joke = await db.joke.create({ data: fields });
 };
 
-export default function LoginRoute() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [searchParams] = useSearchParams();
+
+function FormExample() {
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event: any) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
   return (
-    <div className="text-center">
-      <h1 className="text-slate-500 font-medium logo text-primary p-3 home-link">
-        <span className="logo">Login</span>
-      </h1>
-      <main className="text-slate-500 font-medium logo text-dark text-bold p-3 login-main">
-        <div className="container">
-          <div>
-            <form method="post">
-              <input
-                type="hidden"
-                name="redirectTo"
-                value={searchParams.get("redirectTo") || "/sandw"}
+    <div>
+      <h1 className="centered">Login</h1>
+      <Form
+        noValidate
+        validated={validated}
+        onSubmit={handleSubmit}
+        method="POST"
+      >
+        <Row className="mb-3">
+          <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
+            <Form.Label column sm="2">
+              Username
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control
+                required
+                type="text"
+                placeholder="Usernname"
+                name="user"
               />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please input a username.
+              </Form.Control.Feedback>
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
+            <Form.Label column sm="2">
+              Password
+            </Form.Label>
+            <Col sm="10">
+              <Form.Control
+                required
+                type="password"
+                placeholder="Password"
+                name="pass"
+              />
+              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">
+                Please input a password.
+              </Form.Control.Feedback>
+            </Col>
+          </Form.Group>
+        </Row>
+        <Row className="mb-3">
+          <Col sm="2"></Col>
+          <Col sm="10">
+            <Button type="submit" className="centered m-r-3">
+              Login
+            </Button>
 
-              <div>
-                <label htmlFor="username-input">Username</label>
-                <input
-                  minLength={4}
-                  className="text-bold inp-bl"
-                  type="text"
-                  id="username-input"
-                  name="user"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="password-input">Password</label>
-                <input
-                  minLength={8}
-                  className="text-bold inp-bl"
-                  id="password-input"
-                  name="pass"
-                  type="password"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="text-2bold button bg-primary f-white"
-              >
-                Submit
-              </button>
-            </form>
-            <br />
             <Link to="/signup">
-              <span className="button text-slate-500 font-medium logo text-primary p-3 logo-medium f-primary ">
-                {" "}
-                Sign up{" "}
-              </span>
+              <Button variant="success">Sign up</Button>
             </Link>
-          </div>
-        </div>
-      </main>
+          </Col>
+        </Row>
+      </Form>
     </div>
   );
 }
+
+export default FormExample;
