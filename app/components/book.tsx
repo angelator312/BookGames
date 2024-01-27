@@ -21,7 +21,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-export default function Book({ n, title, almP }: { n: number; title: string; almP: string }) {
+export default function Book({ url, title, almP }: { url: string; title: string; almP: string }) {
   const { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(text,glava,text2);
 
@@ -35,9 +35,8 @@ export default function Book({ n, title, almP }: { n: number; title: string; alm
 
   // const {book}= useLoaderData<string>();
   return (
-    <div
-      className="text-center space-y-2 sm:text-left bg-i"
-    >
+    <div className="text-center space-y-2 sm:text-left bg-i">
+      <h1 className="p-1 text-dark text-center">{title} </h1>
       <div className="space-y-0.5 bg-i">
         <Navbar path={almP} glava={glava} title={title} />
         <div style={{ textIndent: 20 }}>
@@ -55,9 +54,7 @@ export default function Book({ n, title, almP }: { n: number; title: string; alm
           </button> */}
           <h2 className="text-bold ">Глава {glava} </h2>
           <h2 className="text-bold  p-3">{furst2Lines[0]} </h2>
-          <p className="text-bold p-3 text-j in-2 ">
-            {furst2Lines[1]}
-          </p>
+          <p className="text-bold p-3 text-j in-2 ">{furst2Lines[1]}</p>
           {textLines.map((e, i) => (
             <p className="text-bold p-3 text-j in-2 " key={i}>
               {" "}
@@ -73,7 +70,7 @@ export default function Book({ n, title, almP }: { n: number; title: string; alm
                 </p>
               ) : (
                 <form
-                  action={`/e-book${n}`}
+                  action={`${url}`}
                   style={{ display: "inline" }}
                   method="POST"
                 >

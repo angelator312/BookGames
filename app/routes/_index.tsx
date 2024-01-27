@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { redirect, type LinksFunction, type LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Home from "~/components/home";
 import Intro from "~/components/intro";
@@ -7,7 +7,7 @@ import globalMediumStylesUrl from "~/styles/global-medium.css";
 import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "~/styles/bootstrap.css";
 import stylesUrl from "~/styles/index.css";
-import { requireUserId } from "~/utils/session.server";
+import { knigi, requireUserId } from "~/utils/session.server";
 import { cssBundleHref } from "@remix-run/css-bundle";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -28,10 +28,19 @@ export const links: LinksFunction = () => [
 
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  return await requireUserId(request, false);
+  const a= await requireUserId(request, false);
+  console.log(a);
+  console.log(await knigi(a));
+
+  if (typeof a ==="string") {
+    return [a,await knigi(a)];
+  }
+  return redirect("/login");
 };
 
 export default function IndexRoute() {
-  const user = useLoaderData<string>();
-  return <div>{user ? <Home user={user.toString()} /> : <Intro />}</div>;
+  console.log(1);
+  const [user,books] = useLoaderData<typeof loader>();
+  
+  return <div>{user ? <Home user={user.toString()} books={books}/> : <Intro />}</div>;
 }

@@ -1,5 +1,12 @@
 import type { LinksFunction } from "@remix-run/node";
-import { Links, LiveReload, Meta, Outlet, Scripts, useRouteError } from "@remix-run/react";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  useRouteError,
+} from "@remix-run/react";
 import { cssBundleHref } from "@remix-run/css-bundle";
 // import globalLargeStylesUrl from "~/styles/global-large.css";
 // import globalMediumStylesUrl from "~/styles/global-medium.css";
@@ -60,3 +67,5 @@ export function ErrorBoundary() {
     </html>
   );
 }
+
+

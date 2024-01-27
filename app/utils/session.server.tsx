@@ -1,4 +1,5 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
+import getTextStore from "./mongostore-texts";
 
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
@@ -44,8 +45,7 @@ export async function requireUserId(
   const userId = session.get("userId");
   if (!userId || typeof userId !== "string") {
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
-    if (t) throw redirect(`/login?${searchParams}`);
-    else return "";
+    if (t) return redirect(`/login?${searchParams}`);
   }
   return userId;
 }
@@ -89,4 +89,12 @@ export async function getGorB(key: string) {
   //   e=e.toString();
   // }
   return e ;
+}
+export async function knigi(user:string) {
+  const tStore=await getTextStore();
+  const a = await tStore.getPublicBooks();
+  const b = await tStore.getMyBooks(user);
+  // if(b)
+  //   return a?.concat(b);
+  return a;
 }

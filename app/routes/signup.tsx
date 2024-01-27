@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 // import { createUserSession } from "~/utils/session.server";
 import type { ActionFunctionArgs, LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { redirect, json } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 // import  { User } from "~/utils/mongostore";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -12,7 +12,7 @@ import { redirect, json } from "@remix-run/node";
 
 import stylesUrl from "~/styles/login.css";
 import getUserStore from "~/utils/mongostore";
-import { Link, useActionData } from "@remix-run/react";
+import { Link, useSearchParams } from "@remix-run/react";
 import { getUserId } from "~/utils/session.server";
 
 export const links: LinksFunction = () => [
@@ -35,12 +35,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   if (user) {
     const error = "such a user exists";
-    return json({ error });
+    return redirect(`/signup?err=${error}`);
   }
-  if (pass != pass2) return json({ error: "Passwords must be same" });
+  if (pass != pass2) return redirect(`/signup?err=Passwords must be same` );
   console.log(username, pass);
   users.addUser(username, pass);
-  return redirect(`/login?signup=true`);
+  return redirect(`/login?sign=Sign up is done! Now you must login`);
 
   //const fields = { content, name };
 
@@ -53,10 +53,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 function FormExample() {
+  const [searchParams] = useSearchParams();
   const [validated, setValidated] = useState(false);
-  const AD = useActionData<typeof action>();
-  console.log(AD);
-  //
+
   const handleSubmit = (event: any) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -66,7 +65,7 @@ function FormExample() {
 
     setValidated(true);
   };
-
+  const [err] = useState(searchParams.get("err") || " ");
   return (
     <>
       <h1 className="centered">Sign up</h1>
@@ -78,7 +77,7 @@ function FormExample() {
         method="POST"
       >
         <Row className="mb-3">
-          <p className="text-danger">{AD?.error ? AD?.error : ""}</p>
+          <p className="text-danger">{err}</p>
         </Row>
         <Row className="mb-3">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom01">

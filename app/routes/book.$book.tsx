@@ -1,0 +1,60 @@
+import { redirect} from "@remix-run/node";
+import type { ActionFunctionArgs , LoaderFunctionArgs } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import Book from "~/components/book";
+import getUserStore from "~/utils/mongostore";
+import getTextStore from "~/utils/mongostore-texts";
+import { createGorB, getUserId, requireUserId } from "~/utils/session.server";
+export async function action({ params, request }: ActionFunctionArgs) {
+  const form = await request.formData();
+  let glava = form.get("to");
+  if (!glava) glava = "1";
+  // let b = await getGorB("book");
+  // console.log(b);
+
+  const userStore = await getUserStore();
+  const uId = await getUserId(request);
+  // console.log("Glava:",glava);
+
+  // @ts-ignore Заради uId:string|null
+  console.log(await userStore.editUserSGlava(uId, `Book-${params.book}`, glava));
+  // if (!glava) glava = "1";
+  // const b = await textStore.getBook(book);
+  // let text = await textStore.getText(`${b}-${glava}`);
+  // if (!text) {
+  //   text = { text: "A" };
+  // }
+  return redirect(request.url);
+}
+export async function loader({ params, request }: LoaderFunctionArgs) {
+  const a = await requireUserId(request, false);
+  const tStore = await getTextStore();
+  const b = await tStore.getBook(params.book ?? " ");
+  console.log(params.book);
+  if (typeof a === "string") {
+    if (b?.public) {
+      // return a;
+      const user = await (await getUserStore()).getUser(a);
+      let glava = user?.glavi[`Book-${b.text}`] ?? "1";
+      let text = await tStore.getText(`${b.text}-${glava}`);
+      let segG = text?.text;
+      let spec = text?.text2;
+      createGorB("glava", glava, request);
+      createGorB("book", b.text, request);
+      return { text: segG, glava, text2: spec,b };
+    }
+    if (b?.avtor == a) return redirect("/myBook-" + params.book);
+  }
+  return redirect("/");
+}
+export default function Book1() {
+  const book = useLoaderData<typeof loader>();
+  //   style={{ padding: 15.4 }}
+  //   console.log(book);
+  const zagl=book.b.id?.substring(5, book.b.id?.length - 3) 
+  return (
+    <div>
+      <Book url={`/book/${book.b.text}`} title={zagl ?? ""} almP={`img/${book.b.text}-`} />
+    </div>
+  );
+}

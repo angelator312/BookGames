@@ -1,8 +1,15 @@
 import { Link } from "@remix-run/react";
-import author from "~/helps/NIkolaRaikov.png";
+import type { TextOrBs } from "~/utils/mongostore-texts";
 
-export default function Home({ user }: { user: string }) {
-  //   const user = useLoaderData<string>();
+
+export default function Home({
+  user,
+  books,
+}: {
+  user: string;
+  books: TextOrBs[];
+}) {
+  // const userId = useLoaderData<string>();
   return (
     <div>
       {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl  space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
@@ -21,38 +28,41 @@ export default function Home({ user }: { user: string }) {
       </div>
       {/* </div> */}
       <br />
-      <Link to="/e-book1">
-        <div className="text-center space-y-2 sm:text-left centered">
-          {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
-          <table className="text-center centered m-l-15%">
-            <tbody className="text-center centered m-l-3">
-              <tr className="text-center centered m-l-3">
-                <td className="text-center p-r-3">
-                  <img src={author} alt="Author Nikola Raikov" />
-                </td>
-                <td className="text-center">
-                  <div className="space-y-0.5 text-center">
-                    <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark">
-                      Голямото приключение
-                    </h3>
-                    <h4 className="text-j text-slate-500 font-medium logo text-bold text-dark">
-                      {/* <br /> */}
-                      Автор: Никола Райков
-                    </h4>
-                    <h4 className="text-j text-slate-500 font-medium logo text-bold text-dark">
-                      {/* <br /> */}
-                      Редактор: Емануил Томов
-                    </h4>
-                  </div>
-                  <br />
-                  <br />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          {/* </div> */}
-        </div>
-      </Link>
+      {books.map((e, i) => (
+        <Link to={`/book/${e.text}`} key={i}>
+          <div className="text-center space-y-2 sm:text-left centered">
+            {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
+            <table className="text-center centered m-l-15%">
+              <tbody className="text-center centered m-l-3">
+                <tr className="text-center centered m-l-3">
+                  <td className="text-center p-r-3">
+                    <img
+                      src="/img/book.png"
+                      alt="Book"
+                      width={60}
+                      height={60}
+                    />
+                  </td>
+                  <td className="text-center">
+                    <div className="space-y-0.5 text-center">
+                      <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark">
+                        {e.id?.substring(5, e.id?.length - 3)}
+                      </h3>
+                      <h4 className="text-j text-slate-500 font-medium logo text-bold text-dark">
+                        {/* <br /> */}
+                        Автор: {e.avtor}
+                      </h4>
+                    </div>
+                    <br />
+                    <br />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            {/* </div> */}
+          </div>
+        </Link>
+      ))}
       <Link to="/logout" className="text-center centered">
         <span className="text-slate-500 font-medium logo text-center text-primary">
           Log out

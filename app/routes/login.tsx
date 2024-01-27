@@ -8,11 +8,11 @@ import { redirect } from "@remix-run/node";
 // import  { User } from "~/utils/mongostore";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// import { Link, useSearchParams } from "@remix-run/react";
 
 import stylesUrl from "~/styles/login.css";
 import getUserStore from "~/utils/mongostore";
-import { Link } from "@remix-run/react";
+import { Link,useSearchParams } from "@remix-run/react";
+import NavYesOrNo from "~/components/navbarYes";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
@@ -31,7 +31,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const users = await getUserStore();
   const userCheck = await users.checkUser(username, pass);
   if (!userCheck) {
-    return redirect(`/login`);
+    return redirect(`/login?err=Username/Password not valid`);
   }
   // type UserWId=Omit(User,"_id",);
 
@@ -50,6 +50,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 
 function FormExample() {
+  console.log(1);
+  const [searchParams] = useSearchParams();
   const [validated, setValidated] = useState(false);
 
   const handleSubmit = (event: any) => {
@@ -61,16 +63,26 @@ function FormExample() {
 
     setValidated(true);
   };
-
-  return (
+  const [err] = useState(
+    searchParams.get("err") || " "
+  );
+    const [sign] = useState(searchParams.get("sign") || " ");
+    
+    return (
     <div>
       <h1 className="centered">Login</h1>
+      <Row className="mb-3">
+        <NavYesOrNo text={sign}/>
+      </Row>
       <Form
         noValidate
         validated={validated}
         onSubmit={handleSubmit}
         method="POST"
       >
+        <Row className="mb-3">
+          <p className="text-danger">{err}</p>
+        </Row>
         <Row className="mb-3">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
             <Form.Label column sm="2">
