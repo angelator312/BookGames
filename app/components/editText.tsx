@@ -10,15 +10,21 @@ export default function EditText({
     bUrl: string;
     setText: Function;
     setText2: Function;
+    priIzvikvane: Function;
   };
 }) {
-  const { text, text2, glava, bUrl, setText, setText2 } = param;
+  const { text, text2, glava, bUrl, setText, setText2, priIzvikvane } = param;
   return (
     <div>
       <textarea
         defaultValue={text ?? ""}
         placeholder="Здравей,Човече"
-        onChange={(e) => setText(e.target.value ?? "")}
+        onChange={(e) => {
+          setText(e.target.value ?? "");
+          if (priIzvikvane) {
+            priIzvikvane();
+          }
+        }}
         name="text"
       ></textarea>
       <p>
@@ -34,6 +40,9 @@ export default function EditText({
           // console.log(e.target.innerHTML);
           // @ts-ignore
           setText2(e.target.value ?? "");
+          if (priIzvikvane) {
+            priIzvikvane();
+          }
         }}
       ></textarea>
       <p>
