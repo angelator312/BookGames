@@ -9,28 +9,18 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const form = await request.formData();
   let glava = form.get("to");
   if (!glava) glava = "1";
-  // let b = await getGorB("book");
-  // console.log(b);
 
   const userStore = await getUserStore();
   const uId = await getUserId(request);
-  // console.log("Glava:",glava);
-
   // @ts-ignore Заради uId:string|null
-// console.log(await userStore.editUserSGlava(uId, `Book-${params.book}`, glava));
-  // if (!glava) glava = "1";
-  // const b = await textStore.getBook(book);
-  // let text = await textStore.getText(`${b}-${glava}`);
-  // if (!text) {
-  //   text = { text: "A" };
-  // }
+  await userStore.editUserSGlava(uId, `Book-${params.book}`, glava);
   return redirect(request.url);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const a = await requireUserId(request, false);
   const tStore = await getTextStore();
   const b = await tStore.getBook(params.book ?? " ");
-// console.log(params.book);
+  //console.log(params.book);
   if (typeof a === "string") {
     if (b?.avtor == a) return redirect("/myBook/" + params.book);
     if (b?.public) {
@@ -49,7 +39,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 }
 export default function Book1() {
   const book = useLoaderData<typeof loader>();
-// console.log(book.glava);
+  //console.log(book.glava);
   
   //   style={{ padding: 15.4 }}
   //   console.log(book);

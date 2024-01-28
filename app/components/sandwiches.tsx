@@ -12,7 +12,7 @@ export const loader = async () => {
 
 export default function Sandwiches() {
   const data = useLoaderData<typeof loader>();
-  console.log(data);
+// console.log(data);
 
   return (
     <ul>

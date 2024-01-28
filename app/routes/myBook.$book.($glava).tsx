@@ -63,7 +63,7 @@ export default function Book1() {
   );
   const [text2, setText2] = useState(
     //@ts-ignore
-    typeof t?.text2 === "string" ? "" : t?.text2 ?? ""
+    typeof t === "string" ? "" : t?.text2 ?? ""
   );
 
   return (
