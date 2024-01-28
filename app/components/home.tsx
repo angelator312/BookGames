@@ -1,6 +1,5 @@
 import { Link } from "@remix-run/react";
-import type { TextOrBs } from "~/utils/mongostore-texts";
-
+import type { TextOrBs } from "~/utils/textStore";
 
 export default function Home({
   user,
@@ -36,12 +35,14 @@ export default function Home({
               <tbody className="text-center centered m-l-3">
                 <tr className="text-center centered m-l-3">
                   <td className="text-center p-r-3">
-                    <img
-                      src="/img/book.png"
-                      alt="Book"
-                      width={60}
-                      height={60}
-                    />
+                    <div className="space-y-0.5 text-center">
+                      <img
+                        src="/img/book.png"
+                        alt="Book"
+                        width={60}
+                        height={60}
+                      />
+                    </div>
                   </td>
                   <td className="text-center">
                     <div className="space-y-0.5 text-center">
@@ -63,6 +64,11 @@ export default function Home({
           </div>
         </Link>
       ))}
+      <Link to="/newBook" className="text-center centered">
+        <span className="text-slate-500 font-medium logo text-center text-primary">
+          New book
+        </span>
+      </Link>
       <Link to="/logout" className="text-center centered">
         <span className="text-slate-500 font-medium logo text-center text-primary">
           Log out

@@ -29,7 +29,7 @@ export default function Book({ url, title, almP }: { url: string; title: string;
   let text2Lines = text2.split(reg);
   let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
-  console.log(12);
+// console.log(12);
   //  "0".matchAll(reg);
   // Array.from(text2.matchAll(reg));
 

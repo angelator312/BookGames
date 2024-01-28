@@ -18,12 +18,14 @@ function Example({path,title,glava}:{path:string,title:string,glava:string}) {
         <img width={30} height={30} src={menu} alt="menu button" />
       </Button>
 
-      <Offcanvas  show={show} onHide={handleClose} style={{width:"95%"}} >
+      <Offcanvas show={show} onHide={handleClose} style={{ width: "95%" }}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>{title} Глава {glava}</Offcanvas.Title>
+          <Offcanvas.Title>
+            {title} Глава {glava}
+          </Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body style={{width: "95% !important"}}>
-          <img alt={path} src={path+glava + ".jpg"} />
+        <Offcanvas.Body style={{ width: "95% !important" }}>
+          <img alt={path + glava + ".jpg"} src={path + glava + ".jpg"} />
         </Offcanvas.Body>
       </Offcanvas>
     </>

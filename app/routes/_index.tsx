@@ -29,8 +29,8 @@ export const links: LinksFunction = () => [
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const a= await requireUserId(request, false);
-  console.log(a);
-  console.log(await knigi(a));
+// console.log(a);
+// console.log(await knigi(a));
 
   if (typeof a ==="string") {
     return [a,await knigi(a)];
@@ -39,8 +39,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export default function IndexRoute() {
-  console.log(1);
+// console.log(1);
   const [user,books] = useLoaderData<typeof loader>();
-  
+  // @ts-ignore
   return <div>{user ? <Home user={user.toString()} books={books}/> : <Intro />}</div>;
 }

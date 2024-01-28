@@ -11,7 +11,7 @@ import { redirect } from "@remix-run/node";
 // import { Link, useSearchParams } from "@remix-run/react";
 
 import stylesUrl from "~/styles/login.css";
-import getUserStore from "~/utils/mongostore";
+import getUserStore from "~/utils/userStore";
 import { Link, useSearchParams } from "@remix-run/react";
 import { getUserId } from "~/utils/session.server";
 
@@ -38,7 +38,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return redirect(`/signup?err=${error}`);
   }
   if (pass != pass2) return redirect(`/signup?err=Passwords must be same` );
-  console.log(username, pass);
+// console.log(username, pass);
   users.addUser(username, pass);
   return redirect(`/login?sign=Sign up is done! Now you must login`);
 

@@ -2,15 +2,15 @@
 // import bcrypt from "bcryptjs";
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { createUserSession } from "~/utils/session.server";
-import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
+import { createUserSession, getUserId } from "~/utils/session.server";
+import type { ActionFunctionArgs, LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 // import  { User } from "~/utils/mongostore";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 import stylesUrl from "~/styles/login.css";
-import getUserStore from "~/utils/mongostore";
+import getUserStore from "~/utils/userStore";
 import { Link,useSearchParams } from "@remix-run/react";
 import NavYesOrNo from "~/components/navbarYes";
 
@@ -47,10 +47,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   //const joke = await db.joke.create({ data: fields });
 };
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const u = await getUserId(request);
+  if (u) return redirect("/");
+  return true;
+};
 
 
 function FormExample() {
-  console.log(1);
+// console.log(1);
   const [searchParams] = useSearchParams();
   const [validated, setValidated] = useState(false);
 
