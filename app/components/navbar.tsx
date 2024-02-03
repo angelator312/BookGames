@@ -25,7 +25,7 @@ function Example({path,title,glava}:{path:string,title:string,glava:string}) {
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body style={{ width: "95% !important" }}>
-          <img alt={path + glava + ".jpg"} src={path + glava + ".jpg"} />
+          <img alt="Липсват снимка/и" src={path + glava + ".jpg"} />
         </Offcanvas.Body>
       </Offcanvas>
     </>

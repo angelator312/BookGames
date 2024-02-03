@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import type { TextOrBs } from "~/utils/textStore";
+import FormComponent from "./formComp";
 
 export default function Home({
   user,
@@ -28,12 +29,12 @@ export default function Home({
       {/* </div> */}
       <br />
       {books.map((e, i) => (
-        <Link to={`/book/${e.text}`} key={i}>
-          <div className="text-center space-y-2 sm:text-left centered">
-            {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
-            <table className="text-center centered m-l-15%">
-              <tbody className="text-center centered m-l-3">
-                <tr className="text-center centered m-l-3">
+        <div className="text-center space-y-2 sm:text-left centered" key={i}>
+          {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
+          <table className="text-center centered m-l-15%">
+            <tbody className="centered ">
+              <tr className="centered ">
+                <Link to={`/book/${e.text}`}>
                   <td className="text-center p-r-3">
                     <div className="space-y-0.5 text-center">
                       <img
@@ -54,15 +55,32 @@ export default function Home({
                         Автор: {e.avtor}
                       </h4>
                     </div>
-                    <br />
+                    {/* <br /> */}
                     <br />
                   </td>
-                </tr>
-              </tbody>
-            </table>
-            {/* </div> */}
-          </div>
-        </Link>
+                  </Link>
+                {/* 
+                <td className="text-center">
+                  <div className="space-y-0.5 text-center">
+                    <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark">
+                      {e.public ? (
+                        ""
+                      ) : (
+                        <FormComponent
+                          textForSubmit="Publish"
+                          to={`/myBook/${e.text}/publish`}
+                        />
+                      )}
+                    </h3>
+                  </div>
+                  <br />
+                  <br />
+                </td> */}
+              </tr>
+            </tbody>
+          </table>
+          {/* </div> */}
+        </div>
       ))}
       <Link to="/newBook" className="text-center centered">
         <span className="text-slate-500 font-medium logo text-center text-primary">

@@ -1,18 +1,26 @@
-import { Navbar, Container } from "react-bootstrap";
+import { useState } from "react";
+import { Alert } from "react-bootstrap";
 export default function NavYesOrNo({
   text,
   yes = true,
+  f = (a:any) => {},
 }: {
   text: string;
   yes?: boolean;
+  f?: Function;
 }) {
-  if (text.length>2) {
+  const [show, setShow] = useState(true);
+
+  if (show && text.length > 2) {
     return (
-      <Navbar bg={yes ? "success" : "danger"}>
-        <Container>
-          <Navbar.Brand>{text}</Navbar.Brand>
-        </Container>
-      </Navbar>
+      <Alert
+        variant={yes ? "success" : "danger"}
+        onClose={() => setShow(false)}
+        dismissible
+      >
+        <Alert.Heading>{text}</Alert.Heading>
+      </Alert>
     );
-  }else return<></>;
+  }else f(1);
+  return <></>;
 }

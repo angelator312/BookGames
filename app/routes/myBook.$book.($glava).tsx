@@ -1,6 +1,6 @@
 import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
 import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
 import DropDown1 from "~/components/dropdown";
@@ -8,31 +8,8 @@ import { useState } from "react";
 import { Button, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import EditText from "~/components/editText";
 import Text from "~/components/text";
-export async function action({ params, request }: ActionFunctionArgs) {
-  // const form = await request.formData();
-  // let glava = form.get("to");
-  // if (!glava) glava = "1";
-  // // let b = await getGorB("book");
-  // // console.log(b);
-
-  // const userStore = await getUserStore();
-  // const uId = await getUserId(request);
-  // console.log("Glava:",glava);
-
-  // @ts-ignore Заради uId:string|null
-  //  console.log(
-  //   await userStore.editUserSGlava(
-  //     uId ?? "",
-  //     `Book-${params.book}`,
-  //     glava.toString()
-  //   )
-  // );
-  // if (!glava) glava = "1";
-  // const b = await textStore.getBook(book);
-  // let text = await textStore.getText(`${b}-${glava}`);
-  // if (!text) {
-  //   text = { text: "" };
-  // }
+import NavYesOrNo from "~/components/navbarYes";
+export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
@@ -54,6 +31,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   return redirect("/login");
 }
 export default function Book1() {
+  const [searchParams] = useSearchParams();
+  
   function update() {
     textLines = text.split("\n\n");
     text2Lines = text2.split(reg);
@@ -67,7 +46,8 @@ export default function Book1() {
     //@ts-ignore
     typeof t === "string" ? "" : t?.text2 ?? ""
   );
-
+  const [feedMsg] = useState(searchParams.get("feed"));
+  const [errMsg] = useState(searchParams.get("err"));
   const reg = /\(Глава\s+(\d+)\)/g;
   let textLines = text.split("\n\n");
   let text2Lines = text2.split(reg);
@@ -75,6 +55,8 @@ export default function Book1() {
   textLines = textLines.slice(2);
   return (
     <div className="m-l-3">
+      <NavYesOrNo text={feedMsg ?? ""} />
+      <NavYesOrNo text={errMsg ?? ""} yes={false} />
       <Row>
         <Col sm="1"></Col>
         <Col sm="6">
