@@ -34,13 +34,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const user = await users.getUser(username);
 
   if (user) {
-    const error = "such a user exists";
+    const error = "Вече има потребител с такова име!";
     return redirect(`/signup?err=${error}`);
   }
-  if (pass != pass2) return redirect(`/signup?err=Passwords must be same` );
+  if (pass != pass2) return redirect(`/signup?err=Паролите трябва да са еднакви!` );
 // console.log(username, pass);
   users.addUser(username, pass);
-  return redirect(`/login?sign=Sign up is done! Now you must login`);
+  return redirect(`/login?sign=Регистрацията завърши успешно,но сега трябва да влезеш в профила си! `);
 
   //const fields = { content, name };
 

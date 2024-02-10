@@ -12,13 +12,15 @@ export interface TextOrBs {
 }
 
 export class BookStore {
-  async addBook(book: string | null, b: string, avtor: string, publ = true) {
+  async addBook(book: string | null, b: string, avtor: string, publ = true,gl?:string|number) {
+    if(!gl)gl="15";
     const v: TextOrBs = {
       id: `Book-${book}--1`,
       isBook: true,
       text: b,
       public: publ,
       avtor,
+      text2:gl.toString(),
     };
     await this.collection.replaceOne({ id: `Book-${book}--1` }, v, {
       upsert: true,

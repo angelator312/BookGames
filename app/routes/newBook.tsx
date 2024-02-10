@@ -40,8 +40,8 @@ export default function NewBookRoute() {
   };
   const [err] = useState(searchParams.get("err") || " ");
   return (
-    <div>
-      <h1 className="centered">New Book</h1>
+    <div className="centered">
+      <h1 className="centered">Нова книга</h1>
       <Form
         noValidate
         validated={validated}
@@ -54,13 +54,13 @@ export default function NewBookRoute() {
         <Row className="mb-3">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
             <Form.Label column sm="2">
-              Name of book
+              Името на книгата
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 required
                 type="text"
-                placeholder="Name"
+                placeholder="Име"
                 name="name"
                 minLength={6}
               />
@@ -72,13 +72,13 @@ export default function NewBookRoute() {
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
             <Form.Label column sm="2">
-              The abbreviated name of the book
+              Съкратеното име на книгата
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 required
-                type="password"
-                placeholder="abbreviated name"
+                type="text"
+                placeholder="Съкратеното име на книгата"
                 name="abbr"
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
@@ -92,11 +92,11 @@ export default function NewBookRoute() {
           <Col sm="2"></Col>
           <Col sm="10">
             <Button type="submit" className="centered m-r-3">
-              New Book
+              Нова книга
             </Button>
 
             <Link to="/">
-              <Button variant="success">Start</Button>
+              <Button variant="success">Към главно меню</Button>
             </Link>
           </Col>
         </Row>

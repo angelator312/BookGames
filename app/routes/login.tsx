@@ -31,7 +31,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const users = await getUserStore();
   const userCheck = await users.checkUser(username, pass);
   if (!userCheck) {
-    return redirect(`/login?err=Username/Password not valid`);
+    return redirect(`/login?err=Потребителското име или паролата са грешни!`);
   }
   // type UserWId=Omit(User,"_id",);
 

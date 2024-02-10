@@ -9,7 +9,7 @@ export default function Intro() {
           Welcome to Game books
         </h1>
         <h3 className="text-slate-500 font-medium logo text-dark text-bold p-3">
-          Hello Anonymous Who are you?
+          Здравей Anonymous Who are you?
         </h3>
         <span className="text-slate-500 font-medium logo text-dark text-bold p-3">
           We have book: Голямото приключение and many more

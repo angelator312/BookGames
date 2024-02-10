@@ -52,7 +52,7 @@ export default function EditText({
       <FormComponent
         textsHidden={[text, text2]}
         to={`/myBook/${bUrl}/${glava}/save`}
-        textForSubmit="Save changes"
+        textForSubmit="Запази промените"
       />
     </div>
   );

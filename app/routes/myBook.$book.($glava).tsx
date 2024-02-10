@@ -19,12 +19,22 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     return redirect(`/myBook/${book}/1`);
   const a = await requireUserId(request, false);
   const tStore = await getTextStore();
-  const b = await tStore.getBook(book ?? "");
+  let b = await tStore.getBook(book ?? "");
+  if (parseInt(glava) > parseInt(b?.text2 ?? "1")) {
+    await tStore.addBook(
+      b?.id?.substring(5, b.id?.length - 3) ?? "",
+      `${book}`,
+      b?.avtor ?? "",
+      true,
+      glava
+    );
+    if (b) b.text2 = glava;
+  }
   // console.log(glava);
   if (typeof a === "string") {
     if (b?.avtor == a) {
       let t = await tStore.getText(`${book}-${glava}`);
-      return [book, glava, t];
+      return [book, glava, t,b.text2];
     }
     return redirect(`/book/${book}`);
   }
@@ -32,14 +42,14 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 }
 export default function Book1() {
   const [searchParams] = useSearchParams();
-  
+
   function update() {
     textLines = text.split("\n\n");
     text2Lines = text2.split(reg);
     furst2Lines = [textLines[0], textLines[1]];
     textLines = textLines.slice(2);
   }
-  const [bUrl, gl, t] = useLoaderData<typeof loader>();
+  const [bUrl, gl, t,doN] = useLoaderData<typeof loader>();
 
   const [text, setText] = useState(typeof t === "string" ? "" : t?.text ?? "");
   const [text2, setText2] = useState(
@@ -62,7 +72,8 @@ export default function Book1() {
         <Col sm="6">
           <DropDown1
             url={`/myBook/${bUrl}`}
-            doN={15}
+            // @ts-ignore
+            doN={parseInt(doN ?? "15")}
             // @ts-ignore
             activeDrop={parseInt(gl ?? 0)}
           />
@@ -74,7 +85,7 @@ export default function Book1() {
         id="uncontrolled-tab-example"
         className="mb-3"
       >
-        <Tab eventKey="edit" title="Edit text">
+        <Tab eventKey="edit" title="Промени текста">
           <Col sm="6">
             <EditText
               param={{
@@ -91,12 +102,12 @@ export default function Book1() {
           <Row>
             <Col sm="6">
               <Link to="/">
-                <Button variant="primary">Start</Button>
+                <Button variant="primary">Към главно меню</Button>
               </Link>
             </Col>
           </Row>
         </Tab>
-        <Tab eventKey="preview" title="Preview">
+        <Tab eventKey="preview" title="Изглед">
           <Text
             furst2Lines={furst2Lines}
             glava={gl?.toString() ?? "1"}
@@ -108,12 +119,12 @@ export default function Book1() {
           <Row>
             <Col sm="6">
               <Link to="/">
-                <Button variant="primary">Start</Button>
+                <Button variant="primary">Към главно меню</Button>
               </Link>
             </Col>
           </Row>
         </Tab>
-        <Tab eventKey="editAndPreview" title="Edit and preview">
+        <Tab eventKey="editAndPreview" title="Промени текста и изглед">
           <Container>
             <Row>
               <Col sm="6">
@@ -144,7 +155,7 @@ export default function Book1() {
               <Col sm="4"></Col>
               <Col sm="6">
                 <Link to="/">
-                  <Button variant="primary">Start</Button>
+                  <Button variant="primary">Към главно меню</Button>
                 </Link>
               </Col>
             </Row>
