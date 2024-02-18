@@ -1,6 +1,11 @@
 import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { Link, useLoaderData, useSearchParams } from "@remix-run/react";
+import {
+  Link,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from "@remix-run/react";
 import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
 import DropDown1 from "~/components/dropdown";
@@ -20,7 +25,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const a = await requireUserId(request, false);
   const tStore = await getTextStore();
   let b = await tStore.getBook(book ?? "");
-  if (parseInt(glava) > parseInt(b?.text2 ?? "1")) {
+  if (parseInt(glava) > parseInt(b?.doGl ?? "1")) {
     await tStore.addBook(
       b?.id?.substring(5, b.id?.length - 3) ?? "",
       `${book}`,
@@ -28,13 +33,14 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       true,
       glava
     );
-    if (b) b.text2 = glava;
+    if (b) b.doGl = glava;
   }
   // console.log(glava);
   if (typeof a === "string") {
     if (b?.avtor == a) {
+      const comments = await tStore.getComments(book ?? "", glava);
       let t = await tStore.getText(`${book}-${glava}`);
-      return [book, glava, t,b.text2];
+      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments];
     }
     return redirect(`/book/${book}`);
   }
@@ -42,27 +48,58 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 }
 export default function Book1() {
   const [searchParams] = useSearchParams();
-
+  const navigate = useNavigate();
+  const [bUrl, gl, t, doN, comments] = useLoaderData<typeof loader>();
+  let comm = comments;
   function update() {
     textLines = text.split("\n\n");
     text2Lines = text2.split(reg);
     furst2Lines = [textLines[0], textLines[1]];
     textLines = textLines.slice(2);
   }
-  const [bUrl, gl, t,doN] = useLoaderData<typeof loader>();
-
+  //@ts-ignore
   const [text, setText] = useState(typeof t === "string" ? "" : t?.text ?? "");
   const [text2, setText2] = useState(
     //@ts-ignore
     typeof t === "string" ? "" : t?.text2 ?? ""
   );
-  const [feedMsg] = useState(searchParams.get("feed"));
-  const [errMsg] = useState(searchParams.get("err"));
+  
+  
+  const feedCode = searchParams.get("feedCode");
+  const errCode = searchParams.get("errCode");
+  let [feedMsg] = useState(searchParams.get("feed"));
+  let [errMsg] = useState(searchParams.get("err"));
+
+  if(!feedMsg)
+  {
+    switch (feedCode) {
+      case "1":
+        feedMsg = "Запазването приключи!";
+        break;
+    
+      default:
+        break;
+    }
+  }
+
+  if (!errMsg) {
+    switch (errCode) {
+      case "1":
+        errMsg = "Моля въведете текст!";
+        break;
+
+      default:
+        break;
+    }
+  }
+
+
   const reg = /\(Глава\s+(\d+)\)/g;
   let textLines = text.split("\n\n");
   let text2Lines = text2.split(reg);
   let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
+// console.log( );
   return (
     <div className="m-l-3">
       <NavYesOrNo text={feedMsg ?? ""} />
@@ -102,7 +139,7 @@ export default function Book1() {
           <Row>
             <Col sm="6">
               <Link to="/">
-                <Button variant="primary">Към главно меню</Button>
+                <Button variant="primary">Към главната страница</Button>
               </Link>
             </Col>
           </Row>
@@ -119,7 +156,7 @@ export default function Book1() {
           <Row>
             <Col sm="6">
               <Link to="/">
-                <Button variant="primary">Към главно меню</Button>
+                <Button variant="primary">Към главната страница</Button>
               </Link>
             </Col>
           </Row>
@@ -155,14 +192,26 @@ export default function Book1() {
               <Col sm="4"></Col>
               <Col sm="6">
                 <Link to="/">
-                  <Button variant="primary">Към главно меню</Button>
+                  <Button variant="primary">Към главната страница</Button>
                 </Link>
               </Col>
             </Row>
           </Container>
         </Tab>
       </Tabs>
-      <Container></Container>
+      <Container>
+        {/* @ts-ignore */}
+        {comm.map((e, i) => (
+          <Row key={i}>
+            <NavYesOrNo
+              text={e}
+              f={(a:any) => {
+                navigate(`/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`);
+              }}
+            />
+          </Row>
+        ))}
+      </Container>
     </div>
   );
 }

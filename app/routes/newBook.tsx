@@ -66,7 +66,7 @@ export default function NewBookRoute() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a valid name.
+                Моля,напишете името ( най-малко 6 буквено ) на книгата
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
@@ -83,7 +83,7 @@ export default function NewBookRoute() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a password.
+                Моля,напишете съкратеното име на книгата
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
@@ -96,7 +96,7 @@ export default function NewBookRoute() {
             </Button>
 
             <Link to="/">
-              <Button variant="success">Към главно меню</Button>
+              <Button variant="success">Към главната страница</Button>
             </Link>
           </Col>
         </Row>

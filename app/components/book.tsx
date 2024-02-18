@@ -26,10 +26,12 @@ export default function Book({
   url,
   title,
   almP,
+  kr = true,
 }: {
   url: string;
   title: string;
   almP: string;
+  kr?: boolean;
 }) {
   const { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(text,glava,text2);
@@ -55,9 +57,21 @@ export default function Book({
           textLines={textLines}
           text2Lines={text2Lines}
         />
-        <Link to="/" className="text-center">
-          <span className="logo text-bold ">Начало</span>
-        </Link>
+        {kr ? (
+          <>
+            <form action={`${url}/${glava}/idea`} style={{ display: "inline" }}>
+              <button type="submit" className="logo ">
+                Коментирай!
+              </button>
+            </form>
+            <br />
+            <Link to="/" className="text-center">
+              <span className="logo text-bold ">Начало</span>
+            </Link>
+          </>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

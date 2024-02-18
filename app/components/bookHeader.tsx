@@ -28,23 +28,27 @@ export default function BookHeader({ e }: { e: any }) {
                 <br />
               </Link>
             </td>
-            
-                <td className="text-center">
-                  <div className="space-y-0.5 text-center">
-                    <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark">
-                      {e.public ? (
-                        ""
-                      ) : (
-                        <FormComponent
-                          textForSubmit="Publish"
-                          to={`/myBook/${e.text}/publish`}
-                        />
-                      )}
-                    </h3>
-                  </div>
-                  <br />
-                  <br />
-                </td>
+
+            <td className="text-center">
+              <div className="space-y-0.5 text-center">
+                <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark m-l-3">
+                  {e.public ? (
+                    ""
+                  ) : (
+                    // <form method="post" action={`/myBook/${e.text}/publish`}>
+                    //   <input className="bg-book-c" type="submit" value={"Publish"} />
+                    // </form>
+                    <FormComponent
+                      submitVariant="danger"
+                      textForSubmit="Publish"
+                      to={`/myBook/${e.text}/publish`}
+                    />
+                  )}
+                </h3>
+              </div>
+              <br />
+              <br />
+            </td>
           </tr>
         </tbody>
       </table>

@@ -43,6 +43,10 @@
 .f-primary {
   color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity));
 }
+.bg-book-c {
+  background-color: var(--book-c);
+  color: var(--smoke-white);
+}
 input.inp-bl {
   color: var(--black);
 }
@@ -71,4 +75,8 @@ input.inp-bl {
 {
   --smoke-white: rgba(218, 213, 213, 0.795);
   --black: rgb(1, 2, 70);
+  --book-c:#b21e23;
 }
+
+
+

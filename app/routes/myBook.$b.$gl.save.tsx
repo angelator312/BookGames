@@ -8,7 +8,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const glava = params.gl;
   const book = params.b;
   if (!text1 || !text2) {
-    return redirect(`/myBook/${book}/${glava}?err=Моля въведете текст!`);
+    return redirect(`/myBook/${book}/${glava}?errCode=1`);
   }
   if (!glava || Number.isNaN(parseInt(glava)))
     return redirect(`/myBook/${book}/1`);
@@ -18,7 +18,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const tStore = await getTextStore();
   await tStore.addText(`${book}-${glava}`, text1?.toString() ?? "", text2.toString()??"");
 
-  return redirect(`/myBook/${book}/${glava}?feed=Запазването приключи!`);
+  return redirect(`/myBook/${book}/${glava}?feedCode=1`);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.gl;

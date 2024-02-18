@@ -26,6 +26,10 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
 ];
 
+export const action = async ({ request }: LoaderFunctionArgs) => {
+  return redirect("/");
+};
+
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const a= await requireUserId(request, false);

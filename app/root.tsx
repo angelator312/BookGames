@@ -5,6 +5,7 @@ import {
   Meta,
   Outlet,
   Scripts,
+  redirect,
   useRouteError,
 } from "@remix-run/react";
 import { cssBundleHref } from "@remix-run/css-bundle";
@@ -32,6 +33,11 @@ export const links: LinksFunction = () => [
   // { rel: "stylesheet", href: styles },
 ];
 
+export const action = async () => {
+  return redirect("/");
+};
+
+
 export default function App() {
   return (
     <html lang="en" className="bg-white">
@@ -42,7 +48,7 @@ export default function App() {
         <Links />
         <Scripts />
       </head>
-      <body>
+      <body className="bg-i">
         <Outlet />
         <LiveReload />
       </body>
@@ -59,7 +65,7 @@ export function ErrorBoundary() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body >
         Something went wrong
         {/* add the UI you want your users to see */}
         <Scripts />

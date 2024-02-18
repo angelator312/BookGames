@@ -15,12 +15,12 @@ export default function NavYesOrNo({
     return (
       <Alert
         variant={yes ? "success" : "danger"}
-        onClose={() => setShow(false)}
+        onClose={() =>{ setShow(false);f(1);}}
         dismissible
       >
         <Alert.Heading>{text}</Alert.Heading>
       </Alert>
     );
-  }else f(1);
+  }
   return <></>;
 }

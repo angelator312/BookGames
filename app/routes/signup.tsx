@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 // import { createUserSession } from "~/utils/session.server";
-import type { ActionFunctionArgs, LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LinksFunction,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 // import  { User } from "~/utils/mongostore";
 
@@ -34,13 +38,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const user = await users.getUser(username);
 
   if (user) {
-    const error = "Вече има потребител с такова име!";
-    return redirect(`/signup?err=${error}`);
+    return redirect(`/signup?errCode=1`);
   }
-  if (pass != pass2) return redirect(`/signup?err=Паролите трябва да са еднакви!` );
-// console.log(username, pass);
+  if (pass != pass2)
+    return redirect(`/signup?errCode=2`);
+  // console.log(username, pass);
   users.addUser(username, pass);
-  return redirect(`/login?sign=Регистрацията завърши успешно,но сега трябва да влезеш в профила си! `);
+  return redirect(`/login?feedCode=2 `);
 
   //const fields = { content, name };
 
@@ -65,7 +69,25 @@ function FormExample() {
 
     setValidated(true);
   };
-  const [err] = useState(searchParams.get("err") || " ");
+
+  const errCode = searchParams.get("errCode");
+  let [err] = useState(searchParams.get("err"));
+
+  if (!err) {
+    switch (errCode) {
+      case "1":
+        err = "Вече има потребител с такова име!";
+        break;
+
+      case "2":
+        err = "Паролите трябва да са еднакви!";
+        break;
+
+      default:
+        break;
+    }
+  }
+
   return (
     <>
       <h1 className="centered">Sign up</h1>
@@ -75,6 +97,7 @@ function FormExample() {
         validated={validated}
         onSubmit={handleSubmit}
         method="POST"
+        action="/signup"
       >
         <Row className="mb-3">
           <p className="text-danger">{err}</p>

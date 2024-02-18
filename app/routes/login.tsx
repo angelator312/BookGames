@@ -3,7 +3,11 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { createUserSession, getUserId } from "~/utils/session.server";
-import type { ActionFunctionArgs, LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  LinksFunction,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 // import  { User } from "~/utils/mongostore";
 
@@ -11,7 +15,7 @@ import { redirect } from "@remix-run/node";
 
 import stylesUrl from "~/styles/login.css";
 import getUserStore from "~/utils/userStore";
-import { Link,useSearchParams } from "@remix-run/react";
+import { Link, useSearchParams } from "@remix-run/react";
 import NavYesOrNo from "~/components/navbarYes";
 
 export const links: LinksFunction = () => [
@@ -31,7 +35,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const users = await getUserStore();
   const userCheck = await users.checkUser(username, pass);
   if (!userCheck) {
-    return redirect(`/login?err=Потребителското име или паролата са грешни!`);
+    return redirect(`/login?errCode=1`);
   }
   // type UserWId=Omit(User,"_id",);
 
@@ -53,9 +57,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return true;
 };
 
-
 function FormExample() {
-// console.log(1);
+  // console.log(1);
   const [searchParams] = useSearchParams();
   const [validated, setValidated] = useState(false);
 
@@ -68,16 +71,41 @@ function FormExample() {
 
     setValidated(true);
   };
-  const [err] = useState(
-    searchParams.get("err") || " "
-  );
-    const [sign] = useState(searchParams.get("sign") || " ");
-    
-    return (
+  const feedCode = searchParams.get("feedCode");
+  const errCode = searchParams.get("errCode");
+  let [sign] = useState(searchParams.get("feed"));
+  let [err] = useState(searchParams.get("err"));
+
+  if (!sign) {
+    switch (feedCode) {
+      case "1":
+        sign = "Запазването приключи!";
+        break;
+      case "2":
+        sign =
+          "Регистрацията завърши успешно,но сега трябва да влезеш в профила си!";
+        break;
+      default:
+        break;
+    }
+  }
+
+  if (!err) {
+    switch (errCode) {
+      case "1":
+        err = "Потребителското име или паролата са грешни!";
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  return (
     <div>
       <h1 className="centered">Login</h1>
       <Row className="mb-3">
-        <NavYesOrNo text={sign}/>
+        <NavYesOrNo text={sign ?? ""} />
       </Row>
       <Form
         noValidate

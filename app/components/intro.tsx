@@ -3,7 +3,7 @@ import { Link } from "@remix-run/react";
 export default function Intro() {
   //   const user = useLoaderData<string>();
   return (
-    <div className="text-center">
+    <div className="text-center bg-i">
       <div className="text-center">
         <h1 className="text-slate-500 font-medium logo text-primary p-3">
           Welcome to Game books

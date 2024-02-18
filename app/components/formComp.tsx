@@ -6,6 +6,7 @@ export default function FormComponent({
   names = [],
   textsHidden = [],
   namesHidden = [],
+  submitVariant="success",
 }: {
   texts?: string[];
   names?: string[];
@@ -13,6 +14,7 @@ export default function FormComponent({
   namesHidden?: string[];
   textForSubmit: string;
   to: string;
+  submitVariant?:string;
 }) {
   return (
     <Form method="POST" action={to}>
@@ -36,7 +38,12 @@ export default function FormComponent({
         ))}
       </InputGroup>
       <InputGroup className="mb-3">
-        <Button variant="success" as="input" type="submit" value={textForSubmit} />
+        <Button
+          variant={submitVariant}
+          as="input"
+          type="submit"
+          value={textForSubmit}
+        />
       </InputGroup>
       <InputGroup className="mb-3">
         {textsHidden.map((e, i) => (
@@ -44,7 +51,7 @@ export default function FormComponent({
             type="hidden"
             key={i}
             value={e}
-            name={names[i] ?? "text" + (i + 1)}
+            name={namesHidden[i] ?? "text" + (i + 1)}
           />
         ))}
       </InputGroup>
