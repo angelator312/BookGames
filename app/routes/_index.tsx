@@ -39,7 +39,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   if (typeof a ==="string") {
     return [a,await knigi(a)];
   }
-  return redirect("/login");
+  return [0,0];
 };
 
 export default function IndexRoute() {

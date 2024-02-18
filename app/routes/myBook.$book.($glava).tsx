@@ -9,7 +9,7 @@ import {
 import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
 import DropDown1 from "~/components/dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import EditText from "~/components/editText";
 import Text from "~/components/text";
@@ -52,6 +52,8 @@ export default function Book1() {
   const [bUrl, gl, t, doN, comments] = useLoaderData<typeof loader>();
   let comm = comments;
   function update() {
+    // setText(text.replace("\r", "\n"));
+    // setText2(text2.replace("\r", "\n"));
     textLines = text.split("\n\n");
     text2Lines = text2.split(reg);
     furst2Lines = [textLines[0], textLines[1]];
@@ -63,20 +65,25 @@ export default function Book1() {
     //@ts-ignore
     typeof t === "string" ? "" : t?.text2 ?? ""
   );
-  
-  
+  useEffect(() => {
+    setText(text.replace("\r", "\n"));
+    setText2(text2.replace("\r", "\n"));
+  }, [text, text2]);
+
   const feedCode = searchParams.get("feedCode");
   const errCode = searchParams.get("errCode");
   let [feedMsg] = useState(searchParams.get("feed"));
   let [errMsg] = useState(searchParams.get("err"));
 
-  if(!feedMsg)
-  {
+  if (!feedMsg) {
     switch (feedCode) {
       case "1":
         feedMsg = "Запазването приключи!";
         break;
-    
+      case "2":
+        feedMsg = "Публикуването завърши успешно!";
+        break;
+
       default:
         break;
     }
@@ -93,13 +100,12 @@ export default function Book1() {
     }
   }
 
-
   const reg = /\(Глава\s+(\d+)\)/g;
-  let textLines = text.split("\n\n");
-  let text2Lines = text2.split(reg);
+  let textLines = text.replace("\r", "\n").split("\n\n");
+  let text2Lines = text2.replace("\r", "\n").split(reg);
   let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
-// console.log( );
+  // console.log( );
   return (
     <div className="m-l-3">
       <NavYesOrNo text={feedMsg ?? ""} />
@@ -205,7 +211,7 @@ export default function Book1() {
           <Row key={i}>
             <NavYesOrNo
               text={e}
-              f={(a:any) => {
+              f={(a: any) => {
                 navigate(`/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`);
               }}
             />

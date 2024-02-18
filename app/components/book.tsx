@@ -36,8 +36,8 @@ export default function Book({
   const { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(text,glava,text2);
 
-  let textLines = text.split("\n\n");
-  let text2Lines = text2.split(reg);
+  let textLines = (text.replace(/\\r/gm, "\n")).split("\n\n");
+  let text2Lines = (text2.replace(/\\r/gm, "\n")).split(reg);
   let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
   // console.log(12);

@@ -11,15 +11,30 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const name = form.get("name")?.toString();
   const abbr = form.get("abbr")?.toString();
   const a = await requireUserId(request, false);
-  if (typeof a === "string") {
-    // const user = await (await getUserStore()).getUser(a);
-    const tStore=await getTextStore();
-    if (await tStore.getBook(abbr?? " ")) {
-        return redirect(
-          "/newBook?err=There is a book with the same abbreviation!"
-        );    
+  let bool = true;
+  if (typeof a === "string" &&abbr) {
+    for (let i = 0; i < abbr.length; i++) {
+      const e = abbr[i].charCodeAt(0);
+      if (
+        !((97 <= e && e <= 122) || (65 <= e && e <= 90) || (48 <= e && e <= 57))
+      ) {
+        console.log(e);
+        
+        bool = false;
+      }
     }
-    await tStore.addBook(name?.toString() ?? " ",abbr?? " ",a,false);
+    if (!bool)
+      return redirect(
+        "/newBook?err=Letters of the abbreviation are not in English!"
+      );
+    // const user = await (await getUserStore()).getUser(a);
+    const tStore = await getTextStore();
+    if (await tStore.getBook(abbr ?? " ")) {
+      return redirect(
+        "/newBook?err=There is a book with the same abbreviation!"
+      );
+    }
+    await tStore.addBook(name?.toString() ?? " ", abbr ?? " ", a, false);
     return redirect("/");
   }
   return redirect("/newBook?err=Something when wrong!");

@@ -20,7 +20,7 @@ export default function EditText({
         defaultValue={text ?? ""}
         placeholder="Здравей,Човече"
         onChange={(e) => {
-          setText(e.target.value ?? "");
+          setText((e.target.value).replace(/\\r/gm, "\n") ?? "");
           if (priIzvikvane) {
             priIzvikvane();
           }

@@ -17,7 +17,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
     true
   );
 
-  return redirect(`/myBook/${book}/1?feed=Публикуването завърши успешно!`);
+  return redirect(`/myBook/${book}/1?feedCode=2`);
 }
 export async function loader({ params }: LoaderFunctionArgs) {
   return redirect(`/`);

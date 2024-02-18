@@ -16,7 +16,12 @@ export async function action({ params, request }: ActionFunctionArgs) {
   // let b = await getGorB("book");
   // console.log(b);
   const tStore = await getTextStore();
-  await tStore.addText(`${book}-${glava}`, text1?.toString() ?? "", text2.toString()??"");
+  //@ts-ignore
+  await tStore.addText(
+    `${book}-${glava}`,
+    text1.toString().replace(/\\r/gm, "\n"),
+    text2.toString().replace(/\\r/gm, "\n") ?? ""
+  );
 
   return redirect(`/myBook/${book}/${glava}?feedCode=1`);
 }

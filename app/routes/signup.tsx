@@ -137,7 +137,7 @@ function FormExample() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a password.
+                Please input a valid (minimum 8 characters) password.
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
@@ -157,7 +157,7 @@ function FormExample() {
               />
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a password.
+                Please input a valid (minimum 8 characters) password.
               </Form.Control.Feedback>
             </Col>
           </Form.Group>

@@ -47,9 +47,6 @@ export default function Home({ user, books }: { user: string; books: Text[] }) {
       </div>
       {/* </div> */}
       <br />
-      {books.map((e, i) => (
-        <BookHeader e={e} key={i} />
-      ))}
       <Link to="/newBook" className="text-center centered">
         <span className="text-slate-500 font-medium logo text-center text-primary">
           Нова книга
@@ -60,6 +57,9 @@ export default function Home({ user, books }: { user: string; books: Text[] }) {
           Излез от профила
         </span>
       </Link>
+      {books.map((e, i) => (
+        <BookHeader e={e} key={i} />
+      ))}
       {/* </div> */}
       <br />
     </div>
