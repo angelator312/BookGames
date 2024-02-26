@@ -19,16 +19,16 @@ export default function Home({ user, books }: { user: string; books: Text[] }) {
         break;
     }
   return (
-    <div className="bg-i">
+    <div className="m-l-35%">
       {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl  space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
-      <div className="text-center space-y-2 sm:text-left ">
+      <div className="text-center pace-y-2 sm:text-left">
         <NavYesOrNo
           text={err ?? ""}
           yes={false}
           f={(a: any) =>
             setSearchParams((prev) => {
-              if(errCode)prev.set("errCode", "");
-              if(err && !errCode) prev.set("err", "");
+              if (errCode) prev.set("errCode", "");
+              if (err && !errCode) prev.set("err", "");
               return prev;
             })
           }
@@ -57,10 +57,11 @@ export default function Home({ user, books }: { user: string; books: Text[] }) {
           Излез от профила
         </span>
       </Link>
+      <div >
       {books.map((e, i) => (
         <BookHeader e={e} key={i} />
       ))}
-      {/* </div> */}
+      </div>
       <br />
     </div>
   );

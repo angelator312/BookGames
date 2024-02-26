@@ -13,6 +13,12 @@
 .m-l-15\% {
   margin-left: 15% !important;
 }
+.m-l-30\% {
+  margin-left: 30% !important;
+}
+.m-l-35\% {
+  margin-left: 35% !important;
+}
 .m-r-3 {
   margin-right: 3em !important;
 }
@@ -59,12 +65,25 @@ input.inp-bl {
   background-size: contain;
   background-repeat: repeat;
 }
+.bg-intro {
+  background-image: url("/img/desktopImage.jpg");
+  background-position:0 -10em;
+  background-size: cover;
+  background-repeat: repeat-x;
+}
 .centered {
   /* position: absolute; */
   display: block;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+.to-right {
+  /* position: absolute; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
 }
 .btn-menu-my {
   position: absolute;
@@ -73,7 +92,7 @@ input.inp-bl {
 }
 :root
 {
-  --smoke-white: rgba(218, 213, 213, 0.795);
+  --smoke-white: rgba(230, 230, 230, 0.780);
   --black: rgb(1, 2, 70);
   --book-c:#b21e23;
 }

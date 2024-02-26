@@ -6,6 +6,8 @@ import {
   Outlet,
   Scripts,
   redirect,
+  useLocation,
+  useNavigate,
   useRouteError,
 } from "@remix-run/react";
 import { cssBundleHref } from "@remix-run/css-bundle";
@@ -14,6 +16,7 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 // import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "bootstrap/dist/css/bootstrap.css";
 import myStyles from "~/styles/myStyle.css";
+import { Button } from "react-bootstrap";
 // import styles from "./tailwind.css";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -37,10 +40,14 @@ export const action = async () => {
   return redirect("/");
 };
 
-
 export default function App() {
+  const location = useLocation();
+  console.log(location);
   return (
-    <html lang="en" className="bg-white">
+    <html
+      lang="en"
+      className="bg-smkW"
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -48,7 +55,7 @@ export default function App() {
         <Links />
         <Scripts />
       </head>
-      <body className="bg-i">
+      <body className={location.pathname == "/" ? "bg-intro" : "bg-smkW"}>
         <Outlet />
         <LiveReload />
       </body>
@@ -57,6 +64,7 @@ export default function App() {
 }
 export function ErrorBoundary() {
   const error = useRouteError();
+  const navigate = useNavigate();
   console.error(error);
   return (
     <html>
@@ -65,13 +73,14 @@ export function ErrorBoundary() {
         <Meta />
         <Links />
       </head>
-      <body >
-        Something went wrong
+      <body>
+        Нещо се обърка!
+        <Button variant="success" onClick={() => navigate(-1)}>
+          Върни се назад
+        </Button>
         {/* add the UI you want your users to see */}
         <Scripts />
       </body>
     </html>
   );
 }
-
-

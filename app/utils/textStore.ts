@@ -97,7 +97,7 @@ export class BookStore {
   ): Promise<Book | null> {
     if (typeof gl == "string") gl = parseInt(gl);
     // console.log( );
-    if (nom < 0) return null;
+    if (nom < 0 || Number.isNaN(nom)) return null;
     if (!(book && gl)) return null;
     let st = await this.getBook(book);
     if (!st) return null;
@@ -105,7 +105,7 @@ export class BookStore {
     // console.log(2);
 
     // console.log(st);
-    let arr: string[][] = [[]];
+    let arr: string[][] = [];
     for (let i = 0; i <= parseInt(st.doGl) - 2; i++) {
       if (i == gl - 1) {
         //@ts-ignore

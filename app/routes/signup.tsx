@@ -40,8 +40,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (user) {
     return redirect(`/signup?errCode=1`);
   }
-  if (pass != pass2)
-    return redirect(`/signup?errCode=2`);
+  if (pass != pass2) return redirect(`/signup?errCode=2`);
   // console.log(username, pass);
   users.addUser(username, pass);
   return redirect(`/login?feedCode=2 `);
@@ -105,19 +104,19 @@ function FormExample() {
         <Row className="mb-3">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
             <Form.Label column sm="2">
-              Username
+              Име
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 required
                 type="text"
-                placeholder="Usernname"
+                placeholder="Име"
                 name="user"
                 minLength={4}
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback>Става!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a username.
+                Моля, напишете валидно (най-малко 4 символа) име!
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
@@ -125,19 +124,19 @@ function FormExample() {
         <Row className="mb-3">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
             <Form.Label column sm="2">
-              Password
+              Парола
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 required
                 type="password"
-                placeholder="Password"
+                placeholder="Парола"
                 name="pass"
                 minLength={8}
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback>Става!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a valid (minimum 8 characters) password.
+                Моля,напишете валидна (най-малко 8 символа) парола!
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
@@ -145,45 +144,38 @@ function FormExample() {
         <Row className="mb-3">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
             <Form.Label column sm="2">
-              Password
+              Парола отново
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 required
                 type="password"
-                placeholder="Password"
+                placeholder="Парола"
                 name="pass2"
                 minLength={8}
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback>Става!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a valid (minimum 8 characters) password.
+                Моля,напишете валидна (най-малко 8 символа) парола!
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
         </Row>
         <Row className="mb-3">
           <Col sm="2"></Col>
-          <Col sm="10">
-            <Form.Group className="mb-3">
-              <Form.Check
-                required
-                label="Agree to terms and conditions"
-                feedback="You must agree before submitting."
-                feedbackType="invalid"
-              />
-            </Form.Group>
+          <Col sm="1" className="mb-3">
+            <Button type="submit" className="centered m-r-3">Регистриране</Button>
           </Col>
-        </Row>
-        <Row className="mb-3">
           <Col sm="2"></Col>
-          <Col sm="10">
-            <Button type="submit" className="centered m-r-3">
-              Sign up
-            </Button>
-
+          <Col sm="1" className="mb-3">
             <Link to="/login">
-              <Button variant="success">Login</Button>
+              <Button variant="success">Вход </Button>
+            </Link>
+          </Col>
+          <Col sm="1"></Col>
+          <Col sm="1" className="mb-3">
+            <Link to="/">
+              <Button variant="success">Начало</Button>
             </Link>
           </Col>
         </Row>

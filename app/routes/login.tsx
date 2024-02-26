@@ -103,7 +103,7 @@ function FormExample() {
 
   return (
     <div>
-      <h1 className="centered">Login</h1>
+      <h1 className="centered">Вход</h1>
       <Row className="mb-3">
         <NavYesOrNo text={sign ?? ""} />
       </Row>
@@ -119,48 +119,56 @@ function FormExample() {
         <Row className="mb-3">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
             <Form.Label column sm="2">
-              Username
+              Име
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 required
                 type="text"
-                placeholder="Usernname"
+                placeholder="Име"
                 name="user"
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback>Става!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a username.
+                Моля, напишете име!
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
             <Form.Label column sm="2">
-              Password
+              Парола
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 required
                 type="password"
-                placeholder="Password"
+                placeholder="Парола"
                 name="pass"
               />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback>Става!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please input a password.
+                Моля, напишете парола!
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
         </Row>
         <Row className="mb-3">
           <Col sm="2"></Col>
-          <Col sm="10">
+          <Col sm="1" className="mb-3">
             <Button type="submit" className="centered m-r-3">
-              Login
+              Вход
             </Button>
-
+          </Col>
+          <Col sm="1"></Col>
+          <Col sm="2" className="mb-3">
             <Link to="/signup">
-              <Button variant="success">Sign up</Button>
+              <Button variant="success">Регистрация</Button>
+            </Link>
+          </Col>
+          <Col sm="1"></Col>
+          <Col sm="1" className="mb-3">
+            <Link to="/">
+              <Button variant="success">Начало</Button>
             </Link>
           </Col>
         </Row>
