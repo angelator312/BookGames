@@ -124,7 +124,7 @@ export default function Book1() {
       </Row>
       <br />
       <Tabs
-        defaultActiveKey="edit"
+        defaultActiveKey="previewed"
         id="uncontrolled-tab-example"
         className="mb-3"
       >
