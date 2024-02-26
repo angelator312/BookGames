@@ -42,7 +42,7 @@ export const action = async () => {
 
 export default function App() {
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   return (
     <html
       lang="en"
