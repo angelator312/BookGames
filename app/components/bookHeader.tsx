@@ -2,6 +2,7 @@ import { Link } from "@remix-run/react";
 import FormComponent from "./formComp";
 
 export default function BookHeader({ e }: { e: any }) {
+  if(!e)return;
   return (
     <div className="text-center space-y-2 sm:text-left centered">
       {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
@@ -28,7 +29,8 @@ export default function BookHeader({ e }: { e: any }) {
                 <br />
               </Link>
             </td>
-
+          </tr>
+          <tr>
             <td className="text-center">
               <div className="space-y-0.5 text-center">
                 <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark m-l-3">
@@ -46,8 +48,6 @@ export default function BookHeader({ e }: { e: any }) {
                   )}
                 </h3>
               </div>
-              <br />
-              <br />
             </td>
           </tr>
         </tbody>

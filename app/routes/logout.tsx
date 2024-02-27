@@ -2,6 +2,8 @@ import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
 import { logout } from "~/utils/session.server";
 import stylesUrl from "~/styles/login.css";
 import myStyles from "~/styles/myStyle.css";
+import { Link } from "@remix-run/react";
+import { Button, Row } from "react-bootstrap";
 import FormComponent from "~/components/formComp";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -30,8 +32,12 @@ export default function LogoutRoute() {
               Сигурен ли си ,че искаш да излезеш от профила си?
             </h2>
           </div>
-          <FormComponent to="/logout" textForSubmit="Да" />
-          <FormComponent to="/" textForSubmit="Не" />
+          <FormComponent textForSubmit={"Да"} to={"/logout"} submitVariant="danger" />
+          <Row>
+            <Link to="/">
+              <Button variant="secondary">Не</Button>
+            </Link>
+          </Row>{" "}
         </div>
       </div>
     </main>

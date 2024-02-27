@@ -4,16 +4,24 @@ import type { Text } from "~/utils/textStore";
 import BookHeader from "./bookHeader";
 import NavYesOrNo from "./navbarYes";
 
-export default function Home({ user, books }: { user: string; books: Text[] }) {
+export default function Home({
+  user,
+  books,
+}: {
+  user: string;
+  books: Text[][];
+}) {
   // const userId = useLoaderData<string>();
-  const [searchParams,setSearchParams] = useSearchParams();
+  console.log(books[0]);
+  
+  const [searchParams, setSearchParams] = useSearchParams();
   let err = searchParams.get("err");
   const errCode = searchParams.get("errCode");
   if (!err)
     switch (errCode) {
       case "1":
-      err = `Книгата не е завършена!!!`;  
-      break;
+        err = `Книгата не е завършена!!!`;
+        break;
 
       default:
         break;
@@ -57,10 +65,16 @@ export default function Home({ user, books }: { user: string; books: Text[] }) {
           Излез от профила
         </span>
       </Link>
-      <div >
-      {books.map((e, i) => (
-        <BookHeader e={e} key={i} />
-      ))}
+      <div>
+        {books[0].map((e, i) => (
+          <BookHeader e={e} key={i} />
+        ))}
+      </div>
+      <hr/>
+      <div>
+        {books[1].map((e, i) => (
+          <BookHeader e={e} key={i} />
+        ))}
       </div>
       <br />
     </div>

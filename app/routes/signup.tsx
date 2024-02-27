@@ -18,6 +18,7 @@ import stylesUrl from "~/styles/login.css";
 import getUserStore from "~/utils/userStore";
 import { Link, useSearchParams } from "@remix-run/react";
 import { getUserId } from "~/utils/session.server";
+import NavYesOrNo from "~/components/navbarYes";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
@@ -99,7 +100,7 @@ function FormExample() {
         action="/signup"
       >
         <Row className="mb-3">
-          <p className="text-danger">{err}</p>
+          <NavYesOrNo text={err ??""} yes={false}/>
         </Row>
         <Row className="mb-3">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom01">

@@ -44,10 +44,14 @@
   font-weight: 900 !important;
 }
 .f-white {
-  color:var(--smoke-white);
+  color: var(--smoke-white);
 }
 .f-primary {
   color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity));
+}
+.f-book-c {
+  /* background-color: var(--book-c); */
+  color: var(--book-c);
 }
 .bg-book-c {
   background-color: var(--book-c);
@@ -57,17 +61,17 @@ input.inp-bl {
   color: var(--black);
 }
 .bg-smkW {
-  background-color:var(--smoke-white);
+  background-color: var(--smoke-white);
 }
 .bg-i {
   background-image: url("/img/pageDecoration.jpg");
-  background-position:0 -10em;
+  background-position: 0 -10em;
   background-size: contain;
   background-repeat: repeat;
 }
 .bg-intro {
   background-image: url("/img/desktopImage.jpg");
-  background-position:0 -10em;
+  background-position: 0 -10em;
   background-size: cover;
   background-repeat: repeat-x;
 }
@@ -77,6 +81,16 @@ input.inp-bl {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+.mt-3r{
+  margin-top: 6rem !important
+}
+.mt-6r{
+  margin-top: 6rem !important
+}
+.line-height-1
+{
+  line-height: 46px;
 }
 .to-right {
   /* position: absolute; */
@@ -90,12 +104,14 @@ input.inp-bl {
   top: 10px;
   right: 10px;
 }
-:root
-{
-  --smoke-white: rgba(230, 230, 230, 0.780);
-  --black: rgb(1, 2, 70);
-  --book-c:#b21e23;
+hr {
+  display: flex;
+  height: 0.5px;
+  border: 0;
+  border-top: 0.5px solid #ccc;
 }
-
-
-
+:root {
+  --smoke-white: #eeeeec;
+  --black: rgb(1, 2, 70);
+  --book-c: #dc3545;
+}

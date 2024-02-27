@@ -114,9 +114,9 @@ function FormExample() {
         method="POST"
       >
         <Row className="mb-3">
-          <p className="text-danger">{err}</p>
+          <NavYesOrNo text={err ??""} yes={false}/>
         </Row>
-        <Row className="mb-3">
+        <Row className="mb-3S">
           <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
             <Form.Label column sm="2">
               Име
@@ -155,20 +155,20 @@ function FormExample() {
         <Row className="mb-3">
           <Col sm="2"></Col>
           <Col sm="1" className="mb-3">
-            <Button type="submit" className="centered m-r-3">
+            <Button type="submit" variant="danger" className="centered m-r-3">
               Вход
             </Button>
           </Col>
           <Col sm="1"></Col>
           <Col sm="2" className="mb-3">
             <Link to="/signup">
-              <Button variant="success">Регистрация</Button>
+              <Button variant="secondary">Регистрация</Button>
             </Link>
           </Col>
           <Col sm="1"></Col>
           <Col sm="1" className="mb-3">
             <Link to="/">
-              <Button variant="success">Начало</Button>
+              <Button variant="secondary">Начало</Button>
             </Link>
           </Col>
         </Row>

@@ -144,20 +144,21 @@ export class BookStore {
     }
     return bookL.comments[parseInt(gl.toString()) - 1] ?? [];
   }
-  async getPublicBooks(): Promise<Book[] | null> {
+  async getPublicBooks(avt:string): Promise<Book[] | null> {
     const data = await this.collection
-      .find({ public: true, isBook: true }, { sort: { time: "ascending" } })
+      .find({public: true, isBook: true }, { sort: { time: "ascending" } })
       .toArray();
     if (data.length === 0) {
       return null;
     }
+    data.filter(e=>e.avtor==avt?false:true);
     // @ts-ignore
     return data;
   }
   async getMyBooks(avt: string): Promise<Book[] | null> {
     const data = await this.collection
       .find(
-        { public: false, isBook: true, avtor: avt },
+        {isBook: true, avtor: avt },
         { sort: { time: "ascending" } }
       )
       .toArray();

@@ -92,9 +92,9 @@ export async function getGorB(key: string) {
 }
 export async function knigi(user:string) {
   const tStore=await getTextStore();
-  const a = await tStore.getPublicBooks();
+  const a = await tStore.getPublicBooks(user);
   const b = await tStore.getMyBooks(user);
   if(b)
-    return a?.concat(b);
-  return a;
+    return [b,a];
+  return [a,[]];
 }
