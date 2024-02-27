@@ -165,18 +165,18 @@ function FormExample() {
         <Row className="mb-3">
           <Col sm="2"></Col>
           <Col sm="1" className="mb-3">
-            <Button type="submit" className="centered m-r-3">Регистриране</Button>
+            <Button type="submit" variant="danger" className="centered m-r-3">Регистриране</Button>
           </Col>
           <Col sm="2"></Col>
           <Col sm="1" className="mb-3">
             <Link to="/login">
-              <Button variant="success">Вход </Button>
+              <Button variant="secondary">Вход </Button>
             </Link>
           </Col>
           <Col sm="1"></Col>
           <Col sm="1" className="mb-3">
             <Link to="/">
-              <Button variant="success">Начало</Button>
+              <Button variant="secondary">Начало</Button>
             </Link>
           </Col>
         </Row>

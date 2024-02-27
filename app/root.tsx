@@ -75,6 +75,7 @@ export function ErrorBoundary() {
       </head>
       <body>
         Нещо се обърка!
+        ( Опитваме се да го оправим! )
         <Button variant="success" onClick={() => navigate(-1)}>
           Върни се назад
         </Button>

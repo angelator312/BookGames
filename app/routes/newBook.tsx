@@ -124,12 +124,12 @@ export default function NewBookRoute() {
         <Row className="mb-3">
           <Col sm="2"></Col>
           <Col sm="10">
-            <Button type="submit" className="centered m-r-3">
+            <Button type="submit" variant="danger" className="centered m-r-3">
               Нова книга
             </Button>
 
             <Link to="/">
-              <Button variant="success">Към главната страница</Button>
+              <Button variant="secondary">Към главната страница</Button>
             </Link>
           </Col>
         </Row>
