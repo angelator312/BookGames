@@ -25,8 +25,9 @@ export const links: LinksFunction = () => [
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const form = await request.formData();
-  const pass = form.get("pass");
-  const username = form.get("user");
+  const pass = form.get("pass")?.toString().trim();
+  const username = form.get("user")?.toString().trim();
+  
   // we do this type check to be extra sure and to make TypeScript happy
   // we'll explore validation next!
   if (typeof pass !== "string" || typeof username !== "string") {
