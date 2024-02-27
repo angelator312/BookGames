@@ -53,6 +53,7 @@ export default function EditText({
         textsHidden={[text, text2]}
         to={`/myBook/${bUrl}/${glava}/save`}
         textForSubmit="Запази промените"
+        submitVariant="danger"
       />
     </div>
   );

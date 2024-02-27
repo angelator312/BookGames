@@ -1,3 +1,5 @@
+import FormComponent from "./formComp";
+
 export default function Text({
   glava,
   furst2Lines,
@@ -44,16 +46,19 @@ export default function Text({
               {e}
             </p>
           ) : (
-            <form
-              action={flag1 ? `${url}` : `${url}/${e}`}
-              style={{ display: "inline" }}
-              method="POST"
-            >
-              <input type="hidden" name="to" value={e} />
-              <button type="submit" className="logo text-">
-                Глава {e}
-              </button>
-            </form>
+            <div className="m-l-35% ">
+
+            <FormComponent textForSubmit={"Глава "+e} to={flag1 ? `${url}` : `${url}/${e}`} textsHidden={[e]} namesHidden={["to"]} submitVariant="outline-secondary" />
+            </div>
+            //   action=
+            //   style={{ display: "inline" }}
+            //   method="POST"
+            // >
+            //   <input type="hidden" name="to" value={e} />
+            //   <button type="submit" className="logo text-">
+                
+            //   </button>
+            // </form>
           )}
         </div>
       ))}

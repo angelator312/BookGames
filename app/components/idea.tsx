@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
-function IdeaComp({url}:{url:string}) {
+function IdeaComp({ url }: { url: string }) {
   return (
     <Form method="post" action={url}>
       <Row>
@@ -19,7 +19,7 @@ function IdeaComp({url}:{url:string}) {
               Твоят коментар ще бъде видим само от автора!
             </Form.Text>
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="danger" type="submit">
             Коментирай
           </Button>
         </Col>
@@ -32,11 +32,16 @@ function IdeaComp({url}:{url:string}) {
       <Row>
         <Col sm="3"></Col>
         <Col sm="6">
-          <Link to="/">
-            <Button variant="primary">Към главната страница</Button>
+          <Link to="/" className="mb-3">
+            <Button variant="secondary">Към главната страница</Button>
           </Link>
         </Col>
       </Row>
+      {/* <Row> */}
+      {/* <pre> </pre> */}
+      <br />
+      <br />
+      {/* </Row> */}
     </Form>
   );
 }

@@ -1,8 +1,10 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import { json, type LoaderFunctionArgs } from "@remix-run/node";
 // import menu from "~/helps/menu.png";
 import Navbar from "./navbar";
 import Text from "./text";
+import FormComponent from "./formComp";
+import { Col, Row } from "react-bootstrap";
 let reg = /\(Глава\s+(\d+)\)/g;
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   // console.log(11);
@@ -36,8 +38,8 @@ export default function Book({
   const { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(text,glava,text2);
 
-  let textLines = (text.replace(/\\r/gm, "\n")).split("\n\n");
-  let text2Lines = (text2.replace(/\\r/gm, "\n")).split(reg);
+  let textLines = text.replace(/\\r/gm, "\n").split("\n\n");
+  let text2Lines = text2.replace(/\\r/gm, "\n").split(reg);
   let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
   // console.log(12);
@@ -58,17 +60,28 @@ export default function Book({
           text2Lines={text2Lines}
         />
         {kr ? (
-          <>
-            <form action={`${url}/${glava}/idea`} style={{ display: "inline" }}>
-              <button type="submit" className="logo ">
+          <div className="m-l-35%">
+            <Row>
+              <Col sm="3">
+                <FormComponent
+                  submitVariant="secondary"
+                  to={`${url}/${glava}/idea`}
+                  textForSubmit="Коментирай!"
+                />
+              </Col>
+              {/* <button type="submit" className="logo ">
                 Коментирай!
               </button>
-            </form>
-            <br />
-            <Link to="/" className="text-center">
-              <span className="logo text-bold ">Начало</span>
-            </Link>
-          </>
+            </form> */}
+              <Col sm="3">
+                <FormComponent
+                  submitVariant="danger"
+                  to="/"
+                  textForSubmit="Начало"
+                />
+              </Col>
+            </Row>
+          </div>
         ) : (
           ""
         )}

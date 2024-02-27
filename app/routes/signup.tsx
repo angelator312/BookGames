@@ -90,7 +90,7 @@ function FormExample() {
 
   return (
     <>
-      <h1 className="centered">Sign up</h1>
+      <h1 className="centered">Регистрация</h1>
 
       <Form
         noValidate

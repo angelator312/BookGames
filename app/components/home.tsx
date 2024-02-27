@@ -12,7 +12,7 @@ export default function Home({
   books: Text[][];
 }) {
   // const userId = useLoaderData<string>();
-  console.log(books[0]);
+  // console.log(books[0]);
   
   const [searchParams, setSearchParams] = useSearchParams();
   let err = searchParams.get("err");
@@ -44,7 +44,7 @@ export default function Home({
         <div className="space-y-0.5">
           <h1
             style={{ padding: 15.4 }}
-            className="text-slate-500 font-medium logo text-primary"
+            className="text-slate-500 font-medium logo f-book-c"
           >
             Game Books
           </h1>

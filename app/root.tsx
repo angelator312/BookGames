@@ -16,7 +16,7 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 // import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "bootstrap/dist/css/bootstrap.css";
 import myStyles from "~/styles/myStyle.css";
-import { Button } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 // import styles from "./tailwind.css";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -74,11 +74,16 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body>
+        <Row>
         Нещо се обърка!
+        </Row>
+        <Row>
         ( Опитваме се да го оправим! )
+        <br/>
         <Button variant="success" onClick={() => navigate(-1)}>
           Върни се назад
         </Button>
+        </Row>
         {/* add the UI you want your users to see */}
         <Scripts />
       </body>

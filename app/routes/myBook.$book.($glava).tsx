@@ -145,7 +145,7 @@ export default function Book1() {
           <Row>
             <Col sm="6">
               <Link to="/">
-                <Button variant="primary">Към главната страница</Button>
+                <Button variant="secondary">Към главната страница</Button>
               </Link>
             </Col>
           </Row>
@@ -162,7 +162,7 @@ export default function Book1() {
           <Row>
             <Col sm="6">
               <Link to="/">
-                <Button variant="primary">Към главната страница</Button>
+                <Button variant="secondary">Към главната страница</Button>
               </Link>
             </Col>
           </Row>
@@ -198,7 +198,7 @@ export default function Book1() {
               <Col sm="4"></Col>
               <Col sm="6">
                 <Link to="/">
-                  <Button variant="primary">Към главната страница</Button>
+                  <Button variant="secondary">Към главната страница</Button>
                 </Link>
               </Col>
             </Row>
