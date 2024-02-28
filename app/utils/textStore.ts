@@ -225,7 +225,7 @@ export class BookStore {
     return v;
   }
   async getText(id: string): Promise<Text | Spec | null> {
-    const data = await this.collection.findOne({ id: id, isBook: false });
+    const data = await this.collection.findOne({ id: id });
     if (!data) {
       return null;
     }
