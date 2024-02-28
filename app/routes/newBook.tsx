@@ -10,34 +10,18 @@ import getTextStore from "~/utils/textStore";
 export const action = async ({ request }: ActionFunctionArgs) => {
   const form = await request.formData();
   const name = form.get("name")?.toString();
-  const abbr = form.get("abbr")?.toString();
+  const shD = form.get("shortDescription")?.toString();
   const a = await requireUserId(request, false);
-  let bool = true;
-  if (typeof a === "string" && abbr) {
-    for (let i = 0; i < abbr.length; i++) {
-      const e = abbr[i].charCodeAt(0);
-      if (
-        !((97 <= e && e <= 122) || (65 <= e && e <= 90) || (48 <= e && e <= 57))
-      ) {
-        console.log(e);
-
-        bool = false;
-      }
-    }
-    if (!bool)
-      return redirect(
-        "/newBook?errCode=1"
-      );
-    // const user = await (await getUserStore()).getUser(a);
+  if (
+    typeof a === "string" &&
+    typeof name === "string" &&
+    typeof shD === "string"
+  ) {
     const tStore = await getTextStore();
-    if (await tStore.getBook(abbr ?? " ")) {
-      return redirect(
-        "/newBook?errCode=2"
-      );
-    }
-    await tStore.addBook(name?.toString() ?? " ", abbr ?? " ", a, false);
+    await tStore.addBook(name?.toString() ?? " ", a, false, shD);
     return redirect("/");
   }
+
   return redirect("/newBook?errCode=3");
 };
 
@@ -65,7 +49,7 @@ export default function NewBookRoute() {
         err = "Измислете друго съкратено име на книгата";
         break;
       case "3":
-        err = "Something when wrong!";
+        err = "Нещо се обърка!";
         break;
       default:
         break;
@@ -112,7 +96,7 @@ export default function NewBookRoute() {
                 required
                 type="text"
                 placeholder="Съкратеното име на книгата"
-                name="abbr"
+                name="shortDescription"
               />
               <Form.Control.Feedback>Става!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">

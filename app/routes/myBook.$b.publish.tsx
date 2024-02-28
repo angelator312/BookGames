@@ -12,9 +12,9 @@ export async function action({ params, request }: ActionFunctionArgs) {
   await tStore.addBook(
     
     targetBook?.id?.substring(5, targetBook.id?.length - 3)??"",
-    `${book}`,
     targetBook?.avtor ?? "",
-    true
+    true,
+    targetBook?.text2??""
   );
 
   return redirect(`/myBook/${book}/1?feedCode=2`);

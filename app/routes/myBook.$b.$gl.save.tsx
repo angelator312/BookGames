@@ -19,8 +19,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
   //@ts-ignore
   await tStore.addText(
     `${book}-${glava}`,
-    text1.toString().replace(/\\r/gm, "\n"),
-    text2.toString().replace(/\\r/gm, "\n") ?? ""
+    text1.toString().replace(/\\r/gm, ""),
+    text2.toString().replace(/\\r/gm, "") ?? ""
   );
 
   return redirect(`/myBook/${book}/${glava}?feedCode=1`);

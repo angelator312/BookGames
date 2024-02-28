@@ -1,4 +1,5 @@
 import FormComponent from "./formComp";
+import { Editor } from "@monaco-editor/react";
 
 export default function EditText({
   param,
@@ -14,43 +15,49 @@ export default function EditText({
   };
 }) {
   const { text, text2, glava, bUrl, setText, setText2, priIzvikvane } = param;
+  function handleEditorChange(value: any, event: any) {
+    setText(value.replace(/\\r/gm, "") ?? "");
+    if (priIzvikvane) {
+      priIzvikvane();
+    }
+  }
+  function handleEditorChange2(value: any, event: any) {
+    setText2(value.replace(/\\r/gm, "") ?? " ");
+    if (priIzvikvane) {
+      priIzvikvane();
+    }
+  }
   return (
     <div>
-      <textarea
-        defaultValue={text ?? ""}
-        placeholder="Здравей,Човече"
-        onChange={(e) => {
-          setText((e.target.value).replace(/\\r/gm, "\n") ?? "");
-          if (priIzvikvane) {
-            priIzvikvane();
-          }
-        }}
-        name="text"
-      ></textarea>
+      <Editor
+        height="15vh"
+        defaultLanguage="text"
+        onChange={handleEditorChange}
+        // name="text"
+        // placeholder="Здравей,Човече"
+        defaultValue={text ?? "Здравей,Човече"}
+      />
       <p>
-        За нов абзац два празни реда<strong>↑↑↑</strong>
+        За нов абзац два празни реда
         <br />
-        Текста в който пише изборите на читателя <strong>↓↓↓</strong>
+        Посочете към коя глава сочи избора на читателя. Пр. "Към Светлината
+        (Глава 2)" <strong>↓↓↓</strong>
       </p>
-      <textarea
-        placeholder="Към Тъмната гора (Глава 2)"
-        // @ts-ignore
-        defaultValue={text2 ?? ""}
-        onChange={(e) => {
-          // console.log(e.target.innerHTML);
-          // @ts-ignore
-          setText2(e.target.value ?? "");
-          if (priIzvikvane) {
-            priIzvikvane();
-          }
-        }}
-      ></textarea>
+      <Editor
+        height="15vh"
+        defaultLanguage="text"
+        onChange={handleEditorChange2}
+        // name="text"
+        // placeholder="Здравей,Човече"
+        defaultValue={text2 ?? "Към тъмната гора (Глава 2)"}
+      />
       <p>
-        За линк към друга глава :(Глава число) <strong>↑↑↑</strong>
+        За линк към друга глава : (Глава число) Пр. "Бий се (Глава 3)" <br />
+        Кръглите скоби () са задължителен атрибут при посочване на конкретна Глава
       </p>
       <br />
       <FormComponent
-        textsHidden={[text, text2]}
+        textsHidden={[text.replace(/\\r/gm, ""), text2.replace(/\\r/gm, "")]}
         to={`/myBook/${bUrl}/${glava}/save`}
         textForSubmit="Запази промените"
         submitVariant="danger"

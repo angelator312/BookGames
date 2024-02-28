@@ -28,7 +28,6 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   if (parseInt(glava) > parseInt(b?.doGl ?? "1")) {
     await tStore.addBook(
       b?.id?.substring(5, b.id?.length - 3) ?? "",
-      `${book}`,
       b?.avtor ?? "",
       true,
       glava
@@ -52,8 +51,6 @@ export default function Book1() {
   const [bUrl, gl, t, doN, comments] = useLoaderData<typeof loader>();
   let comm = comments;
   function update() {
-    // setText(text.replace("\r", "\n"));
-    // setText2(text2.replace("\r", "\n"));
     textLines = text.split("\n\n");
     text2Lines = text2.split(reg);
     furst2Lines = [textLines[0], textLines[1]];

@@ -74,6 +74,7 @@ export function ErrorBoundary() {
         <Links />
       </head>
       <body>
+        <Scripts />
         <Row>
         Нещо се обърка!
         </Row>
@@ -85,7 +86,6 @@ export function ErrorBoundary() {
         </Button>
         </Row>
         {/* add the UI you want your users to see */}
-        <Scripts />
       </body>
     </html>
   );

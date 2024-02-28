@@ -67,7 +67,7 @@ export default function Home({
       </Link>
       <div>
         {books[0].map((e, i) => (
-          <BookHeader e={e} key={i} />
+          <BookHeader e={e} key={i} avt={true} />
         ))}
       </div>
       <hr/>

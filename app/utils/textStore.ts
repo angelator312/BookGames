@@ -20,29 +20,48 @@ export interface Book {
   comments?: string[][];
   public: boolean;
   avtor: string;
+  text2:string;
+}
+export interface Spec {
+  _id?: string;
+  id:string
+  bookNom: number;
+  isBook: boolean;
+  text?: any;
+  text2?: any;
 }
 
 export class BookStore {
   async addBook(
-    book: string | null,
-    b: string,
+    book: string,
     avtor: string,
     publ = false,
-    gl?: string | number
+    shD:string,
+    gl?: string | number,
   ): Promise<Book> {
+    const b = (await this.getSpec()).bookNom;
+
+
     if (!gl) gl = "15";
+
     const v: Book = {
       id: `Book-${book}--1`,
       isBook: true,
-      text: b,
+      text: `gb${b}`,
       public: publ,
       avtor,
       doGl: gl.toString(),
-      comments: [[]],
+      comments: [],
+      tags:[],
+      text2:shD,
     };
+
     await this.collection.replaceOne({ id: `Book-${book}--1` }, v, {
       upsert: true,
     });
+
+    await this.addSpec(b+1);
+
     return v;
   }
   async addComment(
@@ -152,6 +171,7 @@ export class BookStore {
       return [];
     }
     for (let i = 0; i < data.length; i++)
+      //@ts-ignore
       if (data[i].avtor == avt) delete data[i];
     // @ts-ignore
     return data;
@@ -166,7 +186,7 @@ export class BookStore {
     // @ts-ignore
     return data;
   }
-  collection!: Collection<Text | Book>;
+  collection!: Collection<Text | Book | Spec>;
   // eslint-disable-next-line no-useless-constructor
   constructor(protected readonly collectionName: string) {}
   async conect(urlforconnect: string) {
@@ -191,12 +211,31 @@ export class BookStore {
 
     return v;
   }
-  async getText(id: string): Promise<Text | null> {
-    const data = await this.collection.findOne({ id: id });
+  async getText(id: string): Promise<Text | Spec | null> {
+    const data = await this.collection.findOne({ id: id, isBook: false });
     if (!data) {
       return null;
     }
     return data;
+  }
+  async getSpec(): Promise<Spec> {
+    const data = await this.collection.findOne({
+      id: "Spec--1--cepS",
+      isBook: false,
+    });
+    if (!data) {
+      return await this.addSpec(0);
+    }
+    //@ts-ignore
+    return data;
+  }
+  async addSpec(nom:number): Promise<Spec> {
+    const v: Spec = { isBook: false, bookNom: nom, id: "Spec--1--cepS" };
+    await this.collection.replaceOne({ id: "Spec--1--cepS",isBook:false }, v, {
+      upsert: true,
+    });
+
+    return v;
   }
   prototypeOfText(): Text {
     return {
@@ -214,6 +253,7 @@ export class BookStore {
       doGl: "15",
       public: false,
       avtor: "",
+      text2:"",
     };
   }
 }

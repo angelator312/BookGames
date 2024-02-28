@@ -1,8 +1,10 @@
 import { Link } from "@remix-run/react";
 import FormComponent from "./formComp";
+import { OverlayTrigger } from "react-bootstrap";
 
-export default function BookHeader({ e }: { e: any }) {
-  if(!e)return;
+export default function BookHeader({ e, avt=false }: { e: any; avt?: boolean }) {
+  if (!e) return;
+  avt=!avt;
   return (
     <div className="text-center space-y-2 sm:text-left centered">
       {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
@@ -15,19 +17,30 @@ export default function BookHeader({ e }: { e: any }) {
               </div>
             </td>
             <td className="text-center">
-              <Link to={`/book/${e.text}`}>
-                <div className="space-y-0.5 text-center">
-                  <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark">
-                    {e.id?.substring(5, e.id?.length - 3)}
-                  </h3>
-                  <h4 className="text-j text-slate-500 font-medium logo text-bold text-dark">
-                    {/* <br /> */}
-                    Автор: {e.avtor}
-                  </h4>
-                </div>
-                {/* <br /> */}
-                <br />
-              </Link>
+              <OverlayTrigger
+                placement="right"
+                overlay={
+                  <div className="space-y-0.5 text-center m-l-3">
+                    <h4 className="text-j text-slate-500 font-medium logo text-bold text-dark">
+                      {e.text2}
+                    </h4>
+                  </div>
+                }
+              >
+                <Link to={`/book/${e.text}`}>
+                  <div className="space-y-0.5 text-center">
+                    <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark">
+                      {e.id?.substring(5, e.id?.length - 3)}
+                    </h3>
+                    <h4 className="text-j text-slate-500 font-medium logo text-bold text-dark">
+                      {/* <br /> */}
+                      Автор: {e.avtor}
+                    </h4>
+                  </div>
+                  {/* <br /> */}
+                  <br />
+                </Link>
+              </OverlayTrigger>
             </td>
           </tr>
           <tr>
@@ -44,6 +57,22 @@ export default function BookHeader({ e }: { e: any }) {
                       submitVariant="danger"
                       textForSubmit="Publish"
                       to={`/myBook/${e.text}/publish`}
+                    />
+                  )}
+                </h3>
+              </div>
+            </td>
+            <td className="text-center">
+              <div className="space-y-0.5 text-center">
+                <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark m-l-3">
+                  {avt ? (
+                    ""
+                  ) : (
+                    <FormComponent
+                      method="get"
+                      submitVariant="secondary"
+                      textForSubmit="Delete"
+                      to={`/delete/${e.text}/`}
                     />
                   )}
                 </h3>

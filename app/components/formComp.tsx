@@ -6,7 +6,8 @@ export default function FormComponent({
   names = [],
   textsHidden = [],
   namesHidden = [],
-  submitVariant="success",
+  submitVariant = "success",
+  method = "post",
 }: {
   texts?: string[];
   names?: string[];
@@ -14,10 +15,11 @@ export default function FormComponent({
   namesHidden?: string[];
   textForSubmit: string;
   to: string;
-  submitVariant?:string;
+  submitVariant?: string;
+  method?: string;
 }) {
   return (
-    <Form method="POST" action={to}>
+    <Form method={method} action={to}>
       <InputGroup className="mb-3">
         {texts.map((e, i) => (
           <Form.Group
