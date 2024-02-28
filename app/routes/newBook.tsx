@@ -89,18 +89,19 @@ export default function NewBookRoute() {
           </Form.Group>
           <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
             <Form.Label column sm="2">
-              Съкратеното име на книгата
+              Краткото описание на книгата
             </Form.Label>
             <Col sm="10">
               <Form.Control
                 required
                 type="text"
-                placeholder="Съкратеното име на книгата"
+                placeholder="Хубава книга разказваща за ... "
                 name="shortDescription"
+                maxLength={30}
               />
               <Form.Control.Feedback>Става!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Моля,напишете съкратеното име на книгата
+                Моля,напишете кратко описание!
               </Form.Control.Feedback>
             </Col>
           </Form.Group>
