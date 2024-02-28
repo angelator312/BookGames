@@ -56,6 +56,7 @@ export default function Idea() {
                     onChange={(e) => setCh2(e.target.value)}
                   />
                   <br />
+                  <br />
                   <Button
                     disabled={!(ch == ch2)}
                     variant="danger"
