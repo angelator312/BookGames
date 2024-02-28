@@ -36,11 +36,10 @@ export class BookStore {
     book: string,
     avtor: string,
     publ = false,
-    shD:string,
-    gl?: string | number,
+    shD: string,
+    gl?: string | number
   ): Promise<Book> {
     const b = (await this.getSpec()).bookNom;
-
 
     if (!gl) gl = "15";
 
@@ -52,18 +51,32 @@ export class BookStore {
       avtor,
       doGl: gl.toString(),
       comments: [],
-      tags:[],
-      text2:shD,
+      tags: [],
+      text2: shD,
     };
 
     await this.collection.replaceOne({ id: `Book-${book}--1` }, v, {
       upsert: true,
     });
 
-    await this.addSpec(b+1);
+    await this.addSpec(b + 1);
 
     return v;
   }
+  async deleteBook(
+    book: string,avt:string
+  ): Promise<boolean> {
+    const b = await this.getBook(book);
+    if(avt!==b?.avtor)return false;
+    try {
+      await this.collection.deleteOne({ id: b.id})
+      return true;
+      
+    } catch (error) {
+      return false
+    }
+  }
+
   async addComment(
     book: string | null,
     gl: string | number,
@@ -229,11 +242,15 @@ export class BookStore {
     //@ts-ignore
     return data;
   }
-  async addSpec(nom:number): Promise<Spec> {
+  async addSpec(nom: number): Promise<Spec> {
     const v: Spec = { isBook: false, bookNom: nom, id: "Spec--1--cepS" };
-    await this.collection.replaceOne({ id: "Spec--1--cepS",isBook:false }, v, {
-      upsert: true,
-    });
+    await this.collection.replaceOne(
+      { id: "Spec--1--cepS", isBook: false },
+      v,
+      {
+        upsert: true,
+      }
+    );
 
     return v;
   }
@@ -253,7 +270,7 @@ export class BookStore {
       doGl: "15",
       public: false,
       avtor: "",
-      text2:"",
+      text2: "",
     };
   }
 }

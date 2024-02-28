@@ -16,7 +16,7 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 // import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "bootstrap/dist/css/bootstrap.css";
 import myStyles from "~/styles/myStyle.css";
-import { Button, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 // import styles from "./tailwind.css";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -44,10 +44,7 @@ export default function App() {
   const location = useLocation();
   // console.log(location);
   return (
-    <html
-      lang="en"
-      className="bg-smkW"
-    >
+    <html lang="en" className="bg-smkW">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -76,14 +73,16 @@ export function ErrorBoundary() {
       <body>
         <Scripts />
         <Row>
-        Нещо се обърка!
+          <Col sm="3">Нещо се обърка!</Col>
         </Row>
         <Row>
-        ( Опитваме се да го оправим! )
-        <br/>
-        <Button variant="success" onClick={() => navigate(-1)}>
-          Върни се назад
-        </Button>
+          <Col sm="3">( Опитваме се да го оправим! )</Col>
+          <br />
+              <Col sm="3">
+          <Button variant="success" onClick={() => navigate(-1)}>
+            Върни се назад
+          </Button>
+          </Col>
         </Row>
         {/* add the UI you want your users to see */}
       </body>
