@@ -45,7 +45,7 @@ export default function Idea() {
           <h1 className="home-link ">
             Наистина ли искаш да изтриеш книгата {zagl}?
           </h1>
-          <p>3 пъти трябва да го докажеш </p>
+          <p>2 пъти трябва да го докажеш </p>
           {verif == 1 ? (
             <>
               <Row>

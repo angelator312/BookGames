@@ -95,9 +95,9 @@ export default function NewBookRoute() {
               <Form.Control
                 required
                 type="text"
-                placeholder="Хубава книга разказваща за ... "
+                placeholder="Хубава книга разказваща за ... ( До 500 символа )"
                 name="shortDescription"
-                maxLength={30}
+                maxLength={500}
               />
               <Form.Control.Feedback>Става!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">

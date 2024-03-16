@@ -96,5 +96,5 @@ export async function knigi(user:string) {
   const b = await tStore.getMyBooks(user);
   if(b)
     return [b,a];
-  return [a,[]];
+  return [[],a];
 }

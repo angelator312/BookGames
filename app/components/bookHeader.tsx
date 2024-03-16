@@ -2,9 +2,15 @@ import { Link } from "@remix-run/react";
 import FormComponent from "./formComp";
 import { OverlayTrigger } from "react-bootstrap";
 
-export default function BookHeader({ e, avt=false }: { e: any; avt?: boolean }) {
+export default function BookHeader({
+  e,
+  avt = false,
+}: {
+  e: any;
+  avt?: boolean;
+}) {
   if (!e) return;
-  avt=!avt;
+  avt = !avt;
   return (
     <div className="text-center space-y-2 sm:text-left centered">
       {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
@@ -22,7 +28,7 @@ export default function BookHeader({ e, avt=false }: { e: any; avt?: boolean }) 
                 overlay={
                   <div className="space-y-0.5 text-center m-l-3">
                     <h4 className="text-j text-slate-500 font-medium logo text-bold text-dark">
-                      {e.text2}
+                      <p>{e.text2}</p>
                     </h4>
                   </div>
                 }
