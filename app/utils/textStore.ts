@@ -17,7 +17,7 @@ export interface Book {
   text: string;
   doGl: string;
   tags?: string[];
-  comments?: string[][];
+  comments?: string[][][];
   public: boolean;
   avtor: string;
   text2:string;
@@ -80,6 +80,7 @@ export class BookStore {
   async addComment(
     book: string | null,
     gl: string | number,
+    avt:string,
     comment: string
   ): Promise<Book | null> {
     if (!(book && gl && comment)) return null;
@@ -92,14 +93,15 @@ export class BookStore {
     // console.log( );
 
     // console.log(st);
-    let arr: string[][] = [];
+    const com=[comment,avt];
+    let arr: string[][][] = [];
     for (let i = 0; i <= parseInt(st.doGl) - 2; i++) {
       if (i == gl - 1) {
         try {
           //@ts-ignore
-          arr.push([...(st?.comments[i] ?? []), comment]);
+          arr.push([...(st?.comments[i] ?? []), com]);
         } catch (error) {
-          arr.push([comment]);
+          arr.push([com]);
         }
       } else {
         try {
@@ -137,12 +139,13 @@ export class BookStore {
     // console.log(2);
 
     // console.log(st);
-    let arr: string[][] = [];
+    let arr: string[][][] = [];
     for (let i = 0; i <= parseInt(st.doGl) - 2; i++) {
       if (i == gl - 1) {
         //@ts-ignore
         arr.push([...(st?.comments[i] ?? [])]);
-        arr[i][nom] = "";
+        arr[i][nom][0] = "";
+        arr[i][nom][1] = "";
       }
       // @ts-ignore
       else arr.push(st.comments[i] ?? []);
@@ -169,7 +172,7 @@ export class BookStore {
     //@ts-ignore
     return t;
   }
-  async getComments(book: string, gl: string | number): Promise<string[]> {
+  async getComments(book: string, gl: string | number): Promise<string[][]> {
     const bookL = await this.getBook(book);
     if (!bookL || !bookL.isBook || !bookL.comments) {
       return [];

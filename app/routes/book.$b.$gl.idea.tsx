@@ -15,7 +15,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
   if (!comment) return redirect(request.url);
   const tStore = await getTextStore();
 // console.log( );
-  await tStore.addComment(params.b ?? "", gl ?? "", comment.toString());
+  const u=await requireUserId(request);
+  await tStore.addComment(params.b ?? "", gl ?? "", u,comment.toString());
   return redirect(request.url);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {

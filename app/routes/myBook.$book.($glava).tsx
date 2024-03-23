@@ -206,12 +206,14 @@ export default function Book1() {
         {/* @ts-ignore */}
         {comm.map((e, i) => (
           <Row key={i}>
-            <NavYesOrNo
-              text={e}
-              f={(a: any) => {
-                navigate(`/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`);
-              }}
-            />
+            <Col sm="7">
+              <NavYesOrNo
+                text={e[0].length>0?`${e[0]}\n ot ${e[1]}`:""}
+                f={(a: any) => {
+                  navigate(`/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`);
+                }}
+              />
+            </Col>
           </Row>
         ))}
       </Container>
