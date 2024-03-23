@@ -63,24 +63,21 @@ export class BookStore {
 
     return v;
   }
-  async deleteBook(
-    book: string,avt:string
-  ): Promise<boolean> {
+  async deleteBook(book: string, avt: string): Promise<boolean> {
     const b = await this.getBook(book);
-    if(avt!==b?.avtor)return false;
+    if (avt !== b?.avtor) return false;
     try {
-      await this.collection.deleteOne({ id: b.id})
+      await this.collection.deleteOne({ id: b.id });
       return true;
-      
     } catch (error) {
-      return false
+      return false;
     }
   }
 
   async addComment(
     book: string | null,
     gl: string | number,
-    avt:string,
+    avt: string,
     comment: string
   ): Promise<Book | null> {
     if (!(book && gl && comment)) return null;
@@ -93,7 +90,7 @@ export class BookStore {
     // console.log( );
 
     // console.log(st);
-    const com=[comment,avt];
+    const com = [comment, avt];
     let arr: string[][][] = [];
     for (let i = 0; i <= parseInt(st.doGl) - 2; i++) {
       if (i == gl - 1) {
@@ -178,6 +175,14 @@ export class BookStore {
       return [];
     }
     return bookL.comments[parseInt(gl.toString()) - 1] ?? [];
+  }
+  async getMyComments(book: string, gl: string | number,avt:string): Promise<string[]> {
+    const bookL = await this.getBook(book);
+    if (!bookL || !bookL.isBook || !bookL.comments) {
+      return [];
+    }
+    const a= bookL.comments[parseInt(gl.toString()) - 1] ?? [];
+    return a.map((e,i)=>e[1]==avt?e[0]:"");
   }
   async getPublicBooks(avt: string): Promise<Book[]> {
     const data = await this.collection

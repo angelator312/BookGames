@@ -31,13 +31,16 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       const user = await (await getUserStore()).getUser(a);
       let glava = params.gl ?? user?.glavi[`Book-${b.text}`] ?? "1";
       let text = await tStore.getText(`${b.text}-${glava}`);
+      let myComments=await tStore.getMyComments(params.b??"",glava,a)??[];
       if (!text || !glava) return redirect("/");
+      
+
       let segG = text.text;
       let spec = text.text2;
       createGorB("glava", glava, request);
       createGorB("book", b.text, request);
 
-      return { text: segG, glava, text2: spec, b };
+      return { text: segG, glava, text2: spec, b,myComments };
     }
   }
   return redirect("/");
@@ -60,8 +63,8 @@ export default function Idea() {
         />
       </Row>
       <Row>
-        <div className="text-center space-y-2 sm:text-left bg-i">
-          <IdeaComp url={`/book/${book.b.text}/${book.glava}/idea`} />
+        <div className="space-y-2 sm:text-left bg-i">
+          <IdeaComp url={`/book/${book.b.text}/${book.glava}/idea`}  comments={book.myComments}/>
         </div>
       </Row>
     </div>
