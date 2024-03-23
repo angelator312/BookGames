@@ -17,7 +17,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   // let b = await getGorB("book");
   // console.log(b);
   for (let i = 0; i < neDumi.length; i++) {
-    console.log(neDumi[i]);
+    // console.log(neDumi[i]);
     text1= text1.toString().replace(neDumi[i],"duma");
     text2= text2.toString().replace(neDumi[i],"duma");
   }
