@@ -5,7 +5,7 @@ import Navbar from "./navbar";
 import Text from "./text";
 import FormComponent from "./formComp";
 import { Col, Row } from "react-bootstrap";
-let reg = /\(Глава\s+(\d+)\)/g;
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   // console.log(11);
   // let glava = await getGorB("glava");
@@ -39,7 +39,6 @@ export default function Book({
   // console.log(text,glava,text2);
 
   let textLines = text.replace(/\\r/gm, "").split("\n\n");
-  let text2Lines = text2.replace(/\\r/gm, "").split(reg);
   let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
   // console.log(12);
@@ -57,7 +56,7 @@ export default function Book({
           glava={glava}
           url={url}
           textLines={textLines}
-          text2Lines={text2Lines}
+          text2Lines={text2}
         />
         {kr ? (
           <div className="m-l-35%">

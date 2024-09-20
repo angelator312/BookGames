@@ -1,17 +1,17 @@
-import FormComponent from "./formComp";
+import { Decoder } from "./decoder";
 
 export default function Text({
   glava,
   furst2Lines,
   textLines,
-  text2Lines,
+  text2Lines: text2,
   flag1 = true,
   url,
 }: {
   glava: string |number;
   furst2Lines: string[];
   textLines: string[];
-  text2Lines: string[];
+  text2Lines: string;
   flag1?: boolean;
   url: string;
 }) {
@@ -38,30 +38,8 @@ export default function Text({
           {e}
         </p>
       ))}
-      {text2Lines.map((e, i) => (
-        <div key={i}>
-          {i % 2 == 0 ? (
-            <p className="p-3 text-bold text-j in-1 " key={i}>
-              {" "}
-              {e}
-            </p>
-          ) : (
-            <div className="m-l-35% ">
+      <Decoder text2={text2} url={url} flag1={flag1}/>
 
-            <FormComponent textForSubmit={"Глава "+e} to={flag1 ? `${url}` : `${url}/${e}`} textsHidden={[e]} namesHidden={["to"]} submitVariant="outline-secondary" />
-            </div>
-            //   action=
-            //   style={{ display: "inline" }}
-            //   method="POST"
-            // >
-            //   <input type="hidden" name="to" value={e} />
-            //   <button type="submit" className="logo text-">
-                
-            //   </button>
-            // </form>
-          )}
-        </div>
-      ))}
     </div>
   );
 }

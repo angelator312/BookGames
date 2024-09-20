@@ -29,7 +29,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     await tStore.addBook(
       b?.id?.substring(5, b.id?.length - 3) ?? "",
       b?.avtor ?? "",
-      true,
+      b?.public,
+      b?.text2??"",
       glava
     );
     if (b) b.doGl = glava;
@@ -57,10 +58,10 @@ export default function Book1() {
     textLines = textLines.slice(2);
   }
   //@ts-ignore
-  const [text, setText] = useState(typeof t === "string" ? "" : t?.text ?? "");
+  const [text, setText] = useState(typeof t === "string" ? "проба" : t?.text ?? "проба");
   const [text2, setText2] = useState(
     //@ts-ignore
-    typeof t === "string" ? "" : t?.text2 ?? ""
+    typeof t === "string" ? "проба" : t?.text2 ?? "проба"
   );
   useEffect(() => {
     setText(text.replace("\r", "\n"));
@@ -192,10 +193,17 @@ export default function Book1() {
               </Col>
             </Row>
             <Row>
-              <Col sm="4"></Col>
-              <Col sm="6">
+              <Col sm="2"></Col>
+              <Col sm="3">
                 <Link to="/">
                   <Button variant="secondary">Към главната страница</Button>
+                </Link>
+              </Col>
+              <Col sm="3">
+                <Link to="/helpLanguage">
+                  <Button variant="secondary">
+                    Към документацията!
+                  </Button>
                 </Link>
               </Col>
             </Row>
@@ -208,7 +216,7 @@ export default function Book1() {
           <Row key={i}>
             <Col sm="7">
               <NavYesOrNo
-                text={e[0].length>0?`${e[0]}\n ot ${e[1]}`:""}
+                text={e[0].length > 0 ? `${e[0]}\n ot ${e[1]}` : ""}
                 f={(a: any) => {
                   navigate(`/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`);
                 }}

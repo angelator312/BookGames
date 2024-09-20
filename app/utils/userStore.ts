@@ -55,10 +55,10 @@ export class UserStore {
     return v;
   }
   async getUser(user: string): Promise<User | null> {
-    const data = await this.collection.findOne({ user: user });
-    // .catch(() => {
-    //   console.log(this.collection);
-    // });
+    const data = await this.collection.findOne({ user: user })
+    .catch(() => {
+      return null;
+    });
     if (!data) {
       return null;
     }
