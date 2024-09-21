@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 const reg = /if\((\d+\|\d+\|\d+)/g;
@@ -13,7 +13,6 @@ export function ProverkaIf({ e2, url }: { e2: string; url: string }) {
   }
   const e = a[1].replace(/\\r/gm, "").split(reg2);
   console.log(url, e[3]);
-//   setHrefOfA(url+e[3])
   return (
     <div>
       <input

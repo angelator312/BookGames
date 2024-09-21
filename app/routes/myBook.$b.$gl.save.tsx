@@ -8,7 +8,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   let text2 = form.get("text2") ?? "a";
   const glava = params.gl;
   const book = params.b;
-  if (!text1 || !text2) {
+  if (!text1 && !text2) {
     return redirect(`/myBook/${book}/${glava}?errCode=1`);
   }
   if (!glava || Number.isNaN(parseInt(glava)))
