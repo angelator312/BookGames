@@ -8,6 +8,7 @@ import { createGorB, getUserId, requireUserId } from "~/utils/session.server";
 export async function action({ params, request }: ActionFunctionArgs) {
   const form = await request.formData();
   let glava = form.get("to");
+  // console.log(glava);
   if (!glava) glava = "1";
 
   const userStore = await getUserStore();
@@ -28,8 +29,11 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       const user = await (await getUserStore()).getUser(a);
       let glava = user?.glavi[`Book-${b.text}`] ?? "1";
       let text = await tStore.getText(`${b.text}-${glava}`);
-      if (!text || !glava)
+      if (!text || !glava) {
+        //@ts-ignore
+        tStore.addComment(params.book,glava,a,"Довършете си книгата")
         return redirect(`/?errCode=1`);
+      }
       let segG = text?.text;
       let spec = text?.text2;
       // console.log({ text: segG, glava, text2: spec, b });

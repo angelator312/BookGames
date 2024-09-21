@@ -16,7 +16,7 @@ export default function Text({
   url: string;
 }) {
   return (
-    <div className="bg-i" style={{ textIndent: 20 }}>
+    <div className="bg-i p-4" style={{ textIndent: 20 }}>
       {/*
           <button
             // className=" btn-menu-my"

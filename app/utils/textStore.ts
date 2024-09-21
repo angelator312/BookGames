@@ -36,30 +36,31 @@ export class BookStore {
     book: string,
     avtor: string,
     publ = false,
-    shD: string,
-    gl?: string | number
+    smallDescription: string,
+    gl?: string | number,
+    numSmallName = -1
   ): Promise<Book> {
-    const b = (await this.getSpec()).bookNom;
+    if(numSmallName==-1)numSmallName=(await this.getSpec()).bookNom;
 
     if (!gl) gl = "15";
 
     const v: Book = {
       id: `Book-${book}--1`,
       isBook: true,
-      text: `gb${b}`,
+      text: `gb${numSmallName}`,
       public: publ,
       avtor,
       doGl: gl.toString(),
       comments: [],
       tags: [],
-      text2: shD,
+      text2: smallDescription,
     };
 
     await this.collection.replaceOne({ id: `Book-${book}--1` }, v, {
       upsert: true,
     });
 
-    await this.addSpec(b + 1);
+    await this.addSpec(numSmallName + 1);
 
     return v;
   }
@@ -176,13 +177,17 @@ export class BookStore {
     }
     return bookL.comments[parseInt(gl.toString()) - 1] ?? [];
   }
-  async getMyComments(book: string, gl: string | number,avt:string): Promise<string[]> {
+  async getMyComments(
+    book: string,
+    gl: string | number,
+    avt: string
+  ): Promise<string[]> {
     const bookL = await this.getBook(book);
     if (!bookL || !bookL.isBook || !bookL.comments) {
       return [];
     }
-    const a= bookL.comments[parseInt(gl.toString()) - 1] ?? [];
-    return a.map((e,i)=>e[1]==avt?e[0]:"");
+    const a = bookL.comments[parseInt(gl.toString()) - 1] ?? [];
+    return a.map((e, i) => (e[1] == avt ? e[0] : ""));
   }
   async getPublicBooks(avt: string): Promise<Book[]> {
     const data = await this.collection

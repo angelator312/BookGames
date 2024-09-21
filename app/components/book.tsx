@@ -24,18 +24,36 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
+interface Params {
+  text: string;
+  glava: string;
+  text2: string;
+}
+
 export default function Book({
   url,
   title,
   almP,
   kr = true,
+  flag = true,
+  params = {
+    text: "This is not mandatory",
+    glava: "glava",
+    text2: "This is not mandatory",
+  },
 }: {
   url: string;
   title: string;
   almP: string;
   kr?: boolean;
+  flag?: boolean;
+  params?: Params;
 }) {
-  const { text, glava, text2 } = useLoaderData<typeof loader>();
+  const loaderData = useLoaderData<typeof loader>();
+  if (flag) var { text, glava, text2 } = loaderData;
+  else var { text, glava, text2 } = params;
+  // else
+  //  { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(text,glava,text2);
 
   let textLines = text.replace(/\\r/gm, "").split("\n\n");

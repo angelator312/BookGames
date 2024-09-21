@@ -1,4 +1,5 @@
-import { Link } from "@remix-run/react";
+import { Col, Row } from "react-bootstrap";
+import FormComponent from "~/components/formComp";
 import { TabLang } from "~/components/TabLang";
 export async function action() {
   return "";
@@ -8,7 +9,7 @@ export default function Intro() {
 
   return (
     // <div className="text-center bg-intro">
-    <div className="text-center">
+    <Row className="text-center space-y-2 sm:text-left bg-i">
       <br />
       <br />
       <h1 className="text-slate-500 font-medium logo f-book-c p-3 line-height-1">
@@ -18,13 +19,11 @@ export default function Intro() {
       <TabLang />
       <br />
       <br />
-      <h2>
-        <Link to="/">
-          <span className="text-slate-500 font-medium logo text-center text-primary">
-            Начало
-          </span>
-        </Link>
-      </h2>
-    </div>
+      <Col sm="3">
+      </Col>
+      <Col sm="3">
+        <FormComponent submitVariant="danger" to="/" textForSubmit="Начало" />
+      </Col>
+    </Row>
   );
 }

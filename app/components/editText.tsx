@@ -1,5 +1,4 @@
 import { Button } from "react-bootstrap";
-import FormComponent from "./formComp";
 import { Editor } from "@monaco-editor/react";
 
 export default function EditText({
@@ -68,15 +67,7 @@ export default function EditText({
       </p>
 
       <br />
-      <FormComponent
-        textsHidden={[
-          text.replace(/\\r/gm, "") ?? "a",
-          text2.replace(/\\r/gm, "") ?? "a",
-        ]}
-        to={`/myBook/${bUrl}/${glava}/save`}
-        textForSubmit="Запази промените"
-        submitVariant="danger"
-      />
+      
     </div>
   );
 }

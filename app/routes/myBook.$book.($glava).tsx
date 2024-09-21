@@ -1,3 +1,4 @@
+import type { Text as Text2 } from "~/utils/textStore";
 import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import {
@@ -12,13 +13,14 @@ import DropDown1 from "~/components/dropdown";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import EditText from "~/components/editText";
-import Text from "~/components/text";
 import NavYesOrNo from "~/components/navbarYes";
+import Book from "~/components/book";
+import FormComponent from "~/components/formComp";
 export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
 
-type loaderData=[string,string,any,string,string[][]];
+type loaderData = [string, string, Text2, string, string[][]];
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
@@ -56,8 +58,6 @@ export default function Book1() {
   let comm = comments;
   function update() {
     textLines = text.split("\n\n");
-    text2Lines = text2.split(reg);
-    furst2Lines = [textLines[0], textLines[1]];
     textLines = textLines.slice(2);
   }
   const [text, setText] = useState(
@@ -104,12 +104,10 @@ export default function Book1() {
     }
   }
 
-  const reg = /\(Глава\s+(\d+)\)/g;
   let textLines = text.replace("\r", "\n").split("\n\n");
-  let text2Lines = text2.replace("\r", "\n").split(reg);
-  let furst2Lines = [textLines[0], textLines[1]];
+  // let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
-  // console.log( );
+  // console.log("t",t);
   return (
     <div className="m-l-3">
       <NavYesOrNo text={feedMsg ?? ""} />
@@ -154,13 +152,25 @@ export default function Book1() {
           </Row>
         </Tab>
         <Tab eventKey="preview" title="Изглед">
-          <Text
+          {/* <Text
             furst2Lines={furst2Lines}
             glava={gl ?? "1"}
             url={`/myBook/${bUrl}`}
             textLines={textLines}
-            text2Lines={text2Lines}
+            text2Lines={text2}
             flag1={false}
+            /> */}
+          <Book
+            url={`/myBook/${bUrl}`}
+            title={"Книга " + bUrl}
+            almP={`/myBook/${bUrl}/`}
+            flag={false}
+            params={{
+              text,
+              glava: gl,
+              text2,
+            }}
+            kr={false}
           />
           <Row>
             <Col sm="6">
@@ -173,7 +183,7 @@ export default function Book1() {
         <Tab eventKey="editAndPreview" title="Промени текста и изглед">
           <Container>
             <Row>
-              <Col sm="6">
+              <Col>
                 <EditText
                   text={text}
                   text2={text2}
@@ -185,23 +195,39 @@ export default function Book1() {
                   key={gl}
                 />
               </Col>
-              <Col>
-                <Text
-                  furst2Lines={furst2Lines}
-                  glava={gl ?? "1"}
-                  url={`/myBook/${bUrl}`}
-                  textLines={textLines}
-                  text2Lines={text2Lines}
-                  flag1={false}
-                />
-              </Col>
+              <Book
+                url={`/myBook/${bUrl}`}
+                title={"Книга " + bUrl}
+                almP={`/myBook/${bUrl}/`}
+                flag={false}
+                params={{
+                  text,
+                  glava: gl,
+                  text2,
+                }}
+                kr={false}
+              />
             </Row>
             <Row>
               <Col sm="2"></Col>
               <Col sm="6">
-                <Link to="/">
-                  <Button variant="secondary">Към главната страница</Button>
-                </Link>
+                <FormComponent
+                  to="/"
+                  textForSubmit="Към главната страница"
+                  method="get"
+                  submitVariant="secondary"
+                />
+              </Col>
+              <Col>
+                <FormComponent
+                  textsHidden={[
+                    text.replace(/\\r/gm, "") ?? "a",
+                    text2.replace(/\\r/gm, "") ?? "a",
+                  ]}
+                  to={`/myBook/${bUrl}/${gl}/save`}
+                  textForSubmit="Запази промените"
+                  submitVariant="danger"
+                />
               </Col>
             </Row>
           </Container>
@@ -213,7 +239,7 @@ export default function Book1() {
           <Row key={e[0]}>
             <Col sm="7">
               <NavYesOrNo
-                text={e[0].length > 0 ? `${e[0]}\n ot ${e[1]}` : ""}
+                text={e[0].length > 0 ? `${e[0]}\n от ${e[1]}` : ""}
                 f={(a: any) => {
                   navigate(`/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`);
                 }}

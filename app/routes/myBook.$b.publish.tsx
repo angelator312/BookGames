@@ -14,7 +14,9 @@ export async function action({ params, request }: ActionFunctionArgs) {
     targetBook?.id?.substring(5, targetBook.id?.length - 3)??"",
     targetBook?.avtor ?? "",
     true,
-    targetBook?.text2??""
+    targetBook?.text2??"",
+    targetBook?.doGl??"",
+    parseInt(targetBook?.text.at(-1)??"-1")
   );
 
   return redirect(`/myBook/${book}/1?feedCode=2`);
