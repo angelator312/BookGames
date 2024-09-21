@@ -1,9 +1,10 @@
 // import { log } from "console";
 import FormComponent from "./formComp";
+import { ProverkaIf } from "./proverkaIf";
 const reg = /\(Глава\s+(\d+)\)/g;
-const reg2 = /math\((\d+\|\d+\|\d+)\)/g;
+const reg2 = /(if\(\d+\|\d+\|\d+)\)/g;
 export function Decoder({
-  text2,
+  text2: text,
   flag1 = true,
   url,
 }: {
@@ -11,6 +12,11 @@ export function Decoder({
   flag1?: boolean;
   url: string;
 }) {
+  let text2: string;
+  // console.log(text2);
+  if (Array.isArray(text)) text2 = text[0];
+  else text2 = text;
+  if (!text2) return <></>;
   let text2Lines = text2.replace(/\\r/gm, "").split(reg);
   let a = text2Lines.map((e, i) => {
     if (i % 2 == 0) {
@@ -18,17 +24,23 @@ export function Decoder({
       return b;
     } else return [e];
   });
-  console.log(a);
+  // console.log(a);
   return (
     <>
       {a.map((e, i) => (
         <div key={i}>
           {i % 2 == 0 ? (
-            // e.map
-            <p className="p-3 text-bold text-j in-1 " key={i}>
-              {" "}
-              {e[0]}
-            </p>
+            <>
+              {e.map((e2, i) => (
+                <div key={i}>
+                  {e2.indexOf("if") == 0 ? (
+                    <ProverkaIf e2={e2} url={flag1?"../":url+"/"} />
+                  ) : (
+                    <p key={i}> {e2}</p>
+                  )}
+                </div>
+              ))}
+            </>
           ) : (
             <div className="m-l-35% ">
               <FormComponent

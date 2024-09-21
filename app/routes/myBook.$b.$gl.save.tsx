@@ -4,8 +4,8 @@ import { neDumi } from "~/helps/dumiNe";
 import getTextStore from "~/utils/textStore";
 export async function action({ params, request }: ActionFunctionArgs) {
   const form = await request.formData();
-  let text1 = form.get("text1");
-  let text2 = form.get("text2") ?? " ";
+  let text1 = form.get("text1") ?? "a";
+  let text2 = form.get("text2") ?? "a";
   const glava = params.gl;
   const book = params.b;
   if (!text1 || !text2) {

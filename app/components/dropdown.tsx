@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 
 function DropDown1({
@@ -10,7 +9,7 @@ function DropDown1({
   doN: number;
   activeDrop: number;
 }) {
-  const [activeDropdown, setActiveDropdown] = useState(activeDrop-1 ?? 0);
+  const activeDropdown= activeDrop-1 ;
   return (
     <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -28,7 +27,6 @@ function DropDown1({
             href={`${url}/${i + 1}`}
             key={i}
             active={i == activeDropdown}
-            onClick={() => setActiveDropdown(i)}
           >
             Глава {i + 1}
           </Dropdown.Item>

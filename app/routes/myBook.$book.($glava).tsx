@@ -17,6 +17,9 @@ import NavYesOrNo from "~/components/navbarYes";
 export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
+
+type loaderData=[string,string,any,string,string[][]];
+
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
   const book = params.book;
@@ -30,7 +33,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       b?.id?.substring(5, b.id?.length - 3) ?? "",
       b?.avtor ?? "",
       b?.public,
-      b?.text2??"",
+      b?.text2 ?? "",
       glava
     );
     if (b) b.doGl = glava;
@@ -49,7 +52,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function Book1() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [bUrl, gl, t, doN, comments] = useLoaderData<typeof loader>();
+  const [bUrl, gl, t, doN, comments] = useLoaderData<loaderData>();
   let comm = comments;
   function update() {
     textLines = text.split("\n\n");
@@ -57,17 +60,20 @@ export default function Book1() {
     furst2Lines = [textLines[0], textLines[1]];
     textLines = textLines.slice(2);
   }
-  //@ts-ignore
-  const [text, setText] = useState(typeof t === "string" ? "проба" : t?.text ?? "проба");
+  const [text, setText] = useState(
+    //@ts-ignore
+    typeof t === "string" ? "проба" : t?.text ?? "проба"
+  );
   const [text2, setText2] = useState(
     //@ts-ignore
     typeof t === "string" ? "проба" : t?.text2 ?? "проба"
   );
   useEffect(() => {
-    setText(text.replace("\r", "\n"));
-    setText2(text2.replace("\r", "\n"));
-  }, [text, text2]);
-
+    //@ts-ignore
+    setText(typeof t === "string" ? "проба" : t?.text ?? "проба");
+    //@ts-ignore
+    setText2(typeof t === "string" ? "проба" : t?.text2 ?? "проба");
+  }, [gl, t]);
   const feedCode = searchParams.get("feedCode");
   const errCode = searchParams.get("errCode");
   let [feedMsg] = useState(searchParams.get("feed"));
@@ -116,7 +122,7 @@ export default function Book1() {
             // @ts-ignore
             doN={parseInt(doN ?? "15")}
             // @ts-ignore
-            activeDrop={parseInt(gl ?? 0)}
+            activeDrop={parseInt(gl)}
           />
         </Col>
       </Row>
@@ -129,15 +135,14 @@ export default function Book1() {
         <Tab eventKey="edit" title="Промени текста">
           <Col sm="6">
             <EditText
-              param={{
-                text,
-                text2,
-                glava: gl?.toString() ?? "1",
-                bUrl: `${bUrl}`,
-                setText,
-                setText2,
-                priIzvikvane: update,
-              }}
+              text={text}
+              text2={text2}
+              glava={gl ?? "1"}
+              bUrl={`${bUrl}`}
+              setText={setText}
+              setText2={setText2}
+              priIzvikvane={update}
+              key={gl.toString()}
             />
           </Col>
           <Row>
@@ -151,7 +156,7 @@ export default function Book1() {
         <Tab eventKey="preview" title="Изглед">
           <Text
             furst2Lines={furst2Lines}
-            glava={gl?.toString() ?? "1"}
+            glava={gl ?? "1"}
             url={`/myBook/${bUrl}`}
             textLines={textLines}
             text2Lines={text2Lines}
@@ -170,21 +175,20 @@ export default function Book1() {
             <Row>
               <Col sm="6">
                 <EditText
-                  param={{
-                    text,
-                    text2,
-                    glava: gl?.toString() ?? "1",
-                    bUrl: `${bUrl}`,
-                    setText,
-                    setText2,
-                    priIzvikvane: update,
-                  }}
+                  text={text}
+                  text2={text2}
+                  glava={gl ?? "1"}
+                  bUrl={`${bUrl}`}
+                  setText={setText}
+                  setText2={setText2}
+                  priIzvikvane={update}
+                  key={gl}
                 />
               </Col>
               <Col>
                 <Text
                   furst2Lines={furst2Lines}
-                  glava={gl?.toString() ?? "1"}
+                  glava={gl ?? "1"}
                   url={`/myBook/${bUrl}`}
                   textLines={textLines}
                   text2Lines={text2Lines}
@@ -194,16 +198,9 @@ export default function Book1() {
             </Row>
             <Row>
               <Col sm="2"></Col>
-              <Col sm="3">
+              <Col sm="6">
                 <Link to="/">
                   <Button variant="secondary">Към главната страница</Button>
-                </Link>
-              </Col>
-              <Col sm="3">
-                <Link to="/helpLanguage">
-                  <Button variant="secondary">
-                    Към документацията!
-                  </Button>
                 </Link>
               </Col>
             </Row>
@@ -213,7 +210,7 @@ export default function Book1() {
       <Container>
         {/* @ts-ignore */}
         {comm.map((e, i) => (
-          <Row key={i}>
+          <Row key={e[0]}>
             <Col sm="7">
               <NavYesOrNo
                 text={e[0].length > 0 ? `${e[0]}\n ot ${e[1]}` : ""}

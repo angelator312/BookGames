@@ -1,20 +1,24 @@
+import { Button } from "react-bootstrap";
 import FormComponent from "./formComp";
 import { Editor } from "@monaco-editor/react";
 
 export default function EditText({
-  param,
+  text,
+  text2,
+  glava,
+  bUrl,
+  setText,
+  setText2,
+  priIzvikvane,
 }: {
-  param: {
-    text: string;
-    text2: string;
-    glava: string | number;
-    bUrl: string;
-    setText: Function;
-    setText2: Function;
-    priIzvikvane: Function;
-  };
+  text: string;
+  text2: string;
+  glava: string | number;
+  bUrl: string;
+  setText: Function;
+  setText2: Function;
+  priIzvikvane: Function;
 }) {
-  const { text, text2, glava, bUrl, setText, setText2, priIzvikvane } = param;
   function handleEditorChange(value: any, event: any) {
     setText(value.replace(/\\r/gm, "") ?? "");
     if (priIzvikvane) {
@@ -53,11 +57,22 @@ export default function EditText({
       />
       <p>
         За линк към друга глава : (Глава число) Пр. "Бий се (Глава 3)" <br />
-        Кръглите скоби () са задължителен атрибут при посочване на конкретна Глава
+        Кръглите скоби () са задължителен атрибут при посочване на конкретна
+        Глава
+        <br />
+        <a href="/helpLanguage">
+          <Button variant="secondary">
+            Допълнителни обяснения за псевдо езика
+          </Button>
+        </a>
       </p>
+
       <br />
       <FormComponent
-        textsHidden={[text.replace(/\\r/gm, ""), text2.replace(/\\r/gm, "")]}
+        textsHidden={[
+          text.replace(/\\r/gm, "") ?? "a",
+          text2.replace(/\\r/gm, "") ?? "a",
+        ]}
         to={`/myBook/${bUrl}/${glava}/save`}
         textForSubmit="Запази промените"
         submitVariant="danger"
