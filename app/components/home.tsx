@@ -47,7 +47,7 @@ export default function Home({
             style={{ padding: 15.4 }}
             className="text-slate-500 font-medium logo f-book-c"
           >
-            Game Books
+            Книги-игри
           </h1>
           <br />
 

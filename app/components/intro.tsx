@@ -9,7 +9,7 @@ export default function Intro() {
       <br />
       <br />
       <h1 className="text-slate-500 font-medium logo f-book-c p-3 line-height-1">
-        Добре дошли в Game Books
+        Добре дошли във виртуалната библиотека за книги игри
       </h1>
       <h3 className="text-slate-500 font-medium logo text-dark text-bold p-3">
         Здравей Анонимен!
