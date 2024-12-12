@@ -13,7 +13,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
   }
   if (!glava || Number.isNaN(parseInt(glava)))
     return redirect(`/myBook/${book}/1`);
-
+  if(text2.toString()==" ")
+    text2="(Глава "+glava+")"
   // let b = await getGorB("book");
   // console.log(b);
   for (let i = 0; i < neDumi.length; i++) {
