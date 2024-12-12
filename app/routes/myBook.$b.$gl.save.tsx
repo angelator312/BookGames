@@ -8,7 +8,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   let text2 = form.get("text2") ?? " ";
   const glava = params.gl;
   const book = params.b;
-  if(text2.toString()==" ")
+  if(!text2)
     text2="(Глава "+glava+")";
   if (!text1 && !text2) {
     return redirect(`/myBook/${book}/${glava}?errCode=1`);
