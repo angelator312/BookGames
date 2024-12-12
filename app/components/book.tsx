@@ -75,6 +75,7 @@ export default function Book({
           url={url}
           textLines={textLines}
           text2Lines={text2}
+          flag1={flag}
         />
         {kr ? (
           <div className="m-l-35%">
