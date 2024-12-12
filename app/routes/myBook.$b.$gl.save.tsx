@@ -9,7 +9,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const glava = params.gl;
   const book = params.b;
   if(!text2)
-    text2="(Глава "+(glava+1)+")";
+    text2="(Глава "+(parseInt(glava)+1)+")";
   if (!text1 && !text2) {
     return redirect(`/myBook/${book}/${glava}?errCode=1`);
   }
