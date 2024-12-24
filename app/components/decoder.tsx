@@ -23,10 +23,10 @@ export function Decoder({
       return b;
     } else return [e];
   });
-  console.log(a);
-  console.log(text2Lines);
-  console.log(text2);
-  console.log(text);
+  // console.log(a);
+  // console.log(text2Lines);
+  // console.log(text2);
+  // console.log(text);
   return (
     <>
       {a.map((e, i) => (

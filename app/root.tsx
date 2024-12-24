@@ -15,11 +15,13 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 // import globalMediumStylesUrl from "~/styles/global-medium.css";
 // import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "bootstrap/dist/css/bootstrap.css";
-import myStyles from "~/styles/myStyle.css";
+import myStyles from "~/styles/myStyles/myStyle.css";
+import myStyle2 from "~/styles/myStyles/main.css";
 import { Button, Col, Row } from "react-bootstrap";
 // import styles from "./tailwind.css";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: myStyle2 },
   { rel: "stylesheet", href: myStyles },
   { rel: "stylesheet", href: bootstrapStyles },
   // { rel: "stylesheet", href: globalStylesUrl },

@@ -1,0 +1,48 @@
+@use "." as *;
+
+.in-2 {
+    text-indent: 1.5em;
+}
+
+.in-1 {
+    text-indent: 1em;
+}
+
+.text-l {
+    text-align: left;
+}
+
+.text-bold {
+    color: var(--black) !important;
+    font-weight: bold;
+}
+
+.text-1bold {
+    color: var(--black) !important;
+    font-weight: 800 !important;
+}
+
+.text-2bold {
+    color: var(--black) !important;
+    font-weight: 900 !important;
+}
+
+.text-j {
+    text-align: justify;
+}
+
+.centered {
+    /* position: absolute; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.to-right {
+    /* position: absolute; */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+}

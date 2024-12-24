@@ -3,6 +3,7 @@ import type { Text } from "~/utils/textStore";
 // import { HydrationProvider, Server } from "react-hydration-provider";
 import BookHeader from "./bookHeader";
 import NavYesOrNo from "./navbarYes";
+import Settings from "./settings";
 
 export default function Home({
   user,
@@ -61,6 +62,8 @@ export default function Home({
             Нова книга
           </span>
         </Link>
+        <br />
+        <Settings/>
         <br />
         <Link to="/logout" className="">
           <span className="text-slate-500 font-medium logo text-center text-primary">

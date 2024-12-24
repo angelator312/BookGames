@@ -23,15 +23,18 @@ export default function Intro() {
       <br />
       <h2>
         <Link to="/login">
-          <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium">
-            <Button variant="danger">Вход </Button>
-          </span>
+          {/* <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium"> */}
+          <Button variant="danger">Вход </Button>
+          {/* </span> */}
         </Link>
-        <Link to="/signup">
-          <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium">
-            {" "}
-            <Button variant="secondary">Регистрация </Button>
-          </span>
+        <Link
+          to="/signup"
+          className="link-clear"
+          style={{textDecoration:"none"}}
+        >
+          {/* <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium"> */}{" "}
+          <Button variant="secondary">Регистрация </Button>
+          {/* </span> */}
         </Link>
       </h2>
     </div>

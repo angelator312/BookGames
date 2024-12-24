@@ -1,0 +1,11 @@
+@use "." as *;
+
+.btn-menu-my {
+  @include btn-menu-my(10px);
+  &-2 button {
+    @include btn-menu-my(14%);
+  }
+  &-3 button {
+    @include btn-menu-my(64%, 5%);
+  }
+}

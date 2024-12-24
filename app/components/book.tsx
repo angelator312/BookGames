@@ -35,7 +35,7 @@ export default function Book({
   title,
   almP,
   kr = true,
-  flag = true,
+  flag = 0,
   params = {
     text: "This is not mandatory",
     glava: "glava",
@@ -46,15 +46,15 @@ export default function Book({
   title: string;
   almP: string;
   kr?: boolean;
-  flag?: boolean;
+  flag?: number;
   params?: Params;
 }) {
   const loaderData = useLoaderData<typeof loader>();
-  if (flag) var { text, glava, text2 } = loaderData;
+  if (!flag) var { text, glava, text2 } = loaderData;
   else var { text, glava, text2 } = params;
   // else
   //  { text, glava, text2 } = useLoaderData<typeof loader>();
-  // console.log(text,glava,text2);
+  // console.log(flag,text,glava,text2);
 
   let textLines = text.replace(/\\r/gm, "").split("\n\n");
   let furst2Lines = [textLines[0], textLines[1]];
@@ -68,13 +68,14 @@ export default function Book({
     <div className="text-center space-y-2 sm:text-left bg-i">
       <h1 className="p-1 text-dark text-center">{title} </h1>
       <div className="space-y-0.5 bg-i">
-        <Navbar path={almP} glava={glava} title={title} />
+        <Navbar path={almP} glava={glava} title={title} flag={flag}/>
         <Text
           furst2Lines={furst2Lines}
           glava={glava}
           url={url}
           textLines={textLines}
           text2Lines={text2}
+          flag1={!flag}
         />
         {kr ? (
           <div className="m-l-35%">

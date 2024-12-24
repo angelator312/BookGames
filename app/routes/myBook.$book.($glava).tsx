@@ -1,17 +1,12 @@
 import type { Text as Text2 } from "~/utils/textStore";
 import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import {
-  Link,
-  useLoaderData,
-  useNavigate,
-  useSearchParams,
-} from "@remix-run/react";
+import { useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
 import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
 import DropDown1 from "~/components/dropdown";
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
+import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import EditText from "~/components/editText";
 import NavYesOrNo from "~/components/navbarYes";
 import Book from "~/components/book";
@@ -108,6 +103,8 @@ export default function Book1() {
   // let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
   // console.log("t",t);
+  // console.log(text, gl, text2);
+
   return (
     <div className="m-l-3">
       <NavYesOrNo text={feedMsg ?? ""} />
@@ -129,6 +126,7 @@ export default function Book1() {
         defaultActiveKey="preview"
         id="uncontrolled-tab-example"
         className="mb-3"
+        key={"space"}
       >
         <Tab eventKey="edit" title="Промени текста">
           <Col sm="6">
@@ -144,10 +142,25 @@ export default function Book1() {
             />
           </Col>
           <Row>
-            <Col sm="6">
-              <Link to="/">
-                <Button variant="secondary">Към главната страница</Button>
-              </Link>
+            <Col sm="2"></Col>
+            <Col sm="3">
+              <FormComponent
+                textsHidden={[
+                  text.replace(/\\r/gm, "") ?? "a",
+                  text2.replace(/\\r/gm, "") ?? "a",
+                ]}
+                to={`/myBook/${bUrl}/${gl}/save`}
+                textForSubmit="Запази промените"
+                submitVariant="danger"
+              />
+            </Col>
+            <Col sm="3">
+              <FormComponent
+                to="/"
+                textForSubmit="Към главната страница"
+                method="get"
+                submitVariant="secondary"
+              />
             </Col>
           </Row>
         </Tab>
@@ -164,7 +177,7 @@ export default function Book1() {
             url={`/myBook/${bUrl}`}
             title={"Книга " + bUrl}
             almP={`/myBook/${bUrl}/`}
-            flag={false}
+            flag={2}
             params={{
               text,
               glava: gl,
@@ -173,10 +186,14 @@ export default function Book1() {
             kr={false}
           />
           <Row>
+            <Col sm="2"></Col>
             <Col sm="6">
-              <Link to="/">
-                <Button variant="secondary">Към главната страница</Button>
-              </Link>
+              <FormComponent
+                to="/"
+                textForSubmit="Към главната страница"
+                method="get"
+                submitVariant="secondary"
+              />
             </Col>
           </Row>
         </Tab>
@@ -199,7 +216,7 @@ export default function Book1() {
                 url={`/myBook/${bUrl}`}
                 title={"Книга " + bUrl}
                 almP={`/myBook/${bUrl}/`}
-                flag={false}
+                flag={3}
                 params={{
                   text,
                   glava: gl,

@@ -1,20 +1,30 @@
 import { useState } from "react";
-import {Button,Offcanvas }from "react-bootstrap";
+import { Button, Offcanvas } from "react-bootstrap";
 import menu from "~/helps/menu.png";
 
-function Example({path,title,glava}:{path:string,title:string,glava:string}) {
+function Example({
+  path,
+  title,
+  glava,
+  flag = 0,
+}: {
+  path: string;
+  title: string;
+  glava: string;
+  flag?: number;
+}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
-    <>
-      <Button
-        className="btn-menu-my"
-        variant="outline-light"
-        onClick={handleShow}
-      >
+    <div
+      className={
+        flag ? (flag == 2 ? "btn-menu-my-2" : "btn-menu-my-3") : "btn-menu-my"
+      }
+    >
+      <Button variant="outline-light" onClick={handleShow}>
         <img width={30} height={30} src={menu} alt="menu button" />
       </Button>
 
@@ -28,7 +38,7 @@ function Example({path,title,glava}:{path:string,title:string,glava:string}) {
           <img alt="Липсват снимка/и" src={path + glava + ".jpg"} />
         </Offcanvas.Body>
       </Offcanvas>
-    </>
+    </div>
   );
 }
 

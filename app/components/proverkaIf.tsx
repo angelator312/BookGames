@@ -22,8 +22,8 @@ export function ProverkaIf({
   let e4 = a[1].replace(/\\r/gm, "").split(reg2);
   //   e=e.slice(1)
   let e = e4.map((ei) => ei.replace(/\\r/gm, "").split(/\|/))[1];
-  console.log("e:", e);
-  console.log("e:", valueOfI);
+  // console.log("e:", e);
+  // console.log("e:", valueOfI);
   //   console.log("e2",e2);
   if (flag1)
     return (
@@ -49,7 +49,7 @@ export function ProverkaIf({
     );
   else
   {
-    console.log(url+e[1]);
+    // console.log(url+e[1]);
     
     return (
       <div className="ms-3">
