@@ -1,11 +1,21 @@
 import type { Collection, ObjectId } from "mongodb";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
+export interface SettingsInterface {
+  fontSize?: number;
+  language?: string;
+}
+export interface UserData {
+  fontSize?: number;
+  language?: string;
+}
 export interface User {
   _id?: ObjectId;
   glavi?: any;
   user: string;
   passH: string;
+  settings?: SettingsInterface;
+  data?: UserData;
 }
 
 export class UserStore {
@@ -33,30 +43,34 @@ export class UserStore {
     const v: User = {
       user,
       passH,
-      glavi:{}
+      glavi: {},
     };
-    const i=await this.collection.replaceOne({user: user }, v, { upsert: true });
+    const i = await this.collection.replaceOne({ user: user }, v, {
+      upsert: true,
+    });
     v._id = i.upsertedId;
     return v;
   }
-  async editUserSGlava(user: string,id:string,glava:string): Promise<User|null> {
-    const data=await this.getUser(user);
-    if (!data)return null;
+  async editUserSGlava(
+    user: string,
+    id: string,
+    glava: string
+  ): Promise<User | null> {
+    const data = await this.getUser(user);
+    if (!data) return null;
 
     let v: User = {
       user,
-      passH:data.passH,
-      glavi:data.glavi
-      
+      passH: data.passH,
+      glavi: data.glavi,
     };
-    v.glavi[id]=glava;
-    const i = await this.collection.replaceOne({user},v);
+    v.glavi[id] = glava;
+    const i = await this.collection.replaceOne({ user }, v);
     v._id = i.upsertedId;
     return v;
   }
   async getUser(user: string): Promise<User | null> {
-    const data = await this.collection.findOne({ user: user })
-    .catch(() => {
+    const data = await this.collection.findOne({ user: user }).catch(() => {
       return null;
     });
     if (!data) {
@@ -70,6 +84,24 @@ export class UserStore {
       if (await bcrypt.compare(pass, data.passH)) return data;
     }
     return null;
+  }
+  //Settings
+  getDefaultSettings(): SettingsInterface {
+    const settings: SettingsInterface = {
+      fontSize: 10,
+      language: "Bulgarian",
+    };
+    return settings;
+  }
+  async getMySettings(user: string): Promise<SettingsInterface> {
+    const data = await this.collection.findOne({ user: user });
+    if (data) {
+      if (data.settings) 
+      {
+        return data.settings;
+      }
+    }
+    return this.getDefaultSettings();
   }
 }
 let ObUser: { [key: string]: UserStore } = {};

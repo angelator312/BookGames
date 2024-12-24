@@ -20,6 +20,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const a = await requireUserId(request, false);
   const tStore = await getTextStore();
+  const uStore = await getUserStore();
   const b = await tStore.getBook(params.book ?? " ");
   // console.log(b);
   if (typeof a === "string") {
@@ -39,7 +40,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       // console.log({ text: segG, glava, text2: spec, b });
       createGorB("glava", glava, request);
       createGorB("book", b.text, request);
-      return { text: segG, glava, text2: spec, b };
+      const settings = await uStore.getMySettings(a);
+      return { text: segG, glava, text2: spec, b,settings };
     }
   }
   return redirect("/");
@@ -52,7 +54,7 @@ export default function Book1() {
   //   console.log(book);
   const zagl = book.b.id?.substring(5, book.b.id?.length - 3);
   return (
-    <div>
+    <div style={{"fontSize":(book.settings.fontSize??10)/10+"rem"}}>
       <Book
         url={`/book/${book.b.text}`}
         title={zagl ?? ""}

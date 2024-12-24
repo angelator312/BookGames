@@ -1,5 +1,6 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import getTextStore from "./textStore";
+import getUserStore from "./userStore";
 
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
@@ -101,4 +102,9 @@ export async function knigi(user:string) {
   if(b)
     return [b,a];
   return [[],a];
+}
+export async function loadSettings(user: string) {
+  const tStore = await getUserStore();
+  const a = await tStore.getMySettings(user);
+  return a;
 }

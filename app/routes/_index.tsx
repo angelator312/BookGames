@@ -7,8 +7,9 @@ import globalMediumStylesUrl from "~/styles/global-medium.css";
 import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "~/styles/bootstrap.css";
 import stylesUrl from "~/styles/index.css";
-import { knigi, requireUserId } from "~/utils/session.server";
+import { knigi, loadSettings, requireUserId } from "~/utils/session.server";
 import { cssBundleHref } from "@remix-run/css-bundle";
+import { SettingsInterface } from "~/utils/userStore";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: bootstrapStyles },
@@ -33,18 +34,19 @@ export const action = async ({ request }: LoaderFunctionArgs) => {
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const a= await requireUserId(request, false);
-// console.log(a);
-// console.log(await knigi(a));
-
+  // console.log(a);
+  // console.log(await knigi(a));
+  
   if (typeof a ==="string") {
-    return [a,await knigi(a)];
+    const settings:SettingsInterface = await loadSettings(a);
+    return [a,await knigi(a),settings];
   }
-  return [0,0];
+  return [0,0,0];
 };
 
 export default function IndexRoute() {
 // console.log(1);
   const [user,books] = useLoaderData<typeof loader>();
   // @ts-ignore
-  return <div>{user ? <Home user={user.toString()} books={books}/> : <Intro />}</div>;
+  return <div >{user ? <Home user={user.toString()} books={books}/> : <Intro />}</div>;
 }

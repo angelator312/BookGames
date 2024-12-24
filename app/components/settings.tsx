@@ -1,12 +1,23 @@
+import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { Button, Form, Offcanvas, Row, Tab, Tabs } from "react-bootstrap";
+import type { Book } from "~/utils/textStore";
+import type { SettingsInterface } from "~/utils/userStore";
+type loader=[string,Book[][],SettingsInterface]
 
 function Settings() {
-  const [show, setShow] = useState(false);
-  const [fontSize, setFontSize] = useState("2");
+  const loaderThings = useLoaderData<loader>();
+  const settings=loaderThings[2];
+  console.log(settings);
+  const [fontSize, setFontSize] = useState(settings.fontSize);
 
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () =>
+    {
+      setShow(true);
+
+    }
 
   return (
     <div>
@@ -39,7 +50,7 @@ function Settings() {
                   <Form.Control
                     type="number"
                     value={fontSize}
-                    onChange={(e) => setFontSize(e.target.value??2)}
+                    onChange={(e) => setFontSize(parseInt(e.target.value??2))}
                     name="fontSize"
                   />
                 </Form.Group>
