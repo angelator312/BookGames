@@ -162,6 +162,17 @@ export default function Book1() {
                 submitVariant="secondary"
               />
             </Col>
+            <Col>
+                <FormComponent
+                  textsHidden={[
+                    text.replace(/\\r/gm, "") ?? "a",
+                    text2.replace(/\\r/gm, "") ?? "a",
+                  ]}
+                  to={`/myBook/${bUrl}/${gl}/save`}
+                  textForSubmit="Запази промените"
+                  submitVariant="danger"
+                />
+              </Col>
           </Row>
         </Tab>
         <Tab eventKey="preview" title="Изглед">

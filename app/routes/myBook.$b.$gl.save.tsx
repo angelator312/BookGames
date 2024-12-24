@@ -4,16 +4,17 @@ import { neDumi } from "~/helps/dumiNe";
 import getTextStore from "~/utils/textStore";
 export async function action({ params, request }: ActionFunctionArgs) {
   const form = await request.formData();
-  let text1 = form.get("text1") ?? "a";
-  let text2 = form.get("text2") ?? "a";
+  let text1 = form.get("text1") ?? " ";
+  let text2 = form.get("text2") ?? " ";
   const glava = params.gl;
   const book = params.b;
+  if(!text2)
+    text2="(Глава "+(parseInt(glava)+1)+")";
   if (!text1 && !text2) {
     return redirect(`/myBook/${book}/${glava}?errCode=1`);
   }
   if (!glava || Number.isNaN(parseInt(glava)))
     return redirect(`/myBook/${book}/1`);
-
   // let b = await getGorB("book");
   // console.log(b);
   for (let i = 0; i < neDumi.length; i++) {
