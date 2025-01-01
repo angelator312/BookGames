@@ -38,7 +38,7 @@ function Settings() {
             className="mb-3"
           >
             <Tab eventKey={"текст"} title={"Текст"}>
-              <Form action="/zapaziFontSettings">
+              <Form action="/zapaziSettings">
                 <Form.Group
                   as={Row}
                   className="mb-3"
@@ -56,7 +56,6 @@ function Settings() {
                 </Form.Group>
               </Form>
             </Tab>
-            <Tab eventKey={"език"} title={"Език"}></Tab>
             <Tab eventKey={"Цвят"} title={"Цвят"}></Tab>
           </Tabs>
         </Offcanvas.Body>

@@ -103,6 +103,26 @@ export class UserStore {
     }
     return this.getDefaultSettings();
   }
+  async adjustSettings(
+    settings: SettingsInterface,
+    user: string
+  ): Promise<SettingsInterface> {
+    const data = await this.getUser(user);
+    if (!data) return settings;
+
+    let v: User = {
+      ...data,
+      settings
+    };
+    await this.collection.replaceOne({ user }, v);
+    return settings;
+  }
+
+  //User data
+  getDefaultUserData(): UserData {
+    const settings: UserData = {};
+    return settings;
+  }
 }
 let ObUser: { [key: string]: UserStore } = {};
 
