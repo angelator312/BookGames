@@ -21,7 +21,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const a = await requireUserId(request, false);
   const tStore = await getTextStore();
   const uStore = await getUserStore();
-  const b = await tStore.getBook(params.book ?? " ");
+  const b = await tStore.getBook2(params.book ?? " ");
   // console.log(b);
   if (typeof a === "string") {
     if (b?.avtor == a) return redirect("/myBook/" + params.book);

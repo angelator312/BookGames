@@ -1,4 +1,4 @@
-import type { Collection } from "mongodb";
+import type { Collection, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
 export interface Text {
   _id?: string;
@@ -10,6 +10,12 @@ export interface Text {
   public?: boolean;
   avtor?: string;
 }
+export interface BookData {
+  clicks: number;
+  timeForUser: {
+    [key: string]: number;
+  };
+}
 export interface Book {
   _id?: string;
   id?: string;
@@ -20,11 +26,15 @@ export interface Book {
   comments?: string[][][];
   public: boolean;
   avtor: string;
-  text2:string;
+  text2: string;
+  data: BookData;
 }
+
+const isBook = (x: any): x is Book => x.isBook === true;
+
 export interface Spec {
   _id?: string;
-  id:string
+  id: string;
   bookNom: number;
   isBook: boolean;
   text?: any;
@@ -40,7 +50,7 @@ export class BookStore {
     gl?: string | number,
     numSmallName = -1
   ): Promise<Book> {
-    if(numSmallName==-1)numSmallName=(await this.getSpec()).bookNom;
+    if (numSmallName == -1) numSmallName = (await this.getSpec()).bookNom;
 
     if (!gl) gl = "15";
 
@@ -54,6 +64,7 @@ export class BookStore {
       comments: [],
       tags: [],
       text2: smallDescription,
+      data: this.prototypeOfBookData(),
     };
 
     await this.collection.replaceOne({ id: `Book-${book}--1` }, v, {
@@ -170,6 +181,7 @@ export class BookStore {
     //@ts-ignore
     return t;
   }
+
   async getComments(book: string, gl: string | number): Promise<string[][]> {
     const bookL = await this.getBook(book);
     if (!bookL || !bookL.isBook || !bookL.comments) {
@@ -189,16 +201,39 @@ export class BookStore {
     const a = bookL.comments[parseInt(gl.toString()) - 1] ?? [];
     return a.map((e, i) => (e[1] == avt ? e[0] : ""));
   }
-  async getPublicBooks(avt: string): Promise<Book[]> {
-    const data = await this.collection
+  async searchWithQuery(query: string, books: Book[]): Promise<Book[]> {
+    function filterFunc(e: WithId<Book>, query: string) {
+      return (
+        e.id?.includes(query) ??
+        e.tags?.includes(query) ??
+        e.text2?.includes(query) ??
+        e.avtor?.includes(query)
+      );
+    }
+    // @ts-ignore
+    const data1 = books.filter((e) => filterFunc(e, query));
+    const out = data1;
+    return out;
+  }
+  async getPublicBooks(avt: string, query: string | null): Promise<Book[]> {
+    //@ts-ignore
+    const data: Book[] = await this.collection
       .find({ public: true, isBook: true }, { sort: { time: "ascending" } })
       .toArray();
     if (data.length === 0) {
       return [];
     }
     for (let i = 0; i < data.length; i++)
-      //@ts-ignore
       if (data[i].avtor == avt) delete data[i];
+
+    if (!isBook(data[0])) return [this.prototypeOfBook()];
+
+    if (typeof query === "string" && query.length > 0) {
+      //
+      console.log(data);
+      return this.searchWithQuery(query, data);
+    }
+
     // @ts-ignore
     return data;
   }
@@ -284,7 +319,44 @@ export class BookStore {
       public: false,
       avtor: "",
       text2: "",
+      data: this.prototypeOfBookData(),
     };
+  }
+  //Analyzer
+  async getBook2(book: string): Promise<Book | null> {
+    //@ts-ignore
+    const t: Book | null = await this.collection.findOne({
+      text: book,
+      isBook: true,
+    });
+    if (t) {
+      this.addClick(t);
+      return t;
+    }
+    return null;
+  }
+  async addClick(book:Book): Promise<void> {
+    const v: Book = {
+      ...book,
+      data: 
+      {
+        clicks:book.data.clicks+1,
+        timeForUser:book.data.timeForUser
+      }
+    };
+
+    await this.collection.replaceOne({ id: book.id }, v, {
+      upsert: true,
+    });
+    return ;
+  }
+
+  prototypeOfBookData(): BookData {
+    const d: BookData = {
+      clicks: 0,
+      timeForUser: {},
+    };
+    return d;
   }
 }
 let ObTexts: { [key: string]: BookStore } = {};

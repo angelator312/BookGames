@@ -9,7 +9,7 @@ import bootstrapStyles from "~/styles/bootstrap.css";
 import stylesUrl from "~/styles/index.css";
 import { knigi, loadSettings, requireUserId } from "~/utils/session.server";
 import { cssBundleHref } from "@remix-run/css-bundle";
-import { SettingsInterface } from "~/utils/userStore";
+import type { SettingsInterface } from "~/utils/userStore";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: bootstrapStyles },
@@ -39,7 +39,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   
   if (typeof a ==="string") {
     const settings:SettingsInterface = await loadSettings(a);
-    return [a,await knigi(a),settings];
+    const searchParams = new URL(request.url).searchParams;
+    return [a, await knigi(a, searchParams.get("query")), settings];
   }
   return [0,0,0];
 };

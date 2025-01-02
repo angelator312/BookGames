@@ -7,7 +7,6 @@ export interface SettingsInterface {
 }
 export interface UserData {
   fontSize?: number;
-  language?: string;
 }
 export interface User {
   _id?: ObjectId;
@@ -96,8 +95,7 @@ export class UserStore {
   async getMySettings(user: string): Promise<SettingsInterface> {
     const data = await this.collection.findOne({ user: user });
     if (data) {
-      if (data.settings) 
-      {
+      if (data.settings) {
         return data.settings;
       }
     }
@@ -112,7 +110,7 @@ export class UserStore {
 
     let v: User = {
       ...data,
-      settings
+      settings,
     };
     await this.collection.replaceOne({ user }, v);
     return settings;
@@ -126,6 +124,13 @@ export class UserStore {
 }
 let ObUser: { [key: string]: UserStore } = {};
 
+export function getDefaultUser(): User {
+  const settings: User = {
+    passH: "",
+    user: "",
+  };
+  return settings;
+}
 export default async function getUserStore(
   url: string | undefined = process.env.MONGO_URL,
   collectionName: string = "Register"

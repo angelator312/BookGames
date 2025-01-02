@@ -4,6 +4,7 @@ import type { Text } from "~/utils/textStore";
 import BookHeader from "./bookHeader";
 import NavYesOrNo from "./navbarYes";
 import Settings from "./settings";
+import SearchComponent from "./Search";
 
 export default function Home({
   user,
@@ -63,7 +64,7 @@ export default function Home({
           </span>
         </Link>
         <br />
-        <Settings/>
+        <Settings />
         <br />
         <Link to="/logout" className="">
           <span className="text-slate-500 font-medium logo text-center text-primary">
@@ -79,6 +80,7 @@ export default function Home({
           ))}
         </div>
         <hr />
+        <SearchComponent/>
         <div className="centered text-center m-l-45%">
           {books[1].map((e, i) => (
             <BookHeader e={e} key={i} />

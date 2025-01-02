@@ -15,7 +15,7 @@ export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
 
-type loaderData = [string, string, Text2, string, string[][]];
+type loaderData = [string, string, Text2, string, string[][],string];
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
@@ -40,7 +40,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     if (b?.avtor == a) {
       const comments = await tStore.getComments(book ?? "", glava);
       let t = await tStore.getText(`${book}-${glava}`);
-      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments];
+      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments,a];
     }
     return redirect(`/book/${book}`);
   }
@@ -49,7 +49,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function Book1() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [bUrl, gl, t, doN, comments] = useLoaderData<loaderData>();
+  const [bUrl, gl, t, doN, comments,user] = useLoaderData<loaderData>();
   let comm = comments;
   function update() {
     textLines = text.split("\n\n");
@@ -175,6 +175,7 @@ export default function Book1() {
                         text,
                         glava: gl,
                         text2,
+                        user:user??"",
                       }}
                       kr={false}
                     />

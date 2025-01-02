@@ -5,6 +5,8 @@ import Navbar from "./navbar";
 import Text from "./text";
 import FormComponent from "./formComp";
 import { Col, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import type { loaderBook } from "~/utils/loaderTypes";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   // console.log(11);
@@ -28,6 +30,7 @@ interface Params {
   text: string;
   glava: string;
   text2: string;
+  user: string;
 }
 
 export default function Book({
@@ -40,6 +43,7 @@ export default function Book({
     text: "This is not mandatory",
     glava: "glava",
     text2: "This is not mandatory",
+    user:"user",
   },
 }: {
   url: string;
@@ -49,9 +53,10 @@ export default function Book({
   flag?: number;
   params?: Params;
 }) {
-  const loaderData = useLoaderData<typeof loader>();
-  if (!flag) var { text, glava, text2 } = loaderData;
-  else var { text, glava, text2 } = params;
+  const loaderData = useLoaderData<loaderBook>();
+  if (!flag) var { text, glava, text2, user } = loaderData;
+  //@ts-ignore
+  else var { text, glava, text2, user } = params;
   // else
   //  { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(flag,text,glava,text2);
@@ -59,6 +64,16 @@ export default function Book({
   let textLines = text.replace(/\\r/gm, "").split("\n\n");
   let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
+  const [timeIn] = useState(Date.now());
+  useEffect(() => {
+    const handleUnload = () => {
+      fetch(
+        "/analyses/timeForUser?user=" + user + "time=" + (Date.now() - timeIn)
+      );
+    };
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload); // cleanup
+  }, [timeIn, user]);
   // console.log(12);
   //  "0".matchAll(reg);
   // Array.from(text2.matchAll(reg));
@@ -68,7 +83,7 @@ export default function Book({
     <div className="text-center space-y-2 sm:text-left bg-i">
       <h1 className="p-1 text-dark text-center">{title} </h1>
       <div className="space-y-0.5 bg-i">
-        <Navbar path={almP} glava={glava} title={title} flag={flag}/>
+        <Navbar path={almP} glava={glava} title={title} flag={flag} />
         <Text
           furst2Lines={furst2Lines}
           glava={glava}
@@ -96,6 +111,7 @@ export default function Book({
                   submitVariant="danger"
                   to="/"
                   textForSubmit="Начало"
+                  namesHidden={["time"]}
                 />
               </Col>
             </Row>
