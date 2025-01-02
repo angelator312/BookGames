@@ -3,7 +3,7 @@
 .btn-menu-my {
   @include btn-menu-my(10px);
   &-2 button {
-    @include btn-menu-my(14%);
+    @include btn-menu-my(10px);
   }
   &-3 button {
     @include btn-menu-my(15%, 5%);

@@ -3,18 +3,15 @@ import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData, useSearchParams } from "@remix-run/react";
 import getTextStore from "~/utils/textStore";
-import { requireUserId } from "~/utils/session.server";
-import DropDown1 from "~/components/dropdown";
+import { loadSettings, requireUserId } from "~/utils/session.server";
 import { useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
-import NavYesOrNo from "~/components/navbarYes";
 import Book from "~/components/book";
-import FormComponent from "~/components/formComp";
+import type { SettingsInterface } from "~/utils/userStore";
 export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
 
-type loaderData = [string, string, Text2, string, string[][]];
+type loaderData = [string, string, Text2, SettingsInterface, string[][],string];
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
@@ -39,7 +36,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     if (b?.avtor == a) {
       const comments = await tStore.getComments(book ?? "", glava);
       let t = await tStore.getText(`${book}-${glava}`);
-      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments];
+      return [book, glava, t ?? tStore.prototypeOfText(), await loadSettings(a), comments,a];
     }
     return redirect(`/book/${book}`);
   }
@@ -47,7 +44,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 }
 export default function Book1() {
   const [searchParams] = useSearchParams();
-  const [bUrl, gl, t, doN] = useLoaderData<loaderData>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [bUrl, gl, t, settings,_any,username] = useLoaderData<loaderData>();
   const [text, setText] = useState(
     //@ts-ignore
     typeof t === "string" ? "проба" : t?.text ?? "проба"
@@ -96,22 +94,7 @@ export default function Book1() {
   // console.log(text, gl, text2);
 
   return (
-    <div className="m-l-3">
-      <NavYesOrNo text={feedMsg ?? ""} />
-      <NavYesOrNo text={errMsg ?? ""} yes={false} />
-      <Row>
-        <Col sm="1"></Col>
-        <Col sm="6">
-          <DropDown1
-            url={`/myBook/see/${bUrl}`}
-            // @ts-ignore
-            doN={parseInt(doN ?? "15")}
-            // @ts-ignore
-            activeDrop={parseInt(gl)}
-          />
-        </Col>
-      </Row>
-      <br />
+    <div style={{ fontSize: (settings.fontSize ?? 10) / 10 + "rem" }}>
       {/* <Text
             furst2Lines={furst2Lines}
             glava={gl ?? "1"}
@@ -129,20 +112,9 @@ export default function Book1() {
           text,
           glava: gl,
           text2,
+          user: username,
         }}
-        kr={false}
       />
-      <Row>
-        <Col sm="2"></Col>
-        <Col sm="6">
-          <FormComponent
-            to="/"
-            textForSubmit="Към главната страница"
-            method="get"
-            submitVariant="secondary"
-          />
-        </Col>
-      </Row>
     </div>
   );
 }

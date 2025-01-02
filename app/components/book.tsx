@@ -72,8 +72,8 @@ export default function Book({
       );
     };
     window.addEventListener("beforeunload", handleUnload);
-    return () => window.removeEventListener("beforeunload", handleUnload); // cleanup
-  }, [timeIn, user]);
+    //return () => window.removeEventListener("beforeunload", handleUnload); // cleanup
+  }, []);
   // console.log(12);
   //  "0".matchAll(reg);
   // Array.from(text2.matchAll(reg));
