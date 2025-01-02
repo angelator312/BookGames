@@ -47,7 +47,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 }
 export default function Book1() {
   const [searchParams] = useSearchParams();
-  const [bUrl, gl, t, doN, comments] = useLoaderData<loaderData>();
+  const [bUrl, gl, t, doN] = useLoaderData<loaderData>();
   const [text, setText] = useState(
     //@ts-ignore
     typeof t === "string" ? "проба" : t?.text ?? "проба"
@@ -92,9 +92,6 @@ export default function Book1() {
     }
   }
 
-  let textLines = text.replace("\r", "\n").split("\n\n");
-  // let furst2Lines = [textLines[0], textLines[1]];
-  textLines = textLines.slice(2);
   // console.log("t",t);
   // console.log(text, gl, text2);
 
