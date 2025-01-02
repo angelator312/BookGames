@@ -9,6 +9,7 @@ import type {
   LoaderFunctionArgs,
 } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import Container from 'react-bootstrap/Container';
 // import  { User } from "~/utils/mongostore";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -103,7 +104,7 @@ function FormExample() {
   }
 
   return (
-    <div>
+    <Container>
       <h1 className="centered">Вход</h1>
       <Row className="mb-3">
         <NavYesOrNo text={sign ?? ""} />
@@ -174,7 +175,7 @@ function FormExample() {
           </Col>
         </Row>
       </Form>
-    </div>
+    </Container>
   );
 }
 
