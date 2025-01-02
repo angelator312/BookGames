@@ -1,7 +1,7 @@
 // import { Outlet } from "@remix-run/react";
 // import bcrypt from "bcryptjs";
 import { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 // import { createUserSession } from "~/utils/session.server";
 import type {
   ActionFunctionArgs,
@@ -89,99 +89,123 @@ function FormExample() {
   }
 
   return (
-    <>
-      <h1 className="centered">Регистрация</h1>
-
-      <Form
-        noValidate
-        validated={validated}
-        onSubmit={handleSubmit}
-        method="POST"
-        action="/signup"
-      >
-        <Row className="mb-3">
-          <NavYesOrNo text={err ??""} yes={false}/>
-        </Row>
-        <Row className="mb-3">
-          <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
-            <Form.Label column sm="2">
-              Име
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                required
-                type="text"
-                placeholder="Име"
-                name="user"
-                minLength={4}
-              />
-              <Form.Control.Feedback>Става!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Моля, напишете валидно (най-малко 4 символа) име!
-              </Form.Control.Feedback>
-            </Col>
-          </Form.Group>
-        </Row>
-        <Row className="mb-3">
-          <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
-            <Form.Label column sm="2">
-              Парола
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                required
-                type="password"
-                placeholder="Парола"
-                name="pass"
-                minLength={8}
-              />
-              <Form.Control.Feedback>Става!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Моля,напишете валидна (най-малко 8 символа) парола!
-              </Form.Control.Feedback>
-            </Col>
-          </Form.Group>
-        </Row>
-        <Row className="mb-3">
-          <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
-            <Form.Label column sm="2">
-              Парола отново
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                required
-                type="password"
-                placeholder="Парола"
-                name="pass2"
-                minLength={8}
-              />
-              <Form.Control.Feedback>Става!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Моля,напишете валидна (най-малко 8 символа) парола!
-              </Form.Control.Feedback>
-            </Col>
-          </Form.Group>
-        </Row>
-        <Row className="mb-3">
-          <Col sm="2"></Col>
-          <Col sm="1" className="mb-3">
-            <Button type="submit" variant="danger" className="centered m-r-3">Регистриране</Button>
-          </Col>
-          <Col sm="2"></Col>
-          <Col sm="1" className="mb-3">
-            <Link to="/login">
-              <Button variant="secondary">Вход </Button>
-            </Link>
-          </Col>
-          <Col sm="1"></Col>
-          <Col sm="1" className="mb-3">
-            <Link to="/">
-              <Button variant="secondary">Начало</Button>
-            </Link>
-          </Col>
-        </Row>
-      </Form>
-    </>
+    <Container>
+      <Row>
+        <Col>
+          <h1 className="centered">Регистрация</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Container>
+            <Form
+              noValidate
+              validated={validated}
+              onSubmit={handleSubmit}
+              method="POST"
+              action="/signup"
+            >
+              <Row className="mb-3">
+                <NavYesOrNo text={err ?? ""} yes={false} />
+              </Row>
+              <Row className="mb-3">
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label column sm="2">
+                    Име
+                  </Form.Label>
+                  <Col sm="10">
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder="Име"
+                      name="user"
+                      minLength={4}
+                    />
+                    <Form.Control.Feedback>Става!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      Моля, напишете валидно (най-малко 4 символа) име!
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom02"
+                >
+                  <Form.Label column sm="2">
+                    Парола
+                  </Form.Label>
+                  <Col sm="10">
+                    <Form.Control
+                      required
+                      type="password"
+                      placeholder="Парола"
+                      name="pass"
+                      minLength={8}
+                    />
+                    <Form.Control.Feedback>Става!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      Моля,напишете валидна (най-малко 8 символа) парола!
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom02"
+                >
+                  <Form.Label column sm="3">
+                    Потвърди парола
+                  </Form.Label>
+                  <Col >
+                    <Form.Control
+                      required
+                      type="password"
+                      placeholder="Парола"
+                      name="pass2"
+                      minLength={8}
+                    />
+                    <Form.Control.Feedback>Става!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      Моля,напишете валидна (най-малко 8 символа) парола!
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Col className="mb-3">
+                  <Button
+                    type="submit"
+                    variant="danger"
+                    className="centered m-r-3"
+                  >
+                    Регистриране
+                  </Button>
+                </Col>
+                <Col className="mb-3">
+                  <Link to="/login">
+                    <Button variant="secondary">Вход </Button>
+                  </Link>
+                </Col>
+                <Col className="mb-3">
+                  <Link to="/">
+                    <Button variant="secondary">Начало</Button>
+                  </Link>
+                </Col>
+              </Row>
+            </Form>
+          </Container>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
