@@ -163,16 +163,16 @@ export default function Book1() {
               />
             </Col>
             <Col>
-                <FormComponent
-                  textsHidden={[
-                    text.replace(/\\r/gm, "") ?? "a",
-                    text2.replace(/\\r/gm, "") ?? "a",
-                  ]}
-                  to={`/myBook/${bUrl}/${gl}/save`}
-                  textForSubmit="Запази промените"
-                  submitVariant="danger"
-                />
-              </Col>
+              <FormComponent
+                textsHidden={[
+                  text.replace(/\\r/gm, "") ?? "a",
+                  text2.replace(/\\r/gm, "") ?? "a",
+                ]}
+                to={`/myBook/${bUrl}/${gl}/save`}
+                textForSubmit="Запази промените"
+                submitVariant="danger"
+              />
+            </Col>
           </Row>
         </Tab>
         <Tab eventKey="preview" title="Изглед">
@@ -223,18 +223,20 @@ export default function Book1() {
                   key={gl}
                 />
               </Col>
-              <Book
-                url={`/myBook/${bUrl}`}
-                title={"Книга " + bUrl}
-                almP={`/myBook/${bUrl}/`}
-                flag={3}
-                params={{
-                  text,
-                  glava: gl,
-                  text2,
-                }}
-                kr={false}
-              />
+              <Col>
+                <Book
+                  url={`/myBook/${bUrl}`}
+                  title={"Книга " + bUrl}
+                  almP={`/myBook/${bUrl}/`}
+                  flag={3}
+                  params={{
+                    text,
+                    glava: gl,
+                    text2,
+                  }}
+                  kr={false}
+                />
+              </Col>
             </Row>
             <Row>
               <Col sm="2"></Col>
