@@ -6,7 +6,7 @@ import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
 import DropDown1 from "~/components/dropdown";
 import { useEffect, useState } from "react";
-import { Col, Container, Row, Tab, Tabs } from "react-bootstrap";
+import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import EditText from "~/components/editText";
 import NavYesOrNo from "~/components/navbarYes";
 import Book from "~/components/book";
@@ -109,100 +109,121 @@ export default function Book1() {
     <div className="m-l-3">
       <NavYesOrNo text={feedMsg ?? ""} />
       <NavYesOrNo text={errMsg ?? ""} yes={false} />
-      <Row>
-        <Col sm="1"></Col>
-        <Col sm="6">
-          <DropDown1
-            url={`/myBook/${bUrl}`}
-            // @ts-ignore
-            doN={parseInt(doN ?? "15")}
-            // @ts-ignore
-            activeDrop={parseInt(gl)}
-          />
-        </Col>
-      </Row>
       <br />
-      <Tabs
-        defaultActiveKey="preview"
-        id="uncontrolled-tab-example"
-        className="mb-3"
-        key={"space"}
-        
-      >
-
-        {/* <Button eventKey="preview" title="Преглед" onClick={()=>{window.open(`/myBook/see/${bUrl}/${gl}`);}}> */}
-          
-        {/* </Button> */}
-        <Tab eventKey="editAndPreview" title="Редактирай">
-          <Container>
-            <Row>
-              <Col>
-                <EditText
-                  text={text}
-                  text2={text2}
-                  glava={gl ?? "1"}
-                  bUrl={`${bUrl}`}
-                  setText={setText}
-                  setText2={setText2}
-                  priIzvikvane={update}
-                  key={gl}
-                />
-              </Col>
-              <Col>
-                <Book
-                  url={`/myBook/${bUrl}`}
-                  title={"Книга " + bUrl}
-                  almP={`/myBook/${bUrl}/`}
-                  flag={3}
-                  params={{
-                    text,
-                    glava: gl,
-                    text2,
-                  }}
-                  kr={false}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col sm="2"></Col>
-              <Col sm="6">
-                <FormComponent
-                  to="/"
-                  textForSubmit="Към главната страница"
-                  method="get"
-                  submitVariant="secondary"
-                />
-              </Col>
-              <Col>
-                <FormComponent
-                  textsHidden={[
-                    text.replace(/\\r/gm, "") ?? "a",
-                    text2.replace(/\\r/gm, "") ?? "a",
-                  ]}
-                  to={`/myBook/${bUrl}/${gl}/save`}
-                  textForSubmit="Запази промените"
-                  submitVariant="danger"
-                />
-              </Col>
-            </Row>
-          </Container>
-        </Tab>
-      </Tabs>
-      <Container>
-        {/* @ts-ignore */}
-        {comm.map((e, i) => (
-          <Row key={e[0]}>
-            <Col sm="7">
-              <NavYesOrNo
-                text={e[0].length > 0 ? `${e[0]}\n от ${e[1]}` : ""}
-                f={(a: any) => {
-                  navigate(`/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`);
-                }}
+      <Tab.Container id="left-tabs-example" defaultActiveKey="editAndPreview">
+        <Row>
+          <Nav>
+            <Col>
+              <Nav.Item>
+                <Nav.Link eventKey="editAndPreview">Редактирай</Nav.Link>
+              </Nav.Item>
+            </Col>
+            <Col>
+              <DropDown1
+                url={`/myBook/${bUrl}`}
+                // @ts-ignore
+                doN={parseInt(doN ?? "15")}
+                // @ts-ignore
+                activeDrop={parseInt(gl)}
               />
             </Col>
-          </Row>
-        ))}
-      </Container>
+            <Col>
+              <Nav.Item>
+                <Nav.Link
+                  eventKey="editAndPreview"
+                  onClick={() => {
+                    window.open(`/myBook/see/${bUrl}/${gl}`);
+                  }}
+                >
+                  Преглед
+                </Nav.Link>
+              </Nav.Item>
+            </Col>
+          </Nav>
+        </Row>
+        <Row>
+          <Tab.Content
+            id="uncontrolled-tab-example"
+            className="mb-3"
+            key={"space"}
+          >
+            {/* <Button eventKey="preview" title="Преглед" onClick={()=>{window.open(`/myBook/see/${bUrl}/${gl}`);}}> */}
+
+            {/* </Button> */}
+            <Tab.Pane eventKey="editAndPreview" title="Редактирай">
+              <Container>
+                <Row>
+                  <Col>
+                    <EditText
+                      text={text}
+                      text2={text2}
+                      glava={gl ?? "1"}
+                      bUrl={`${bUrl}`}
+                      setText={setText}
+                      setText2={setText2}
+                      priIzvikvane={update}
+                      key={gl}
+                    />
+                  </Col>
+                  <Col>
+                    <Book
+                      url={`/myBook/${bUrl}`}
+                      title={"Книга " + bUrl}
+                      almP={`/myBook/${bUrl}/`}
+                      flag={3}
+                      params={{
+                        text,
+                        glava: gl,
+                        text2,
+                      }}
+                      kr={false}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col sm="2"></Col>
+                  <Col sm="6">
+                    <FormComponent
+                      to="/"
+                      textForSubmit="Към главната страница"
+                      method="get"
+                      submitVariant="secondary"
+                    />
+                  </Col>
+                  <Col>
+                    <FormComponent
+                      textsHidden={[
+                        text.replace(/\\r/gm, "") ?? "a",
+                        text2.replace(/\\r/gm, "") ?? "a",
+                      ]}
+                      to={`/myBook/${bUrl}/${gl}/save`}
+                      textForSubmit="Запази промените"
+                      submitVariant="danger"
+                    />
+                  </Col>
+                </Row>
+              </Container>
+            </Tab.Pane>
+          </Tab.Content>
+          <Container>
+            {/* @ts-ignore */}
+            {comm.map((e, i) => (
+              <Row key={e[0]}>
+                <Col sm="7">
+                  <NavYesOrNo
+                    text={e[0].length > 0 ? `${e[0]}\n от ${e[1]}` : ""}
+                    f={(a: any) => {
+                      navigate(
+                        `/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`
+                      );
+                    }}
+                  />
+                </Col>
+              </Row>
+            ))}
+          </Container>
+        </Row>
+      </Tab.Container>
     </div>
   );
 }
