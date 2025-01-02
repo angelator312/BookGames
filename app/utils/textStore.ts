@@ -30,8 +30,6 @@ export interface Book {
   data: BookData;
 }
 
-const isBook = (x: any): x is Book => x.isBook === true;
-
 export interface Spec {
   _id?: string;
   id: string;
@@ -226,7 +224,6 @@ export class BookStore {
     for (let i = 0; i < data.length; i++)
       if (data[i].avtor == avt) delete data[i];
 
-    if (!isBook(data[0])) return [this.prototypeOfBook()];
 
     if (typeof query === "string" && query.length > 0) {
       //
@@ -340,8 +337,8 @@ export class BookStore {
       ...book,
       data: 
       {
-        clicks:book.data.clicks+1,
-        timeForUser:book.data.timeForUser
+        clicks:(book.data?.clicks??0)+1,
+        timeForUser:book.data?.timeForUser??{}
       }
     };
 

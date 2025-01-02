@@ -5,6 +5,7 @@ import BookHeader from "./bookHeader";
 import NavYesOrNo from "./navbarYes";
 import Settings from "./settings";
 import SearchComponent from "./Search";
+import { Col, Container, Row } from "react-bootstrap";
 
 export default function Home({
   user,
@@ -29,9 +30,9 @@ export default function Home({
         break;
     }
   return (
-    <div className="m-l-35%">
+    <Container>
       {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl  space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
-      <div className="text-center space-y-2 sm:text-left">
+      <Container>
         <NavYesOrNo
           text={err ?? ""}
           yes={false}
@@ -44,50 +45,61 @@ export default function Home({
           }
         />
         {/* <div className="m-l-15%"> */}
-        <div className="">
-          <h1
-            style={{ padding: 15.4 }}
-            className="text-slate-500 font-medium logo f-book-c"
-          >
-            Книги-игри
-          </h1>
-          <br />
-
-          <h3 className="font-medium text-dark">Здравей {user}</h3>
-        </div>
+        <Row>
+          <Col style={{ paddingTop: "1rem" }}>
+            <h1 className="text-slate-500 font-medium logo f-book-c">
+              Книги-игри
+            </h1>
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col style={{ paddingTop: "1rem" }}>
+            <h3 className="font-medium text-dark">Здравей {user}</h3>
+          </Col>
+        </Row>
         {/* </div> */}
         {/* </div> */}
         <br />
-        <Link to="/newBook" className="">
-          <span className="text-slate-500 font-medium logo text-center text-primary">
-            Нова книга
-          </span>
-        </Link>
+
+        <Row>
+          <Col style={{ paddingTop: "1rem" }}>
+            <Link to="/newBook" className="">
+              <span className="text-slate-500 font-medium logo text-center text-primary">
+                Нова книга
+              </span>
+            </Link>
+          </Col>
+        </Row>
         <br />
         <Settings />
         <br />
-        <Link to="/logout" className="">
-          <span className="text-slate-500 font-medium logo text-center text-primary">
-            Излез от профила
-          </span>
-        </Link>
+        <Row>
+          <Col style={{ paddingTop: "1rem" }}>
+            <Link to="/logout" className="">
+              <span className="text-slate-500 font-medium logo text-center text-primary">
+                Излез от профила
+              </span>
+            </Link>
+          </Col>
+        </Row>
         <br />
         <br />
         {/* </div> */}
-        <div className="centered text-center m-l-45%">
+        <Container>
           {books[0].map((e, i) => (
             <BookHeader e={e} key={i} avt={true} />
           ))}
-        </div>
+        </Container>
         <hr />
-        <SearchComponent/>
+        <SearchComponent />
         <div className="centered text-center m-l-45%">
           {books[1].map((e, i) => (
             <BookHeader e={e} key={i} />
           ))}
         </div>
-      </div>
+      </Container>
       <br />
-    </div>
+    </Container>
   );
 }
