@@ -1,7 +1,7 @@
 // import { Outlet } from "@remix-run/react";
 // import bcrypt from "bcryptjs";
 import { useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, Row,Container } from "react-bootstrap";
 import { createUserSession, getUserId } from "~/utils/session.server";
 import type {
   ActionFunctionArgs,
@@ -9,7 +9,6 @@ import type {
   LoaderFunctionArgs,
 } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import Container from 'react-bootstrap/Container';
 // import  { User } from "~/utils/mongostore";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
