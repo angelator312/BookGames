@@ -1,7 +1,7 @@
 // import { Outlet } from "@remix-run/react";
 // import bcrypt from "bcryptjs";
 import { useState } from "react";
-import { Button, Col, Form, Row,Container } from "react-bootstrap";
+import { Button, Col, Form, Row, Container } from "react-bootstrap";
 import { createUserSession, getUserId } from "~/utils/session.server";
 import type {
   ActionFunctionArgs,
@@ -27,7 +27,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const form = await request.formData();
   const pass = form.get("pass")?.toString().trim();
   const username = form.get("user")?.toString().trim();
-  
+
   // we do this type check to be extra sure and to make TypeScript happy
   // we'll explore validation next!
   if (typeof pass !== "string" || typeof username !== "string") {
@@ -104,76 +104,85 @@ function FormExample() {
 
   return (
     <Container>
-      <h1 className="centered">Вход</h1>
       <Row className="mb-3">
-        <NavYesOrNo text={sign ?? ""} />
+        <Col>
+          <h1 className="centered">Вход</h1>
+          <NavYesOrNo text={sign ?? ""} />
+        </Col>
       </Row>
-      <Form
-        noValidate
-        validated={validated}
-        onSubmit={handleSubmit}
-        method="POST"
-      >
-        <Row className="mb-3">
-          <NavYesOrNo text={err ??""} yes={false}/>
-        </Row>
-        <Row className="mb-3S">
-          <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
-            <Form.Label column sm="2">
-              Име
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                required
-                type="text"
-                placeholder="Име"
-                name="user"
-              />
-              <Form.Control.Feedback>Става!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Моля, напишете име!
-              </Form.Control.Feedback>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
-            <Form.Label column sm="2">
-              Парола
-            </Form.Label>
-            <Col sm="10">
-              <Form.Control
-                required
-                type="password"
-                placeholder="Парола"
-                name="pass"
-              />
-              <Form.Control.Feedback>Става!</Form.Control.Feedback>
-              <Form.Control.Feedback type="invalid">
-                Моля, напишете парола!
-              </Form.Control.Feedback>
-            </Col>
-          </Form.Group>
-        </Row>
-        <Row className="mb-3">
-          <Col sm="2"></Col>
-          <Col sm="1" className="mb-3">
-            <Button type="submit" variant="danger" className="centered m-r-3">
-              Вход
-            </Button>
-          </Col>
-          <Col sm="1"></Col>
-          <Col sm="2" className="mb-3">
-            <Link to="/signup">
-              <Button variant="secondary">Регистрация</Button>
-            </Link>
-          </Col>
-          <Col sm="1"></Col>
-          <Col sm="1" className="mb-3">
-            <Link to="/">
-              <Button variant="secondary">Начало</Button>
-            </Link>
-          </Col>
-        </Row>
-      </Form>
+      <Row>
+        <Col>
+          <Container>
+
+            <Form
+              noValidate
+              validated={validated}
+              onSubmit={handleSubmit}
+              method="POST"
+            >
+              <Row className="mb-3">
+                <NavYesOrNo text={err ?? ""} yes={false} />
+              </Row>
+              <Row className="mb-3S">
+                <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
+                  <Form.Label column sm="2">
+                    Име
+                  </Form.Label>
+                  <Col sm="10">
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder="Име"
+                      name="user"
+                    />
+                    <Form.Control.Feedback>Става!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      Моля, напишете име!
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
+                  <Form.Label column sm="2">
+                    Парола
+                  </Form.Label>
+                  <Col sm="10">
+                    <Form.Control
+                      required
+                      type="password"
+                      placeholder="Парола"
+                      name="pass"
+                    />
+                    <Form.Control.Feedback>Става!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">
+                      Моля, напишете парола!
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Col sm="2"></Col>
+                <Col sm="1" className="mb-3">
+                  <Button type="submit" variant="danger" className="centered m-r-3">
+                    Вход
+                  </Button>
+                </Col>
+                <Col sm="1"></Col>
+                <Col sm="2" className="mb-3">
+                  <Link to="/signup">
+                    <Button variant="secondary">Регистрация</Button>
+                  </Link>
+                </Col>
+                <Col sm="1"></Col>
+                <Col sm="1" className="mb-3">
+                  <Link to="/">
+                    <Button variant="secondary">Начало</Button>
+                  </Link>
+                </Col>
+              </Row>
+            </Form>
+          </Container>
+        </Col>
+      </Row>
     </Container>
   );
 }
