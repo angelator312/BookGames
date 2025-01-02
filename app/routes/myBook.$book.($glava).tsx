@@ -128,54 +128,8 @@ export default function Book1() {
         className="mb-3"
         key={"space"}
       >
-        <Tab eventKey="edit" title="Промени текста">
-          <Col sm="6">
-            <EditText
-              text={text}
-              text2={text2}
-              glava={gl ?? "1"}
-              bUrl={`${bUrl}`}
-              setText={setText}
-              setText2={setText2}
-              priIzvikvane={update}
-              key={gl.toString()}
-            />
-          </Col>
-          <Row>
-            <Col sm="2"></Col>
-            <Col sm="3">
-              <FormComponent
-                textsHidden={[
-                  text.replace(/\\r/gm, "") ?? "a",
-                  text2.replace(/\\r/gm, "") ?? "a",
-                ]}
-                to={`/myBook/${bUrl}/${gl}/save`}
-                textForSubmit="Запази промените"
-                submitVariant="danger"
-              />
-            </Col>
-            <Col sm="3">
-              <FormComponent
-                to="/"
-                textForSubmit="Към главната страница"
-                method="get"
-                submitVariant="secondary"
-              />
-            </Col>
-            <Col>
-              <FormComponent
-                textsHidden={[
-                  text.replace(/\\r/gm, "") ?? "a",
-                  text2.replace(/\\r/gm, "") ?? "a",
-                ]}
-                to={`/myBook/${bUrl}/${gl}/save`}
-                textForSubmit="Запази промените"
-                submitVariant="danger"
-              />
-            </Col>
-          </Row>
-        </Tab>
-        <Tab eventKey="preview" title="Изглед">
+
+        <Tab eventKey="preview" title="Изглед" onClick={()=>{}}>
           {/* <Text
             furst2Lines={furst2Lines}
             glava={gl ?? "1"}
@@ -208,7 +162,7 @@ export default function Book1() {
             </Col>
           </Row>
         </Tab>
-        <Tab eventKey="editAndPreview" title="Промени текста и изглед">
+        <Tab eventKey="editAndPreview" title="Редактирай">
           <Container>
             <Row>
               <Col>
