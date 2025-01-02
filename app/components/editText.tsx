@@ -59,11 +59,9 @@ export default function EditText({
         Кръглите скоби () са задължителен атрибут при посочване на конкретна
         Глава
         <br />
-        <a href="/helpLanguage">
-          <Button variant="secondary">
+          <Button variant="secondary" onClick={() => window.open("/helpLanguage")}>
             Допълнителни обяснения за псевдо езика
           </Button>
-        </a>
       </p>
 
       <br />
