@@ -111,7 +111,7 @@ export default function Home({
             </Row>
             <Row>
               <Col>
-                <Container>
+                <div>
                   {books[1].map((e, i) => (
                     <Row key={i}>
                       <Col>
@@ -119,7 +119,7 @@ export default function Home({
                       </Col>
                     </Row>
                   ))}
-                </Container>
+                </div>
               </Col>
             </Row>
           </Container>
