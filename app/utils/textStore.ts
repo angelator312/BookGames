@@ -258,9 +258,7 @@ export class BookStore {
     //console.log(data1);
 
     // @ts-ignore
-    const data1Ost = books.filter((e) => !filterFunc(e, query));
     const out = data2;
-    out.push(...data1Ost);
     return out;
   }
   async getPublicBooks(avt: string, query: string | null): Promise<Book[]> {
