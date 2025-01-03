@@ -109,15 +109,19 @@ export default function Home({
                 <SearchComponent />
               </Col>
             </Row>
-            <Container>
-              {books[1].map((e, i) => (
-                <Row key={i}>
-                  <Col>
-                    <BookHeader e={e}/>
-                  </Col>
-                </Row>
-              ))}
-            </Container>
+            <Row>
+              <Col>
+                <Container>
+                  {books[1].map((e, i) => (
+                    <Row key={i}>
+                      <Col>
+                        <BookHeader e={e} />
+                      </Col>
+                    </Row>
+                  ))}
+                </Container>
+              </Col>
+            </Row>
           </Container>
         </Col>
       </Row>

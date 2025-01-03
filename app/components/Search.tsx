@@ -17,7 +17,7 @@ export default function SearchComponent() {
           <Form.Control
             type="text"
             name="query"
-            placeholder="Search tweets..."
+            placeholder="Търси"
             defaultValue={params.get("query") ?? ""}
           />
         </Col>
