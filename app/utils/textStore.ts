@@ -227,8 +227,8 @@ export class BookStore {
     function analysticFunc(e: WithId<Book>): number {
       const clickWeight=10;
       const timeWeight = 100;
-      let br=e.data.clicks*clickWeight;
-      br+=sredno(e.data.timeForUser)*timeWeight;
+      let br=(e.data?.clicks??0)*clickWeight;
+      br+=sredno(e.data?.timeForUser??{})*timeWeight;
       
       return br;
     }
