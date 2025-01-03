@@ -200,17 +200,50 @@ export class BookStore {
     return a.map((e, i) => (e[1] == avt ? e[0] : ""));
   }
   async searchWithQuery(query: string, books: Book[]): Promise<Book[]> {
-    function filterFunc(e: WithId<Book>, query: string) {
+    function includes(queryOrg: string, str: string): number {
+      const query = queryOrg;
+      let br = 0;
+      const len = str.length;
+      if (str.indexOf(query) != -1) br += len - str.indexOf(query);
+      if (str.toLowerCase().indexOf(query) != -1)
+        br += len - str.toLowerCase().indexOf(query);
+      if (str.toLowerCase().indexOf(query.toLowerCase()) != -1)
+        br += len - str.toLowerCase().indexOf(query.toLowerCase());
+      return br;
+    }
+    function includesFromArray(queryOrg: string, str: string[]): number {
+      let br = 0;
+      for (const e of str) {
+        br += includes(queryOrg, e);
+      }
+      return br; // return the number of matches
+    }
+    function filterFunc(e: WithId<Book>, query: string):number {
       return (
-        e.id?.includes(query) ??
-        e.tags?.includes(query) ??
-        e.text2?.includes(query) ??
-        e.avtor?.includes(query)
+        includes(query, e.id ?? "")*2 +
+        includesFromArray(query, e.tags ?? [""])*3 +
+        includes(query, e.text2 ?? "")*2 +
+        includes(query, e.avtor ?? "")
       );
     }
     // @ts-ignore
     const data1 = books.filter((e) => filterFunc(e, query));
-    const out = data1;
+    const data2=data1.sort((a,b) =>{
+      //@ts-ignore
+      const aOtg=filterFunc(a,query),bOtg=filterFunc( b,query);
+      console.log(a, aOtg);
+      console.log(b, bOtg);
+      
+      if(aOtg>bOtg) return -1;
+      if (aOtg ==bOtg) return 0;
+      return 1;
+    })
+    //console.log(data1);
+    
+    // @ts-ignore
+    const data1Ost = books.filter((e) => !filterFunc(e, query));
+    const out = data2;
+    out.push(...data1Ost);
     return out;
   }
   async getPublicBooks(avt: string, query: string | null): Promise<Book[]> {
@@ -226,7 +259,7 @@ export class BookStore {
 
     if (typeof query === "string" && query.length > 0) {
       //
-      console.log(data);
+      //console.log(data);
       return this.searchWithQuery(query, data);
     }
 

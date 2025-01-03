@@ -6,7 +6,7 @@ import getUserStore from "~/utils/userStore";
 export async function loader({ request }: LoaderFunctionArgs) {
   const form =new URL(request.url).searchParams;
   if (!form) return redirect("/");
-  console.log(form);
+  //console.log(form);
   
   const a = await requireUserId(request, false);
   if (!a) return redirect("/login");
