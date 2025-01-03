@@ -14,7 +14,7 @@ export default function BookHeader({
   return (
     <Container style={{ marginTop: "1rem" }} fluid>
       <Row>
-        <Col xs={1}>
+        <Col xs={2}>
           <img src="/img/book.png" alt="Book" width={60} height={60} />
         </Col>
         <Col xs={6}>
@@ -29,42 +29,38 @@ export default function BookHeader({
             </a>
           </OverlayTrigger>
         </Col>
-        <Col className="text-bold text-dark" xs={5}>{e.avtor}</Col>
+        <Col className="text-bold text-dark" xs={4}>
+          {e.avtor}
+        </Col>
         {/* <br /> */}
         <br />
       </Row>
-      <Row>
-        <Col className="text-center">
-          <h3 className="centered  m-l-3">
-            {e.public ? (
-              ""
-            ) : (
-              // <form method="post" action={`/myBook/${e.text}/publish`}>
-              //   <input className="bg-book-c" type="submit" value={"Publish"} />
-              // </form>
+      {e.public ? (
+        ""
+      ) : (
+        <Row>
+          <Col className="text-center">
+            <h3 className="centered  m-l-3">
               <FormComponent
                 submitVariant="danger"
                 textForSubmit="Publish"
                 to={`/myBook/${e.text}/publish`}
               />
-            )}
-          </h3>
-        </Col>
-        <Col className="text-center">
-          <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark m-l-3">
-            {avt ? (
-              ""
-            ) : (
+            </h3>
+          </Col>
+
+          <Col className="text-center">
+            <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark m-l-3">
               <FormComponent
                 method="get"
                 submitVariant="secondary"
                 textForSubmit="Delete"
                 to={`/delete/${e.text}/`}
               />
-            )}
-          </h3>
-        </Col>
-      </Row>
+            </h3>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 }

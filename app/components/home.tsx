@@ -89,7 +89,7 @@ export default function Home({
       {/* </div> */}
       <Row>
         <Col>
-          <Container>
+          <Container className="">
             {books[0].map((e, i) => (
               <Row key={i}>
                 <Col>
