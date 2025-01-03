@@ -12,7 +12,7 @@ export default function BookHeader({
   if (!e) return;
   avt = !avt;
   return (
-    <Container style={{ marginTop: "1rem" }}>
+    <Container style={{ marginTop: "1rem" }} fluid>
       <Row>
         <Col>
           <img src="/img/book.png" alt="Book" width={60} height={60} />
