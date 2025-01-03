@@ -5,6 +5,7 @@ import Book from "~/components/book";
 import getUserStore from "~/utils/userStore";
 import getTextStore from "~/utils/textStore";
 import { createGorB, getUserId, requireUserId } from "~/utils/session.server";
+import { loaderBook } from "~/utils/loaderTypes";
 export async function action({ params, request }: ActionFunctionArgs) {
   const form = await request.formData();
   let glava = form.get("to");
@@ -41,13 +42,13 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       createGorB("glava", glava, request);
       createGorB("book", b.text, request);
       const settings = await uStore.getMySettings(a);
-      return { text: segG, glava, text2: spec, b,settings };
+      return { text: segG, glava, text2: spec, b,settings,user:a };
     }
   }
   return redirect("/");
 }
 export default function Book1() {
-  const book = useLoaderData<typeof loader>();
+  const book = useLoaderData<loaderBook>();
   //console.log(book.glava);
 
   //   style={{ padding: 15.4 }}

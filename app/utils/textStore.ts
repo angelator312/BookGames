@@ -224,7 +224,6 @@ export class BookStore {
     for (let i = 0; i < data.length; i++)
       if (data[i].avtor == avt) delete data[i];
 
-
     if (typeof query === "string" && query.length > 0) {
       //
       console.log(data);
@@ -332,20 +331,37 @@ export class BookStore {
     }
     return null;
   }
-  async addClick(book:Book): Promise<void> {
+  async addClick(book: Book): Promise<void> {
     const v: Book = {
       ...book,
-      data: 
-      {
-        clicks:(book.data?.clicks??0)+1,
-        timeForUser:book.data?.timeForUser??{}
-      }
+      data: {
+        clicks: (book.data?.clicks ?? 0) + 1,
+        timeForUser: book.data?.timeForUser ?? {},
+      },
     };
 
     await this.collection.replaceOne({ id: book.id }, v, {
       upsert: true,
     });
-    return ;
+    return;
+  }
+  async addTime(bookName: string, timeM: number, user: string): Promise<void> {
+    if (Number.isNaN(timeM)) return;
+    const book = await this.getBook(bookName);
+    if (!book) return;
+    const v: Book = {
+      ...book,
+      data: {
+        clicks: book.data?.clicks,
+        timeForUser: {
+          ...(book.data?.timeForUser ?? {}),
+        },
+      },
+    };
+    v.data.timeForUser[user] = v.data.timeForUser[user] + timeM;
+    await this.collection.replaceOne({ id: book.id }, v, {
+      upsert: true,
+    });
   }
 
   prototypeOfBookData(): BookData {

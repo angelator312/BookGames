@@ -1,5 +1,4 @@
 import { useLoaderData } from "@remix-run/react";
-import { json, type LoaderFunctionArgs } from "@remix-run/node";
 // import menu from "~/helps/menu.png";
 import Navbar from "./navbar";
 import Text from "./text";
@@ -8,29 +7,12 @@ import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  // console.log(11);
-  // let glava = await getGorB("glava");
-  // let b = await getGorB("book");
-  // if (!glava) glava = "1";
-  // const textStore = await getTextStore();
-  // // const b = await textStore.getBook(book);
-  // let text = await textStore.getText(`${b}-${glava}`);
-  // if (!text) {
-  //   text = { text: "A" };
-  // }
-  return json({
-    text: "This is not mandatory",
-    glava: "glava",
-    text2: "This is not mandatory",
-  });
-};
-
 interface Params {
   text: string;
   glava: string;
   text2: string;
   user: string;
+  book: { text: string };
 }
 
 export default function Book({
@@ -43,7 +25,8 @@ export default function Book({
     text: "This is not mandatory",
     glava: "glava",
     text2: "This is not mandatory",
-    user:"user",
+    user: "user",
+    book: { text: "Problem" },
   },
 }: {
   url: string;
@@ -54,9 +37,9 @@ export default function Book({
   params?: Params;
 }) {
   const loaderData = useLoaderData<loaderBook>();
-  if (!flag) var { text, glava, text2, user } = loaderData;
+  if (!flag) var { text, glava, text2, user, b: book } = loaderData;
   //@ts-ignore
-  else var { text, glava, text2, user } = params;
+  else var { text, glava, text2, user, book } = params;
   // else
   //  { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(flag,text,glava,text2);
@@ -66,9 +49,14 @@ export default function Book({
   textLines = textLines.slice(2);
   const [timeIn] = useState(Date.now());
   useEffect(() => {
-    const handleUnload = () => {
-      fetch(
-        "/analyses/timeForUser?user=" + user + "time=" + (Date.now() - timeIn)
+    const handleUnload = async() => {
+      await fetch(
+        "/analyses/timeForUser?user=" +
+          user +
+          "&time=" +
+          timeIn+
+          "&book=" +
+          book.text
       );
     };
     window.addEventListener("beforeunload", handleUnload);
@@ -109,9 +97,13 @@ export default function Book({
               <Col sm="3">
                 <FormComponent
                   submitVariant="danger"
-                  to="/"
+                  to={
+                    "/analyses/timeForUser"
+                  }
+                  method="GET"
                   textForSubmit="Начало"
-                  namesHidden={["time"]}
+                  namesHidden={["time", "user", "book"]}
+                  textsHidden={[timeIn.toString(),user,book.text]}
                 />
               </Col>
             </Row>

@@ -2,10 +2,10 @@ import type { Book } from "./textStore";
 import type { SettingsInterface, User } from "./userStore";
 
 export type loaderBook={
-    text: any;
-    glava: any;
-    text2: any;
+    text: string;
+    glava: string;
+    text2: string;
     b: Book;
     settings: SettingsInterface;
-    user:User;
+    user:string;
 }

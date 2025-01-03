@@ -176,6 +176,7 @@ export default function Book1() {
                         glava: gl,
                         text2,
                         user:user??"",
+                        book:{text:bUrl}
                       }}
                       kr={false}
                     />

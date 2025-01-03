@@ -8,6 +8,7 @@ export default function FormComponent({
   namesHidden = [],
   submitVariant = "success",
   method = "post",
+  handleClick=()=>"",
 }: {
   texts?: string[];
   names?: string[];
@@ -17,6 +18,7 @@ export default function FormComponent({
   to: string;
   submitVariant?: string;
   method?: string;
+  handleClick?: () => void;
 }) {
   return (
     <Form method={method} action={to}>
@@ -41,6 +43,7 @@ export default function FormComponent({
       </InputGroup>
       <InputGroup className="mb-3">
         <Button
+          onClick={handleClick}
           variant={submitVariant}
           as="input"
           type="submit"
