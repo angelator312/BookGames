@@ -30,7 +30,7 @@ export default function Home({
         break;
     }
   return (
-    <Container>
+    <Container fluid>
       {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl  space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
       <NavYesOrNo
         text={err ?? ""}
@@ -51,7 +51,7 @@ export default function Home({
           </h1>
         </Col>
       </Row>
-      <br />
+
       <Row>
         <Col style={{ marginTop: "1rem" }}>
           <h3 className="font-medium text-dark">Здравей {user}</h3>
@@ -59,7 +59,7 @@ export default function Home({
       </Row>
       {/* </div> */}
       {/* </div> */}
-      <br />
+
 
       <Row>
         <Col style={{ marginTop: "1rem" }}>
@@ -70,13 +70,13 @@ export default function Home({
           </Link>
         </Col>
       </Row>
-      <br />
+
       <Row>
         <Col>
           <Settings />
         </Col>
       </Row>
-      <br />
+
       <Row>
         <Col style={{ marginTop: "1rem" }}>
           <Link to="/logout" className="">
@@ -87,9 +87,9 @@ export default function Home({
         </Col>
       </Row>
       {/* </div> */}
-      <Row>
+      <Row className="mt-5">
         <Col>
-          <Container className="">
+          <div className="">
             {books[0].map((e, i) => (
               <Row key={i}>
                 <Col>
@@ -97,11 +97,10 @@ export default function Home({
                 </Col>
               </Row>
             ))}
-          </Container>
+          </div>
         </Col>
       </Row>
-      <hr />
-      <Row>
+      <Row className="mt-5">
         <Col>
           <Container>
             <Row>
