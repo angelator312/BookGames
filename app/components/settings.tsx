@@ -8,7 +8,7 @@ type loader=[string,Book[][],SettingsInterface]
 function Settings() {
   const loaderThings = useLoaderData<loader>();
   const settings=loaderThings[2];
-  console.log(settings);
+  //console.log(settings);
   const [fontSize, setFontSize] = useState(settings.fontSize);
 
   const [show, setShow] = useState(false);

@@ -218,28 +218,45 @@ export class BookStore {
       }
       return br; // return the number of matches
     }
-    function filterFunc(e: WithId<Book>, query: string):number {
+    
+    function sredno(e: { [key: string]: number }): number {
+      let sum = 0;
+      Object.values(e).map(k => sum +=k);
+      return sum/Object.values(e).length;
+    }
+    function analysticFunc(e: WithId<Book>): number {
+      const clickWeight=10;
+      const timeWeight = 100;
+      let br=e.data.clicks*clickWeight;
+      br+=sredno(e.data.timeForUser)*timeWeight;
+      
+      return br;
+    }
+    function filterFunc(e: WithId<Book>, query: string): number {
       return (
-        includes(query, e.id ?? "")*2 +
-        includesFromArray(query, e.tags ?? [""])*3 +
-        includes(query, e.text2 ?? "")*2 +
+        includes(query, e.id ?? "") * 2 +
+        includesFromArray(query, e.tags ?? [""]) * 3 +
+        includes(query, e.text2 ?? "") * 2 +
         includes(query, e.avtor ?? "")
       );
     }
     // @ts-ignore
     const data1 = books.filter((e) => filterFunc(e, query));
-    const data2=data1.sort((a,b) =>{
+    const data2 = data1.sort((a, b) => {
       //@ts-ignore
-      const aOtg=filterFunc(a,query),bOtg=filterFunc( b,query);
-      console.log(a, aOtg);
-      console.log(b, bOtg);
-      
-      if(aOtg>bOtg) return -1;
-      if (aOtg ==bOtg) return 0;
+      const aOtg = filterFunc(a, query),bOtg = filterFunc(b, query);
+      if (aOtg > bOtg) return -1;
+      if (aOtg == bOtg) {
+        //@ts-ignore
+        const aOtg = analysticFunc(a),bOtg = analysticFunc(b);
+        if (aOtg > bOtg) return -1;
+        if (aOtg == bOtg) return 0;
+        return 1;
+      }
       return 1;
-    })
+    });
     //console.log(data1);
-    
+
     // @ts-ignore
     const data1Ost = books.filter((e) => !filterFunc(e, query));
     const out = data2;
