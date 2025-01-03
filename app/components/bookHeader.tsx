@@ -14,10 +14,10 @@ export default function BookHeader({
   return (
     <Container style={{ marginTop: "1rem" }} fluid>
       <Row>
-        <Col>
+        <Col xs={1}>
           <img src="/img/book.png" alt="Book" width={60} height={60} />
         </Col>
-        <Col>
+        <Col xs={6}>
           <OverlayTrigger
             placement="right"
             overlay={<Tooltip>{e.text2}</Tooltip>}
@@ -29,13 +29,7 @@ export default function BookHeader({
             </a>
           </OverlayTrigger>
         </Col>
-        <Col>
-          <h4 className="text-bold text-dark">
-            {/* <br /> */}
-            Автор:
-          </h4>
-        </Col>
-        <Col className="text-bold text-dark">{e.avtor}</Col>
+        <Col className="text-bold text-dark" xs={5}>{e.avtor}</Col>
         {/* <br /> */}
         <br />
       </Row>
