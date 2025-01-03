@@ -1,16 +1,19 @@
-import { Link, useSearchParams } from "@remix-run/react";
+import { useSearchParams } from "@remix-run/react";
 import type { Text } from "~/utils/textStore";
 // import { HydrationProvider, Server } from "react-hydration-provider";
 import BookHeader from "./bookHeader";
 import NavYesOrNo from "./navbarYes";
-import Settings from "./settings";
 import SearchComponent from "./Search";
 import { Col, Container, Row } from "react-bootstrap";
+import MenuForHome  from "./home.menu";
+import type { SettingsInterface } from "~/utils/userStore";
 
 export default function Home({
   user,
   books,
+  settings,
 }: {
+  settings:SettingsInterface,
   user: string;
   books: Text[][];
 }) {
@@ -53,37 +56,8 @@ export default function Home({
       </Row>
 
       <Row>
-        <Col style={{ marginTop: "1rem" }}>
-          <h3 className="font-medium text-dark">Здравей {user}</h3>
-        </Col>
-      </Row>
-      {/* </div> */}
-      {/* </div> */}
-
-
-      <Row>
-        <Col style={{ marginTop: "1rem" }}>
-          <Link to="/newBook" className="">
-            <span className="text-slate-500 font-medium logo  text-primary">
-              Нова книга
-            </span>
-          </Link>
-        </Col>
-      </Row>
-
-      <Row>
         <Col>
-          <Settings />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col style={{ marginTop: "1rem" }}>
-          <Link to="/logout" className="">
-            <span className="text-slate-500 font-medium logo text-primary">
-              Излез от профила
-            </span>
-          </Link>
+          <MenuForHome/>
         </Col>
       </Row>
       {/* </div> */}

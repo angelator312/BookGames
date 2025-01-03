@@ -3,10 +3,10 @@ import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 export interface SettingsInterface {
   fontSize?: number;
-  language?: string;
+  tutorial?: boolean;
 }
 export interface UserData {
-  fontSize?: number;
+  forMe: string;
 }
 export interface User {
   _id?: ObjectId;
@@ -88,7 +88,7 @@ export class UserStore {
   getDefaultSettings(): SettingsInterface {
     const settings: SettingsInterface = {
       fontSize: 10,
-      language: "Bulgarian",
+      tutorial: true,
     };
     return settings;
   }
@@ -118,9 +118,12 @@ export class UserStore {
 
   //User data
   getDefaultUserData(): UserData {
-    const settings: UserData = {};
+    const settings: UserData = {
+      forMe:""
+    };
     return settings;
   }
+  
 }
 let ObUser: { [key: string]: UserStore } = {};
 

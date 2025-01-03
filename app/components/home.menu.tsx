@@ -3,13 +3,16 @@ import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { Button, Col, Form, Offcanvas, Row, Tab, Tabs } from "react-bootstrap";
 import type { Book } from "~/utils/textStore";
-import type { SettingsInterface } from "~/utils/userStore";
-type loader = [string, Book[][], SettingsInterface];
+import type { SettingsInterface, User } from "~/utils/userStore";
+type loaderIndex = [string, Book[][], User];
 
-function Settings() {
-  const loaderThings = useLoaderData<loader>();
-  const settings = loaderThings[2];
+function MenuForHome() {
+  const loaderThings = useLoaderData<loaderIndex>();
+  //@ts-ignore
+  const settings: SettingsInterface = loaderThings[2].settings;
+  const user = loaderThings[2];
   //console.log(settings);
+
   const [fontSize, setFontSize] = useState(settings.fontSize);
 
   const [show, setShow] = useState(false);
@@ -45,6 +48,8 @@ function Settings() {
                     Големина на шрифта
                   </Form.Label>
                   <Form.Control
+                    min={10}
+                    max={50}
                     type="number"
                     value={fontSize}
                     onChange={(e) => setFontSize(parseInt(e.target.value ?? 2))}
@@ -53,17 +58,41 @@ function Settings() {
                 </Form.Group>
               </Form>
             </Tab>
-            <Tab eventKey={"Цвят"} title={"Цвят"}></Tab>
+            <Tab eventKey={"Тема"} title={"Тема"}></Tab>
             <Tab eventKey={"Профил"} title={"Профил"}>
               <Row>
                 <Col style={{ marginTop: "1rem" }}>
-                  <a href="/logout" className="">
+                  <h3 className="font-medium text-dark">Здравей {user.user}</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col style={{ marginTop: "1rem" }}>
+                  <a color="red" href="/logout" className="">
                     <span className="text-slate-500 font-medium logo text-primary">
                       Излез от профила
                     </span>
                   </a>
                 </Col>
               </Row>
+              {settings.tutorial ? (
+                <Row>
+                  <Col style={{ marginTop: "1rem" }}>
+                    <Button
+                      variant="link"
+                      onClick={async () => {
+                        settings.tutorial = false;
+                        await fetch("/profil/stopTutorial");
+                        setShow(false);
+                      }}
+                      className="text-slate-500 font-medium logo text-primary"
+                    >
+                      Спри Подсказките
+                    </Button>
+                  </Col>
+                </Row>
+              ) : (
+                ""
+              )}
             </Tab>
             <Tab eventKey={"Създаване"} title={"Създаване"}>
               <Row>
@@ -83,4 +112,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default MenuForHome;
