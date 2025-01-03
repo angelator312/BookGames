@@ -87,32 +87,40 @@ export default function Home({
         </Col>
       </Row>
       {/* </div> */}
-      <Container>
-        {books[0].map((e, i) => (
-          <Row key={i}>
-            <Col>
-              <BookHeader e={e} avt={true} />
-            </Col>
-          </Row>
-        ))}
-      </Container>
+      <Row>
+        <Col>
+          <Container>
+            {books[0].map((e, i) => (
+              <Row key={i}>
+                <Col>
+                  <BookHeader e={e} avt={true} />
+                </Col>
+              </Row>
+            ))}
+          </Container>
+        </Col>
+      </Row>
       <hr />
-      <Container>
-        <Row>
-          <Col>
-            <SearchComponent />
-          </Col>
-        </Row>
-        <Container>
-          {books[1].map((e, i) => (
-            <Row key={i}>
+      <Row>
+        <Col>
+          <Container>
+            <Row>
               <Col>
-                <BookHeader e={e} key={i} />
+                <SearchComponent />
               </Col>
             </Row>
-          ))}
-        </Container>
-      </Container>
+            <Container>
+              {books[1].map((e, i) => (
+                <Row key={i}>
+                  <Col>
+                    <BookHeader e={e}/>
+                  </Col>
+                </Row>
+              ))}
+            </Container>
+          </Container>
+        </Col>
+      </Row>
     </Container>
   );
 }
