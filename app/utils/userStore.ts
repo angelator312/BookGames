@@ -15,9 +15,13 @@ export interface User {
   passH: string;
   settings?: SettingsInterface;
   data?: UserData;
+  admin?: boolean;
 }
 
 export class UserStore {
+  FixDatabase() {
+    this.collection.updateMany({settings:undefined}, { $set: { settings: {fontSize:10} } });
+  }
   collection!: Collection<User>;
   // eslint-disable-next-line no-useless-constructor
   constructor(protected readonly collectionName: string) {}
@@ -122,6 +126,16 @@ export class UserStore {
       forMe:""
     };
     return settings;
+  }
+  async isAdmin(a:string): Promise<boolean> 
+  {
+    const data = await this.getUser(a);
+    if (data) {
+      if (data?.admin ==true) {
+        return true;
+      }
+    }
+    return false;
   }
   
 }
