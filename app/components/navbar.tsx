@@ -28,7 +28,12 @@ function Example({
         <img width={30} height={30} src={menu} alt="menu button" />
       </Button>
 
-      <Offcanvas show={show} onHide={handleClose} style={{ width: "95%" }}>
+      <Offcanvas
+        className="offcanvas-without-linkProblems"
+        show={show}
+        onHide={handleClose}
+        style={{ width: "95%" }}
+      >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
             {title} Глава {glava}

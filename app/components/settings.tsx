@@ -28,7 +28,12 @@ function Settings() {
         <img width={30} height={30} src={menu} alt="menu button" />
       </Button>
 
-      <Offcanvas show={show} onHide={handleClose} style={{ width: "85%" }}>
+      <Offcanvas
+        className="offcanvas-without-linkProblems"
+        show={show}
+        onHide={handleClose}
+        style={{ width: "85%" }}
+      >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Настройки</Offcanvas.Title>
         </Offcanvas.Header>

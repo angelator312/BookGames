@@ -2,6 +2,7 @@
   --smoke-white: #eeeeec;
   --black: rgb(1, 2, 70);
   --book-c: #dc3545;
+  --color-links-hover:none !important;
 }
 
 .btn-menu-my {
@@ -65,4 +66,9 @@
   margin-left: auto;
   margin-right: auto;
   text-align: right;
+}
+
+.offcanvas-without-linkProblems {
+  --color-links-hover:none !important;
+  --color-links:none !important;
 }/*# sourceMappingURL=main.css.map */
