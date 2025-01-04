@@ -57,13 +57,13 @@ export default function Home({
 
       <Row>
         <Col>
-          <MenuForHome/>
+          <MenuForHome />
         </Col>
       </Row>
       {/* </div> */}
       <Row className="mt-5">
         <Col>
-          <div className="">
+          <div className="bg-white bg-opacity-25 rounded-3 p-3">
             {books[0].map((e, i) => (
               <Row key={i}>
                 <Col>
@@ -76,7 +76,7 @@ export default function Home({
       </Row>
       <Row className="mt-5">
         <Col>
-          <Container>
+          <Container fluid className="bg-white bg-opacity-25 rounded-3 p-3">
             <Row>
               <Col>
                 <SearchComponent />
