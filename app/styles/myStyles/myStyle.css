@@ -39,7 +39,7 @@
 }
 .f-book-c {
   /* background-color: var(--book-c); */
-  color: var(--book-c);
+  color: var(--book-c) !important;
 }
 .bg-book-c {
   background-color: var(--book-c);

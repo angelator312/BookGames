@@ -35,7 +35,9 @@ function MenuForHome({
         style={{ width: "85%" }}
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Книги игри</Offcanvas.Title>
+          <Offcanvas.Title className="text-slate-500 font-medium logo f-book-c">
+            Навигация на сайта
+          </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body
           style={{ width: "95% !important" }}
