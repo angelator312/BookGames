@@ -1,5 +1,12 @@
-import FormComponent from "./formComp";
-import { Col, Container, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import {
+  Col,
+  Container,
+  Dropdown,
+  DropdownButton,
+  OverlayTrigger,
+  Row,
+  Tooltip,
+} from "react-bootstrap";
 import type { Text } from "~/utils/textStore";
 
 export default function BookHeader({
@@ -13,7 +20,7 @@ export default function BookHeader({
   return (
     <Container style={{ marginTop: "1rem" }} fluid>
       <Row>
-        <Col xs={2}>
+        <Col>
           <img src="/img/book.png" alt="Book" width={60} height={60} />
         </Col>
         <Col xs={6}>
@@ -28,36 +35,22 @@ export default function BookHeader({
             </a>
           </OverlayTrigger>
         </Col>
-        <Col className="text-bold text-dark" xs={4}>
+        <Col className="text-bold text-dark" xs={2}>
           {e.avtor}
         </Col>
         {/* <br /> */}
-        <br />
-      </Row>
-      <Row>
-        {e.public ? (
-          ""
-        ) : (
-          <Col className="text-center">
-            <h3 className="centered  m-l-3">
-              <FormComponent
-                submitVariant="danger"
-                textForSubmit="Publish"
-                to={`/myBook/${e.text}/publish`}
-              />
-            </h3>
-          </Col>
-        )}
         {avt ? (
           <Col className="text-center">
-            <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark m-l-3">
-              <FormComponent
-                method="get"
-                submitVariant="secondary"
-                textForSubmit="Delete"
-                to={`/delete/${e.text}/`}
-              />
-            </h3>
+            <DropdownButton title="Действия" id="dropdown-basic-button">
+              <Dropdown.Item
+                //method=post
+                href={`/myBook/${e.text}/publish`}
+                disabled={e.public}
+              >
+                Публикувай
+              </Dropdown.Item>
+              <Dropdown.Item href={`/delete/${e.text}/`}>Изтрий</Dropdown.Item>
+            </DropdownButton>
           </Col>
         ) : (
           ""
