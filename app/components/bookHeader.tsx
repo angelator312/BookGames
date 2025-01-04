@@ -10,7 +10,6 @@ export default function BookHeader({
   avt?: boolean;
 }) {
   if (!e) return;
-  avt = !avt;
   return (
     <Container style={{ marginTop: "1rem" }} fluid>
       <Row>
@@ -35,10 +34,10 @@ export default function BookHeader({
         {/* <br /> */}
         <br />
       </Row>
-      {e.public ? (
-        ""
-      ) : (
-        <Row>
+      <Row>
+        {e.public ? (
+          ""
+        ) : (
           <Col className="text-center">
             <h3 className="centered  m-l-3">
               <FormComponent
@@ -48,7 +47,8 @@ export default function BookHeader({
               />
             </h3>
           </Col>
-
+        )}
+        {avt ? (
           <Col className="text-center">
             <h3 className="centered text-j text-slate-500 font-medium logo text-bold text-dark m-l-3">
               <FormComponent
@@ -59,8 +59,10 @@ export default function BookHeader({
               />
             </h3>
           </Col>
-        </Row>
-      )}
+        ) : (
+          ""
+        )}
+      </Row>
     </Container>
   );
 }
