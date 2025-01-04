@@ -69,17 +69,11 @@ function MenuForHome({
           {settings.tutorial ? (
             <Row>
               <Col style={{ marginTop: "1rem" }}>
-                <Button
-                  variant="link"
-                  onClick={async () => {
-                    settings.tutorial = false;
-                    await fetch("/profil/stopTutorial");
-                    setShow(false);
-                  }}
-                  className="text-slate-500 font-medium logo text-primary"
-                >
-                  Спри Подсказките
-                </Button>
+                <a href="/profil/stopTutorial" className="">
+                  <span className="text-slate-500 font-medium logo  text-primary">
+                    Спри подсказките
+                  </span>
+                </a>
               </Col>
             </Row>
           ) : (

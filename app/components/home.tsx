@@ -28,7 +28,6 @@ export default function Home({
       case "1":
         err = `Книгата не е завършена!!!`;
         break;
-
       default:
         break;
     }
