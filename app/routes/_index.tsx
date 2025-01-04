@@ -13,7 +13,8 @@ import bootstrapStyles from "~/styles/bootstrap.css";
 import stylesUrl from "~/styles/index.css";
 import { knigi, requireUserId } from "~/utils/session.server";
 import { cssBundleHref } from "@remix-run/css-bundle";
-import getUserStore from "~/utils/userStore";
+import getUserStore, { getDefaultSettings, SettingsInterface, User } from "~/utils/userStore";
+import { Book } from "~/utils/textStore";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: bootstrapStyles },
@@ -42,20 +43,25 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   if (typeof a === "string") {
     const user = await (await getUserStore()).getUser(a);
-    const searchParams = new URL(request.url).searchParams;
-    return [a, await knigi(a, searchParams.get("query")), user];
+    if(user)
+    {
+      const searchParams = new URL(request.url).searchParams;
+      return [user, await knigi(a, searchParams.get("query")), user.settings??getDefaultSettings()];
+    }
   }
-  return [0, 0, 0];
+  return null;
 };
-
+type loaderType=[User,Book[],SettingsInterface]|null;
 export default function IndexRoute() {
   // console.log(1);
-  const [user, books, settings] = useLoaderData<typeof loader>();
+  const loader = useLoaderData<loaderType>();
+  if(loader)
+    var [user, books, settings] = loader;
   return (
     <div>
-      {user ? (
+      {loader ? (
         // @ts-ignore
-        <Home user={user.toString()} books={books} settings={settings} />
+        <Home user={user} books={books} settings={settings} />
       ) : (
         <Intro />
       )}

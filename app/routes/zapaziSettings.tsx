@@ -19,5 +19,5 @@ export async function loader({ request }: LoaderFunctionArgs) {
     }
   //settings.language="bg";
   uStore.adjustSettings(settings, a);
-  return redirect("/?successCode=1");
+  return redirect(form.get("toUrl")??"/?successCode=1");
 }

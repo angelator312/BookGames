@@ -6,7 +6,7 @@ import NavYesOrNo from "./navbarYes";
 import SearchComponent from "./Search";
 import { Col, Container, Row } from "react-bootstrap";
 import MenuForHome  from "./home.menu";
-import type { SettingsInterface } from "~/utils/userStore";
+import type { SettingsInterface, User } from "~/utils/userStore";
 
 export default function Home({
   user,
@@ -14,7 +14,7 @@ export default function Home({
   settings,
 }: {
   settings:SettingsInterface,
-  user: string;
+  user: User;
   books: Text[][];
 }) {
   // const userId = useLoaderData<string>();
@@ -57,7 +57,7 @@ export default function Home({
 
       <Row>
         <Col>
-          <MenuForHome />
+          <MenuForHome user={user} settings={settings}/>
         </Col>
       </Row>
       {/* </div> */}

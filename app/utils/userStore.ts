@@ -2,7 +2,7 @@ import type { Collection, ObjectId } from "mongodb";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 export interface SettingsInterface {
-  fontSize?: number;
+  fontSize: number;
   tutorial?: boolean;
 }
 export interface UserData {
@@ -22,12 +22,28 @@ export class UserStore {
   FixDatabase() {
     this.collection.updateMany(
       { settings: undefined },
-      { $set: { settings: { fontSize: 10 } } }
+      { $set: { settings: getDefaultSettings() } }
     );
     this.collection.updateMany(
       { admin: undefined },
       { $set: { admin: false } }
     );
+    const defaultSettings = getDefaultSettings();
+    const sValues = Object.values(defaultSettings);
+    Object.keys(defaultSettings).forEach((key, i) => {
+      this.collection.updateMany(
+        { [`settings.${key}`]: undefined },
+        { $set: { [`settings.${key}`]: sValues[i] } }
+      );
+    });
+    const DefaultUserData = this.getDefaultUserData();
+    const uValues = Object.values(DefaultUserData);
+    Object.keys(DefaultUserData).forEach((key, i) => {
+      this.collection.updateMany(
+        { [`data.${key}`]: undefined },
+        { $set: { [`data.${key}`]: uValues[i] } }
+      );
+    });
   }
   collection!: Collection<User>;
   // eslint-disable-next-line no-useless-constructor
@@ -97,11 +113,7 @@ export class UserStore {
   }
   //Settings
   getDefaultSettings(): SettingsInterface {
-    const settings: SettingsInterface = {
-      fontSize: 10,
-      tutorial: true,
-    };
-    return settings;
+    return getDefaultSettings();
   }
   async getMySettings(user: string): Promise<SettingsInterface> {
     const data = await this.collection.findOne({ user: user });
@@ -129,22 +141,17 @@ export class UserStore {
 
   //User data
   getDefaultUserData(): UserData {
-    const settings: UserData = {
-      forMe:""
-    };
-    return settings;
+    return getDefaultUserData();
   }
-  async isAdmin(a:string): Promise<boolean> 
-  {
+  async isAdmin(a: string): Promise<boolean> {
     const data = await this.getUser(a);
     if (data) {
-      if (data?.admin ==true) {
+      if (data?.admin == true) {
         return true;
       }
     }
     return false;
   }
-  
 }
 let ObUser: { [key: string]: UserStore } = {};
 
@@ -166,4 +173,19 @@ export default async function getUserStore(
     );
   }
   return ObUser[collectionName];
+}
+
+export function getDefaultSettings(): SettingsInterface {
+  const settings: SettingsInterface = {
+    fontSize: 10,
+    tutorial: true,
+  };
+  return settings;
+}
+
+export function getDefaultUserData(): UserData {
+  const settings: UserData = {
+    forMe: "",
+  };
+  return settings;
 }
