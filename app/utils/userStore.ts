@@ -20,7 +20,14 @@ export interface User {
 
 export class UserStore {
   FixDatabase() {
-    this.collection.updateMany({settings:undefined}, { $set: { settings: {fontSize:10} } });
+    this.collection.updateMany(
+      { settings: undefined },
+      { $set: { settings: { fontSize: 10 } } }
+    );
+    this.collection.updateMany(
+      { admin: undefined },
+      { $set: { admin: false } }
+    );
   }
   collection!: Collection<User>;
   // eslint-disable-next-line no-useless-constructor
