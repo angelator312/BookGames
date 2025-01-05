@@ -77,7 +77,7 @@ export class BookStore {
       data: this.prototypeOfBookData(),
     };
 
-    await this.collection.replaceOne({ id: `Book-${book}--1` }, v, {
+    await this.collection.replaceOne({ id: `${book}` }, v, {
       upsert: true,
     });
 
