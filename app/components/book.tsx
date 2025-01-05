@@ -6,6 +6,8 @@ import FormComponent from "./formComp";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
+import MenuForHome from "./home.menu";
+import { getDefaultSettings } from "~/utils/userStore";
 
 interface Params {
   text: string;
@@ -75,7 +77,7 @@ export default function Book({
     <div className="text-center space-y-2 sm:text-left bg-i">
       <h1 className="p-1 text-dark text-center">{title} </h1>
       <div className="space-y-0.5 bg-i">
-        <Navbar path={almP} glava={glava} title={title} flag={flag} />
+        {/* <MenuForHome user={user} settings={user.settings??getDefaultSettings()}/> */}
         <Text
           furst2Lines={furst2Lines}
           glava={glava}

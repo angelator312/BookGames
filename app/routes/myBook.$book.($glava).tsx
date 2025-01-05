@@ -117,9 +117,6 @@ export default function Book1() {
               <Nav.Item>
                 <Nav.Link eventKey="editAndPreview">Редактирай</Nav.Link>
               </Nav.Item>
-              <Nav.Item>
-                <Nav.Link href="/helpLanguage">Помощ</Nav.Link>
-              </Nav.Item>
             </Col>
             <Col>
               <DropDown1
@@ -213,7 +210,7 @@ export default function Book1() {
           <Container>
             {/* @ts-ignore */}
             {comm.map((e, i) => (
-              <Row key={e[0]}>
+              <Row key={i}>
                 <Col sm="7">
                   <NavYesOrNo
                     text={e[0].length > 0 ? `${e[0]}\n от ${e[1]}` : ""}
