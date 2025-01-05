@@ -8,9 +8,10 @@ export function ModalInsertChapterSimple({
 }: {
   showInsertChapter: boolean;
   handleCloseInsertChapter: () => void;
-  handleInsertChapter: (insertChapter: number) => void;
+  handleInsertChapter: (insertChapter: number,text:string) => void;
 }) {
   const [insertChapter, setInsertChapter] = useState(0);
+  const [insertText, setInsertText] = useState("");
   return (
     <Modal show={showInsertChapter} onHide={handleCloseInsertChapter}>
       <Modal.Header closeButton>
@@ -21,13 +22,20 @@ export function ModalInsertChapterSimple({
           value={insertChapter}
           onChange={(e) => setInsertChapter(parseInt(e.target.value))}
           type="number"
+          placeholder="Глава"
+        />
+        <input
+          value={insertText}
+          onChange={(e) => setInsertText(e.target.value)}
+          type="string"
+          placeholder="Текст в бутона"
         />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleCloseInsertChapter}>
           Затвори
         </Button>
-        <Button variant="primary" onClick={()=>handleInsertChapter(insertChapter)}>
+        <Button variant="primary" onClick={()=>handleInsertChapter(insertChapter,insertText)}>
           Вмъкни
         </Button>
       </Modal.Footer>

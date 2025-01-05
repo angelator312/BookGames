@@ -62,8 +62,8 @@ export default function EditText({
     }
   }
   const [showInsertChapter, setShowInsertChapter] = useState(false);
-  function handleInsertChapter(insertChapter: number) {
-    insertText(`=>(Глава ${insertChapter})(резултат 0)[АААА]`);
+  function handleInsertChapter(insertChapter: number,text:string) {
+    insertText(`=>(Глава ${insertChapter})(резултат 0)[${text??"AAAA"}]`);
     return setShowInsertChapter(false);
   }
 
