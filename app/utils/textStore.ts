@@ -65,7 +65,7 @@ export class BookStore {
     if (!gl) gl = "15";
 
     const v: Book = {
-      id: `Book-${book}--1`,
+      id: `${book}`,
       isBook: true,
       text: `gb${numSmallName}`,
       public: publ,
