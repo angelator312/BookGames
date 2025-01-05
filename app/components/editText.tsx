@@ -1,5 +1,15 @@
-import { Button, Container } from "react-bootstrap";
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  Container,
+  Dropdown,
+  DropdownButton,
+  Modal,
+  Row,
+} from "react-bootstrap";
 import { Editor } from "@monaco-editor/react";
+import { useState } from "react";
 
 export default function EditText({
   text,
@@ -19,53 +29,89 @@ export default function EditText({
   priIzvikvane: Function;
 }) {
   function handleEditorChange(value: any, event: any) {
-    setText(value.replace(/\r/gm, "") ?? "");
+    const arr = (value.replace(/\r/gm, "") ?? "").split(/^---\s*$/gm);
+    setText(arr[0]);
+    setText2(arr[1] ?? "");
     if (priIzvikvane) {
       priIzvikvane();
     }
   }
-  function handleEditorChange2(value: any, event: any) {
-    setText2(value.replace(/\r/gm, "") ?? " ");
-    if (priIzvikvane) {
-      priIzvikvane();
-    }
+  const [showInsertChapter, setShowInsertChapter] = useState(false);
+
+  const handleCloseInsertChapter = () => setShowInsertChapter(false);
+  const handleInsertChapter = () =>{
+    setText2(text2 + "=>(Глава 2)(резултат 0)[АААА]");
+    return setShowInsertChapter(false);
   }
+  const handleShowInsertChapter = () => setShowInsertChapter(true);
   return (
     <Container fluid>
+      <Row>
+        <ButtonGroup>
+          {/* <Button onClick={() => setText("")}>Изчисти</Button> */}
+          <Button
+            variant="secondary"
+            onClick={() => window.open("/helpLanguage")}
+          >
+            Помощ{" "}
+          </Button>
+          <DropdownButton
+            as={ButtonGroup}
+            title="Вмъкване"
+            id="bg-nested-dropdown"
+          >
+            <Dropdown.Item eventKey="1" onClick={handleShowInsertChapter}>На избор За Глава</Dropdown.Item>
+            <Dropdown.Item eventKey="2">Dropdown link</Dropdown.Item>
+          </DropdownButton>
+        </ButtonGroup>
+      </Row>
       <Editor
+        options={{
+          unicodeHighlight: {
+            ambiguousCharacters: false,
+          },
+        }}
         height="15vh"
-        defaultLanguage="text"
+        defaultLanguage="bg"
         onChange={handleEditorChange}
+        
         // name="text"
         // placeholder="Здравей,Човече"
-        defaultValue={text ?? "Здравей,Човече"}
+        defaultValue={
+          (text == "" ? "Здравей,Човече" : text) + "\n---\n" + text2
+        }
       />
+      <Row>
+        <Col></Col>
+      </Row>
       <p>
         За нов абзац два празни реда
         <br />
         Посочете към коя глава сочи избора на читателя. Пр. "Към Светлината
         (Глава 2)" <strong>↓↓↓</strong>
       </p>
-      <Editor
-        height="15vh"
-        defaultLanguage="text"
-        onChange={handleEditorChange2}
-        // name="text"
-        // placeholder="Здравей,Човече"
-        defaultValue={text2 ?? "Към тъмната гора (Глава 2)"}
-      />
       <p>
         За линк към друга глава : (Глава число) Пр. "Бий се (Глава 3)" <br />
         Кръглите скоби () са задължителен атрибут при посочване на конкретна
         Глава
         <br />
-          <Button variant="secondary" onClick={() => window.open("/helpLanguage")}>
-            Допълнителни обяснения за псевдо езика
-          </Button>
       </p>
 
       <br />
-      
+      <Modal show={showInsertChapter} onHide={handleCloseInsertChapter}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseInsertChapter}>
+            Затвори
+          </Button>
+          <Button variant="primary" onClick={handleInsertChapter}>
+            Вмъкни
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }

@@ -117,6 +117,9 @@ export default function Book1() {
               <Nav.Item>
                 <Nav.Link eventKey="editAndPreview">Редактирай</Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                <Nav.Link href="/helpLanguage">Помощ</Nav.Link>
+              </Nav.Item>
             </Col>
             <Col>
               <DropDown1
@@ -175,8 +178,8 @@ export default function Book1() {
                         text,
                         glava: gl,
                         text2,
-                        user:user??"",
-                        book:{text:bUrl}
+                        user: user ?? "",
+                        book: { text: bUrl },
                       }}
                       kr={false}
                     />

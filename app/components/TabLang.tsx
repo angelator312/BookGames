@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "react-bootstrap";
-import { Decoder } from "./decoder";
+import { DecoderSimple } from "./decoderSimple";
 
 export function TabLang() {
   return (
@@ -16,7 +16,7 @@ export function TabLang() {
             <br /> натисне върху това ще отиде на глава x!
             <br />
           </p>
-          <Decoder text2={"(Глава 5)"} url="/helpLanguage#" />
+          <DecoderSimple text2={"(Глава 5)"} url="/helpLanguage#" />
         </Tab>
         <Tab
           eventKey={"въпрос за отиване към главата"}
@@ -36,7 +36,7 @@ export function TabLang() {
             <br />
             
           </p>
-          <Decoder
+          <DecoderSimple
             text2={"(Глава 5) if(1|2|3)"}
             url="/helpLanguage#"
             flag1={false}
