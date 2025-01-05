@@ -40,7 +40,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       createGorB("glava", glava, request);
       createGorB("book", b.text, request);
 
-      return { text: segG, glava, text2: spec, b,myComments };
+      return { text: segG, glava, text2: spec, b,myComments,user };
     }
   }
   return redirect("/");

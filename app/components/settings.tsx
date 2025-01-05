@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { Button, Col, Form, Offcanvas, Row, Tab, Tabs } from "react-bootstrap";
 import type { Book } from "~/utils/textStore";
-import type { SettingsInterface } from "~/utils/userStore";
+import type { SettingsInterface } from "~/utils/User";
 type loader = [string, Book[][], SettingsInterface];
 
 function Settings() {

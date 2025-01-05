@@ -13,7 +13,9 @@ import bootstrapStyles from "~/styles/bootstrap.css";
 import stylesUrl from "~/styles/index.css";
 import { knigi, requireUserId } from "~/utils/session.server";
 import { cssBundleHref } from "@remix-run/css-bundle";
-import getUserStore, { getDefaultSettings, SettingsInterface, User } from "~/utils/userStore";
+import getUserStore from "~/utils/userStore";
+import { getDefaultSettings, SettingsInterface } from "~/utils/User";
+import { User } from "~/utils/User";
 import { Book } from "~/utils/textStore";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),

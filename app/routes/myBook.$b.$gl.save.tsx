@@ -11,7 +11,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   if (!glava || Number.isNaN(parseInt(glava)))
     return redirect(`/myBook/${book}/1`);
   if(!text2)
-    text2="(Глава "+(parseInt(glava)+1)+")";
+    text2="=>(Глава "+(1+ parseInt(glava) )+")[Следваща]"
   if (!text1 && !text2) {
     return redirect(`/myBook/${book}/${glava}?errCode=1`);
   }

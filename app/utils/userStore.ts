@@ -1,23 +1,7 @@
-import type { Collection, ObjectId } from "mongodb";
+import type { Collection } from "mongodb";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
-export interface SettingsInterface {
-  fontSize: number;
-  tutorial?: boolean;
-}
-export interface UserData {
-  forMe: string;
-}
-export interface User {
-  _id?: ObjectId;
-  glavi?: any;
-  user: string;
-  passH: string;
-  settings?: SettingsInterface;
-  data?: UserData;
-  admin?: boolean;
-}
-
+import { getDefaultSettings, getDefaultUserData, SettingsInterface, User, UserData } from "./User";
 export class UserStore {
   FixDatabase() {
     this.collection.updateMany(
@@ -155,13 +139,6 @@ export class UserStore {
 }
 let ObUser: { [key: string]: UserStore } = {};
 
-export function getDefaultUser(): User {
-  const settings: User = {
-    passH: "",
-    user: "",
-  };
-  return settings;
-}
 export default async function getUserStore(
   url: string | undefined = process.env.MONGO_URL,
   collectionName: string = "Register"
@@ -175,17 +152,3 @@ export default async function getUserStore(
   return ObUser[collectionName];
 }
 
-export function getDefaultSettings(): SettingsInterface {
-  const settings: SettingsInterface = {
-    fontSize: 10,
-    tutorial: true,
-  };
-  return settings;
-}
-
-export function getDefaultUserData(): UserData {
-  const settings: UserData = {
-    forMe: "",
-  };
-  return settings;
-}
