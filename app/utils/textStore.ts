@@ -20,7 +20,7 @@ export interface Book {
   _id?: string;
   id?: string;
   isBook: boolean;
-  text: string;
+  text: string; //imetoSikrateno
   doGl: string;
   tags?: string[];
   comments?: string[][][];
@@ -40,6 +40,18 @@ export interface Spec {
 }
 
 export class BookStore {
+  async FixDatabase()
+  {
+    this.collection.updateMany(
+      { isBook: true, data: undefined },
+      { $set: { data: { clicks: 0, timeForUser: {} } } }
+    );
+    const books=await this.collection.find({ isBook: true, id:{$regex:/^Book/} }).toArray();
+    for(let e of books)
+    {
+      this.collection.updateOne({_id:e._id},{$set:{id:e.id?.substring(5,e.id.length-3)}});
+    }
+  }
   async addBook(
     book: string,
     avtor: string,

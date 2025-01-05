@@ -30,7 +30,7 @@ export default function BookHeader({
           >
             <a href={`/book/${e.text}`}>
               <h3 className="text-bold text-dark">
-                {e.id?.substring(5, e.id?.length - 3)}
+                {e.id}
               </h3>
             </a>
           </OverlayTrigger>

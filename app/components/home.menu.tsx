@@ -91,7 +91,7 @@ function MenuForHome({
           {user.admin ? (
             <Row>
               <Col style={{ marginTop: "1rem" }}>
-                <a href="/admin/console" className="">
+                <a href="/admin" className="">
                   <span className="text-slate-500 font-medium logo  text-primary">
                     Администрация
                   </span>

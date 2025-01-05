@@ -46,15 +46,24 @@ export default function AdminRoute() {
       </Row>
       <Row>
         <Col>
-          <Form method="POST" action="/admin/console">
+          <Form method="POST" action="/admin/db/updateUsers">
             <Form.Control type="submit" value={"Update Users"} />
+          </Form>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form method="POST" action="/admin/db/updateTexts">
+            <Form.Control type="submit" value={"Update Texts"} />
           </Form>
         </Col>
       </Row>
 
       <MenuForHome
-      //@ts-ignore
-      user={user} settings={settings}/>
+        //@ts-ignore
+        user={user}
+        settings={settings}
+      />
     </Container>
   );
 }
