@@ -195,8 +195,8 @@ export default function Book1() {
                   <Col>
                     <FormComponent
                       textsHidden={[
-                        text.replace(/\\r/gm, "") ?? "a",
-                        text2.replace(/\\r/gm, "") ?? "a",
+                        text.replace(/\r/gm, "") ?? "a",
+                        text2.replace(/\r/gm, "") ?? "a",
                       ]}
                       to={`/myBook/${bUrl}/${gl}/save`}
                       textForSubmit="Запази промените"

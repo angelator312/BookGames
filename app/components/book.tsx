@@ -47,8 +47,8 @@ export default function Book({
   // else
   //  { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(flag,text,glava,text2);
-
-  let textLines = text.replace(/\\r/gm, "").split("\n\n");
+  
+  let textLines = text.replace(/\r/gm, "").split("\n\n");
   let furst2Lines = [textLines[0], textLines[1]];
   textLines = textLines.slice(2);
   const [timeIn] = useState(Date.now());

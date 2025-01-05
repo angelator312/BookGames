@@ -8,13 +8,13 @@ export async function action({ params, request }: ActionFunctionArgs) {
   let text2 = form.get("text2") ?? " ";
   const glava = params.gl;
   const book = params.b;
+  if (!glava || Number.isNaN(parseInt(glava)))
+    return redirect(`/myBook/${book}/1`);
   if(!text2)
     text2="(Глава "+(parseInt(glava)+1)+")";
   if (!text1 && !text2) {
     return redirect(`/myBook/${book}/${glava}?errCode=1`);
   }
-  if (!glava || Number.isNaN(parseInt(glava)))
-    return redirect(`/myBook/${book}/1`);
   // let b = await getGorB("book");
   // console.log(b);
   for (let i = 0; i < neDumi.length; i++) {
@@ -27,8 +27,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
   //@ts-ignore
   await tStore.addText(
     `${book}-${glava}`,
-    text1.toString().replace(/\\r/gm, ""),
-    text2.toString().replace(/\\r/gm, "") ?? ""
+    text1.toString(),
+    text2.toString() ?? ""
   );
 
   return redirect(`/myBook/${book}/${glava}?feedCode=1`);

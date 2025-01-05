@@ -16,10 +16,10 @@ export function Decoder({
   if (Array.isArray(text)) text2 = text[0];
   else text2 = text;
   if (!text2) return <></>;
-  let text2Lines = text2.replace(/\\r/gm, "").split(reg);
+  let text2Lines = text2.replace(/\r/gm, "").split(reg);
   let a = text2Lines.map((e, i) => {
     if (i % 2 == 0) {
-      let b = e.replace(/\\r/gm, "").split(reg2);
+      let b = e.replace(/\r/gm, "").split(reg2);
       return b;
     } else return [e];
   });

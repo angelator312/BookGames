@@ -19,13 +19,13 @@ export default function EditText({
   priIzvikvane: Function;
 }) {
   function handleEditorChange(value: any, event: any) {
-    setText(value.replace(/\\r/gm, "") ?? "");
+    setText(value.replace(/\r/gm, "") ?? "");
     if (priIzvikvane) {
       priIzvikvane();
     }
   }
   function handleEditorChange2(value: any, event: any) {
-    setText2(value.replace(/\\r/gm, "") ?? " ");
+    setText2(value.replace(/\r/gm, "") ?? " ");
     if (priIzvikvane) {
       priIzvikvane();
     }

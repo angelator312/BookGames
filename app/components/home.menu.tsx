@@ -66,7 +66,8 @@ function MenuForHome({
               </a>
             </Col>
           </Row>
-          {settings.tutorial ? (
+          
+          {/* {settings.tutorial ? (
             <Row>
               <Col style={{ marginTop: "1rem" }}>
                 <a href="/profil/stopTutorial" className="">
@@ -78,7 +79,7 @@ function MenuForHome({
             </Row>
           ) : (
             ""
-          )}
+          )} */}
           <Row>
             <Col style={{ marginTop: "1rem" }}>
               <a href="/newBook" className="">

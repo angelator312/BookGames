@@ -15,13 +15,13 @@ export function ProverkaIf({
   const [valueOfI, setValueOfI] = useState("");
   //   const [hrefOfA, setHrefOfA] = useState(url);
   const navigation = useNavigate();
-  const a = e2.replace(/\\r/gm, "").split(reg);
+  const a = e2.replace(/\r/gm, "").split(reg);
   if (a.length < 3) {
     return <>a</>;
   }
-  let e4 = a[1].replace(/\\r/gm, "").split(reg2);
+  let e4 = a[1].replace(/\r/gm, "").split(reg2);
   //   e=e.slice(1)
-  let e = e4.map((ei) => ei.replace(/\\r/gm, "").split(/\|/))[1];
+  let e = e4.map((ei) => ei.replace(/\r/gm, "").split(/\|/))[1];
   // console.log("e:", e);
   // console.log("e:", valueOfI);
   //   console.log("e2",e2);
