@@ -37,7 +37,11 @@ export default function Book({
   params?: Params;
 }) {
   const loaderData = useLoaderData<loaderBook>();
-  if (!flag) var { text, glava, text2, user, b: book } = loaderData;
+  if (!flag) 
+    {
+      var book=loaderData.b;
+      var { text, glava, text2, user } = loaderData;
+    }
   //@ts-ignore
   else var { text, glava, text2, user, book } = params;
   // else

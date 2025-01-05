@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Editor } from "@monaco-editor/react";
 
 export default function EditText({
@@ -31,7 +31,7 @@ export default function EditText({
     }
   }
   return (
-    <div>
+    <Container fluid>
       <Editor
         height="15vh"
         defaultLanguage="text"
@@ -66,6 +66,6 @@ export default function EditText({
 
       <br />
       
-    </div>
+    </Container>
   );
 }

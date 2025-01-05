@@ -113,6 +113,7 @@ export default function Book1() {
           glava: gl,
           text2,
           user: username,
+          book: { text: bUrl },
         }}
       />
     </div>

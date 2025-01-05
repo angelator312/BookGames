@@ -151,7 +151,7 @@ export default function Book1() {
 
             {/* </Button> */}
             <Tab.Pane eventKey="editAndPreview" title="Редактирай">
-              <Container>
+              <Container fluid>
                 <Row>
                   <Col>
                     <EditText
