@@ -1,7 +1,8 @@
 import menu from "~/helps/menu.png";
 import { useState } from "react";
 import { Button, Col, Offcanvas, Row } from "react-bootstrap";
-import type { SettingsInterface, User } from "~/utils/userStore";
+import type { SettingsInterface } from "~/utils/User";
+import type { User } from "~/utils/User";
 
 function MenuForHome({
   settings,

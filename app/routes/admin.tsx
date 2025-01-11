@@ -4,7 +4,8 @@ import { useLoaderData } from "@remix-run/react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import MenuForHome from "~/components/home.menu";
 import { requireUserId } from "~/utils/session.server";
-import type { SettingsInterface, User } from "~/utils/userStore";
+import type { SettingsInterface } from "~/utils/User";
+import type { User } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);

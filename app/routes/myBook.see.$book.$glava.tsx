@@ -6,7 +6,7 @@ import getTextStore from "~/utils/textStore";
 import { loadSettings, requireUserId } from "~/utils/session.server";
 import { useEffect, useState } from "react";
 import Book from "~/components/book";
-import type { SettingsInterface } from "~/utils/userStore";
+import type { SettingsInterface } from "~/utils/User";
 export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }

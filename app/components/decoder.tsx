@@ -11,7 +11,7 @@ export function Decoder({
   flag1?: boolean;
   url: string;
 }) {
-  console.log(text);
+  //console.log(text);
   
   if (text.split(reg).length > 1)
     return <DecoderAdvanced text2={text} flag1={flag1} url={url} />;

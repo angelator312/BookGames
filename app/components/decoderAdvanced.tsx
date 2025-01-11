@@ -34,7 +34,7 @@ export function DecoderAdvanced({
   let textIzb = "";
   let zarIzb = 0;
   let scoreChangeIzb = 0;
-  console.log(text2Lines);
+  //console.log(text2Lines);
 
   text2Lines.map((e) => {
     if (!e) return e;

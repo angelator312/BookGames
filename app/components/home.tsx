@@ -6,7 +6,8 @@ import NavYesOrNo from "./navbarYes";
 import SearchComponent from "./Search";
 import { Col, Container, Row } from "react-bootstrap";
 import MenuForHome  from "./home.menu";
-import type { SettingsInterface, User } from "~/utils/userStore";
+import type { SettingsInterface } from "~/utils/User";
+import type { User } from "~/utils/User";
 
 export default function Home({
   user,

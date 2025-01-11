@@ -1,6 +1,6 @@
 import { redirect, type LoaderFunctionArgs} from "@remix-run/node";
 import { loadSettings, requireUserId } from "~/utils/session.server";
-import type { SettingsInterface } from "~/utils/userStore";
+import type { SettingsInterface } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

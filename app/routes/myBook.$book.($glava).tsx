@@ -11,11 +11,13 @@ import EditText from "~/components/editText";
 import NavYesOrNo from "~/components/navbarYes";
 import Book from "~/components/book";
 import FormComponent from "~/components/formComp";
+import getUserStore from "~/utils/userStore";
+import { User } from "~/utils/User";
 export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
 
-type loaderData = [string, string, Text2, string, string[][],string];
+type loaderData = [string, string, Text2, string, string[][],User];
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
@@ -38,9 +40,10 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   // console.log(glava);
   if (typeof a === "string") {
     if (b?.avtor == a) {
+      const uStore=await getUserStore();
       const comments = await tStore.getComments(book ?? "", glava);
       let t = await tStore.getText(`${book}-${glava}`);
-      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments,a];
+      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments,await uStore.getUser(a)];
     }
     return redirect(`/book/${book}`);
   }
@@ -175,6 +178,7 @@ export default function Book1() {
                         text,
                         glava: gl,
                         text2,
+                        //@ts-ignore
                         user: user ?? "",
                         book: { text: bUrl },
                       }}

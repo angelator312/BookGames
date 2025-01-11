@@ -62,8 +62,8 @@ export default function EditText({
     }
   }
   const [showInsertChapter, setShowInsertChapter] = useState(false);
-  function handleInsertChapter(insertChapter: number) {
-    insertText(`=>(Глава ${insertChapter})(резултат 0)[АААА]`);
+  function handleInsertChapter(insertChapter: number,text:string) {
+    insertText(`=>(Глава ${insertChapter})(резултат 0)[${text??"AAAA"}]`);
     return setShowInsertChapter(false);
   }
 
@@ -106,7 +106,7 @@ export default function EditText({
           },
         }}
         onMount={editorMount}
-        height="15vh"
+        height="20vh"
         defaultLanguage="bg"
         onChange={handleEditorChange}
         // name="text"
@@ -119,16 +119,9 @@ export default function EditText({
         <Col></Col>
       </Row>
       <p>
-        За нов абзац два празни реда
-        <br />
-        Посочете към коя глава сочи избора на читателя. Пр. "Към Светлината
-        (Глава 2)" <strong>↓↓↓</strong>
-      </p>
-      <p>
-        За линк към друга глава : (Глава число) Пр. "Бий се (Глава 3)" <br />
-        Кръглите скоби () са задължителен атрибут при посочване на конкретна
-        Глава
-        <br />
+        изборите са след --- <br/>
+        Всичко е описано в Помощ и нещата за вмъкване се вмъкват чрез бутона
+        <br/>Ако искаате да ви е по-лесно редактирайте в уголемен прозорец
       </p>
 
       <br />

@@ -7,13 +7,13 @@ import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
 import MenuForHome from "./home.menu";
-import { getDefaultSettings } from "~/utils/userStore";
+import { getDefaultUser, User } from "~/utils/User";
 
 interface Params {
   text: string;
   glava: string;
   text2: string;
-  user: string;
+  user: User;
   book: { text: string };
 }
 
@@ -27,7 +27,7 @@ export default function Book({
     text: "This is not mandatory",
     glava: "glava",
     text2: "This is not mandatory",
-    user: "user",
+    user: getDefaultUser(),
     book: { text: "Problem" },
   },
 }: {
@@ -77,7 +77,9 @@ export default function Book({
     <div className="text-center space-y-2 sm:text-left bg-i">
       <h1 className="p-1 text-dark text-center">{title} </h1>
       <div className="space-y-0.5 bg-i">
-        {/* <MenuForHome user={user} settings={user.settings??getDefaultSettings()}/> */}
+        <MenuForHome
+        //@ts-ignore
+        user={user} settings={user.settings}/>
         <Text
           furst2Lines={furst2Lines}
           glava={glava}
@@ -109,7 +111,7 @@ export default function Book({
                   method="GET"
                   textForSubmit="Начало"
                   namesHidden={["time", "user", "book"]}
-                  textsHidden={[timeIn.toString(),user,book.text]}
+                  textsHidden={[timeIn.toString(),user.user,book.text]}
                 />
               </Col>
             </Row>
