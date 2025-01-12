@@ -53,7 +53,7 @@ export default function Book1() {
 
   //   style={{ padding: 15.4 }}
   //   console.log(book);
-  const zagl = book.b.id?.substring(5, book.b.id?.length - 3);
+  const zagl = book.b.id;
   return (
     <div style={{"fontSize":(book.settings.fontSize??10)/10+"rem"}}>
       <Book
