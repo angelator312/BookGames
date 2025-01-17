@@ -55,6 +55,8 @@ export class UserStore {
       user,
       passH,
       glavi: {},
+      data:getDefaultUserData(),
+      admin: false
     };
     const i = await this.collection.replaceOne({ user: user }, v, {
       upsert: true,
@@ -71,9 +73,7 @@ export class UserStore {
     if (!data) return null;
 
     let v: User = {
-      user,
-      passH: data.passH,
-      glavi: data.glavi,
+      ...data
     };
     v.glavi[id] = glava;
     const i = await this.collection.replaceOne({ user }, v);
