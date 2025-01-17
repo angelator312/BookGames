@@ -1,7 +1,8 @@
 import type { Collection } from "mongodb";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
-import { getDefaultSettings, getDefaultUserData, SettingsInterface, User, UserData } from "./User";
+import type { SettingsInterface, User, UserData } from "./User";
+import { getDefaultSettings, getDefaultUserData } from "./User";
 export class UserStore {
   FixDatabase() {
     this.collection.updateMany(
@@ -118,6 +119,20 @@ export class UserStore {
     let v: User = {
       ...data,
       settings,
+    };
+    await this.collection.replaceOne({ user }, v);
+    return settings;
+  }
+  async adjustUserData(
+    settings: UserData,
+    user: string
+  ): Promise<UserData> {
+    const data = await this.getUser(user);
+    if (!data) return settings;
+
+    let v: User = {
+      ...data,
+      data:settings,
     };
     await this.collection.replaceOne({ user }, v);
     return settings;

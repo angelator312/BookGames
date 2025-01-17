@@ -5,8 +5,7 @@ import { useState } from "react";
 import { Col, Container, Form, Row, Tab, Tabs } from "react-bootstrap";
 import MenuForHome from "~/components/home.menu";
 import { requireUserId } from "~/utils/session.server";
-import type { SettingsInterface } from "~/utils/User";
-import type { User } from "~/utils/User";
+import type { SettingsInterface,User } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

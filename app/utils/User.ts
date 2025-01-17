@@ -6,10 +6,12 @@ export interface User {
   user: string;
   passH: string;
   settings?: SettingsInterface;
-  data?: UserData;
-  admin?: boolean;
+  data: UserData;
+  admin: boolean;
 }export interface UserData {
   forMe: string;
+  isPro: boolean;
+  verifiedAuthor: boolean;
 }
 export interface SettingsInterface {
   fontSize: number;
@@ -27,6 +29,8 @@ export function getDefaultSettings(): SettingsInterface {
 export function getDefaultUserData(): UserData {
   const settings: UserData = {
     forMe: "",
+    verifiedAuthor: false,
+    isPro: false,
   };
   return settings;
 }
@@ -34,6 +38,8 @@ export function getDefaultUser(): User {
   const settings: User = {
     passH: "",
     user: "",
+    data:getDefaultUserData(),
+    admin: false,
   };
   return settings;
 }

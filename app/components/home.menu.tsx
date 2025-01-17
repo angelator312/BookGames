@@ -1,8 +1,7 @@
 import menu from "~/helps/menu.png";
 import { useState } from "react";
 import { Button, Col, Offcanvas, Row } from "react-bootstrap";
-import type { SettingsInterface } from "~/utils/User";
-import type { User } from "~/utils/User";
+import type { SettingsInterface,User } from "~/utils/User";
 
 function MenuForHome({
   settings,
@@ -67,7 +66,15 @@ function MenuForHome({
               </a>
             </Col>
           </Row>
-          
+          <Row>
+            <Col style={{ marginTop: "1rem" }}>
+              <a href="/Profil" className="">
+                <span className="text-slate-500 font-medium logo  text-primary">
+                  Профил
+                </span>
+              </a>
+            </Col>
+          </Row>
           {/* {settings.tutorial ? (
             <Row>
               <Col style={{ marginTop: "1rem" }}>
