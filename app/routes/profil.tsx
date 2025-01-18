@@ -81,13 +81,13 @@ export default function Settings() {
             </Col>
           </Row>
         </Tab>
-        <Tab title="Планове" eventKey={"Paying"}>
+        {/* <Tab title="Планове" eventKey={"Paying"}>
           <Row>
             <Col>
             
             </Col>
           </Row>
-        </Tab>
+        </Tab> */}
       </Tabs>
     </Container>
   );
