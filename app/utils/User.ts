@@ -1,5 +1,13 @@
 import type { ObjectId } from "mongodb";
 
+export interface Turneta{
+  _id?: ObjectId;
+  time:string;//let now = new Date();
+              //let todayString = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+  duration?:number;
+  timeForStop:string; //like time property
+}
+
 export interface User {
   _id?: ObjectId;
   glavi?: any;

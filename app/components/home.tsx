@@ -1,13 +1,12 @@
 import { useSearchParams } from "@remix-run/react";
-import type { Text } from "~/utils/textStore";
+import type { Book} from "~/utils/textStore";
 // import { HydrationProvider, Server } from "react-hydration-provider";
 import BookHeader from "./bookHeader";
 import NavYesOrNo from "./navbarYes";
 import SearchComponent from "./Search";
 import { Col, Container, Row } from "react-bootstrap";
 import MenuForHome  from "./home.menu";
-import type { SettingsInterface } from "~/utils/User";
-import type { User } from "~/utils/User";
+import type { SettingsInterface,User } from "~/utils/User";
 
 export default function Home({
   user,
@@ -16,7 +15,7 @@ export default function Home({
 }: {
   settings:SettingsInterface,
   user: User;
-  books: Text[][];
+  books: Book[][];
 }) {
   // const userId = useLoaderData<string>();
   // console.log(books[0]);
@@ -92,6 +91,13 @@ export default function Home({
                       </Col>
                     </Row>
                   ))}
+                  { books[1].length<=0?
+                  <h3 className="centered text-bold" >
+                    Няма Резултати
+                  </h3>
+                  :""
+
+                  }
                 </div>
               </Col>
             </Row>

@@ -1,0 +1,4 @@
+@mixin boldText($number) {
+  color: var(--black) !important;
+  font-weight: $number * 100+ 700 !important;
+}

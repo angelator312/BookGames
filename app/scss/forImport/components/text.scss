@@ -1,48 +1,50 @@
 @use "." as *;
 
 .in-2 {
-    text-indent: 1.5em;
+  text-indent: 1.5em;
 }
 
 .in-1 {
-    text-indent: 1em;
+  text-indent: 1em;
 }
 
 .text-l {
-    text-align: left;
+  text-align: left;
 }
 
-.text-bold {
-    color: var(--black) !important;
-    font-weight: bold;
+.text {
+  &-1bold {
+    @include boldText(1);
+  }
+  &-2bold {
+    @include boldText(2);
+  }
+
+  &-bold {
+    @include boldText(1);
+  }
+  &-black {
+    @include boldText(-2);
+  }
 }
 
-.text-1bold {
-    color: var(--black) !important;
-    font-weight: 800 !important;
-}
-
-.text-2bold {
-    color: var(--black) !important;
-    font-weight: 900 !important;
-}
 
 .text-j {
-    text-align: justify;
+  text-align: justify;
 }
 
 .centered {
-    /* position: absolute; */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
+  /* position: absolute; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .to-right {
-    /* position: absolute; */
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: right;
+  /* position: absolute; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
 }

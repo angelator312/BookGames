@@ -7,13 +7,15 @@ import {
   Row,
   Tooltip,
 } from "react-bootstrap";
-import type { Text } from "~/utils/textStore";
+import { AuthorResume } from "./userResume";
+import { getDefaultUserData } from "~/utils/User";
+import type { Book } from "~/utils/textStore";
 
 export default function BookHeader({
   e,
   avt = false,
 }: {
-  e: Text;
+  e: Book;
   avt?: boolean;
 }) {
   if (!e) return;
@@ -29,14 +31,12 @@ export default function BookHeader({
             overlay={<Tooltip>{e.text2}</Tooltip>}
           >
             <a href={`/book/${e.text}`}>
-              <h3 className="text-bold text-dark">
-                {e.id}
-              </h3>
+              <h3 className="text-bold text-dark">{e.id}</h3>
             </a>
           </OverlayTrigger>
         </Col>
         <Col className="text-bold text-dark" xs={2}>
-          {e.avtor}
+          <AuthorResume authorData={e.author?.data??getDefaultUserData()} authorName={e.avtor ?? ""} />
         </Col>
         {/* <br /> */}
         {avt ? (

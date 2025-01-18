@@ -1,5 +1,7 @@
 import type { Collection, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
+import { getDefaultUser, type User } from "./User";
+import getUserStore from "./userStore";
 export interface Text {
   _id?: string;
   id?: string;
@@ -26,6 +28,7 @@ export interface Book {
   comments?: string[][][];
   public: boolean;
   avtor: string;
+  author?: User;
   text2: string;
   data: BookData;
 }
@@ -40,16 +43,30 @@ export interface Spec {
 }
 
 export class BookStore {
-  async FixDatabase()
-  {
+  async FixDatabase() {
     this.collection.updateMany(
       { isBook: true, data: undefined },
       { $set: { data: { clicks: 0, timeForUser: {} } } }
     );
-    const books=await this.collection.find({ isBook: true, id:{$regex:/^Book/} }).toArray();
-    for(let e of books)
-    {
-      this.collection.updateOne({_id:e._id},{$set:{id:e.id?.substring(5,e.id.length-3)}});
+    const books = await this.collection
+      .find({ isBook: true, id: { $regex: /^Book/ } })
+      .toArray();
+    for (let e of books) {
+      this.collection.updateOne(
+        { _id: e._id },
+        { $set: { id: e.id?.substring(5, e.id.length - 3) } }
+      );
+    }
+    const uStore = await getUserStore();
+    const books2 = await this.collection
+      .find({ isBook: true })
+      .toArray();
+    for (let e of books2) {
+      this.collection.updateOne(
+        { _id: e._id },
+        //@ts-ignore
+        { $set: { author:await uStore.getUser(e.avtor)??getDefaultUser() } }
+      );
     }
   }
   async addBook(
@@ -230,18 +247,18 @@ export class BookStore {
       }
       return br; // return the number of matches
     }
-    
+
     function sredno(e: { [key: string]: number }): number {
       let sum = 0;
-      Object.values(e).map(k => sum +=k);
-      return sum/Object.values(e).length;
+      Object.values(e).map((k) => (sum += k));
+      return sum / Object.values(e).length;
     }
     function analysticFunc(e: WithId<Book>): number {
-      const clickWeight=10;
+      const clickWeight = 10;
       const timeWeight = 100;
-      let br=(e.data?.clicks??0)*clickWeight;
-      br+=sredno(e.data?.timeForUser??{})*timeWeight;
-      
+      let br = (e.data?.clicks ?? 0) * clickWeight;
+      br += sredno(e.data?.timeForUser ?? {}) * timeWeight;
+
       return br;
     }
     function filterFunc(e: WithId<Book>, query: string): number {
@@ -256,11 +273,15 @@ export class BookStore {
     const data1 = books.filter((e) => filterFunc(e, query));
     const data2 = data1.sort((a, b) => {
       //@ts-ignore
-      const aOtg = filterFunc(a, query),bOtg = filterFunc(b, query);
-      if (aOtg > bOtg) return -1;
-      if (aOtg == bOtg) {
+      const aOtg = filterFunc(a, query),
         //@ts-ignore
-        const aOtg = analysticFunc(a),bOtg = analysticFunc(b);
+        bOtg = filterFunc(b, query);
+        if (aOtg > bOtg) return -1;
+        if (aOtg == bOtg) {
+          //@ts-ignore
+          const aOtg = analysticFunc(a),
+          //@ts-ignore
+          bOtg = analysticFunc(b);
         if (aOtg > bOtg) return -1;
         if (aOtg == bOtg) return 0;
         return 1;

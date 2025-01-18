@@ -33,19 +33,21 @@
   text-align: left;
 }
 
-.text-bold {
-  color: var(--black) !important;
-  font-weight: bold;
-}
-
 .text-1bold {
   color: var(--black) !important;
   font-weight: 800 !important;
 }
-
 .text-2bold {
   color: var(--black) !important;
   font-weight: 900 !important;
+}
+.text-bold {
+  color: var(--black) !important;
+  font-weight: 800 !important;
+}
+.text-black {
+  color: var(--black) !important;
+  font-weight: 500 !important;
 }
 
 .text-j {
