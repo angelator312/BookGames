@@ -1,13 +1,13 @@
 import { useLoaderData } from "@remix-run/react";
 // import menu from "~/helps/menu.png";
-import Navbar from "./navbar";
 import Text from "./text";
 import FormComponent from "./formComp";
 import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
 import MenuForHome from "./home.menu";
-import { getDefaultUser, User } from "~/utils/User";
+import type { User } from "~/utils/User";
+import { getDefaultUser } from "~/utils/User";
 
 interface Params {
   text: string;

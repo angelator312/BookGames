@@ -31,9 +31,9 @@ export default function Text({
           </button> */}
       <h2 className="text-bold ">Глава {glava} </h2>
       <h2 className="text-bold  p-3">{furst2Lines[0]} </h2>
-      <p className="text-bold p-3 text-j in-2 ">{furst2Lines[1]}</p>
+      <p className=" p-3 text-j in-2 ">{furst2Lines[1]}</p>
       {textLines.map((e, i) => (
-        <p className="text-bold p-3 text-j in-2 " key={e}>
+        <p className=" p-3 text-j in-2 " key={e}>
           {" "}
           {e}
         </p>
