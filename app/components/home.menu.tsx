@@ -1,7 +1,7 @@
 import menu from "~/helps/menu.png";
 import { useState } from "react";
 import { Button, Col, Offcanvas, Row } from "react-bootstrap";
-import type { SettingsInterface,User } from "~/utils/User";
+import type { SettingsInterface, User } from "~/utils/User";
 
 function MenuForHome({
   settings,
@@ -93,6 +93,18 @@ function MenuForHome({
               <a href="/newBook" className="">
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Нова книга
+                </span>
+              </a>
+            </Col>
+          </Row>
+          <Row>
+            <Col style={{ marginTop: "1rem" }}>
+              <a
+                href="https://github.com/angelator312/Systezanie-1"
+                className=""
+              >
+                <span className="text-slate-500 font-medium logo  text-primary">
+                  Github
                 </span>
               </a>
             </Col>
