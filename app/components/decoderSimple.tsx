@@ -1,4 +1,6 @@
+import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 import FormComponent from "./formComp";
+import { Col } from "react-bootstrap";
 const reg = /\(Глава\s+(\d+)\)/g;
 const reg2 = /(if\(.+\|\d+\|\d+)\)/g;
 export function DecoderSimple({
@@ -31,9 +33,9 @@ export function DecoderSimple({
       {a.map((e, i) => (
         <div key={i}>
           {i % 2 == 0 ? (
-            <>
-              {e}
-            </>
+            <Col {...propertiesForColumnsWidth}>
+              <p className="text-bold">{e}</p>
+            </Col>
           ) : (
             <div className="m-l-35% ">
               <FormComponent
@@ -44,15 +46,6 @@ export function DecoderSimple({
                 submitVariant="outline-secondary"
               />
             </div>
-            //   action=
-            //   style={{ display: "inline" }}
-            //   method="POST"
-            // >
-            //   <input type="hidden" name="to" value={e} />
-            //   <button type="submit" className="logo text-">
-
-            //   </button>
-            // </form>
           )}
         </div>
       ))}

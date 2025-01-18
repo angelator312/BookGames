@@ -1,4 +1,6 @@
+import { Col, Container, Row } from "react-bootstrap";
 import { Decoder } from "./decoder";
+import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 
 export default function Text({
   glava,
@@ -8,7 +10,7 @@ export default function Text({
   flag1 = true,
   url,
 }: {
-  glava: string |number;
+  glava: string | number;
   furst2Lines: string[];
   textLines: string[];
   text2Lines: string;
@@ -16,30 +18,35 @@ export default function Text({
   url: string;
 }) {
   return (
-    <div className="bg-i p-4" style={{ textIndent: 20 }}>
-      {/*
-          <button
-            // className=" btn-menu-my"
-            // onClick={() => {
-            //   console.log(vis);
-            //   if (!vis || vis == "none") {
-            //     setVis("block");
-            //   } else setVis("none");
-            // }}
-          >
-            <img width={30} height={30} src={menu} alt="menu button" />
-          </button> */}
-      <h2 className="text-bold ">Глава {glava} </h2>
-      <h2 className="text-bold  p-3">{furst2Lines[0]} </h2>
-      <p className=" p-3 text-j in-2 ">{furst2Lines[1]}</p>
-      {textLines.map((e, i) => (
-        <p className=" p-3 text-j in-2 " key={e}>
-          {" "}
-          {e}
-        </p>
-      ))}
-      <Decoder text2={text2} url={url} flag1={flag1}/>
+    <Container className="bg-i p-4" style={{ textIndent: 20 }}>
+      <Row>
+        <Col>
+          <h2 className="">Глава {glava} </h2>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h2 className="p-3">{furst2Lines[0]} </h2>
+        </Col>
+      </Row>
 
-    </div>
+      <Row>
+        <Col {...propertiesForColumnsWidth}>
+          <p className="text-bold p-3 text-j in-2 ">{furst2Lines[1]}</p>
+        </Col>
+      </Row>
+      {textLines.map((e, i) => (
+        <Row key={e}>
+          <Col {...propertiesForColumnsWidth}>
+            <p className="text-bold p-3 text-j in-2 "> {e}</p>
+          </Col>
+        </Row>
+      ))}
+      <Row>
+        <Col>
+          <Decoder text2={text2} url={url} flag1={flag1} />
+        </Col>
+      </Row>
+    </Container>
   );
 }
