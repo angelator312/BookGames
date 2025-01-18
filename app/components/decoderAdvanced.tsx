@@ -84,25 +84,34 @@ export function DecoderAdvanced({
     }
     return e;
   });
+
+  let arr: any[] = [];
+  for (let i = 0; i < a.izbori.length; i++) {
+    if (a.izbori[i].isText) {
+      arr.push({ text: a.izbori[i].text, izb: a.izbori[i + 1] });
+      ++i;
+    } else {
+      arr.push({ text: "", izb: a.izbori[i + 1] });
+    }
+  }
   //console.log(a);
   // console.log(text2Lines);
   // console.log(text2);
   // console.log(text);
   return (
-    <div>
-      {a.izbori.map((e, i) => (
-        <Row key={i}>
-          {e.isText ? (
+    <ul>
+      {arr.map((e, i) => (
+        <li key={i}>
+          <Row>
             <Col {...propertiesForColumnsWidth}>
-              <p className="text-bold">{e.text}</p>
+              <p className="text-bold">{e.text}{i}</p>
             </Col>
-          ) : (
-            <Col className="m-l-35% ">
-              <IzborComponent izbor={e} url={url} flag={flag1} />
+            <Col className=" ">
+              <IzborComponent izbor={e.izb} url={url} flag={flag1} />
             </Col>
-          )}
-        </Row>
+          </Row>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

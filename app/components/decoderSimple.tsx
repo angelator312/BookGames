@@ -1,6 +1,8 @@
-import { propertiesForColumnsWidth } from "~/utils/columnStyles";
+import {
+  propertiesForColumnsWidth2,
+} from "~/utils/columnStyles";
 import FormComponent from "./formComp";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 const reg = /\(Глава\s+(\d+)\)/g;
 const reg2 = /(if\(.+\|\d+\|\d+)\)/g;
 export function DecoderSimple({
@@ -18,37 +20,40 @@ export function DecoderSimple({
   else text2 = text;
   if (!text2) return <></>;
   let text2Lines = text2.replace(/\r/gm, "").split(reg);
-  let a = text2Lines.map((e, i) => {
-    if (i % 2 == 0) {
-      let b = e.replace(/\r/gm, "").split(reg2);
-      return b;
-    } else return [e];
-  });
+  let a = [];
+  for (let i = 0; i < text2Lines.length; i += 2) {
+    const e = text2Lines[i];
+    let b = e.replace(/\r/gm, "").split(reg2);
+    a.push({ b, e: [text2Lines[i + 1]] });
+  }
   // console.log(a);
   // console.log(text2Lines);
   // console.log(text2);
   // console.log(text);
   return (
-    <>
+    <ul>
       {a.map((e, i) => (
-        <div key={i}>
-          {i % 2 == 0 ? (
-            <Col {...propertiesForColumnsWidth}>
-              <p className="text-bold">{e}</p>
+        <li key={i}>
+          <Row>
+            <Col {...propertiesForColumnsWidth2}>
+              <p className="text-bold">{e.b}</p>
             </Col>
-          ) : (
-            <div className="m-l-35% ">
-              <FormComponent
-                textForSubmit={"Глава " + e[0]}
-                to={flag1 ? `${url}` : `${url}/${e}`}
-                textsHidden={e}
-                namesHidden={["to"]}
-                submitVariant="outline-secondary"
-              />
-            </div>
-          )}
-        </div>
+            {e.e&&e.e[0]!=null ? (
+              <Col sm="2">
+                <FormComponent
+                  textForSubmit={"Глава " + e.e[0]}
+                  to={flag1 ? `${url}` : `${url}/${e}`}
+                  textsHidden={e.e}
+                  namesHidden={["to"]}
+                  submitVariant="outline-secondary"
+                />
+              </Col>
+            ) : (
+              ""
+            )}
+          </Row>
+        </li>
       ))}
-    </>
+    </ul>
   );
 }

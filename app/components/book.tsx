@@ -55,17 +55,17 @@ export default function Book({
   textLines = textLines.slice(2);
   const [timeIn] = useState(Date.now());
   useEffect(() => {
-    const handleUnload = async() => {
-      await fetch(
-        "/analyses/timeForUser?user=" +
-          user +
-          "&time=" +
-          timeIn+
-          "&book=" +
-          book.text
-      );
-    };
-    window.addEventListener("beforeunload", handleUnload);
+    // const handleUnload = async() => {
+    //   await fetch(
+    //     "/analyses/timeForUser?user=" +
+    //       user +
+    //       "&time=" +
+    //       timeIn+
+    //       "&book=" +
+    //       book.text
+    //   );
+    // };
+    // window.addEventListener("beforeunload", handleUnload);
     //return () => window.removeEventListener("beforeunload", handleUnload); // cleanup
   }, []);
   // console.log(12);

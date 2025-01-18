@@ -36,7 +36,7 @@ export default function Text({
         </Col>
       </Row>
       {textLines.map((e, i) => (
-        <Row key={e}>
+        <Row key={e+i}>
           <Col {...propertiesForColumnsWidth}>
             <p className="text-bold p-3 text-j in-2 "> {e}</p>
           </Col>
