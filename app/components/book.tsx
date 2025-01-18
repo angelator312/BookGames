@@ -91,7 +91,7 @@ export default function Book({
         {kr ? (
           <div className="m-l-35%">
             <Row>
-              <Col sm="3">
+              <Col >
                 <FormComponent
                   submitVariant="secondary"
                   to={`${url}/${glava}/idea`}
@@ -102,7 +102,7 @@ export default function Book({
                 Коментирай!
               </button>
             </form> */}
-              <Col sm="3">
+              <Col >
                 <FormComponent
                   submitVariant="danger"
                   to={
