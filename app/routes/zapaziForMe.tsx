@@ -9,11 +9,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
   //console.log(form);
   
   const a = await requireUserId(request, false);
-  if (!a) return redirect("/login");
+  if (!a) return redirect("/login?redirectTo="+request.url);
   const uStore = await getUserStore();
   const forMeDescription = form.get("forMe")?.toString();
   const user = await uStore.getUser(a);
-  if(!user) return redirect("/login");
+  if(!user) return redirect("/login?redirectTo="+request.url);
   const data=user.data;
   if (typeof forMeDescription == "string")
       data.forMe = forMeDescription;

@@ -40,7 +40,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     }
     return redirect(`/book/${book}`);
   }
-  return redirect("/login");
+  return redirect("/login?redirectTo="+request.url);
 }
 export default function Book1() {
   const [searchParams] = useSearchParams();

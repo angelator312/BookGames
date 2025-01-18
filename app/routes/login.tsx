@@ -41,8 +41,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   // type UserWId=Omit(User,"_id",);
 
   const url = request.url;
-  const searchParams = new URLSearchParams(url);
-
+  const searchParams = new URL(url).searchParams;
+  //console.log(searchParams);
+  
   return createUserSession(
     userCheck.user,
     searchParams.get("redirectTo") ?? "/"
@@ -113,7 +114,6 @@ function FormExample() {
       <Row>
         <Col>
           <Container>
-
             <Form
               noValidate
               validated={validated}
@@ -124,7 +124,11 @@ function FormExample() {
                 <NavYesOrNo text={err ?? ""} yes={false} />
               </Row>
               <Row className="mb-3S">
-                <Form.Group as={Row} className="mb-3" controlId="validationCustom01">
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom01"
+                >
                   <Form.Label column sm="2">
                     Име
                   </Form.Label>
@@ -141,7 +145,11 @@ function FormExample() {
                     </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
-                <Form.Group as={Row} className="mb-3" controlId="validationCustom02">
+                <Form.Group
+                  as={Row}
+                  className="mb-3"
+                  controlId="validationCustom02"
+                >
                   <Form.Label column sm="2">
                     Парола
                   </Form.Label>
@@ -152,6 +160,7 @@ function FormExample() {
                       placeholder="Парола"
                       name="pass"
                     />
+                    <Form.Control type="hidden" name="redirectTo" value={searchParams.get("redirectTo")??"/"}/>
                     <Form.Control.Feedback>Става!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">
                       Моля, напишете парола!
@@ -162,7 +171,11 @@ function FormExample() {
               <Row className="mb-3">
                 <Col sm="2"></Col>
                 <Col sm="1" className="mb-3">
-                  <Button type="submit" variant="danger" className="centered m-r-3">
+                  <Button
+                    type="submit"
+                    variant="danger"
+                    className="centered m-r-3"
+                  >
                     Вход
                   </Button>
                 </Col>

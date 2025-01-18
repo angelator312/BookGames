@@ -9,7 +9,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   //console.log(form);
   
   const a = await requireUserId(request, false);
-  if (!a) return redirect("/login");
+  if (!a) return redirect("/login?redirectTo="+request.url);
   const uStore = await getUserStore();
   const fontSize = form.get("fontSize")?.toString();
   const settings = await uStore.getMySettings(a);

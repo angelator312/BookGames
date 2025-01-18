@@ -44,8 +44,9 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       const settings = await uStore.getMySettings(a);
       return { text: segG, glava, text2: spec, b,settings,user:a };
     }
+    return redirect("/")
   }
-  return redirect("/");
+  return redirect("/login?redirectTo=" + request.url);
 }
 export default function Book1() {
   const book = useLoaderData<loaderBook>();
