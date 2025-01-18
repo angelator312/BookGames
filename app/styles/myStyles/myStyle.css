@@ -1,4 +1,4 @@
-.link-clear{
+.link-clear {
   text-decoration: none;
   text-decoration-color: white;
 }
@@ -14,7 +14,7 @@
 .m-l-3 {
   margin-left: 3em !important;
 }
- .m-l-5\% {
+.m-l-5\% {
   margin-left: 5% !important;
 }
 .m-l-15\% {
@@ -24,12 +24,14 @@
   margin-left: 30% !important;
 }
 .m-l-35\% {
-  margin-left: 35% ;
-} 
+  margin-left: 35%;
+}
 .m-r-3 {
   margin-right: 3em !important;
 }
-
+ul {
+  list-style-image: url("/img/arrow_32.png");
+}
 
 .f-white {
   color: var(--smoke-white);
@@ -64,20 +66,18 @@ input.inp-bl {
   background-repeat: repeat-x;
 }
 
-.mt-3r{
-  margin-top: 3rem !important
+.mt-3r {
+  margin-top: 3rem !important;
 }
-.mt-6r{
-  margin-top: 6rem !important
+.mt-6r {
+  margin-top: 6rem !important;
 }
-.mb-3{
-  margin-bottom: 3rem !important
+.mb-3 {
+  margin-bottom: 3rem !important;
 }
-.line-height-1
-{
+.line-height-1 {
   line-height: 46px;
 }
-
 
 hr {
   display: flex;

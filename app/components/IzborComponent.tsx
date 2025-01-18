@@ -5,7 +5,6 @@ export default function IzborComponent({izbor,url,flag}: {izbor:Izbor,url:string
   // [number,number,number,string]} ) {
   console.log(izbor);
   return (
-    <>
       <FormComponent
         textForSubmit={izbor.text}
         to={flag ? `${url}` : `${url}/${izbor.glava}`}
@@ -13,6 +12,5 @@ export default function IzborComponent({izbor,url,flag}: {izbor:Izbor,url:string
         namesHidden={["to"]}
         submitVariant="outline-secondary"
       />
-    </>
   );
 }
