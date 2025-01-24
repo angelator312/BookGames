@@ -11,11 +11,11 @@ import globalMediumStylesUrl from "~/styles/global-medium.css";
 import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "~/styles/bootstrap.css";
 import stylesUrl from "~/styles/index.css";
-import { knigi, requireUserId } from "~/utils/session.server";
+import { getUserDatas, knigi, requireUserId } from "~/utils/session.server";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import getUserStore from "~/utils/userStore";
 import { getDefaultSettings } from "~/utils/User";
-import type { User , SettingsInterface } from "~/utils/User";
+import type { User , SettingsInterface, UserData } from "~/utils/User";
 import type { Book } from "~/utils/textStore";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -48,22 +48,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     if(user)
     {
       const searchParams = new URL(request.url).searchParams;
-      return [user, await knigi(a, searchParams.get("query")), user.settings??getDefaultSettings()];
+      const knigite = await knigi(a, searchParams.get("query"));
+      return [user,knigite, user.settings??getDefaultSettings(),await getUserDatas(knigite[1])];
     }
   }
   return null;
 };
-type loaderType=[User,Book[],SettingsInterface]|null;
+type loaderType=[User,Book[],SettingsInterface,UserData]|null;
 export default function IndexRoute() {
   // console.log(1);
   const loader = useLoaderData<loaderType>();
   if(loader)
-    var [user, books, settings] = loader;
+    var [user, books, settings,dataNotMine] = loader;
   return (
     <div>
       {loader ? (
         // @ts-ignore
-        <Home user={user} books={books} settings={settings} />
+        <Home dataMy={user.data} dataNotMine={dataNotMine} user={user} books={books} settings={settings} />
       ) : (
         <Intro />
       )}

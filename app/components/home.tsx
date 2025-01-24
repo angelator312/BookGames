@@ -6,16 +6,20 @@ import NavYesOrNo from "./navbarYes";
 import SearchComponent from "./Search";
 import { Col, Container, Row } from "react-bootstrap";
 import MenuForHome  from "./home.menu";
-import type { SettingsInterface,User } from "~/utils/User";
+import type { SettingsInterface,User, UserData } from "~/utils/User";
 
 export default function Home({
   user,
   books,
   settings,
+  dataMy,
+  dataNotMine
 }: {
-  settings:SettingsInterface,
+  settings: SettingsInterface;
   user: User;
   books: Book[][];
+  dataMy: UserData;
+  dataNotMine: UserData[];
 }) {
   // const userId = useLoaderData<string>();
   // console.log(books[0]);
@@ -56,7 +60,7 @@ export default function Home({
 
       <Row>
         <Col>
-          <MenuForHome user={user} settings={settings}/>
+          <MenuForHome user={user} settings={settings} />
         </Col>
       </Row>
       {/* </div> */}
@@ -66,7 +70,7 @@ export default function Home({
             {books[0].map((e, i) => (
               <Row key={i}>
                 <Col>
-                  <BookHeader e={e} avt={true} />
+                  <BookHeader authorData={dataMy} e={e} avt={true} />
                 </Col>
               </Row>
             ))}
@@ -87,17 +91,15 @@ export default function Home({
                   {books[1].map((e, i) => (
                     <Row key={i}>
                       <Col>
-                        <BookHeader e={e} />
+                        <BookHeader authorData={dataNotMine[i]} e={e} />
                       </Col>
                     </Row>
                   ))}
-                  { books[1].length<=0?
-                  <h3 className="centered text-bold" >
-                    Няма Резултати
-                  </h3>
-                  :""
-
-                  }
+                  {books[1].length <= 0 ? (
+                    <h3 className="centered text-bold">Няма Резултати</h3>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </Col>
             </Row>

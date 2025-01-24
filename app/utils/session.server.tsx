@@ -1,6 +1,7 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
-import getTextStore from "./textStore";
+import getTextStore, { Book } from "./textStore";
 import getUserStore from "./userStore";
+import { getDefaultUserData } from "./User";
 
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
@@ -107,4 +108,12 @@ export async function loadSettings(user: string) {
   const tStore = await getUserStore();
   const a = await tStore.getMySettings(user);
   return a;
+}
+
+export async function getUserDatas(books:Book[])
+{
+  const uStore = await getUserStore();
+  return books.map(async book =>{
+    return (await uStore.getUser(book.avtor))?.data??getDefaultUserData();
+  })
 }

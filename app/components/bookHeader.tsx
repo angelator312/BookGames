@@ -8,13 +8,15 @@ import {
   Tooltip,
 } from "react-bootstrap";
 import { AuthorResume } from "./userResume";
-import { getDefaultUserData } from "~/utils/User";
+import type { UserData } from "~/utils/User";
 import type { Book } from "~/utils/textStore";
 
 export default function BookHeader({
   e,
   avt = false,
+  authorData
 }: {
+  authorData:UserData
   e: Book;
   avt?: boolean;
 }) {
@@ -36,7 +38,7 @@ export default function BookHeader({
           </OverlayTrigger>
         </Col>
         <Col className="text-bold text-dark" xs={2}>
-          <AuthorResume authorData={e.author?.data??getDefaultUserData()} authorName={e.avtor ?? ""} />
+          <AuthorResume authorData={authorData} authorName={e.avtor ?? ""} />
         </Col>
         {/* <br /> */}
         {avt ? (

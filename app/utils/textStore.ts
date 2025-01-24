@@ -1,6 +1,6 @@
 import type { Collection, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
-import { getDefaultUser, type User } from "./User";
+import { getDefaultUser } from "./User";
 import getUserStore from "./userStore";
 export interface Text {
   _id?: string;
@@ -28,7 +28,6 @@ export interface Book {
   comments?: string[][][];
   public: boolean;
   avtor: string;
-  author?: User;
   text2: string;
   data: BookData;
 }
