@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import IzborComponent from "./IzborComponent";
-import { propertiesForColumnsWidth, propertiesForColumnsWidth2 } from "~/utils/columnStyles";
+import { propertiesForColumnsWidth2 } from "~/utils/columnStyles";
 
 export interface Izbori {
   zarche: boolean;
@@ -98,6 +98,7 @@ export function DecoderAdvanced({
   // console.log(text2Lines);
   // console.log(text2);
   // console.log(text);
+  // console.log(arr);
   return (
     <ul>
       {arr.map((e, i) => (
@@ -106,9 +107,11 @@ export function DecoderAdvanced({
             <Col {...propertiesForColumnsWidth2}>
               <p className="text-bold">{e.text}</p>
             </Col>
-            <Col sm="2">
-              <IzborComponent izbor={e.izb} url={url} flag={flag1} />
-            </Col>
+            {e.izb ? (
+              <Col sm="2">
+                <IzborComponent izbor={e.izb} url={url} flag={flag1} />
+              </Col>
+            ) : null}
           </Row>
         </li>
       ))}
