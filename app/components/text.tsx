@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { Decoder } from "./decoder";
 import { propertiesForColumnsWidth } from "~/utils/columnStyles";
+import { DecoderAdvanced } from "./decoderAdvanced";
 
 export default function Text({
   glava,
@@ -36,7 +37,7 @@ export default function Text({
         </Col>
       </Row>
       {textLines.map((e, i) => (
-        <Row key={e+i}>
+        <Row key={e + i}>
           <Col {...propertiesForColumnsWidth}>
             <p className="text-bold p-3 text-j in-2 "> {e}</p>
           </Col>
@@ -44,7 +45,11 @@ export default function Text({
       ))}
       <Row>
         <Col>
-          <Decoder text2={text2} url={url} flag1={flag1} />
+          {!flag1 ? (
+            <DecoderAdvanced text2={text2} url={url} flag1={flag1} />
+          ) : (
+            <Decoder text2={text2} url={url} flag1={flag1} />
+          )}
         </Col>
       </Row>
     </Container>
