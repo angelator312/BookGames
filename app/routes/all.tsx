@@ -54,7 +54,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       ];
     }
   }
-  return null;
+  return redirect("/login?redirectTo="+request.url);
 };
 type loaderType = [User, Book[], SettingsInterface, UserData[]] | null;
 export default function AllBooksRoute() {

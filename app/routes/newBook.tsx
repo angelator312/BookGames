@@ -39,7 +39,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       return [user, user.settings ?? uStore.getDefaultSettings()];
     }
   }
-  return redirect("/");
+  return redirect("/login?redirectTo="+request.url);
 };
 type loaderType = [User, SettingsInterface];
 export default function NewBookRoute() {

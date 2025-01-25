@@ -43,6 +43,15 @@ export default function Intro() {
           <Button variant="secondary">Регистрация </Button>
           {/* </span> */}
         </Link>
+        <Link
+          to="/intro"
+          className="link-clear"
+          style={{ textDecoration: "none" }}
+        >
+          {/* <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium"> */}{" "}
+          <Button variant="secondary">Проба </Button>
+          {/* </span> */}
+        </Link>
       </h2>
     </Container>
   );
