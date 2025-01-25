@@ -38,7 +38,7 @@ function MenuForIntro() {
         >
           <Row>
             <Col style={{ marginTop: "1rem" }}>
-              <h3 className="font-medium text-dark">Здравей Aнонимен </h3>
+              <h3 className="font-medium text-dark">Здравей Анонимен </h3>
             </Col>
           </Row>{" "}
           <Row>
@@ -87,7 +87,7 @@ function MenuForIntro() {
           {/* Винаги на края е това↓↓↓ */}
           <Row>
             <Col style={{ marginTop: "1rem" }}>
-              <a color="red" href="/register" className="">
+              <a color="red" href="/signup" className="">
                 <span className="text-slate-500 font-medium logo text-primary">
                   Регистрация
                 </span>

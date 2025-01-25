@@ -181,7 +181,7 @@ function FormExample() {
                 </Col>
                 <Col sm="1"></Col>
                 <Col sm="2" className="mb-3">
-                  <Link to="/signup">
+                  <Link to={"/signup?redirectTo="+searchParams.get("redirectTo")}>
                     <Button variant="secondary">Регистрация</Button>
                   </Link>
                 </Col>

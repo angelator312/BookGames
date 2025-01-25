@@ -89,6 +89,13 @@ export default function Home({
                 </Col>
               </Row>
             ))}
+            {books[0].length == 0 ? (
+              <a href="/newBook">
+                <Button variant="primary" className="text-sm">
+                  Тук Няма Никой,Създай книга:
+                </Button>
+              </a>
+            ) : null}
             {oshte0 ? (
               <Row>
                 <Col>
@@ -129,7 +136,11 @@ export default function Home({
                   {oshte1 ? (
                     <Row>
                       <Col>
-                        <a href={"/all?query=" + (searchParams.get("query")??"")}>
+                        <a
+                          href={
+                            "/all?query=" + (searchParams.get("query") ?? "")
+                          }
+                        >
                           <Button variant="outline-primary" className="text-sm">
                             Виж всички
                           </Button>

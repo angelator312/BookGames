@@ -44,7 +44,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (pass != pass2) return redirect(`/signup?errCode=2`);
   // console.log(username, pass);
   users.addUser(username, pass);
-  return redirect(`/login?feedCode=2 `);
+  return redirect(`/login?feedCode=2&redirectTo=${form.get("redirectTo")?.toString()??""}`);
 
   //const fields = { content, name };
 
@@ -105,6 +105,7 @@ function FormExample() {
               method="POST"
               action="/signup"
             >
+              <Form.Control name="redirectTo" type="hidden" value={searchParams.get("redirectTo")?.toString()??""}/>
               <Row className="mb-3">
                 <NavYesOrNo text={err ?? ""} yes={false} />
               </Row>
