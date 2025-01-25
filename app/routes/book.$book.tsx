@@ -28,7 +28,9 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     if (b?.avtor == a) return redirect("/myBook/" + params.book);
     if (b?.public) {
       // return a;
-      const user = await (await getUserStore()).getUser(a);
+      //console.log(uStore.collection);
+      
+      const user = await uStore.getUser(a);
       let glava = user?.glavi[`Book-${b.text}`] ?? "1";
       let text = await tStore.getText(`${b.text}-${glava}`);
       if (!text || !glava) {

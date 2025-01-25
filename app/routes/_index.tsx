@@ -54,12 +54,17 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
   return null;
 };
-type loaderType=[User,Book[],SettingsInterface,UserData]|null;
+type loaderType=[User,Book[],SettingsInterface,UserData[]]|null;
 export default function IndexRoute() {
   // console.log(1);
   const loader = useLoaderData<loaderType>();
   if(loader)
+  {
     var [user, books, settings,dataNotMine] = loader;
+    //console.log(books[1]);
+    
+  }
+  
   return (
     <div>
       {loader ? (
