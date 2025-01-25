@@ -6,7 +6,7 @@ import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
 import MenuForHome from "./home.menu";
-import type { User } from "~/utils/User";
+import type { User, VariableInterface } from "~/utils/User";
 import { getDefaultUser } from "~/utils/User";
 
 interface Params {
@@ -15,6 +15,7 @@ interface Params {
   text2: string;
   user: User;
   book: { text: string };
+  variables:{[key:string]:VariableInterface};
 }
 
 export default function Book({
@@ -29,6 +30,7 @@ export default function Book({
     text2: "This is not mandatory",
     user: getDefaultUser(),
     book: { text: "Problem" },
+    variables:{},
   },
 }: {
   url: string;
@@ -42,10 +44,10 @@ export default function Book({
   if (!flag) 
     {
       var book=loaderData.b;
-      var { text, glava, text2, user } = loaderData;
+      var { text, glava, text2, user, variables } = loaderData;
     }
   //@ts-ignore
-  else var { text, glava, text2, user, book } = params;
+  else var { text, glava, text2, user, book,variables } = params;
   // else
   //  { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(flag,text,glava,text2);
@@ -81,6 +83,7 @@ export default function Book({
         //@ts-ignore
         user={user} settings={user.settings}/>
         <Text
+          variables={variables??[]}
           furst2Lines={furst2Lines}
           glava={glava}
           url={url}

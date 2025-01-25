@@ -2,6 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Decoder } from "./decoder";
 import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 import { DecoderAdvanced } from "./decoderAdvanced";
+import { compileToString, VariableInterface } from "~/utils/User";
 
 export default function Text({
   glava,
@@ -10,6 +11,7 @@ export default function Text({
   text2Lines: text2,
   flag1 = true,
   url,
+  variables = {},
 }: {
   glava: string | number;
   furst2Lines: string[];
@@ -17,7 +19,12 @@ export default function Text({
   text2Lines: string;
   flag1?: boolean;
   url: string;
+  variables: { [key: string]: VariableInterface };
 }) {
+  console.log("vars:", variables);
+  function compileToStringM(a: string) {
+    return compileToString(a, variables);
+  }
   return (
     <Container className="bg-i p-4" style={{ textIndent: 20 }}>
       <Row>
@@ -27,19 +34,21 @@ export default function Text({
       </Row>
       <Row>
         <Col>
-          <h2 className="p-3">{furst2Lines[0]} </h2>
+          <h2 className="p-3">{compileToStringM(furst2Lines[0])} </h2>
         </Col>
       </Row>
 
       <Row>
         <Col {...propertiesForColumnsWidth}>
-          <p className="text-bold p-3 text-j in-2 ">{furst2Lines[1]}</p>
+          <p className="text-bold p-3 text-j in-2 ">
+            {compileToStringM(furst2Lines[1])}
+          </p>
         </Col>
       </Row>
       {textLines.map((e, i) => (
         <Row key={e + i}>
           <Col {...propertiesForColumnsWidth}>
-            <p className="text-bold p-3 text-j in-2 "> {e}</p>
+            <p className="text-bold p-3 text-j in-2 "> {compileToStringM(e)}</p>
           </Col>
         </Row>
       ))}

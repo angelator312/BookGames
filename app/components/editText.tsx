@@ -11,6 +11,7 @@ import { Editor, type OnMount } from "@monaco-editor/react";
 import React, { useState } from "react";
 import type { editor } from "monaco-editor";
 import { ModalInsertChapterSimple } from "./ModalInsertChapterSimple";
+import { ModalInsertChapterSimpleWithScoreChange } from "./ModalInsertChapterSimpleWithScoreChange";
 export default function EditText({
   text,
   text2,
@@ -53,6 +54,8 @@ export default function EditText({
   const editorMount: OnMount = (editorL: editor.IStandaloneCodeEditor) => {
     setMonacoInstance(editorL);
   };
+
+
   function handleEditorChange(value: any, event: any) {
     const arr = (value.replace(/\r/gm, "") ?? "").split(/^---\s*$/gm);
     setText(arr[0]);
@@ -62,13 +65,19 @@ export default function EditText({
     }
   }
   const [showInsertChapter, setShowInsertChapter] = useState(false);
+  const [showInsertChapter2, setShowInsertChapter2] = useState(false);
   function handleInsertChapter(insertChapter: number,text:string) {
-    insertText(`=>(Глава ${insertChapter})(резултат 0)[${text??"AAAA"}]`);
+    insertText(`=>(Глава ${insertChapter})[${text??"AAAA"}]`);
     return setShowInsertChapter(false);
   }
-
+  function handleInsertChapter2(insertChapter: number,scoreChange:number, text: string) {
+    insertText(`=>(Глава ${insertChapter})(резултат ${scoreChange})[${text ?? "AAAA"}]`);
+    return setShowInsertChapter2(false);
+  }
   const handleCloseInsertChapter = () => setShowInsertChapter(false);
+  const handleCloseInsertChapter2 = () => setShowInsertChapter2(false);
   const handleShowInsertChapter = () => setShowInsertChapter(true);
+  const handleShowInsertChapter2 = () => setShowInsertChapter2(true);
   return (
     <Container fluid>
       <Row>
@@ -87,9 +96,11 @@ export default function EditText({
               id="bg-nested-dropdown"
             >
               <Dropdown.Item eventKey="1" onClick={handleShowInsertChapter}>
-                На избор За Глава
+                На избор за глава
               </Dropdown.Item>
-              <Dropdown.Item eventKey="2">Dropdown link</Dropdown.Item>
+              <Dropdown.Item eventKey="2" onClick={handleShowInsertChapter2}>
+                На избор за глава със резултат
+              </Dropdown.Item>{" "}
             </DropdownButton>
           </ButtonGroup>
         </Col>
@@ -119,9 +130,10 @@ export default function EditText({
         <Col></Col>
       </Row>
       <p>
-        изборите са след --- <br/>
+        изборите са след --- <br />
         Всичко е описано в Помощ и нещата за вмъкване се вмъкват чрез бутона
-        <br/>Ако искаате да ви е по-лесно редактирайте в уголемен прозорец
+        <br />
+        Ако искаате да ви е по-лесно редактирайте в уголемен прозорец
       </p>
 
       <br />
@@ -129,6 +141,11 @@ export default function EditText({
         showInsertChapter={showInsertChapter}
         handleCloseInsertChapter={handleCloseInsertChapter}
         handleInsertChapter={handleInsertChapter}
+      />
+      <ModalInsertChapterSimpleWithScoreChange
+        showInsertChapter={showInsertChapter2}
+        handleCloseInsertChapter={handleCloseInsertChapter2}
+        handleInsertChapter={handleInsertChapter2}
       />
     </Container>
   );

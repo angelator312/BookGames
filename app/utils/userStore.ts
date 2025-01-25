@@ -2,7 +2,7 @@ import type { Collection } from "mongodb";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 import type { SettingsInterface, User, UserData } from "./User";
-import { getDefaultSettings, getDefaultUserData } from "./User";
+import { getDefaultSettings, getDefaultUserData, getDefaultVariable } from "./User";
 export class UserStore {
   FixDatabase() {
     this.collection.updateMany(
@@ -55,8 +55,8 @@ export class UserStore {
       user,
       passH,
       glavi: {},
-      data:getDefaultUserData(),
-      admin: false
+      data: getDefaultUserData(),
+      admin: false,
     };
     const i = await this.collection.replaceOne({ user: user }, v, {
       upsert: true,
@@ -73,7 +73,7 @@ export class UserStore {
     if (!data) return null;
 
     let v: User = {
-      ...data
+      ...data,
     };
     v.glavi[id] = glava;
     const i = await this.collection.replaceOne({ user }, v);
@@ -123,16 +123,13 @@ export class UserStore {
     await this.collection.replaceOne({ user }, v);
     return settings;
   }
-  async adjustUserData(
-    settings: UserData,
-    user: string
-  ): Promise<UserData> {
+  async adjustUserData(settings: UserData, user: string): Promise<UserData> {
     const data = await this.getUser(user);
     if (!data) return settings;
 
     let v: User = {
       ...data,
-      data:settings,
+      data: settings,
     };
     await this.collection.replaceOne({ user }, v);
     return settings;
@@ -151,6 +148,32 @@ export class UserStore {
     }
     return false;
   }
+  //Variables
+  async editVariable(user:string,id:string,plusR:number) {
+    const data = await this.getUser(user);
+    if (!data) return null;
+
+    let v: User = {
+      ...data,
+    };
+    if(v.variables)
+    {
+      
+      v.variables[id].value += plusR;
+    }else
+    {
+      v.variables={};
+      v.variables[id]=getDefaultVariable();
+      console.log(v.variables);
+      
+      v.variables[id].value += plusR;
+    }
+    const i = await this.collection.replaceOne({ user }, v);
+    v._id = i.upsertedId;
+    console.log("vars updated:",v);
+    
+    return v;
+  }
 }
 let ObUser: { [key: string]: UserStore } = {};
 
@@ -166,4 +189,5 @@ export default async function getUserStore(
   }
   return ObUser[collectionName];
 }
+
 

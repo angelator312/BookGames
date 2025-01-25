@@ -1,6 +1,5 @@
 import type { Book } from "./textStore";
-import type { SettingsInterface } from "./User";
-import type { User } from "./User";
+import type { SettingsInterface, User, VariableInterface } from "./User";
 
 export type loaderBook={
     text: string;
@@ -9,4 +8,5 @@ export type loaderBook={
     b: Book;
     settings: SettingsInterface;
     user:User;
+    variables:{[key:string]:VariableInterface};
 }

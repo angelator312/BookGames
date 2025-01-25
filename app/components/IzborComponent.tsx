@@ -8,8 +8,8 @@ export default function IzborComponent({izbor,url,flag}: {izbor:Izbor,url:string
       <FormComponent
         textForSubmit={izbor.text}
         to={flag ? `${url}` : `${url}/${izbor.glava}`}
-        textsHidden={[izbor.glava.toString()]}
-        namesHidden={["to"]}
+        textsHidden={[izbor.glava.toString(),izbor.scoreChange.toString()]}
+        namesHidden={["to","rezultat"]}
         submitVariant="outline-secondary"
       />
   );

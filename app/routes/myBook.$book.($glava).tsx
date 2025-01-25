@@ -12,12 +12,13 @@ import NavYesOrNo from "~/components/navbarYes";
 import Book from "~/components/book";
 import FormComponent from "~/components/formComp";
 import getUserStore from "~/utils/userStore";
-import { User } from "~/utils/User";
+import type { User, VariableInterface } from "~/utils/User";
+import { getDefaultVariable } from "~/utils/User";
 export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
 
-type loaderData = [string, string, Text2, string, string[][],User];
+type loaderData = [string, string, Text2, string, string[][],User,VariableInterface];
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
@@ -43,7 +44,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       const uStore=await getUserStore();
       const comments = await tStore.getComments(book ?? "", glava);
       let t = await tStore.getText(`${book}-${glava}`);
-      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments,await uStore.getUser(a)];
+      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments,await uStore.getUser(a),[getDefaultVariable()]];
     }
     return redirect(`/book/${book}`);
   }
@@ -52,7 +53,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function Book1() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [bUrl, gl, t, doN, comments,user] = useLoaderData<loaderData>();
+  const [bUrl, gl, t, doN, comments,user,vars] = useLoaderData<loaderData>();
   let comm = comments;
   function update() {
     textLines = text.split("\n\n");
@@ -181,6 +182,8 @@ export default function Book1() {
                         //@ts-ignore
                         user: user ?? "",
                         book: { text: bUrl },
+                        //@ts-ignore
+                        variables: vars,
                       }}
                       kr={false}
                     />
