@@ -55,9 +55,13 @@ export default function Text({
       <Row>
         <Col>
           {!flag1 ? (
-            <DecoderAdvanced text2={text2} url={url} flag1={flag1} />
+            <DecoderAdvanced
+              text2={compileToStringM(text2)}
+              url={url}
+              flag1={flag1}
+            />
           ) : (
-            <Decoder text2={text2} url={url} flag1={flag1} />
+            <Decoder text2={compileToStringM(text2)} url={url} flag1={flag1} />
           )}
         </Col>
       </Row>
