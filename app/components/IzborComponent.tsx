@@ -6,6 +6,7 @@ export default function IzborComponent({izbor,url,flag}: {izbor:Izbor,url:string
   console.log(izbor);
   return (
       <FormComponent
+        disabled={izbor.disabled}
         textForSubmit={izbor.text}
         to={flag ? `${url}` : `${url}/${izbor.glava}`}
         textsHidden={[izbor.glava.toString(),izbor.scoreChange.toString()]}

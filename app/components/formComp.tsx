@@ -9,6 +9,7 @@ export default function FormComponent({
   submitVariant = "success",
   method = "post",
   handleClick=()=>"",
+  disabled=false
 }: {
   texts?: string[];
   names?: string[];
@@ -16,12 +17,13 @@ export default function FormComponent({
   namesHidden?: string[];
   textForSubmit: string;
   to: string;
+  disabled?: boolean;
   submitVariant?: string;
   method?: string;
   handleClick?: () => void;
 }) {
   return (
-    <Form method={method} action={to}>
+    <Form method={method} action={to} >
       <InputGroup className="mb-3">
         {texts.map((e, i) => (
           <Form.Group
@@ -43,6 +45,7 @@ export default function FormComponent({
       </InputGroup>
       <InputGroup className="mb-3">
         <Button
+          disabled={disabled}
           onClick={handleClick}
           variant={submitVariant}
           as="input"
