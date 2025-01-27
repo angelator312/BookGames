@@ -70,7 +70,7 @@ export function compileToString(
   console.log("start", text);
 
   for (const i of Object.keys(variables)) {
-    result = result.replace(
+    result = result?.replace(
       `{${variables[i].name}}`,
       variables[i].value.toString()
     );
