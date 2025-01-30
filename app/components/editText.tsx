@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import type { editor } from "monaco-editor";
 import { ModalInsertChapterSimple } from "./ModalInsertChapterSimple";
 import { ModalInsertChapterSimpleWithScoreChange } from "./ModalInsertChapterSimpleWithScoreChange";
+import GetImagesModal from "./getImages";
 export default function EditText({
   text,
   text2,
@@ -64,10 +65,15 @@ export default function EditText({
       priIzvikvane();
     }
   }
+  const [showInsertImage, setShowInsertImage] = useState(false);
   const [showInsertChapter, setShowInsertChapter] = useState(false);
   const [showInsertChapter2, setShowInsertChapter2] = useState(false);
   function handleInsertChapter(insertChapter: number,text:string) {
     insertText(`=>(Глава ${insertChapter})[${text??"AAAA"}]`);
+    return setShowInsertChapter(false);
+  }
+  function handleInsertImage(insertID: string) {
+    insertText(`=>{image:${insertID}}`);
     return setShowInsertChapter(false);
   }
   function handleInsertChapter2(insertChapter: number,scoreChange:number, text: string) {
@@ -75,8 +81,10 @@ export default function EditText({
     return setShowInsertChapter2(false);
   }
   const handleCloseInsertChapter = () => setShowInsertChapter(false);
+  const handleCloseInsertImage = () => setShowInsertImage(false);
   const handleCloseInsertChapter2 = () => setShowInsertChapter2(false);
   const handleShowInsertChapter = () => setShowInsertChapter(true);
+  const handleShowInsertImage = () => setShowInsertImage(true);
   const handleShowInsertChapter2 = () => setShowInsertChapter2(true);
   return (
     <Container fluid>
@@ -100,7 +108,10 @@ export default function EditText({
               </Dropdown.Item>
               <Dropdown.Item eventKey="2" onClick={handleShowInsertChapter2}>
                 На избор за глава със резултат
-              </Dropdown.Item>{" "}
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="2" onClick={handleShowInsertImage}>
+                На Картинка
+              </Dropdown.Item>
             </DropdownButton>
           </ButtonGroup>
         </Col>
@@ -133,7 +144,7 @@ export default function EditText({
         изборите са след --- <br />
         Всичко е описано в Помощ и нещата за вмъкване се вмъкват чрез бутона
         <br />
-        Ако искаате да ви е по-лесно редактирайте в уголемен прозорец
+        Ако искате да ви е по-лесно редактирайте в уголемен прозорец
       </p>
 
       <br />
@@ -146,6 +157,11 @@ export default function EditText({
         showInsertChapter={showInsertChapter2}
         handleCloseInsertChapter={handleCloseInsertChapter2}
         handleInsertChapter={handleInsertChapter2}
+      />
+      <GetImagesModal
+      handleClose={handleCloseInsertImage}
+      show={showInsertImage}
+      handleInsertImage={handleInsertImage}
       />
     </Container>
   );

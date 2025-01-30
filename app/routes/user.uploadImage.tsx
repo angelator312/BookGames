@@ -31,13 +31,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         arr.push(chunk);
       }
       const fileStore = await getFileStore();
-      await fileStore.addImage(
+      return(await fileStore.addImage(
         filename,
         userId,
         contentType,
         Buffer.concat(arr)
-      );
-      return;
+      )).id;
     },
     // fallback to memory for everything else
     unstable_createMemoryUploadHandler()
@@ -47,7 +46,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     request,
     uploadHandler
   );
-  return formData;
+  // formData.forEach((entry) => {});
+  return formData.get("file");
   // because our uploadHandler returns a string, that's what the imageUrl will be.
   // ... etc
 };

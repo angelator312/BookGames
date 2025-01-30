@@ -1,13 +1,7 @@
-import type { Collection} from "mongodb";
-import { Binary ,MongoClient, ObjectId } from "mongodb";
-interface ImageInterface {
-  _id?: string;
-  name: string;
-  user: string;
-  data: Binary;
-  mimeType:string;
-}
-
+import type { Collection } from "mongodb";
+import { Binary, MongoClient, ObjectId } from "mongodb";
+import sharp from "sharp";
+import { ImageInterface, MiniInterface } from "./ImageInterface";
 class FileStore {
   collection!: Collection<ImageInterface>;
   // eslint-disable-next-line no-useless-constructor
@@ -26,24 +20,38 @@ class FileStore {
   async addImage(
     name: string,
     user: string,
-    mimeType:string,
-    data: Uint8Array,
-  ): Promise<ImageInterface> {
+    mimeType: string,
+    data: Uint8Array
+  ): Promise<any> {
+    const thumbnail = await sharp(data)
+      .resize(128, 128, {
+        fit: "contain",
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      })
+      .png({})
+      .toBuffer();
     const v: ImageInterface = {
       name,
       user,
       mimeType,
-      data:new Binary(data),
+      data: new Binary(data),
+      thumbnail: new Binary(thumbnail),
     };
     const i = await this.collection.insertOne(v);
     v._id = i.insertedId;
-    return v;
+    return { id: v._id };
   }
-  async getImage(_id: ObjectId,user:string): Promise<ImageInterface |null> {
-      return (await this.collection.findOne({ _id,user }))
+  async getImage(_id: ObjectId): Promise<ImageInterface | null> {
+    //@ts-ignore
+    return await this.collection.findOne({ _id });
+  }
+  async listImages(user: string): Promise<MiniInterface[]> {
+    const arr = await this.collection.find({ user }).toArray();
+    return arr.map((e) => {
+      return { thumbnail: e.thumbnail, id: e._id,name: e.name};
+    });
   }
 }
-
 
 let ObUser: { [key: string]: FileStore } = {};
 
@@ -59,4 +67,3 @@ export default async function getFileStore(
   }
   return ObUser[collectionName];
 }
-
