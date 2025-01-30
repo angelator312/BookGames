@@ -59,15 +59,6 @@ function MenuForHome({
           </Row>
           <Row>
             <Col style={{ marginTop: "1rem" }}>
-              <a href="/Settings" className="">
-                <span className="text-slate-500 font-medium logo  text-primary">
-                  Настройки
-                </span>
-              </a>
-            </Col>
-          </Row>
-          <Row>
-            <Col style={{ marginTop: "1rem" }}>
               <a href="/Profil" className="">
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Профил
