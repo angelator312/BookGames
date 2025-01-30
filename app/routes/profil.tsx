@@ -59,6 +59,7 @@ export default function Settings() {
   const [fontSize, setFontSize] = useState(settings.fontSize);
   const [minis, setMinis] = useState<MiniInterface[]>([]);
   const [showImages, setShowImages] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
   useEffect(() => {
     async function getImages() {
       setMinis(await (await fetch("/getImages")).json());
@@ -173,7 +174,14 @@ export default function Settings() {
             action="/uploadImage"
             encType="multipart/form-data"
             method="post"
-          ></Form>
+          >
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Изберете изображение за качване</Form.Label>
+              <Form.Control type="file" name="file"  onChange={()=>setDisabled(false)}/>
+              <Form.Control type="hidden" value="/settings" name="toUrl" />
+              <Button type="submit" disabled={disabled}>Качи</Button>
+            </Form.Group>
+          </Form>
           <Modal
             show={idDeleteModal != "ne"}
             onHide={() => setIdDeleteModal("ne")}

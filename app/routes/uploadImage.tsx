@@ -1,5 +1,6 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 import {
+  redirect,
   unstable_composeUploadHandlers,
   unstable_createMemoryUploadHandler,
   unstable_parseMultipartFormData,
@@ -31,23 +32,28 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         arr.push(chunk);
       }
       const fileStore = await getImageStore();
-      return(await fileStore.addImage(
-        filename,
-        userId,
-        contentType,
-        Buffer.concat(arr)
-      )).id;
+      return (
+        await fileStore.addImage(
+          filename,
+          userId,
+          contentType,
+          Buffer.concat(arr)
+        )
+      ).id;
     },
     // fallback to memory for everything else
     unstable_createMemoryUploadHandler()
   );
 
+  // console.log(request);
+
+  // const a = (await request.formData()).get("toUrl");
   const formData = await unstable_parseMultipartFormData(
     request,
     uploadHandler
   );
   // formData.forEach((entry) => {});
-  return formData.get("file");
+  return redirect("/profil")
   // because our uploadHandler returns a string, that's what the imageUrl will be.
   // ... etc
 };
