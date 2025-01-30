@@ -1,12 +1,18 @@
-import { Col, Card, Row } from "react-bootstrap";
+import { Col, Card, Row, Button } from "react-bootstrap";
 import type { MiniInterface } from "~/utils/ImageInterface";
 
 export default function PreviewImages({
   minis,
   handleInsertImage,
+  options = { delete: false, handleDeleteImage: () => {} },
 }: {
   minis: MiniInterface[];
   handleInsertImage: (insertID: string) => void;
+  options?: {
+    delete: boolean;
+    handleDeleteImage: (id:string) => void;
+    insert?: boolean;
+  };
 }) {
   return (
     <Row className="justify-content-center">
@@ -20,6 +26,14 @@ export default function PreviewImages({
             />
             <Card.Body>
               <Card.Title>{e.name}</Card.Title>
+              {options.delete? (
+                <Button
+                  variant="danger"
+                  onClick={() => options.handleDeleteImage(e.id)}
+                >
+                  Delete
+                </Button>
+              ) : null}
             </Card.Body>
           </Card>
         </Col>

@@ -4,7 +4,7 @@ import {
   unstable_createMemoryUploadHandler,
   unstable_parseMultipartFormData,
 } from "@remix-run/node";
-import getFileStore from "~/utils/fileStore";
+import getImageStore from "~/utils/fileStore";
 import { requireUserId } from "~/utils/session.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -30,7 +30,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         // save the chunk
         arr.push(chunk);
       }
-      const fileStore = await getFileStore();
+      const fileStore = await getImageStore();
       return(await fileStore.addImage(
         filename,
         userId,

@@ -48,14 +48,24 @@ class FileStore {
   async listImages(user: string): Promise<MiniInterface[]> {
     const arr = await this.collection.find({ user }).toArray();
     return arr.map((e) => {
-      return { thumbnail: e.thumbnail, id: e._id,name: e.name};
+      return { thumbnail: e.thumbnail, id: e._id, name: e.name };
     });
+  }
+  async deleteImage(_id: string, user: string): Promise<boolean> {
+    const img = await this.getImage(new ObjectId(_id));
+    
+    if (img) {
+      if (img.user === user) {
+        return (await this.collection.deleteOne(img)).deletedCount == 1;
+      }
+    }
+    return false;
   }
 }
 
 let ObUser: { [key: string]: FileStore } = {};
 
-export default async function getFileStore(
+export default async function getImageStore(
   url: string | undefined = process.env.MONGO_URL,
   collectionName: string = "Images"
 ) {

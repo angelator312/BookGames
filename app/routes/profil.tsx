@@ -2,9 +2,22 @@ import { Editor } from "@monaco-editor/react";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { useState } from "react";
-import { Col, Container, Form, Row, Tab, Tabs } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Modal,
+  Row,
+  Spinner,
+  Tab,
+  Tabs,
+} from "react-bootstrap";
 import MenuForHome from "~/components/home.menu";
+import PreviewImages from "~/components/previewOnImages";
+import getImageStore from "~/utils/fileStore";
+import type { MiniInterface } from "~/utils/ImageInterface";
 import { requireUserId } from "~/utils/session.server";
 import type { SettingsInterface, User, UserData } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
@@ -18,20 +31,43 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     const uStore = await getUserStore();
     const user = await uStore.getUser(a);
     if (user) {
+      const iStore = await getImageStore();
+      const gallery = await iStore.listImages(a);
+      // console.log([
+      //   user,
+      //   user.settings ?? uStore.getDefaultSettings(),
+      //   user.data ?? uStore.getDefaultUserData(),
+      //   gallery.map((a) => {
+      //     return { id: a.id, name: a.name };
+      //   }),
+      // ]);
+
       return [
         user,
         user.settings ?? uStore.getDefaultSettings(),
         user.data ?? uStore.getDefaultUserData(),
+        gallery,
       ];
     }
   }
   return redirect("/");
 };
-type loaderType = [User, SettingsInterface, UserData];
+type loaderType = [User, SettingsInterface, UserData, MiniInterface[]];
 export default function Settings() {
   const [user, settings, data] = useLoaderData<loaderType>();
   const [text, setText] = useState(data.forMe);
   const [fontSize, setFontSize] = useState(settings.fontSize);
+  const [minis, setMinis] = useState<MiniInterface[]>([]);
+  const [showImages, setShowImages] = useState<boolean>(false);
+  useEffect(() => {
+    async function getImages() {
+      setMinis(await (await fetch("/getImages")).json());
+    }
+    getImages().then((r) => {
+      setShowImages(true);
+    });
+  }, []);
+  const [idDeleteModal, setIdDeleteModal] = useState<string>("ne");
   function handleEditorChange(value: any, event: any) {
     setText(value);
   }
@@ -110,13 +146,76 @@ export default function Settings() {
             </Col>
           </Row>
         </Tab>
-        {/* <Tab title="Планове" eventKey={"Paying"}>
+        <Tab title="Галерия" eventKey={"Галерия"}>
           <Row>
             <Col>
-            
+              {showImages ? (
+                <PreviewImages
+                  minis={minis ?? []}
+                  handleInsertImage={(a) => {
+                    return;
+                  }}
+                  options={{
+                    delete: true,
+                    handleDeleteImage: (id) => {
+                      setIdDeleteModal(id);
+                    },
+                  }}
+                />
+              ) : (
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              )}
             </Col>
           </Row>
-        </Tab> */}
+          <Form
+            action="/uploadImage"
+            encType="multipart/form-data"
+            method="post"
+          ></Form>
+          <Modal
+            show={idDeleteModal != "ne"}
+            onHide={() => setIdDeleteModal("ne")}
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Премахни</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              Искате ли да премахнете?
+              <PreviewImages
+                minis={minis.filter((a) => a.id == idDeleteModal)}
+                handleInsertImage={(a) => {
+                  return;
+                }}
+              />
+              <Row>
+                <Col>
+                  <Form action="/deleteImage">
+                    <Form.Control
+                      type="hidden"
+                      value={idDeleteModal}
+                      name="id"
+                    />
+                    <Form.Control
+                      type="hidden"
+                      value="/profil"
+                      name="toUrl"
+                    />
+                    <Button type="submit" >
+                      Премахни
+                    </Button>
+                  </Form>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Button onClick={() => setIdDeleteModal("ne")}>Отказ</Button>
+                </Col>
+              </Row>
+            </Modal.Body>
+          </Modal>
+        </Tab>
       </Tabs>
     </Container>
   );
