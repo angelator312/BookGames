@@ -73,8 +73,8 @@ export default function EditText({
     return setShowInsertChapter(false);
   }
   function handleInsertImage(insertID: string) {
-    insertText(`=>{image:${insertID}}`);
-    return setShowInsertChapter(false);
+    insertText(`=>[image:${insertID}]`);
+    return setShowInsertImage(false);
   }
   function handleInsertChapter2(insertChapter: number,scoreChange:number, text: string) {
     insertText(`=>(Глава ${insertChapter})(резултат ${scoreChange})[${text ?? "AAAA"}]`);

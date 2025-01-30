@@ -4,7 +4,7 @@ import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 import { DecoderAdvanced } from "./decoderAdvanced";
 import type { VariableInterface } from "~/utils/User";
 import { compileToString } from "~/utils/User";
-const regImg = /=>{(image:.*?)}/g;
+const regImg = /=>\[(image:.*?)\]/g;
 export default function Text({
   glava,
   furst2Lines,
@@ -34,7 +34,6 @@ export default function Text({
     for (const z of e.split(regImg)) {
       textsPlImage.push(z);
     }
-
     return [];
   });
 
