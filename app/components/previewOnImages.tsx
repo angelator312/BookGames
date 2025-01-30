@@ -1,5 +1,5 @@
 import { Col, Card, Row } from "react-bootstrap";
-import { MiniInterface } from "~/utils/ImageInterface";
+import type { MiniInterface } from "~/utils/ImageInterface";
 
 export default function PreviewImages({
   minis,

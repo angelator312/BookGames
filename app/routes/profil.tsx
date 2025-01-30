@@ -31,6 +31,7 @@ type loaderType = [User, SettingsInterface, UserData];
 export default function Settings() {
   const [user, settings, data] = useLoaderData<loaderType>();
   const [text, setText] = useState(data.forMe);
+  const [fontSize, setFontSize] = useState(settings.fontSize);
   function handleEditorChange(value: any, event: any) {
     setText(value);
   }
@@ -77,6 +78,34 @@ export default function Settings() {
                     <Form.Control type="hidden" value="/Profil" name="toUrl" />
                   </Col>
                 </Row>
+              </Form>
+            </Col>
+          </Row>
+        </Tab>
+        <Tab title="Настройки" eventKey={"Настройки"}>
+          <Row>
+            <Col>
+              <Form action="/zapaziSettings">
+                <Form.Group as={Row} className="mb-3">
+                  <Form.Label
+                    column
+                    sm={10}
+                    style={{
+                      fontSize: Math.max(fontSize, 10) / 10 + "rem",
+                    }}
+                  >
+                    Големина на шрифта
+                  </Form.Label>
+                  <Form.Control
+                    min={10}
+                    max={50}
+                    type="number"
+                    value={fontSize}
+                    onChange={(e) => setFontSize(parseInt(e.target.value ?? 2))}
+                    name="fontSize"
+                  />
+                  <Form.Control type="hidden" value="/settings" name="toUrl" />
+                </Form.Group>
               </Form>
             </Col>
           </Row>
