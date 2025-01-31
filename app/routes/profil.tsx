@@ -80,8 +80,8 @@ export default function Settings() {
         user={user}
         settings={settings}
       />
-      <Tabs defaultActiveKey={search[0].get("koe")??"За мен"}>
-        <Tab title="За мен" eventKey={"За мен"}>
+      <Tabs defaultActiveKey={search[0].get("koe") ?? "1"}>
+        <Tab title="За мен" eventKey={"1"}>
           <Row>
             <Col>
               <Form action="/zapaziForMe">
@@ -113,14 +113,18 @@ export default function Settings() {
                   <Col>
                     <Form.Control type="submit" value={"Запази"} />
                     <Form.Control type="hidden" value={text} name="forMe" />
-                    <Form.Control type="hidden" value="/Profil" name="toUrl" />
+                    <Form.Control
+                      type="hidden"
+                      value="/Profil?koe=1"
+                      name="toUrl"
+                    />
                   </Col>
                 </Row>
               </Form>
             </Col>
           </Row>
         </Tab>
-        <Tab title="Настройки" eventKey={"Настройки"}>
+        <Tab title="Настройки" eventKey={"2"}>
           <Row>
             <Col>
               <Form action="/zapaziSettings">
@@ -142,13 +146,65 @@ export default function Settings() {
                     onChange={(e) => setFontSize(parseInt(e.target.value ?? 2))}
                     name="fontSize"
                   />
-                  <Form.Control type="hidden" value="/settings" name="toUrl" />
+                  <Form.Control
+                    type="hidden"
+                    value="/profil?koe=2"
+                    name="toUrl"
+                  />
                 </Form.Group>
               </Form>
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <h1>Смяна на паролата(Beta version)</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form action="/changePassword" method="post">
+                <Form.Group as={Row} className="mb-3">
+                  <Form.Label column sm={10}>
+                    Стара парола
+                  </Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="oldPassword"
+                    placeholder="Стара парола"
+                  />
+                </Form.Group>
+                <Form.Group as={Row} className="mb-3">
+                  <Form.Label column sm={10}>
+                    Нова парола
+                  </Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="newPassword"
+                    placeholder="Нова парола"
+                  />
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3">
+                  <Form.Label column sm={10}>
+                    Повторете Новата парола
+                  </Form.Label>
+                  <Form.Control
+                    type="password"
+                    name="newPassword2"
+                    placeholder="Нова парола"
+                  />
+                </Form.Group>
+                <Form.Control
+                  type="hidden"
+                  value="/profil?koe=2"
+                  name="toUrl"
+                />
+                <Button type="submit">Запази</Button>
+              </Form>
+            </Col>
+          </Row>
         </Tab>
-        <Tab title="Галерия" eventKey={"Галерия"}>
+        <Tab title="Галерия" eventKey={"3"}>
           <Row>
             <Col>
               {showImages ? (
@@ -178,9 +234,15 @@ export default function Settings() {
           >
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Изберете изображение за качване</Form.Label>
-              <Form.Control type="file" name="file"  onChange={()=>setDisabled(false)}/>
-              <Form.Control type="hidden" value="/settings" name="toUrl" />
-              <Button type="submit" disabled={disabled}>Качи</Button>
+              <Form.Control
+                type="file"
+                name="file"
+                onChange={() => setDisabled(false)}
+              />
+              <Form.Control type="hidden" value="/profil?koe=3" name="toUrl" />
+              <Button type="submit" disabled={disabled}>
+                Качи
+              </Button>
             </Form.Group>
           </Form>
           <Modal
@@ -208,12 +270,10 @@ export default function Settings() {
                     />
                     <Form.Control
                       type="hidden"
-                      value="/profil"
+                      value="/profil?koe=3"
                       name="toUrl"
                     />
-                    <Button type="submit" >
-                      Премахни
-                    </Button>
+                    <Button type="submit">Премахни</Button>
                   </Form>
                 </Col>
               </Row>

@@ -53,7 +53,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     uploadHandler
   );
   // formData.forEach((entry) => {});
-  return redirect("/profil")
+  return redirect("/profil?koe=3");
   // because our uploadHandler returns a string, that's what the imageUrl will be.
   // ... etc
 };
