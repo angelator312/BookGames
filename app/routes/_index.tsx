@@ -52,7 +52,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       return [user,knigite, user.settings??getDefaultSettings(),await getUserDatas(knigite[1])];
     }
   }
-  return null;
+  return redirect("/intro");
 };
 type loaderType=[User,Book[],SettingsInterface,UserData[]]|null;
 export default function IndexRoute() {

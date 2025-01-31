@@ -1,5 +1,6 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
-import getTextStore, { Book } from "./textStore";
+import type { Book } from "./textStore";
+import getTextStore from "./textStore";
 import getUserStore from "./userStore";
 import { getDefaultUserData } from "./User";
 
@@ -19,7 +20,7 @@ const storage = createCookieSessionStorage({
     secrets: [sessionSecret],
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24,
+    maxAge: 60 * 60 * 24*30,
     httpOnly: true,
   },
 });
