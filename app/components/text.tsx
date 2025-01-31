@@ -4,7 +4,7 @@ import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 import { DecoderAdvanced } from "./decoderAdvanced";
 import type { VariableInterface } from "~/utils/User";
 import { compileToString } from "~/utils/User";
-const regImg = /=>\[(image:.*?)\]/g;
+const regImg = /=>\[(image:.*?)\]/gm;
 export default function Text({
   glava,
   furst2Lines,
@@ -30,11 +30,13 @@ export default function Text({
   furst2Lines[1] = compileToStringM(furst2Lines[1]);
   textLines = textLines.map((e) => compileToStringM(e));
   let textsPlImage: string[] = [];
-  textLines.map((e) => {
+  furst2Lines[1].split(regImg).forEach((line) => {
+    textsPlImage.push(line);
+  });
+  textLines.forEach((e) => {
     for (const z of e.split(regImg)) {
       textsPlImage.push(z);
     }
-    return [];
   });
 
   text2 = compileToStringM(text2);
@@ -51,11 +53,7 @@ export default function Text({
         </Col>
       </Row>
 
-      <Row>
-        <Col {...propertiesForColumnsWidth}>
-          <p className="text-bold p-3 text-j in-2 ">{furst2Lines[1]}</p>
-        </Col>
-      </Row>
+
       {textsPlImage.map((e, i) => (
         <Row key={e + i}>
           <Col {...propertiesForColumnsWidth}>

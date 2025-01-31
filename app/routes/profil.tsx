@@ -1,7 +1,7 @@
 import { Editor } from "@monaco-editor/react";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -72,6 +72,7 @@ export default function Settings() {
   function handleEditorChange(value: any, event: any) {
     setText(value);
   }
+  const search = useSearchParams();
   return (
     <Container>
       <MenuForHome
@@ -79,7 +80,7 @@ export default function Settings() {
         user={user}
         settings={settings}
       />
-      <Tabs>
+      <Tabs defaultActiveKey={search[0].get("koe")??"За мен"}>
         <Tab title="За мен" eventKey={"За мен"}>
           <Row>
             <Col>
