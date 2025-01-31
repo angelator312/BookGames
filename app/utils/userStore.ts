@@ -96,6 +96,21 @@ export class UserStore {
     }
     return null;
   }
+  async changePassword(user: string, newPass: string): Promise<boolean> {
+    const passH = this.hash(newPass);
+    const data = await this.getUser(user);
+    if(!data)return false;
+    const v: User = {
+      ...data,
+      passH,
+    };
+    const i = await this.collection.replaceOne({ user: user }, v, {
+      upsert: true,
+    });
+    v._id = i.upsertedId;
+    return true;
+  }
+
   //Settings
   getDefaultSettings(): SettingsInterface {
     return getDefaultSettings();
@@ -149,29 +164,26 @@ export class UserStore {
     return false;
   }
   //Variables
-  async editVariable(user:string,id:string,plusR:number) {
+  async editVariable(user: string, id: string, plusR: number) {
     const data = await this.getUser(user);
     if (!data) return null;
 
     let v: User = {
       ...data,
     };
-    if(v.variables)
-    {
-      
+    if (v.variables) {
       v.variables[id].value += plusR;
-    }else
-    {
-      v.variables={};
-      v.variables[id]=getDefaultVariable();
+    } else {
+      v.variables = {};
+      v.variables[id] = getDefaultVariable();
       console.log(v.variables);
-      
+
       v.variables[id].value += plusR;
     }
     const i = await this.collection.replaceOne({ user }, v);
     v._id = i.upsertedId;
-    console.log("vars updated:",v);
-    
+    console.log("vars updated:", v);
+
     return v;
   }
 }

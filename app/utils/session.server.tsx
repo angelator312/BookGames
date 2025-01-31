@@ -41,16 +41,16 @@ export async function getUserId(request: Request) {
 
 export async function requireUserId(
   request: Request,
-  t = true,
+  t = false,
   redirectTo: string = new URL(request.url).pathname
-) {
+):Promise<string|null> {
   const session = await getUserSession(request);
   const userId = session.get("userId");
   if (!userId || typeof userId !== "string") {
     if (t)
     {
-      const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
-      return redirect(`/login?${searchParams}`);
+      // const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+      return null;
     }
       
   }

@@ -35,13 +35,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
   const users = await getUserStore();
   const userCheck = await users.checkUser(username, pass);
+  const url = request.url;
+  const searchParams = new URL(url).searchParams;
   if (!userCheck) {
-    return redirect(`/login?errCode=1`);
+    return redirect(`/login?redirectTo=${searchParams.get("redirectTo")??"/"}errCode=1`);
   }
   // type UserWId=Omit(User,"_id",);
 
-  const url = request.url;
-  const searchParams = new URL(url).searchParams;
   //console.log(searchParams);
   
   return createUserSession(

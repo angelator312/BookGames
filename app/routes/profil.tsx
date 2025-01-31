@@ -15,6 +15,7 @@ import {
   Tabs,
 } from "react-bootstrap";
 import MenuForHome from "~/components/home.menu";
+import NavYesOrNo from "~/components/navbarYes";
 import PreviewImages from "~/components/previewOnImages";
 import getImageStore from "~/utils/fileStore";
 import type { MiniInterface } from "~/utils/ImageInterface";
@@ -73,6 +74,40 @@ export default function Settings() {
     setText(value);
   }
   const search = useSearchParams();
+  const [errorText, setErrorText] = useState(search[0].get("error") ?? "");
+  const [goodText, setGoodText] = useState(search[0].get("good") ?? "");
+  const [showError, setShowError] = useState(false);
+  const [showGood, setShowGood] = useState(false);
+  useEffect(() => {
+    switch (errorText) {
+      case "2":
+        setErrorText("Грешка при  Паролите(Някъде).");
+        setShowError(true);
+        break;
+      case "3":
+        setErrorText("Грешка при написването на втората нова парола.");
+        setShowError(true);
+        break;
+      case "4":
+        setErrorText("Грешка при първата парола.");
+        setShowError(true);
+        break;
+      case "5":
+        setErrorText("Грешка при промяна на паролата.");
+        setShowError(true);
+        break;
+      default:
+        break;
+    }
+    switch (goodText) {
+      case "1":
+        setGoodText("Успешно променена парола!");
+        setShowGood(true);
+        break;
+      default:
+        break;
+    }
+  }, [errorText, goodText, showError, showGood]);
   return (
     <Container>
       <MenuForHome
@@ -80,6 +115,12 @@ export default function Settings() {
         user={user}
         settings={settings}
       />
+      <Row>
+        <Col>
+          <NavYesOrNo text={showError ? errorText : ""} yes={false} />
+          <NavYesOrNo text={showGood ? goodText : ""} yes={true} />
+        </Col>
+      </Row>
       <Tabs defaultActiveKey={search[0].get("koe") ?? "1"}>
         <Tab title="За мен" eventKey={"1"}>
           <Row>
@@ -157,7 +198,7 @@ export default function Settings() {
           </Row>
           <Row>
             <Col>
-              <h1>Смяна на паролата(Beta version)</h1>
+              <h1>Смяна на паролата</h1>
             </Col>
           </Row>
           <Row>
@@ -178,6 +219,7 @@ export default function Settings() {
                     Нова парола
                   </Form.Label>
                   <Form.Control
+                    minLength={8}
                     type="password"
                     name="newPassword"
                     placeholder="Нова парола"
@@ -189,6 +231,7 @@ export default function Settings() {
                     Повторете Новата парола
                   </Form.Label>
                   <Form.Control
+                    minLength={8}
                     type="password"
                     name="newPassword2"
                     placeholder="Нова парола"
