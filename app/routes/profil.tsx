@@ -193,6 +193,7 @@ export default function Settings() {
                     name="toUrl"
                   />
                 </Form.Group>
+                <Button type="submit">Запази</Button>
               </Form>
             </Col>
           </Row>
