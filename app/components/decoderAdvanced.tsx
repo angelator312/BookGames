@@ -38,32 +38,32 @@ export function DecoderAdvanced({
   let textIzb = "";
   let zarIzb: number | number[] = 0;
   let scoreChangeIzb = 0;
-  //console.log(text2Lines);
+  // console.log(text2Lines);
 
   text2Lines.map((e) => {
     if (!e) return e;
     if (e.indexOf("(Глава") == 0) {
       //e===>"(Глава 1)"
       glavaIzb = parseInt(e.replace(")", "").substring(6));
-      // console.log("glavaIzb", e.replace(")", "").substring(6));
+      console.log("glavaIzb",glavaIzb);
     } else if (e.indexOf("(резултат") == 0) {
       //e===>"(резултат 1)"
       scoreChangeIzb = parseInt(e.replace(")", " ").substring(10));
-      // console.log("scoreChangeIzb", e.replace(")", " ").substring(10));
+      console.log("scoreChangeIzb",scoreChangeIzb);
     } else if (e.indexOf("(на зар") == 0) {
       //e===>"(на зар 1)"
-      // console.log("zarIzb", e.substring(7));
       let str = e.replace(")", "").substring(7).split(",");
       if (str.length == 1) {
         zarIzb = parseInt(str[0]);
       } else {
         zarIzb = str.map((e) => parseInt(e, 10));
       }
+      console.log("zarIzb", zarIzb);
       a.broiZarcheta = 1;
     } else if (e.indexOf("[") == 0) {
       //e==>[ Думи Думи и Думи]
       textIzb = e.replace("[", "").replace("]", "");
-      // console.log("textIzb", textIzb);
+      console.log("textIzb", textIzb);
 
       a.izbori.push({
         glava: glavaIzb,
@@ -91,7 +91,8 @@ export function DecoderAdvanced({
     }
     return e;
   });
-
+  console.log(a.izbori);
+  
   let arr: any[] = [];
   for (let i = 0; i < a.izbori.length; i++) {
     let e = a.izbori[i + 1];
