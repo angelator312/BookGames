@@ -26,7 +26,7 @@ export interface Book {
   comments?: string[][][];
   public: boolean;
   avtor: string;
-  text2: string;
+  text2: string;//smallDescription
   data: BookData;
 }
 

@@ -32,7 +32,7 @@ export default function BookHeader({
             placement="right"
             overlay={<Tooltip>{e.text2}</Tooltip>}
           >
-            <a href={`/book/${e.text}`}>
+            <a href={`/book/intro/${e.text}`}>
               <h3 className="text-bold text-dark">{e.id}</h3>
             </a>
           </OverlayTrigger>

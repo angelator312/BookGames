@@ -44,7 +44,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   if (typeof a !== "string") {
     const searchParams = new URL(request.url).searchParams;
-    const knigite = await knigi(a, searchParams.get("query"));
+    const knigite = await knigi("", searchParams.get("query"));
     return [knigite, await getUserDatas(knigite[1])];
   }
   return redirect("/");

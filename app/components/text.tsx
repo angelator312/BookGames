@@ -1,10 +1,13 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { Decoder } from "./decoder";
-import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 import { DecoderAdvanced } from "./decoderAdvanced";
 import type { VariableInterface } from "~/utils/User";
 import { compileToString } from "~/utils/User";
-const regImg = /=>\[(image:.*?)\]/gm;
+// const regImg = /=>\[(image:.*?)\]/gm;
+import { regexForImage as regImg } from "~/utils/regex";
+import RenderText from "./renderText";
+import RenderTextWithDecoder from "./renderText2";
+
 export default function Text({
   glava,
   furst2Lines,
@@ -31,7 +34,7 @@ export default function Text({
   textLines = textLines.map((e) => compileToStringM(e));
   let textsPlImage: string[] = [];
   console.log(furst2Lines);
-  
+
   furst2Lines[1].split(regImg).forEach((line) => {
     textsPlImage.push(line);
   });
@@ -51,22 +54,13 @@ export default function Text({
       </Row>
       <Row>
         <Col>
-          <h2 className="p-3">{furst2Lines[0]} </h2>
+          <h2 className="p-3">
+            <RenderTextWithDecoder texts={furst2Lines[0]} />
+          </h2>
         </Col>
       </Row>
 
-
-      {textsPlImage.map((e, i) => (
-        <Row key={e + i}>
-          <Col {...propertiesForColumnsWidth}>
-            {e.startsWith("image:") ? (
-              <img src={"/getImage/" + e.split(":")[1]} alt="image" />
-            ) : (
-              <p className="text-bold p-3 text-j in-2 "> {e}</p>
-            )}
-          </Col>
-        </Row>
-      ))}
+      <RenderText texts={textsPlImage} />
       <Row>
         <Col>
           {!flag1 ? (
