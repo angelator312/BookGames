@@ -22,9 +22,9 @@ export default function BookSettingsComponent({
   name: string;
   tags?: string[];
   bookResume: string;
-  user:User;
+  user: User;
 }) {
-  const settings:SettingsInterface=user.settings??getDefaultSettings();
+  const settings: SettingsInterface = user.settings ?? getDefaultSettings();
   const [text, setText] = useState(bookResume);
   // const [tagsList, setTagsList] = useState(tags);
   function handleEditorChange(value: any, event: any) {
@@ -35,6 +35,7 @@ export default function BookSettingsComponent({
       <MenuForHome settings={settings} user={user} />
       <Row>
         <Col>
+          <p className="mt-5">Кратко описание на книгата</p>
           <Editor
             options={{
               unicodeHighlight: {
@@ -56,20 +57,19 @@ export default function BookSettingsComponent({
           />
         </Col>
         <Form method="post">
-            <Form.Group>
-              <Form.Label>Тагове:</Form.Label>
-              <Form.Control
+          <Form.Group>
+            <Form.Label>Тагове:</Form.Label>
+            <Form.Control
               type="text"
               name="tags"
               defaultValue={tags.join(",")}
               placeholder="таг,друг таг"
-              />
-              <Button variant="success" type="submit">
-                Запази
-              </Button>
-            </Form.Group>
+            />
+            <Button variant="success" type="submit">
+              Запази
+            </Button>
+          </Form.Group>
         </Form>
-
       </Row>
     </div>
   );

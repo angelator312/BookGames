@@ -88,6 +88,7 @@ export default function Book1() {
           {/* Za Avtora */}
           <Card>
             <Card.Img
+              className="centered"
               style={{ width: "102px", height: "118px" }}
               src={b.urlForImmage}
             />
