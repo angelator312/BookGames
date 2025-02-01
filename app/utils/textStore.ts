@@ -61,15 +61,14 @@ export class BookStore {
       }
     );
   }
-  async setBook(all: {
-    text: string;//gbX X:number 
-    // id?: string;// Голямото приключение (името на книгата)
-    text2?: string; // Хубава книга разказваща за ... (Описанието на книгата)
-    tags?: string[];
-  }): Promise<boolean> {
-    const bId = all.text;
-    // delete all.id
-    if (!bId) return false;
+  async setBook(
+    bId: string, //gbX X:number
+    all: {
+      // id?: string;// Голямото приключение (името на книгата)
+      text2?: string; // Хубава книга разказваща за ... (Описанието на книгата)
+      tags?: string[];
+    }
+  ): Promise<boolean> {
     const b = await this.getBook(bId);
     if (b) {
       // console.log(all);
@@ -78,7 +77,7 @@ export class BookStore {
         ...b,
         ...all,
       };
-      console.log(v);
+      // console.log(v);
       // delete v._id;
       await this.collection.replaceOne({ text: `${bId}` }, v, {
         upsert: true,

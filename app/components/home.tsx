@@ -8,7 +8,6 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import MenuForHome from "./home.menu";
 import type { SettingsInterface, User, UserData } from "~/utils/User";
 import { Link } from "react-bootstrap-icons";
-import { useEffect, useState } from "react";
 
 export default function Home({
   user,
@@ -24,19 +23,21 @@ export default function Home({
   dataNotMine: UserData[];
 }) {
   // const userId = useLoaderData<string>();
-  const [oshte0, setOshte0] = useState<boolean>(false);
-  const [oshte1, setOshte1] = useState<boolean>(false);
-  useEffect(() => {
-    if (books[0].length > 5) {
-      books[0] = books[0].slice(0, 5);
-      setOshte0(true);
-    }
+  let oshte0 = false;
+  let oshte1 = false;
+  let myBooks=books[0];
+  let otherBooks = books[1];
+  // useEffect(() => {
+  if (books[0].length > 5) {
+    myBooks = books[0].slice(0, 5);
+    oshte0 = true;
+  }
 
-    if (books[1].length > 5) {
-      books[1] = books[1].slice(0, 5);
-      setOshte1(true);
-    }
-  },[books]);
+  if (books[1].length > 5) {
+    otherBooks = books[1].slice(0, 5);
+    oshte1 = true;
+  }
+  // },[books]);
   // console.log(books[1], oshte1);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -82,14 +83,14 @@ export default function Home({
       <Row className="mt-5">
         <Col>
           <div className="bg-white bg-opacity-25 rounded-3 p-3">
-            {books[0].map((e, i) => (
+            {myBooks.map((e, i) => (
               <Row key={i}>
                 <Col>
                   <BookHeader authorData={dataMy} e={e} avt={true} />
                 </Col>
               </Row>
             ))}
-            {books[0].length == 0 ? (
+            {myBooks.length == 0 ? (
               <a href="/newBook">
                 <Button variant="primary" className="text-sm">
                   Тук Няма Никой,Създай книга:
@@ -121,14 +122,14 @@ export default function Home({
             <Row>
               <Col>
                 <div>
-                  {books[1].map((e, i) => (
+                  {otherBooks.map((e, i) => (
                     <Row key={i}>
                       <Col>
                         <BookHeader authorData={dataNotMine[i]} e={e} />
                       </Col>
                     </Row>
                   ))}
-                  {books[1].length <= 0 ? (
+                  {otherBooks.length <= 0 ? (
                     <h3 className="centered text-bold">Няма Резултати</h3>
                   ) : (
                     ""
@@ -147,9 +148,7 @@ export default function Home({
                         </a>
                       </Col>
                     </Row>
-                  ) : (
-                    "aaa"
-                  )}
+                  ) : null}
                 </div>
               </Col>
             </Row>

@@ -14,7 +14,7 @@ export async function action({ request, params, context }: ActionFunctionArgs) {
       if (book) {
         if(book.avtor==user)
         { 
-          await tStore.setBook({text:bId,text2:text});
+          await tStore.setBook(bId,{text2:text});
           return redirect(`/myBook/${bId}`);
         }
       }

@@ -15,24 +15,19 @@ import getUserStore from "~/utils/userStore";
 import type { User, VariableInterface } from "~/utils/User";
 import { getDefaultVariable } from "~/utils/User";
 import BookSettingsComponent from "~/components/BookSettingsComponent";
-export async function action({ request,params }: ActionFunctionArgs) {
+export async function action({ request, params }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
   if (userId) {
     const formData = await request.formData();
     if (formData) {
       const tags = formData.get("tags")?.toString();
-      if (tags) {
+      if (typeof tags === "string") {
         const tagList = tags.split(",").map((tag) => tag.trim());
-        if(tagList.length>0)
-        {
-          const bId=params.book;
-          if(bId)
-          {
-
-            const tStore=await getTextStore();
-            await tStore.setBook({text:bId,tags:tagList});
-          }
-          
+        const bId = params.book;
+        if (bId) {
+          console.log("tags:",tagList);
+          const tStore = await getTextStore();
+          await tStore.setBook(bId, { tags: tagList });
         }
       }
     }
@@ -50,7 +45,7 @@ type loaderData = [
   User,
   VariableInterface,
   string,
-  string[],
+  string[]
 ];
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
@@ -87,7 +82,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         await uStore.getUser(a),
         [getDefaultVariable()],
         b.text2,
-        b.tags??[],
+        b.tags ?? [],
       ];
     }
     return redirect(`/book/${book}`);
@@ -97,7 +92,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function Book1() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [bUrl, gl, t, doN, comments, user, vars, bookResume,tags] =
+  const [bUrl, gl, t, doN, comments, user, vars, bookResume, tags] =
     useLoaderData<loaderData>();
   let comm = comments;
   function update() {
