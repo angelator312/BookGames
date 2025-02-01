@@ -30,6 +30,8 @@ export default function Text({
   furst2Lines[1] = compileToStringM(furst2Lines[1]);
   textLines = textLines.map((e) => compileToStringM(e));
   let textsPlImage: string[] = [];
+  console.log(furst2Lines);
+  
   furst2Lines[1].split(regImg).forEach((line) => {
     textsPlImage.push(line);
   });

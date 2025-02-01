@@ -2,6 +2,8 @@ import { Editor } from "@monaco-editor/react";
 import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import FormComponent from "./formComp";
+import MenuForHome from "./home.menu";
+import { getDefaultSettings, SettingsInterface, User } from "~/utils/User";
 
 export const loader = async () => {
   return;
@@ -14,11 +16,14 @@ export default function BookSettingsComponent({
   bookResume,
   name,
   tags = [],
+  user,
 }: {
-  name:string;
+  name: string;
   tags?: string[];
   bookResume: string;
+  user:User;
 }) {
+  const settings:SettingsInterface=user.settings??getDefaultSettings();
   const [text, setText] = useState(bookResume);
   const [tagsList, setTagsList] = useState(tags);
   function handleEditorChange(value: any, event: any) {
@@ -26,6 +31,7 @@ export default function BookSettingsComponent({
   }
   return (
     <div>
+      <MenuForHome settings={settings} user={user} />
       <Row>
         <Col>
           <Editor
@@ -44,8 +50,8 @@ export default function BookSettingsComponent({
           <FormComponent
             to="/zapaziBookResume"
             textForSubmit="Запази"
-            namesHidden={["text","book"]}
-            textsHidden={[text,name]}
+            namesHidden={["text", "book"]}
+            textsHidden={[text, name]}
           />
         </Col>
       </Row>

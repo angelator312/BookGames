@@ -240,7 +240,17 @@ export default function Book1() {
               </Container>
             </Tab.Pane>
             <Tab.Pane eventKey="settings" title="Настройки">
-              <BookSettingsComponent bookResume={bookResume} name={bUrl} />
+              <BookSettingsComponent
+                //@ts-ignore
+                user={user
+                //   {
+                //   ...user,
+                //   // _id:new ObjectId(user._id)
+                // }
+                }
+                bookResume={bookResume}
+                name={bUrl}
+              />
             </Tab.Pane>
           </Tab.Content>
           <Container>

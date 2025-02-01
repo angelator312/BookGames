@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
 import MenuForHome from "./home.menu";
 import type { User, VariableInterface } from "~/utils/User";
-import { getDefaultUser } from "~/utils/User";
+import { getDefaultUser, getDefaultVariable } from "~/utils/User";
 
 interface Params {
   text: string;
@@ -53,7 +53,7 @@ export default function Book({
   // console.log(flag,text,glava,text2);
   
   let textLines = text.replace(/\r/gm, "").split("\n\n");
-  let furst2Lines = [textLines[0], textLines[1]];
+  let furst2Lines = [textLines[0], textLines[1]??""];
   textLines = textLines.slice(2);
   const [timeIn] = useState(Date.now());
   useEffect(() => {
@@ -83,7 +83,7 @@ export default function Book({
         //@ts-ignore
         user={user} settings={user.settings}/>
         <Text
-          variables={variables??[]}
+          variables={variables??[getDefaultVariable()]}
           furst2Lines={furst2Lines}
           glava={glava}
           url={url}

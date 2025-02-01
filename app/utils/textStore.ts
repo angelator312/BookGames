@@ -61,10 +61,13 @@ export class BookStore {
       }
     );
   }
-  async setBook(all: { id: string; text2?: string }): Promise<boolean> {
-    const b = await this.getBook(all.id);
+  async setBook(all: { id?: string; text2?: string }): Promise<boolean> {
+    const bId=all.id;
+    delete all.id
+    if(!bId) return false;
+    const b = await this.getBook(bId);
     if (b) {
-      console.log(all);
+      // console.log(all);
 
       const v: Book = {
         ...b,
@@ -72,7 +75,7 @@ export class BookStore {
       };
       console.log(v);
       // delete v._id;
-      await this.collection.replaceOne({ text: `${all.id}` }, v, {
+      await this.collection.replaceOne({ text: `${bId}` }, v, {
         upsert: true,
       });
       return true;
