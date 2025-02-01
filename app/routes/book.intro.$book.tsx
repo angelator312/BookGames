@@ -95,7 +95,7 @@ export default function Book1() {
 
         <Col></Col>
       </Row>
-      <Row className="centered">
+      <Row >
         <Col>
           <a href={"/book/" + book.text}>
             <Button variant="primary">Прочети Ме</Button>
