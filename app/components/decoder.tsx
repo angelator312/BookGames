@@ -1,7 +1,6 @@
 import { DecoderAdvanced } from "./decoderAdvanced";
 import { DecoderSimple } from "./decoderSimple";
-const reg =
-  /=>\s*(\(Глава .*?\))\s*(\(резултат .*?\))?\s*(\(на зар .*?\))?\s*\[([^\]]+)]/gm;
+import {regexForAdvancedDecoder as reg} from "~/utils/regex"
 export function Decoder({
   text2: text,
   flag1 = true,

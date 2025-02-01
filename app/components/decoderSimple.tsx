@@ -1,10 +1,11 @@
-import {
-  propertiesForColumnsWidth2,
-} from "~/utils/columnStyles";
+import { propertiesForColumnsWidth2 } from "~/utils/columnStyles";
 import FormComponent from "./formComp";
 import { Col, Row } from "react-bootstrap";
-const reg = /\(Глава\s+(\d+)\)/g;
-const reg2 = /(if\(.+\|\d+\|\d+)\)/g;
+import {
+  regexForSimpleDecoder as reg,
+  regexForSimpleDecoder2 as reg2,
+} from "~/utils/regex";
+
 export function DecoderSimple({
   text2: text,
   flag1 = true,
@@ -38,7 +39,7 @@ export function DecoderSimple({
             <Col {...propertiesForColumnsWidth2}>
               <p className="text-bold">{e.b}</p>
             </Col>
-            {e.e&&e.e[0]!=null ? (
+            {e.e && e.e[0] != null ? (
               <Col sm="2">
                 <FormComponent
                   textForSubmit={"Глава " + e.e[0]}

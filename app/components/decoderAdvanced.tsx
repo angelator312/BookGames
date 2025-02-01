@@ -3,6 +3,7 @@ import IzborComponent from "./IzborComponent";
 import { propertiesForColumnsWidth2 } from "~/utils/columnStyles";
 import { useState } from "react";
 import ZarcheComponent from "./ZarcheComponent";
+import { regexForAdvancedDecoder as reg } from "~/utils/regex";
 
 export interface Izbori {
   broiZarcheta: number;
@@ -16,9 +17,6 @@ export interface Izbor {
   text: string;
   disabled?: boolean;
 }
-
-const reg =
-  /=>\s*(\(Глава .*?\))\s*(\(резултат .*?\))?\s*(\(на зар .*?\))?\s*(\[[^\]]+])/gm;
 export function DecoderAdvanced({
   text2: text,
   flag1 = true,
