@@ -61,10 +61,15 @@ export class BookStore {
       }
     );
   }
-  async setBook(all: { id?: string; text2?: string }): Promise<boolean> {
-    const bId=all.id;
-    delete all.id
-    if(!bId) return false;
+  async setBook(all: {
+    text: string;//gbX X:number 
+    // id?: string;// Голямото приключение (името на книгата)
+    text2?: string; // Хубава книга разказваща за ... (Описанието на книгата)
+    tags?: string[];
+  }): Promise<boolean> {
+    const bId = all.text;
+    // delete all.id
+    if (!bId) return false;
     const b = await this.getBook(bId);
     if (b) {
       // console.log(all);

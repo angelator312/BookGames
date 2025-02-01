@@ -1,9 +1,10 @@
 import { Editor } from "@monaco-editor/react";
 import { useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import FormComponent from "./formComp";
 import MenuForHome from "./home.menu";
-import { getDefaultSettings, SettingsInterface, User } from "~/utils/User";
+import type { SettingsInterface, User } from "~/utils/User";
+import { getDefaultSettings } from "~/utils/User";
 
 export const loader = async () => {
   return;
@@ -25,7 +26,7 @@ export default function BookSettingsComponent({
 }) {
   const settings:SettingsInterface=user.settings??getDefaultSettings();
   const [text, setText] = useState(bookResume);
-  const [tagsList, setTagsList] = useState(tags);
+  // const [tagsList, setTagsList] = useState(tags);
   function handleEditorChange(value: any, event: any) {
     setText(value);
   }
@@ -54,6 +55,21 @@ export default function BookSettingsComponent({
             textsHidden={[text, name]}
           />
         </Col>
+        <Form method="post">
+            <Form.Group>
+              <Form.Label>Тагове:</Form.Label>
+              <Form.Control
+              type="text"
+              name="tags"
+              defaultValue={tags.join(",")}
+              placeholder="таг,друг таг"
+              />
+              <Button variant="success" type="submit">
+                Запази
+              </Button>
+            </Form.Group>
+        </Form>
+
       </Row>
     </div>
   );

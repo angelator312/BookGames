@@ -15,8 +15,30 @@ import getUserStore from "~/utils/userStore";
 import type { User, VariableInterface } from "~/utils/User";
 import { getDefaultVariable } from "~/utils/User";
 import BookSettingsComponent from "~/components/BookSettingsComponent";
-export async function action({ request }: ActionFunctionArgs) {
-  return redirect(request.url);
+export async function action({ request,params }: ActionFunctionArgs) {
+  const userId = await requireUserId(request);
+  if (userId) {
+    const formData = await request.formData();
+    if (formData) {
+      const tags = formData.get("tags")?.toString();
+      if (tags) {
+        const tagList = tags.split(",").map((tag) => tag.trim());
+        if(tagList.length>0)
+        {
+          const bId=params.book;
+          if(bId)
+          {
+
+            const tStore=await getTextStore();
+            await tStore.setBook({text:bId,tags:tagList});
+          }
+          
+        }
+      }
+    }
+    return redirect(request.url);
+  }
+  return redirect("/login");
 }
 
 type loaderData = [
@@ -27,7 +49,8 @@ type loaderData = [
   string[][],
   User,
   VariableInterface,
-  string
+  string,
+  string[],
 ];
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
@@ -64,6 +87,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         await uStore.getUser(a),
         [getDefaultVariable()],
         b.text2,
+        b.tags??[],
       ];
     }
     return redirect(`/book/${book}`);
@@ -73,7 +97,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function Book1() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [bUrl, gl, t, doN, comments, user, vars, bookResume] =
+  const [bUrl, gl, t, doN, comments, user, vars, bookResume,tags] =
     useLoaderData<loaderData>();
   let comm = comments;
   function update() {
@@ -242,12 +266,14 @@ export default function Book1() {
             <Tab.Pane eventKey="settings" title="Настройки">
               <BookSettingsComponent
                 //@ts-ignore
-                user={user
-                //   {
-                //   ...user,
-                //   // _id:new ObjectId(user._id)
-                // }
+                user={
+                  user
+                  //   {
+                  //   ...user,
+                  //   // _id:new ObjectId(user._id)
+                  // }
                 }
+                tags={tags}
                 bookResume={bookResume}
                 name={bUrl}
               />
