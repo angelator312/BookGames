@@ -22,18 +22,19 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   if (typeof a === "string") {
     const user = await uStore.getUser(a);
     if (user) {
-      let glava = user?.glavi[`Book-${b.text}`];
+        let glava = user?.glavi[`Book-${b.text}`];
       if (glava) {
         return redirect("/book/" + bId);
       }
       settings = user.settings ?? settings;
     }
   }
-  if (b.public) {
+
+  const author = await uStore.getUser(b.avtor);
+  if (b.public ||a==b.avtor) {
     // return a;
     //console.log(uStore.collection);
 
-    const author = await uStore.getUser(b.avtor);
     let authorDescription = "Author: " + b.avtor;
     if (author) {
       authorDescription = author.data.forMe;
@@ -44,6 +45,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       user: a,
       aDescr: authorDescription,
       urlForImmage: "/img/question_mark.png",
+      isAvtor: a == b.avtor,//TODO: redirect
     };
   }
   return redirect("/");
@@ -54,6 +56,7 @@ export default function Book1() {
   const book = b.b;
   const settings = b.settings;
   const smallDescription = book.text2 ?? "small description";
+  const isAvtor = b.isAvtor;
   //console.log(book.glava);
   let textsPlImage: string[] = [];
 
@@ -99,7 +102,12 @@ export default function Book1() {
       </Row>
       <Row>
         <Col>
-          <a href={"/book/" + book.text}>
+          <a href={
+            isAvtor?
+            "/myBook/see/" + book.text+"/1"
+            :
+            "/book/" + book.text
+            }>
             <Button variant="primary">Прочети Ме</Button>
           </a>
         </Col>

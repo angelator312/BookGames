@@ -3,9 +3,7 @@ import {
   Container,
   Dropdown,
   DropdownButton,
-  OverlayTrigger,
   Row,
-  Tooltip,
 } from "react-bootstrap";
 import { AuthorResume } from "./userResume";
 import type { UserData } from "~/utils/User";
@@ -14,9 +12,9 @@ import type { Book } from "~/utils/textStore";
 export default function BookHeader({
   e,
   avt = false,
-  authorData
+  authorData,
 }: {
-  authorData:UserData
+  authorData: UserData;
   e: Book;
   avt?: boolean;
 }) {
@@ -28,14 +26,9 @@ export default function BookHeader({
           <img src="/img/book.png" alt="Book" width={60} height={60} />
         </Col>
         <Col xs={6}>
-          <OverlayTrigger
-            placement="right"
-            overlay={<Tooltip>{e.text2}</Tooltip>}
-          >
-            <a href={`/book/intro/${e.text}`}>
-              <h3 className="text-bold text-dark">{e.id}</h3>
-            </a>
-          </OverlayTrigger>
+          <a href={`/book/intro/${e.text}`}>
+            <h3 className="text-bold text-dark">{e.id}</h3>
+          </a>
         </Col>
         <Col className="text-bold text-dark" xs={2}>
           <AuthorResume authorData={authorData} authorName={e.avtor ?? ""} />
@@ -44,6 +37,12 @@ export default function BookHeader({
         {avt ? (
           <Col className="text-center">
             <DropdownButton title="Действия" id="dropdown-basic-button">
+              <Dropdown.Item
+                //method=post
+                href={`/myBook/${e.text}/`}
+              >
+                Редактирай
+              </Dropdown.Item>
               <Dropdown.Item
                 //method=post
                 href={`/myBook/${e.text}/publish`}
