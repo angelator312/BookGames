@@ -77,13 +77,15 @@ export function DecoderAdvanced({
       scoreChangeIzb = 0;
       textIzb = "";
     } else {
-      a.izbori.push({
-        glava: 0,
-        zar: 0,
-        scoreChange: 0,
-        text: e,
-        isText: true,
-      });
+      if (e.trim()) {
+        a.izbori.push({
+          glava: 0,
+          zar: 0,
+          scoreChange: 0,
+          text: e,
+          isText: true,
+        });
+      }
       glavaIzb = 0;
       zarIzb = 0;
       scoreChangeIzb = 0;
@@ -92,10 +94,15 @@ export function DecoderAdvanced({
     return e;
   });
   // console.log(a.izbori);
-  
+
   let arr: any[] = [];
   for (let i = 0; i < a.izbori.length; i++) {
     let e = a.izbori[i + 1];
+    if(!e)
+    {
+      arr.push({text:a.izbori[i].text,izb:undefined});
+      break;
+    }
     if (a.broiZarcheta) {
       //console.log(e);
       e.disabled = !(e.zar == 0);
