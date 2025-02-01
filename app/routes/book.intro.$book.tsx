@@ -4,8 +4,9 @@ import { useLoaderData } from "@remix-run/react";
 import getUserStore from "~/utils/userStore";
 import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import RenderTextWithDecoder from "~/components/renderText2";
+import { Link } from "react-bootstrap-icons";
 export async function action({ params, request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
@@ -24,7 +25,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     if (user) {
       let glava = user?.glavi[`Book-${b.text}`];
       if (glava) {
-        return redirect("/book" + bId);
+        return redirect("/book/" + bId);
       }
       settings = user.settings ?? settings;
     }
@@ -43,6 +44,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       settings,
       user: a,
       aDescr: authorDescription,
+      urlForImmage: "/img/question_mark.png",
     };
   }
   return redirect("/");
@@ -82,7 +84,7 @@ export default function Book1() {
         <Col>
           {/* Za Avtora */}
           <Card>
-            <Card.Img src="a" />
+            <Card.Img src={b.urlForImmage} />
             <Card.Body>
               <Card.Title>{book.avtor}</Card.Title>
               <Card.Text>
@@ -92,7 +94,13 @@ export default function Book1() {
           </Card>
         </Col>
 
+        <Col></Col>
+      </Row>
+      <Row className="centered">
         <Col>
+          <a href={"/book/" + book.text}>
+            <Button variant="primary">Прочети Ме</Button>
+          </a>
         </Col>
       </Row>
     </Container>

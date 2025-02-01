@@ -56,7 +56,6 @@ export default function EditText({
     setMonacoInstance(editorL);
   };
 
-
   function handleEditorChange(value: any, event: any) {
     const arr = (value.replace(/\r/gm, "") ?? "").split(/^---\s*$/gm);
     setText(arr[0]);
@@ -68,16 +67,22 @@ export default function EditText({
   const [showInsertImage, setShowInsertImage] = useState(false);
   const [showInsertChapter, setShowInsertChapter] = useState(false);
   const [showInsertChapter2, setShowInsertChapter2] = useState(false);
-  function handleInsertChapter(insertChapter: number,text:string) {
-    insertText(`=>(Глава ${insertChapter})[${text??"AAAA"}]`);
+  function handleInsertChapter(insertChapter: number, text: string) {
+    insertText(`=>(Глава ${insertChapter})[${text ?? "AAAA"}]`);
     return setShowInsertChapter(false);
   }
   function handleInsertImage(insertID: string) {
     insertText(`=>[image:${insertID}]`);
     return setShowInsertImage(false);
   }
-  function handleInsertChapter2(insertChapter: number,scoreChange:number, text: string) {
-    insertText(`=>(Глава ${insertChapter})(резултат ${scoreChange})[${text ?? "AAAA"}]`);
+  function handleInsertChapter2(
+    insertChapter: number,
+    scoreChange: number,
+    text: string
+  ) {
+    insertText(
+      `=>(Глава ${insertChapter})(резултат ${scoreChange})[${text ?? "AAAA"}]`
+    );
     return setShowInsertChapter2(false);
   }
   const handleCloseInsertChapter = () => setShowInsertChapter(false);
@@ -145,6 +150,10 @@ export default function EditText({
         Всичко е описано в Помощ и нещата за вмъкване се вмъкват чрез бутона
         <br />
         Ако искате да ви е по-лесно редактирайте в уголемен прозорец
+        <br />
+        Поддържаме{" "}
+        <a href="s" onClick={()=>window.open("https://www.markdownguide.org/basic-syntax/")}>Markdown</a>
+        <br />
       </p>
 
       <br />
@@ -159,9 +168,9 @@ export default function EditText({
         handleInsertChapter={handleInsertChapter2}
       />
       <GetImagesModal
-      handleClose={handleCloseInsertImage}
-      show={showInsertImage}
-      handleInsertImage={handleInsertImage}
+        handleClose={handleCloseInsertImage}
+        show={showInsertImage}
+        handleInsertImage={handleInsertImage}
       />
     </Container>
   );
