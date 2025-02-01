@@ -6,8 +6,10 @@ import { Col, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
 import MenuForHome from "./home.menu";
-import type { User, VariableInterface } from "~/utils/User";
-import { getDefaultUser, getDefaultVariable } from "~/utils/User";
+import type { User } from "~/utils/User";
+import { getDefaultSettings, getDefaultUser } from "~/utils/User";
+import type { VariableInterface } from "~/utils/VariableThings";
+import { getDefaultVariable } from "~/utils/VariableThings";
 
 interface Params {
   text: string;
@@ -15,7 +17,7 @@ interface Params {
   text2: string;
   user: User;
   book: { text: string };
-  variables:{[key:string]:VariableInterface};
+  variables: { [key: string]: VariableInterface };
 }
 
 export default function Book({
@@ -30,7 +32,7 @@ export default function Book({
     text2: "This is not mandatory",
     user: getDefaultUser(),
     book: { text: "Problem" },
-    variables:{},
+    variables: {},
   },
 }: {
   url: string;
@@ -41,19 +43,18 @@ export default function Book({
   params?: Params;
 }) {
   const loaderData = useLoaderData<loaderBook>();
-  if (!flag) 
-    {
-      var book=loaderData.b;
-      var { text, glava, text2, user, variables } = loaderData;
-    }
+  if (!flag) {
+    var book = loaderData.b;
+    var { text, glava, text2, user, variables } = loaderData;
+  }
   //@ts-ignore
-  else var { text, glava, text2, user, book,variables } = params;
+  else var { text, glava, text2, user, book, variables } = params;
   // else
   //  { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(flag,text,glava,text2);
-  
+
   let textLines = text.replace(/\r/gm, "").split("\n\n");
-  let furst2Lines = [textLines[0], textLines[1]??""];
+  let furst2Lines = [textLines[0], textLines[1] ?? ""];
   textLines = textLines.slice(2);
   const [timeIn] = useState(Date.now());
   useEffect(() => {
@@ -80,10 +81,12 @@ export default function Book({
       <h1 className="p-1 text-dark text-center">{title} </h1>
       <div className="space-y-0.5 bg-i">
         <MenuForHome
-        //@ts-ignore
-        user={user} settings={user.settings}/>
+          //@ts-ignore
+          user={user}
+          settings={user.settings ??getDefaultSettings()}
+        />
         <Text
-          variables={variables??[getDefaultVariable()]}
+          variables={variables ?? [getDefaultVariable()]}
           furst2Lines={furst2Lines}
           glava={glava}
           url={url}
@@ -94,7 +97,7 @@ export default function Book({
         {kr ? (
           <div className="m-l-35%">
             <Row>
-              <Col >
+              <Col>
                 <FormComponent
                   submitVariant="secondary"
                   to={`${url}/${glava}/idea`}
@@ -105,16 +108,14 @@ export default function Book({
                 Коментирай!
               </button>
             </form> */}
-              <Col >
+              <Col>
                 <FormComponent
                   submitVariant="danger"
-                  to={
-                    "/analyses/timeForUser"
-                  }
+                  to={"/analyses/timeForUser"}
                   method="GET"
                   textForSubmit="Начало"
                   namesHidden={["time", "user", "book"]}
-                  textsHidden={[timeIn.toString(),user.user,book.text]}
+                  textsHidden={[timeIn.toString(), user.user, book.text]}
                 />
               </Col>
             </Row>

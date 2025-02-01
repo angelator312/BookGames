@@ -12,26 +12,48 @@ import NavYesOrNo from "~/components/navbarYes";
 import Book from "~/components/book";
 import FormComponent from "~/components/formComp";
 import getUserStore from "~/utils/userStore";
-import type { User, VariableInterface } from "~/utils/User";
-import { getDefaultVariable } from "~/utils/User";
+import type { User } from "~/utils/User";
 import BookSettingsComponent from "~/components/BookSettingsComponent";
+import type { VariableCollection } from "~/utils/VariableThings";
+import { getDefaultVariables } from "~/utils/VariableThings";
 export async function action({ request, params }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
   if (userId) {
     const formData = await request.formData();
     if (formData) {
       const tags = formData.get("tags")?.toString();
+      //for tags
       if (typeof tags === "string") {
         const tagList = tags.split(",").map((tag) => tag.trim());
         const bId = params.book;
         if (bId) {
-          console.log("tags:",tagList);
+          console.log("tags:", tagList);
           const tStore = await getTextStore();
           await tStore.setBook(bId, { tags: tagList });
         }
       }
+      // for Variables
+      const isHavingVars = formData.get("isHavingVars")?.toString();
+      if (isHavingVars == "yes") {
+        let values: VariableCollection = {};
+        formData.forEach((value, key) => {
+          if (key.startsWith("var/")) {
+            key = key.substring(4);
+            values[key] = {
+              name: key,
+              value: parseInt(value.toString(), 10),
+            };
+          }
+        });
+        const bId = params.book;
+        if (bId) {
+          console.log("values:", values);
+          const vStore = await getTextStore();
+          await vStore.saveDefaultVariables(bId, values);
+        }
+      }
     }
-    return redirect(request.url);
+    return redirect(new URL(request.url).pathname);
   }
   return redirect("/login");
 }
@@ -43,7 +65,7 @@ type loaderData = [
   string,
   string[][],
   User,
-  VariableInterface,
+  VariableCollection,
   string,
   string[]
 ];
@@ -80,7 +102,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         b.doGl,
         comments,
         await uStore.getUser(a),
-        [getDefaultVariable()],
+        getDefaultVariables(),
         b.text2,
         b.tags ?? [],
       ];
@@ -271,6 +293,7 @@ export default function Book1() {
                 tags={tags}
                 bookResume={bookResume}
                 name={bUrl}
+                vars={vars}
               />
             </Tab.Pane>
           </Tab.Content>

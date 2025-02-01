@@ -1,5 +1,6 @@
 import type { Collection, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
+import { getDefaultVariables, type VariableCollection } from "./VariableThings";
 export interface Text {
   _id?: string;
   id?: string;
@@ -26,8 +27,9 @@ export interface Book {
   comments?: string[][][];
   public: boolean;
   avtor: string;
-  text2: string;//smallDescription
+  text2: string; //smallDescription
   data: BookData;
+  defaultVariables?: VariableCollection;
 }
 
 export interface Spec {
@@ -468,6 +470,22 @@ export class BookStore {
       timeForUser: {},
     };
     return d;
+  }
+
+  async saveDefaultVariables(bId: string, vars: VariableCollection) {
+    const book = await this.getBook(bId);
+    if (!book) return false;
+    const v: Book = {
+      ...book,
+      defaultVariables: vars,
+    };
+    await this.collection.replaceOne({ id: book.id }, v);
+    return true;
+  }
+  async getVariables(bId: string): Promise<VariableCollection> {
+  const book = await this.getBook(bId);
+  if (!book) return {};
+  return book.defaultVariables??getDefaultVariables();
   }
 }
 let ObTexts: { [key: string]: BookStore } = {};

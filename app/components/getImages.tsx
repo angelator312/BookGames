@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Modal, Spinner } from "react-bootstrap";
-import type { MiniInterface } from "~/utils/ImageInterface";
+import type { MiniInterface } from "~/utils/ImageThings";
 import PreviewImages from "./previewOnImages";
 
 export default function GetImagesModal({

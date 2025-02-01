@@ -58,9 +58,8 @@ export default function Book1() {
   const smallDescription = book.text2 ?? "small description";
   const isAvtor = b.isAvtor;
   //console.log(book.glava);
-  let textsPlImage: string[] = [];
 
-  console.log(textsPlImage);
+  // console.log(textsPlImage);
 
   //   style={{ padding: 15.4 }}
   //   console.log(book);

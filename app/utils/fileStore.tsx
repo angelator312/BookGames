@@ -1,7 +1,7 @@
 import type { Collection } from "mongodb";
 import { Binary, MongoClient, ObjectId } from "mongodb";
 import sharp from "sharp";
-import { ImageInterface, MiniInterface } from "./ImageInterface";
+import { ImageInterface, MiniInterface } from "./ImageThings";
 class FileStore {
   collection!: Collection<ImageInterface>;
   // eslint-disable-next-line no-useless-constructor

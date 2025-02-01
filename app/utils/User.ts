@@ -1,4 +1,5 @@
-import { ObjectId } from "mongodb";
+import type { ObjectId } from "mongodb";
+import { VariableCollection, VariableInterface } from "./VariableThings";
 
 export interface Turneta {
   _id?: ObjectId;
@@ -7,10 +8,7 @@ export interface Turneta {
   duration?: number;
   timeForStop: string; //like time property
 }
-export interface VariableInterface {
-  name: string;
-  value: number;
-}
+
 export interface User {
   _id?: ObjectId;
   glavi?: any;
@@ -56,15 +54,10 @@ export function getDefaultUser(): User {
   };
   return settings;
 }
-export function getDefaultVariable(): VariableInterface {
-  return {
-    value: 0,
-    name: "резултат",
-  };
-}
+
 export function compileToString(
   text: string,
-  variables: { [key: string]: VariableInterface }
+  variables: VariableCollection
 ): string {
   let result = text;
   // console.log("start", text);

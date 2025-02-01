@@ -1,12 +1,12 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { Decoder } from "./decoder";
 import { DecoderAdvanced } from "./decoderAdvanced";
-import type { VariableInterface } from "~/utils/User";
 import { compileToString } from "~/utils/User";
 // const regImg = /=>\[(image:.*?)\]/gm;
 import { regexForImage as regImg } from "~/utils/regex";
 import RenderText from "./renderText";
 import RenderTextWithDecoder from "./renderText2";
+import type { VariableInterface } from "~/utils/VariableThings";
 
 export default function Text({
   glava,
@@ -33,7 +33,7 @@ export default function Text({
   furst2Lines[1] = compileToStringM(furst2Lines[1]);
   textLines = textLines.map((e) => compileToStringM(e));
   let textsPlImage: string[] = [];
-  console.log(furst2Lines);
+  // console.log(furst2Lines);
 
   furst2Lines[1].split(regImg).forEach((line) => {
     textsPlImage.push(line);

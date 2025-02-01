@@ -18,7 +18,7 @@ import MenuForHome from "~/components/home.menu";
 import NavYesOrNo from "~/components/navbarYes";
 import PreviewImages from "~/components/previewOnImages";
 import getImageStore from "~/utils/fileStore";
-import type { MiniInterface } from "~/utils/ImageInterface";
+import type { MiniInterface } from "~/utils/ImageThings";
 import { requireUserId } from "~/utils/session.server";
 import type { SettingsInterface, User, UserData } from "~/utils/User";
 import getUserStore from "~/utils/userStore";

@@ -2,7 +2,8 @@ import type { Collection } from "mongodb";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 import type { SettingsInterface, User, UserData } from "./User";
-import { getDefaultSettings, getDefaultUserData, getDefaultVariable } from "./User";
+import { getDefaultSettings, getDefaultUserData } from "./User";
+import { getDefaultVariable } from "./VariableThings";
 export class UserStore {
   FixDatabase() {
     this.collection.updateMany(

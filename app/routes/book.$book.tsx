@@ -5,8 +5,8 @@ import Book from "~/components/book";
 import getUserStore from "~/utils/userStore";
 import getTextStore from "~/utils/textStore";
 import { createGorB, getUserId, requireUserId } from "~/utils/session.server";
-import { loaderBook } from "~/utils/loaderTypes";
-import { getDefaultVariable } from "~/utils/User";
+import type { loaderBook } from "~/utils/loaderTypes";
+import { getDefaultVariable } from "~/utils/VariableThings";
 export async function action({ params, request }: ActionFunctionArgs) {
   const form = await request.formData();
   let glava = form.get("to");
