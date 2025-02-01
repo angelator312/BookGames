@@ -100,7 +100,12 @@ export function DecoderAdvanced({
     let e = a.izbori[i + 1];
     if(!e)
     {
-      arr.push({text:a.izbori[i].text,izb:undefined});
+      console.log(a.izbori[i]);
+      
+      if (a.izbori[i].isText)
+        arr.push({ text: a.izbori[i].text, izb: undefined });
+      else
+        arr.push({ text: "", izb: a.izbori[i] });
       break;
     }
     if (a.broiZarcheta) {
