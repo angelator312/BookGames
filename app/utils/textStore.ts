@@ -458,6 +458,7 @@ export class BookStore {
         },
       },
     };
+    if (Number.isNaN(v.data.timeForUser[user])) v.data.timeForUser[user] = 0;
     v.data.timeForUser[user] = v.data.timeForUser[user] + timeM;
     await this.collection.replaceOne({ id: book.id }, v, {
       upsert: true,
@@ -483,9 +484,9 @@ export class BookStore {
     return true;
   }
   async getVariables(bId: string): Promise<VariableCollection> {
-  const book = await this.getBook(bId);
-  if (!book) return {};
-  return book.defaultVariables??getDefaultVariables();
+    const book = await this.getBook(bId);
+    if (!book) return {};
+    return book.defaultVariables ?? getDefaultVariables();
   }
 }
 let ObTexts: { [key: string]: BookStore } = {};

@@ -102,7 +102,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         b.doGl,
         comments,
         await uStore.getUser(a),
-        getDefaultVariables(),
+        b.defaultVariables??getDefaultVariables(),
         b.text2,
         b.tags ?? [],
       ];
