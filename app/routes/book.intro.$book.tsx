@@ -63,6 +63,7 @@ export default function Book1() {
   //   console.log(book);
   return (
     <Container
+      className="centered"
       fluid
       style={{ fontSize: (settings.fontSize ?? 10) / 10 + "rem" }}
     >
@@ -75,15 +76,18 @@ export default function Book1() {
           </h1>
         </Col>
       </Row>
-      <Row>
+      <Row sm="8" className="centered">
         <Col>
           {/* Za knigata */}
           <RenderTextWithDecoder texts={smallDescription} />
         </Col>
-        <Col>
+        <Col sm="4" className="centered">
           {/* Za Avtora */}
           <Card>
-            <Card.Img style={{width:"102px",height:"118px"}} src={b.urlForImmage} />
+            <Card.Img
+              style={{ width: "102px", height: "118px" }}
+              src={b.urlForImmage}
+            />
             <Card.Body>
               <Card.Title>{book.avtor}</Card.Title>
               <Card.Text>
@@ -92,10 +96,8 @@ export default function Book1() {
             </Card.Body>
           </Card>
         </Col>
-
-        <Col></Col>
       </Row>
-      <Row >
+      <Row>
         <Col>
           <a href={"/book/" + book.text}>
             <Button variant="primary">Прочети Ме</Button>
