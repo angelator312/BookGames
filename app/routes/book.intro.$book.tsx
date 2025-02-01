@@ -6,7 +6,6 @@ import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import RenderTextWithDecoder from "~/components/renderText2";
-import { Link } from "react-bootstrap-icons";
 export async function action({ params, request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
@@ -84,7 +83,7 @@ export default function Book1() {
         <Col>
           {/* Za Avtora */}
           <Card>
-            <Card.Img src={b.urlForImmage} />
+            <Card.Img style={{width:"102px",height:"118px"}} src={b.urlForImmage} />
             <Card.Body>
               <Card.Title>{book.avtor}</Card.Title>
               <Card.Text>
