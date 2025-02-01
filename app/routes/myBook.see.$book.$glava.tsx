@@ -15,9 +15,9 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const userStore = await getUserStore();
   const uId = await getUserId(request);
   if (!uId) return;
-  console.log("rezultat:", form.get("rezultat")?.toString());
+  // console.log("rezultat:", form.get("rezultat")?.toString());
   const rezPlus = parseInt(form.get("rezultat")?.toString() ?? "NaN");
-  console.log(rezPlus);
+  // console.log(rezPlus);
   if (!Number.isNaN(rezPlus)) {
     await userStore.editVariable(uId, "rezultat", rezPlus);
   }

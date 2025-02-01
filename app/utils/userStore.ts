@@ -176,13 +176,13 @@ export class UserStore {
     } else {
       v.variables = {};
       v.variables[id] = getDefaultVariable();
-      console.log(v.variables);
+      // console.log(v.variables);
 
       v.variables[id].value += plusR;
     }
     const i = await this.collection.replaceOne({ user }, v);
     v._id = i.upsertedId;
-    console.log("vars updated:", v);
+    // console.log("vars updated:", v);
 
     return v;
   }

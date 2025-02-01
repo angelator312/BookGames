@@ -67,7 +67,7 @@ export function compileToString(
   variables: { [key: string]: VariableInterface }
 ): string {
   let result = text;
-  console.log("start", text);
+  // console.log("start", text);
 
   for (const i of Object.keys(variables)) {
     result = result?.replace(
@@ -75,6 +75,6 @@ export function compileToString(
       variables[i].value.toString()
     );
   }
-  console.log("end", result);
+  // console.log("end", result);
   return result;
 }

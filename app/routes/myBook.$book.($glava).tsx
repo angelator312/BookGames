@@ -14,11 +14,21 @@ import FormComponent from "~/components/formComp";
 import getUserStore from "~/utils/userStore";
 import type { User, VariableInterface } from "~/utils/User";
 import { getDefaultVariable } from "~/utils/User";
+import BookSettingsComponent from "~/components/BookSettingsComponent";
 export async function action({ request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
 
-type loaderData = [string, string, Text2, string, string[][],User,VariableInterface];
+type loaderData = [
+  string,
+  string,
+  Text2,
+  string,
+  string[][],
+  User,
+  VariableInterface,
+  string
+];
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
@@ -28,32 +38,43 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const a = await requireUserId(request, false);
   const tStore = await getTextStore();
   let b = await tStore.getBook(book ?? "");
+  if (!b) return redirect(`/`);
   if (parseInt(glava) > parseInt(b?.doGl ?? "1")) {
     await tStore.addBook(
-      b?.id?.substring(5, b.id?.length - 3) ?? "",
-      b?.avtor ?? "",
-      b?.public,
-      b?.text2 ?? "",
+      b.id?.substring(5, b.id?.length - 3) ?? "",
+      b.avtor ?? "",
+      b.public,
+      b.text2 ?? "",
       glava
     );
     if (b) b.doGl = glava;
   }
   // console.log(glava);
   if (typeof a === "string") {
-    if (b?.avtor == a) {
-      const uStore=await getUserStore();
+    if (b.avtor == a) {
+      const uStore = await getUserStore();
       const comments = await tStore.getComments(book ?? "", glava);
       let t = await tStore.getText(`${book}-${glava}`);
-      return [book, glava, t ?? tStore.prototypeOfText(), b.doGl, comments,await uStore.getUser(a),[getDefaultVariable()]];
+      return [
+        book,
+        glava,
+        t ?? tStore.prototypeOfText(),
+        b.doGl,
+        comments,
+        await uStore.getUser(a),
+        [getDefaultVariable()],
+        b.text2,
+      ];
     }
     return redirect(`/book/${book}`);
   }
-  return redirect("/login?redirectTo="+request.url);
+  return redirect("/login?redirectTo=" + request.url);
 }
 export default function Book1() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [bUrl, gl, t, doN, comments,user,vars] = useLoaderData<loaderData>();
+  const [bUrl, gl, t, doN, comments, user, vars, bookResume] =
+    useLoaderData<loaderData>();
   let comm = comments;
   function update() {
     textLines = text.split("\n\n");
@@ -120,6 +141,11 @@ export default function Book1() {
             <Col>
               <Nav.Item>
                 <Nav.Link eventKey="editAndPreview">Редактирай</Nav.Link>
+              </Nav.Item>
+            </Col>
+            <Col>
+              <Nav.Item>
+                <Nav.Link eventKey="settings">Настройки</Nav.Link>
               </Nav.Item>
             </Col>
             <Col>
@@ -212,6 +238,9 @@ export default function Book1() {
                   </Col>
                 </Row>
               </Container>
+            </Tab.Pane>
+            <Tab.Pane eventKey="settings" title="Настройки">
+              <BookSettingsComponent bookResume={bookResume} name={bUrl} />
             </Tab.Pane>
           </Tab.Content>
           <Container>

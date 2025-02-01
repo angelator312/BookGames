@@ -3,7 +3,7 @@ import FormComponent from "./formComp";
 
 export default function IzborComponent({izbor,url,flag}: {izbor:Izbor,url:string,flag:boolean}) {
   // [number,number,number,string]} ) {
-  console.log(izbor);
+  // console.log(izbor);
   return (
       <FormComponent
         disabled={izbor.disabled}

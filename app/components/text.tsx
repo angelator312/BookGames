@@ -22,7 +22,7 @@ export default function Text({
   url: string;
   variables: { [key: string]: VariableInterface };
 }) {
-  console.log("vars:", variables);
+  // console.log("vars:", variables);
   function compileToStringM(a: string) {
     return compileToString(a, variables);
   }

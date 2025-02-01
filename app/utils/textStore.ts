@@ -1,7 +1,5 @@
 import type { Collection, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
-import { getDefaultUser } from "./User";
-import getUserStore from "./userStore";
 export interface Text {
   _id?: string;
   id?: string;
@@ -56,17 +54,30 @@ export class BookStore {
         { $set: { id: e.id?.substring(5, e.id.length - 3) } }
       );
     }
-    const uStore = await getUserStore();
-    const books2 = await this.collection
-      .find({ isBook: true })
-      .toArray();
-    for (let e of books2) {
-      this.collection.updateOne(
-        { _id: e._id },
-        //@ts-ignore
-        { $set: { author:await uStore.getUser(e.avtor)??getDefaultUser() } }
-      );
+    this.collection.updateMany(
+      { isBook: true, "author.data.isPro": false },
+      {
+        $set: { author: undefined },
+      }
+    );
+  }
+  async setBook(all: { id: string; text2?: string }): Promise<boolean> {
+    const b = await this.getBook(all.id);
+    if (b) {
+      console.log(all);
+
+      const v: Book = {
+        ...b,
+        ...all,
+      };
+      console.log(v);
+      // delete v._id;
+      await this.collection.replaceOne({ text: `${all.id}` }, v, {
+        upsert: true,
+      });
+      return true;
     }
+    return false;
   }
   async addBook(
     book: string,
@@ -275,10 +286,10 @@ export class BookStore {
       const aOtg = filterFunc(a, query),
         //@ts-ignore
         bOtg = filterFunc(b, query);
-        if (aOtg > bOtg) return -1;
-        if (aOtg == bOtg) {
-          //@ts-ignore
-          const aOtg = analysticFunc(a),
+      if (aOtg > bOtg) return -1;
+      if (aOtg == bOtg) {
+        //@ts-ignore
+        const aOtg = analysticFunc(a),
           //@ts-ignore
           bOtg = analysticFunc(b);
         if (aOtg > bOtg) return -1;

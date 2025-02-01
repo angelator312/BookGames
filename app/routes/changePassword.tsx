@@ -6,11 +6,9 @@ export async function action({ request, params, context }: ActionFunctionArgs) {
   const user = await requireUserId(request);
   if (user) {
     const formData = await request.formData();
-    const values = Object.fromEntries(formData);
     const oldPassword = formData.get("oldPassword")?.toString();
     const newPassword = formData.get("newPassword")?.toString();
     const newPassword2 = formData.get("newPassword2")?.toString();
-    console.log(oldPassword, newPassword, newPassword2, values);
     const users = await getUserStore();
     if (!newPassword) return redirect("/profil?koe=2&error=2");
     if (!oldPassword) return redirect("/profil?koe=2&error=2");
