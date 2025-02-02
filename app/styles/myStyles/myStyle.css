@@ -63,7 +63,7 @@ input.inp-bl {
   background-image: url("/img/desktopImage.jpg");
   background-position: 0 -10em;
   background-size: cover;
-  background-repeat: repeat-x;
+  background-repeat: repeat;
 }
 
 .mt-3r {

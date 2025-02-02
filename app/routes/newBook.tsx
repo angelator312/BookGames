@@ -21,7 +21,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     typeof shD === "string"
   ) {
     const tStore = await getTextStore();
-    await tStore.addBook(name?.toString() ?? " ", a, false, shD);
+    await tStore.addBook(name?.toString() ?? " ", a, false, shD,1);
     return redirect("/");
   }
 

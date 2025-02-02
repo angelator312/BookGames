@@ -75,43 +75,41 @@ type loaderData = [
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
-  const book = params.book;
-  if (!book) return;
+  const bId = params.book;
+  if (!bId) return;
   if (!glava || Number.isNaN(parseInt(glava)))
-    return redirect(`/myBook/${book}/1`);
+    return redirect(`/myBook/${bId}/1`);
   const a = await requireUserId(request, false);
   const tStore = await getTextStore();
-  let b = await tStore.getBook(book ?? "");
-  if (!b) return redirect(`/`);
-  if (parseInt(glava) > parseInt(b?.doGl ?? "1")) {
-    await tStore.addBook(
-      b.id?.substring(5, b.id?.length - 3) ?? "",
-      b.avtor ?? "",
-      b.public,
-      b.text2 ?? "",
-      glava
-    );
-    if (b) b.doGl = glava;
+  let book = await tStore.getBook(bId ?? "");
+  if (!book) return redirect(`/`);
+
+  if (parseInt(glava) > parseInt(book.doGl ?? "1")) {
+    if (book.id) {
+      // console.log("gl:", parseInt(glava), parseInt(book.doGl ?? "1"));
+      book.doGl = glava;
+      await tStore.setBook(bId, { doGl: glava });
+    }
   }
   // console.log(glava);
   if (typeof a === "string") {
-    if (b.avtor == a) {
+    if (book.avtor == a) {
       const uStore = await getUserStore();
-      const comments = await tStore.getComments(book ?? "", glava);
-      let t = await tStore.getText(`${book}-${glava}`);
+      const comments = await tStore.getComments(bId ?? "", glava);
+      let t = await tStore.getText(`${bId}-${glava}`);
       return [
-        await tStore.getBook(book),
+        await tStore.getBook(bId),
         glava,
         t ?? tStore.prototypeOfText(),
-        b.doGl,
+        book.doGl,
         comments,
         await uStore.getUser(a),
-        b.defaultVariables ?? getDefaultVariables(),
-        b.text2,
-        b.tags ?? [],
+        book.defaultVariables ?? getDefaultVariables(),
+        book.text2,
+        book.tags ?? [],
       ];
     }
-    return redirect(`/book/${book}`);
+    return redirect(`/book/${bId}`);
   }
   return redirect("/login?redirectTo=" + request.url);
 }

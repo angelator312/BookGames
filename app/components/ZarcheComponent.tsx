@@ -19,22 +19,15 @@ export default function ZarcheComponent({
   }
   if (value == 0) {
     return (
-      <div>
-        <Button
-          onClick={() => {
-            const a=rand();
-            setValue(a);
-            onResult(a);
-          }}
-        >
-          Хвърли Зар
-        </Button>
-      </div>
+      <Button
+        onClick={() => {
+          const a = rand();
+          setValue(a);
+          onResult(a);
+        }}
+      >
+        Хвърли Зар
+      </Button>
     );
-  } else
-    return (
-      <div>
-        <p>Зарът е {value} </p>
-      </div>
-    );
+  } else return <p>Зарът е {value} </p>;
 }

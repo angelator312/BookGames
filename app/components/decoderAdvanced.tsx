@@ -130,12 +130,14 @@ export function DecoderAdvanced({
   return (
     <>
       {a.broiZarcheta ? (
-        <ZarcheComponent
-          onResult={(val) => {
-            setZarValue(val);
-          }}
-          broiZarcheta={a.broiZarcheta}
-        />
+        <div className="mb-5">
+          <ZarcheComponent
+            onResult={(val) => {
+              setZarValue(val);
+            }}
+            broiZarcheta={a.broiZarcheta}
+          />
+        </div>
       ) : null}
       <ul>
         {arr.map((e, i) => (

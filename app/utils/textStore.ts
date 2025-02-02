@@ -69,6 +69,7 @@ export class BookStore {
       // id?: string;// Голямото приключение (името на книгата)
       text2?: string; // Хубава книга разказваща за ... (Описанието на книгата)
       tags?: string[];
+      doGl?:string;
     }
   ): Promise<boolean> {
     const b = await this.getBook(bId);
@@ -112,8 +113,9 @@ export class BookStore {
       text2: smallDescription,
       data: this.prototypeOfBookData(),
     };
-
-    await this.collection.replaceOne({ id: `${book}` }, v, {
+    console.log(v);
+    
+    await this.collection.replaceOne({ text: `gb${numSmallName}` }, v, {
       upsert: true,
     });
 
