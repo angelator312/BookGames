@@ -25,6 +25,7 @@ export function ModalInsertChapterSimpleWithScoreChange({
       <Modal.Body>
         <Row>
           <Col>
+            <label>Номер на глава:</label>
             <input
               value={insertChapter}
               onChange={(e) => setInsertChapter(parseInt(e.target.value))}
@@ -33,21 +34,23 @@ export function ModalInsertChapterSimpleWithScoreChange({
             />
           </Col>{" "}
           <Col>
-            <input
-              value={scoreChange}
-              onChange={(e) => setScoreChange(parseInt(e.target.value))}
-              type="number"
-              placeholder="Промяна на резултата"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
+            <label>Текст в бутона:</label>
             <input
               value={insertText}
               onChange={(e) => setInsertText(e.target.value)}
               type="string"
               placeholder="Текст в бутона"
+            />
+          </Col>
+        </Row>
+        <Row className="mt-2">
+          <Col>
+            <label>С колко се променя променливата "резултат":</label>
+            <input
+              value={scoreChange}
+              onChange={(e) => setScoreChange(parseInt(e.target.value))}
+              type="number"
+              placeholder="+21"
             />
           </Col>
         </Row>

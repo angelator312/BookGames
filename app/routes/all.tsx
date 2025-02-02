@@ -6,7 +6,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import BookHeader from "~/components/bookHeader";
 import SearchComponent from "~/components/Search";
 import { requireUserId, knigi, getUserDatas } from "~/utils/session.server";
-import type { Book } from "~/utils/textStore";
+import type { BookInterface } from "~/utils/textStore";
 import type { User, SettingsInterface, UserData } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
 import globalLargeStylesUrl from "~/styles/global-large.css";
@@ -56,7 +56,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
   return redirect("/login?redirectTo="+request.url);
 };
-type loaderType = [User, Book[], SettingsInterface, UserData[]] | null;
+type loaderType = [User, BookInterface[], SettingsInterface, UserData[]] | null;
 export default function AllBooksRoute() {
   const loader = useLoaderData<loaderType>();
   if (loader) {

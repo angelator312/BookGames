@@ -16,7 +16,7 @@ import { cssBundleHref } from "@remix-run/css-bundle";
 import getUserStore from "~/utils/userStore";
 import { getDefaultSettings } from "~/utils/User";
 import type { User , SettingsInterface, UserData } from "~/utils/User";
-import type { Book } from "~/utils/textStore";
+import type { BookInterface } from "~/utils/textStore";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: bootstrapStyles },
@@ -54,7 +54,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
   return redirect("/intro");
 };
-type loaderType=[User,Book[],SettingsInterface,UserData[]]|null;
+type loaderType=[User,BookInterface[],SettingsInterface,UserData[]]|null;
 export default function IndexRoute() {
   // console.log(1);
   const loader = useLoaderData<loaderType>();

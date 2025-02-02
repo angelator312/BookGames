@@ -1,7 +1,7 @@
 import type { Collection, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
 import { getDefaultVariables, type VariableCollection } from "./VariableThings";
-export interface Text {
+export interface TextInterface {
   _id?: string;
   id?: string;
   isBook: boolean;
@@ -17,7 +17,7 @@ export interface BookData {
     [key: string]: number;
   };
 }
-export interface Book {
+export interface BookInterface {
   _id?: string;
   id?: string;
   isBook: boolean;
@@ -32,7 +32,7 @@ export interface Book {
   defaultVariables?: VariableCollection;
 }
 
-export interface Spec {
+export interface SpecInterface {
   _id?: string;
   id: string;
   bookNom: number;
@@ -75,7 +75,7 @@ export class BookStore {
     if (b) {
       // console.log(all);
 
-      const v: Book = {
+      const v: BookInterface = {
         ...b,
         ...all,
       };
@@ -95,12 +95,12 @@ export class BookStore {
     smallDescription: string,
     gl?: string | number,
     numSmallName = -1
-  ): Promise<Book> {
+  ): Promise<BookInterface> {
     if (numSmallName == -1) numSmallName = (await this.getSpec()).bookNom;
 
     if (!gl) gl = "15";
 
-    const v: Book = {
+    const v: BookInterface = {
       id: `${book}`,
       isBook: true,
       text: `gb${numSmallName}`,
@@ -137,7 +137,7 @@ export class BookStore {
     gl: string | number,
     avt: string,
     comment: string
-  ): Promise<Book | null> {
+  ): Promise<BookInterface | null> {
     if (!(book && gl && comment)) return null;
     if (typeof gl == "string") gl = parseInt(gl);
     if (Number.isNaN(gl)) return null;
@@ -169,7 +169,7 @@ export class BookStore {
     }
     if (!st.comments) st.comments = arr;
 
-    const v: Book = {
+    const v: BookInterface = {
       ...st,
 
       comments: arr,
@@ -183,7 +183,7 @@ export class BookStore {
     book: string | null,
     gl: string | number,
     nom: number
-  ): Promise<Book | null> {
+  ): Promise<BookInterface | null> {
     if (typeof gl == "string") gl = parseInt(gl);
     // console.log( );
     if (nom < 0 || Number.isNaN(nom)) return null;
@@ -209,7 +209,7 @@ export class BookStore {
 
     // console.dir(arr);
 
-    const v: Book = {
+    const v: BookInterface = {
       ...st,
 
       comments: arr,
@@ -219,7 +219,7 @@ export class BookStore {
     });
     return v;
   }
-  async getBook(book: string): Promise<Book | null> {
+  async getBook(book: string): Promise<BookInterface | null> {
     const t = await this.collection.findOne({
       text: book,
       isBook: true,
@@ -247,7 +247,7 @@ export class BookStore {
     const a = bookL.comments[parseInt(gl.toString()) - 1] ?? [];
     return a.map((e, i) => (e[1] == avt ? e[0] : ""));
   }
-  async searchWithQuery(query: string, books: Book[]): Promise<Book[]> {
+  async searchWithQuery(query: string, books: BookInterface[]): Promise<BookInterface[]> {
     function includes(queryOrg: string, str: string): number {
       const query = queryOrg;
       let br = 0;
@@ -272,7 +272,7 @@ export class BookStore {
       Object.values(e).map((k) => (sum += k));
       return sum / Object.values(e).length;
     }
-    function analysticFunc(e: WithId<Book>): number {
+    function analysticFunc(e: WithId<BookInterface>): number {
       const clickWeight = 10;
       const timeWeight = 100;
       let br = (e.data?.clicks ?? 0) * clickWeight;
@@ -280,7 +280,7 @@ export class BookStore {
 
       return br;
     }
-    function filterFunc(e: WithId<Book>, query: string): number {
+    function filterFunc(e: WithId<BookInterface>, query: string): number {
       return (
         includes(query, e.id ?? "") * 2 +
         includesFromArray(query, e.tags ?? [""]) * 3 +
@@ -313,9 +313,9 @@ export class BookStore {
     const out = data2;
     return out;
   }
-  async getPublicBooks(avt: string, query: string | null): Promise<Book[]> {
+  async getPublicBooks(avt: string, query: string | null): Promise<BookInterface[]> {
     //@ts-ignore
-    const data: Book[] = await this.collection
+    const data: BookInterface[] = await this.collection
       .find({ public: true, isBook: true }, { sort: { time: "ascending" } })
       .toArray();
     if (data.length === 0) {
@@ -333,7 +333,7 @@ export class BookStore {
     // @ts-ignore
     return data;
   }
-  async getMyBooks(avt: string): Promise<Book[] | null> {
+  async getMyBooks(avt: string): Promise<BookInterface[] | null> {
     const data = await this.collection
       .find({ isBook: true, avtor: avt }, { sort: { time: "ascending" } })
       .toArray();
@@ -343,7 +343,7 @@ export class BookStore {
     // @ts-ignore
     return data;
   }
-  collection!: Collection<Text | Book | Spec>;
+  collection!: Collection<TextInterface | BookInterface | SpecInterface>;
   // eslint-disable-next-line no-useless-constructor
   constructor(protected readonly collectionName: string) {}
   async conect(urlforconnect: string) {
@@ -357,8 +357,8 @@ export class BookStore {
     this.collection = database.collection(this.collectionName);
     // console.log(this.collectionName, this.collection);
   }
-  async addText(id: string, text: string, text2: string): Promise<Text> {
-    const v: Text = {
+  async addText(id: string, text: string, text2: string): Promise<TextInterface> {
+    const v: TextInterface = {
       id: id,
       text,
       text2,
@@ -368,14 +368,14 @@ export class BookStore {
 
     return v;
   }
-  async getText(id: string): Promise<Text | Spec | null> {
+  async getText(id: string): Promise<TextInterface | SpecInterface | null> {
     const data = await this.collection.findOne({ id: id });
     if (!data) {
       return null;
     }
     return data;
   }
-  async getSpec(): Promise<Spec> {
+  async getSpec(): Promise<SpecInterface> {
     const data = await this.collection.findOne({
       id: "Spec--1--cepS",
       isBook: false,
@@ -386,8 +386,8 @@ export class BookStore {
     //@ts-ignore
     return data;
   }
-  async addSpec(nom: number): Promise<Spec> {
-    const v: Spec = { isBook: false, bookNom: nom, id: "Spec--1--cepS" };
+  async addSpec(nom: number): Promise<SpecInterface> {
+    const v: SpecInterface = { isBook: false, bookNom: nom, id: "Spec--1--cepS" };
     await this.collection.replaceOne(
       { id: "Spec--1--cepS", isBook: false },
       v,
@@ -398,7 +398,7 @@ export class BookStore {
 
     return v;
   }
-  prototypeOfText(): Text {
+  prototypeOfText(): TextInterface {
     return {
       isBook: false,
       text: "",
@@ -407,7 +407,7 @@ export class BookStore {
       avtor: "",
     };
   }
-  prototypeOfBook(): Book {
+  prototypeOfBook(): BookInterface {
     return {
       isBook: true,
       text: "",
@@ -419,9 +419,9 @@ export class BookStore {
     };
   }
   //Analyzer
-  async getBook2(book: string): Promise<Book | null> {
+  async getBook2(book: string): Promise<BookInterface | null> {
     //@ts-ignore
-    const t: Book | null = await this.collection.findOne({
+    const t: BookInterface | null = await this.collection.findOne({
       text: book,
       isBook: true,
     });
@@ -431,8 +431,8 @@ export class BookStore {
     }
     return null;
   }
-  async addClick(book: Book): Promise<void> {
-    const v: Book = {
+  async addClick(book: BookInterface): Promise<void> {
+    const v: BookInterface = {
       ...book,
       data: {
         clicks: (book.data?.clicks ?? 0) + 1,
@@ -449,7 +449,7 @@ export class BookStore {
     if (Number.isNaN(timeM)) return;
     const book = await this.getBook(bookName);
     if (!book) return;
-    const v: Book = {
+    const v: BookInterface = {
       ...book,
       data: {
         clicks: book.data?.clicks,
@@ -476,7 +476,7 @@ export class BookStore {
   async saveDefaultVariables(bId: string, vars: VariableCollection) {
     const book = await this.getBook(bId);
     if (!book) return false;
-    const v: Book = {
+    const v: BookInterface = {
       ...book,
       defaultVariables: vars,
     };

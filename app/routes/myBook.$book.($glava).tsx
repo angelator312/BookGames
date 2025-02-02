@@ -1,4 +1,7 @@
-import type { Text as Text2 } from "~/utils/textStore";
+import type {
+  BookInterface as BookType,
+  TextInterface as Text2,
+} from "~/utils/textStore";
 import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData, useNavigate, useSearchParams } from "@remix-run/react";
@@ -59,7 +62,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
 }
 
 type loaderData = [
-  string,
+  BookType,
   string,
   Text2,
   string,
@@ -73,6 +76,7 @@ type loaderData = [
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.glava;
   const book = params.book;
+  if (!book) return;
   if (!glava || Number.isNaN(parseInt(glava)))
     return redirect(`/myBook/${book}/1`);
   const a = await requireUserId(request, false);
@@ -96,13 +100,13 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       const comments = await tStore.getComments(book ?? "", glava);
       let t = await tStore.getText(`${book}-${glava}`);
       return [
-        book,
+        await tStore.getBook(book),
         glava,
         t ?? tStore.prototypeOfText(),
         b.doGl,
         comments,
         await uStore.getUser(a),
-        b.defaultVariables??getDefaultVariables(),
+        b.defaultVariables ?? getDefaultVariables(),
         b.text2,
         b.tags ?? [],
       ];
@@ -114,8 +118,9 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function Book1() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [bUrl, gl, t, doN, comments, user, vars, bookResume, tags] =
+  const [b, gl, t, doN, comments, user, vars, bookResume, tags] =
     useLoaderData<loaderData>();
+  const bUrl = b.text;
   let comm = comments;
   function update() {
     textLines = text.split("\n\n");
@@ -239,7 +244,7 @@ export default function Book1() {
                   <Col>
                     <Book
                       url={`/myBook/${bUrl}`}
-                      title={"Книга " + bUrl}
+                      title={b.id ?? "Книга " + bUrl}
                       almP={`/myBook/${bUrl}/`}
                       flag={3}
                       params={{

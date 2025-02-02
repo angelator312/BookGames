@@ -20,20 +20,21 @@ export function ModalInsertChapterSimple({
       <Modal.Body>
         <Row>
           <Col>
+            <label>Номер на глава:</label>
             <input
               value={insertChapter}
               onChange={(e) => setInsertChapter(parseInt(e.target.value))}
               type="number"
               placeholder="Глава"
             />
-          </Col>
-          {" "}
+          </Col>{" "}
           <Col>
+            <label>Текст в бутона:</label>
             <input
               value={insertText}
               onChange={(e) => setInsertText(e.target.value)}
               type="string"
-              placeholder="Текст в бутона"
+              placeholder="Отиди на пътешествие"
             />
           </Col>
         </Row>
@@ -46,7 +47,10 @@ export function ModalInsertChapterSimple({
             </Button>
           </Col>
           <Col>
-            <Button variant="primary" onClick={() => handleInsertChapter(insertChapter, insertText)}>
+            <Button
+              variant="primary"
+              onClick={() => handleInsertChapter(insertChapter, insertText)}
+            >
               Вмъкни
             </Button>
           </Col>

@@ -98,14 +98,12 @@ export function DecoderAdvanced({
   let arr: any[] = [];
   for (let i = 0; i < a.izbori.length; i++) {
     let e = a.izbori[i + 1];
-    if(!e)
-    {
+    if (!e) {
       console.log(a.izbori[i]);
-      
+
       if (a.izbori[i].isText)
         arr.push({ text: a.izbori[i].text, izb: undefined });
-      else
-        arr.push({ text: "", izb: a.izbori[i] });
+      else arr.push({ text: "", izb: a.izbori[i] });
       break;
     }
     if (a.broiZarcheta) {
@@ -144,7 +142,7 @@ export function DecoderAdvanced({
           <li key={i}>
             <Row>
               <Col {...propertiesForColumnsWidth2}>
-                <p className="text-bold">{e.text}</p>
+                <p className="text-bold">{e.text ? e.text : <pre> </pre>}</p>
               </Col>
               {e.izb ? (
                 <Col sm="2">

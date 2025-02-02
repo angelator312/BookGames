@@ -1,5 +1,5 @@
 import { useSearchParams } from "@remix-run/react";
-import type { Book } from "~/utils/textStore";
+import type { BookInterface } from "~/utils/textStore";
 // import { HydrationProvider, Server } from "react-hydration-provider";
 import BookHeader from "./bookHeader";
 import NavYesOrNo from "./navbarYes";
@@ -18,7 +18,7 @@ export default function Home({
 }: {
   settings: SettingsInterface;
   user: User;
-  books: Book[][];
+  books: BookInterface[][];
   dataMy: UserData;
   dataNotMine: UserData[];
 }) {

@@ -1,5 +1,5 @@
 import { redirect, useLoaderData, useSearchParams } from "@remix-run/react";
-import type { Book } from "~/utils/textStore";
+import type { BookInterface } from "~/utils/textStore";
 // import { HydrationProvider, Server } from "react-hydration-provider";
 
 import { Button, Col, Container, Row } from "react-bootstrap";
@@ -49,7 +49,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
   return redirect("/");
 };
-type loaderType = [Book[][], UserData[]];
+type loaderType = [BookInterface[][], UserData[]];
 export default function AllBooksRoute() {
   const loader = useLoaderData<loaderType>();
   let [books, dataNotMine] = loader;

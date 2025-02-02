@@ -7,7 +7,7 @@ import {
 } from "react-bootstrap";
 import { AuthorResume } from "./userResume";
 import type { UserData } from "~/utils/User";
-import type { Book } from "~/utils/textStore";
+import type { BookInterface } from "~/utils/textStore";
 
 export default function BookHeader({
   e,
@@ -15,7 +15,7 @@ export default function BookHeader({
   authorData,
 }: {
   authorData: UserData;
-  e: Book;
+  e: BookInterface;
   avt?: boolean;
 }) {
   if (!e) return;

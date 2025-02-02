@@ -1,5 +1,5 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
-import type { Book } from "./textStore";
+import type { BookInterface } from "./textStore";
 import getTextStore from "./textStore";
 import getUserStore from "./userStore";
 import { getDefaultUserData } from "./User";
@@ -111,7 +111,7 @@ export async function loadSettings(user: string) {
   return a;
 }
 
-export async function getUserDatas(books:Book[])
+export async function getUserDatas(books:BookInterface[])
 {
   const uStore = await getUserStore();
   return books.map(async book =>{

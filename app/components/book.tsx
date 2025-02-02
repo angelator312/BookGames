@@ -97,13 +97,13 @@ export default function Book({
         {kr ? (
           <div className="m-l-35%">
             <Row>
-              <Col>
+              {/* <Col>
                 <FormComponent
                   submitVariant="secondary"
                   to={`${url}/${glava}/idea`}
                   textForSubmit="Коментирай!"
                 />
-              </Col>
+              </Col> */}
               {/* <button type="submit" className="logo ">
                 Коментирай!
               </button>
