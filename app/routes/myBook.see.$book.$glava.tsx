@@ -7,10 +7,11 @@ import getTextStore from "~/utils/textStore";
 import { createGorB, getUserId, requireUserId } from "~/utils/session.server";
 import type { loaderBook } from "~/utils/loaderTypes";
 import getVariableStore from "~/utils/variableStore";
+import type { VariableCollection } from "~/utils/VariableThings";
 export async function action({ params, request }: ActionFunctionArgs) {
-  const form = await request.formData();
-  let glava = form.get("to");
-  let bId = params.book;
+  const formData = await request.formData();
+  let glava = formData.get("to");
+  const bId = params.book;
   if (!bId) return redirect("/");
   // console.log(glava);
   if (!glava) glava = "1";
@@ -18,20 +19,39 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const uId = await getUserId(request);
   if (!uId) return;
   // console.log("rezultat:", form.get("rezultat")?.toString());
-  const rezPlus = parseInt(form.get("rezultat")?.toString() ?? "NaN");
-  // console.log(rezPlus);
-  if (!Number.isNaN(rezPlus)) {
-    const vStore = await getVariableStore();
-    const variables = await vStore.getVariables(uId, bId);
-    variables["rezultat"].value += rezPlus;
-    await vStore.setVariable(uId, bId, {
-      book: bId,
-      user: uId,
-      vars: variables,
-    });
-  }
+  const vStore = await getVariableStore();
+  // console.log("rezultat:", form.get("rezultat")?.toString());
+  let values: VariableCollection = await vStore.getVariables(uId, bId);
+  formData.forEach(async (value, key) => {
+    if (key.startsWith("var/")) {
+      key = key.substring(4);
+      let num = parseInt(value.toString(), 10);
+      if (Number.isNaN(num)) {
+        const tStore = await getTextStore();
+        const book = await tStore.getBook(bId);
+        if (book) {
+          if (book.defaultVariables)
+            if (book.defaultVariables[key]) {
+              num = book.defaultVariables[key].value;
+            }
+        }
+        if (Number.isNaN(num)) num = 0;
+      }
+      if (values[key]) {
+        values[key].value+=num;
+      } else
+        values[key] = {
+          name: key,
+          value: num,
+        };
+    }
+  });
+
+  console.log("values:", values);
+  await vStore.setVariables(uId, bId, values);
+
   // @ts-ignore Заради uId:string|null
-  await userStore.editUserSGlava(uId, `Book-${params.book}`, glava);
+  await userStore.editUserSGlava(uId, `Book-${bId}`, glava);
   return redirect(request.url);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
@@ -40,8 +60,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const uStore = await getUserStore();
   const b = await tStore.getBook2(params.book ?? " ");
   // console.log(b);
-  const bId=params.book;
-  if(!bId)return redirect("/");
+  const bId = params.book;
+  if (!bId) return redirect("/");
 
   if (typeof uId === "string") {
     if (b?.public) {
@@ -60,7 +80,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       let spec = text?.text2;
       // console.log({ text: segG, glava, text2: spec, b });
       const vStore = await getVariableStore();
-      const vars=await vStore.getVariables(uId,bId);
+      const vars = await vStore.getVariables(uId, bId);
       createGorB("glava", glava, request);
       createGorB("book", b.text, request);
       const settings = await uStore.getMySettings(uId);

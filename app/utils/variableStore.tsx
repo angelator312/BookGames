@@ -2,7 +2,8 @@ import type { Collection } from "mongodb";
 import { MongoClient } from "mongodb";
 import getTextStore from "./textStore";
 import {} from "./User";
-import { type VariableItem, getDefaultVariable } from "./VariableThings";
+import type { VariableItem, VariableCollection } from "./VariableThings";
+import { getDefaultVariables } from "./VariableThings";
 class VariableStore {
   collection!: Collection<VariableItem>;
   //   bookCollection!: Collection<BookItem>
@@ -19,25 +20,33 @@ class VariableStore {
     this.collection = database.collection(this.collectionName);
     // console.log(this.collectionName, this.collection);
   }
-  async getVariables(user: string, book: string) {
-    const result = await this.collection.findOne({ user, book });
+  async getVariables(user: string, bId: string) {
+    const result = await this.collection.findOne({ user, book: bId });
     if (result) {
       return result.vars;
     } else {
       const tStore = await getTextStore();
-      const text = await tStore.getBook(book);
-      if (text) {
-        if (text.defaultVariables?.rezultat) {
-          return text.defaultVariables;
+      const book = await tStore.getBook(bId);
+      if (book) {
+        if (book.defaultVariables) {
+          await this.setVariables(user, bId, book.defaultVariables);
+          return book.defaultVariables;
         }
       }
-      return { rezultat: getDefaultVariable() };
+      return getDefaultVariables();
     }
   }
-  async setVariable(user: string, book: string, vs: VariableItem) {
+  async setVariableItem(user: string, book: string, vs: VariableItem) {
     // const vars=await this.getVariables(user,book);
     return await this.collection.replaceOne({ user, book }, vs, {
       upsert: true,
+    });
+  }
+  async setVariables(user: string, book: string, vs: VariableCollection) {
+    return await this.setVariableItem(user, book, {
+      book: book,
+      user: user,
+      vars: vs,
     });
   }
 }

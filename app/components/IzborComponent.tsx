@@ -10,7 +10,7 @@ export default function IzborComponent({izbor,url,flag}: {izbor:Izbor,url:string
         textForSubmit={izbor.text}
         to={flag ? `${url}` : `${url}/${izbor.glava}`}
         textsHidden={[izbor.glava.toString(),izbor.scoreChange.toString()]}
-        namesHidden={["to","rezultat"]}
+        namesHidden={["to","var/резултат"]}
         submitVariant="outline-secondary"
       />
   );
