@@ -64,7 +64,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   if (!bId) return redirect("/");
 
   if (typeof uId === "string") {
-    if (b?.public) {
+    if (b?.avtor==uId) {
       // return a;
       //console.log(uStore.collection);
 
@@ -94,7 +94,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         variables: vars,
       };
     }
-    return redirect("/");
+    return redirect("/?a");
   }
   return redirect("/login?redirectTo=" + request.url);
 }
