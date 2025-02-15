@@ -11,6 +11,7 @@ import type { VariableCollection } from "~/utils/VariableThings";
 export async function action({ params, request }: ActionFunctionArgs) {
   const formData = await request.formData();
   let glava = formData.get("to");
+  //console.log(glava);\
   const bId = params.book;
   if (!bId) return redirect("/");
   // console.log(glava);
@@ -38,7 +39,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
         if (Number.isNaN(num)) num = 0;
       }
       if (values[key]) {
-        values[key].value+=num;
+        values[key].value += num;
       } else
         values[key] = {
           name: key,
@@ -52,7 +53,11 @@ export async function action({ params, request }: ActionFunctionArgs) {
 
   // @ts-ignore Заради uId:string|null
   await userStore.editUserSGlava(uId, `Book-${bId}`, glava);
-  return redirect(request.url);
+  const outUrl =
+    request.url.substring(0, request.url.lastIndexOf("/")) + "/" + glava;
+  console.log();
+  
+  return redirect(outUrl);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const uId = await requireUserId(request, false);
@@ -64,7 +69,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   if (!bId) return redirect("/");
 
   if (typeof uId === "string") {
-    if (b?.avtor==uId) {
+    if (b?.avtor == uId) {
       // return a;
       //console.log(uStore.collection);
 
@@ -105,6 +110,8 @@ export default function Book1() {
   //   style={{ padding: 15.4 }}
   //   console.log(book);
   const zagl = book.b.id;
+  console.log(book.text2);
+
   return (
     <div style={{ fontSize: (book.settings.fontSize ?? 10) / 10 + "rem" }}>
       <Book
