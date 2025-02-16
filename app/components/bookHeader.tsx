@@ -16,19 +16,19 @@ export default function BookHeader({
   return (
     <Container fluid className="my-2">
       <Row>
-        <Col xs={2} md={1}>
+        <Col xs={3} md={1}>
           <img src="/img/book-60.png" alt="Book" className="book-image" />
         </Col>
-        <Col xs={6} md={7}>
+        <Col xs={9} md={7}>
           <a href={`/book/intro/${e.text}`}>
             <h3 className="text-bold text-dark">{e.id}</h3>
           </a>
-        </Col>
-        <Col className="text-bold text-dark" xs={2}>
           <AuthorResume authorData={authorData} authorName={e.avtor ?? ""} />
         </Col>
+        {/* <Col className="text-bold text-dark" xs={6} md={2}> */}
+        {/* </Col> */}
         {/* <br /> */}
-        <Col className="text-center" xs={2}>
+        <Col className="text-center" xs={12} md={2}>
           {avt ? (
             <DropdownButton title="Действия" id="dropdown-basic-button">
               <Dropdown.Item

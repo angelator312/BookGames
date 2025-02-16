@@ -18,7 +18,10 @@ export function AuthorResume({
     <div className="author-resume">
       <Row>
         <Col>
-          <span onClick={() => setShowModal(true)}>
+          <span
+            onClick={() => setShowModal(true)}
+            className="fst-italic text-dark"
+          >
             {authorName} <IsProUser usD={authorData} />
           </span>
         </Col>

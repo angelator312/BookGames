@@ -32,7 +32,7 @@ function MenuForHome({
         className="offcanvas-without-linkProblems"
         show={show}
         onHide={handleClose}
-        style={{ width: "45%" }}
+        placement="end"
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title className="text-slate-500 font-medium logo f-book-c">
