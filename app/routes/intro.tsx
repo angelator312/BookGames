@@ -4,8 +4,6 @@ import type { BookInterface } from "~/utils/textStore";
 
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { type UserData } from "~/utils/User";
-import { Link } from "react-bootstrap-icons";
-import { useEffect, useState } from "react";
 import BookHeader from "~/components/bookHeader";
 import SearchComponent from "~/components/Search";
 import MenuForIntro from "~/components/intro.menu";
@@ -53,20 +51,14 @@ type loaderType = [BookInterface[][], UserData[]];
 export default function AllBooksRoute() {
   const loader = useLoaderData<loaderType>();
   let [books, dataNotMine] = loader;
-  const [oshte0, setOshte0] = useState<boolean>(false);
-  const [oshte1, setOshte1] = useState<boolean>(false);
-  useEffect(() => {
-    if (books[0].length > 5) {
-      books[0] = books[0].slice(0, 5);
-      setOshte0(true);
-    }
+  let oshte1 = false;
+  let otherBooks = books[1];
+  // useEffect(() => {
 
-    if (books[1].length > 5) {
-      books[1] = books[1].slice(0, 5);
-      setOshte1(true);
-    }
-  }, [books]);
-
+  if (books[1].length > 5) {
+    otherBooks = books[1].slice(0, 5);
+    oshte1 = true;
+  }
   // const userId = useLoaderData<string>();
   // console.log(books[1], oshte1);
 
@@ -102,24 +94,11 @@ export default function AllBooksRoute() {
       <Row className="mt-5">
         <Col>
           <div className="bg-white bg-opacity-25 rounded-3 p-3">
-            {books[0].length == 0 ? (
               <a href="/newBook">
                 <Button variant="outline-primary" className="text-sm">
                   Тук Няма Никой,Създай книга:
                 </Button>
               </a>
-            ) : null}
-            {oshte0 ? (
-              <Row>
-                <Col>
-                  <Link to={"/mine"}>
-                    <Button variant="outline-primary" className="text-sm">
-                      Виж всички
-                    </Button>
-                  </Link>
-                </Col>
-              </Row>
-            ) : null}
           </div>
         </Col>
       </Row>
@@ -134,14 +113,14 @@ export default function AllBooksRoute() {
             <Row>
               <Col>
                 <div>
-                  {books[1].map((e, i) => (
+                  {otherBooks.map((e, i) => (
                     <Row key={i}>
                       <Col>
                         <BookHeader authorData={dataNotMine[i]} e={e} />
                       </Col>
                     </Row>
                   ))}
-                  {books[1].length <= 0 ? (
+                  {otherBooks.length <= 0 ? (
                     <h3 className="centered text-bold">Няма Резултати</h3>
                   ) : (
                     ""
