@@ -22,16 +22,19 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   if (typeof a === "string") {
     const user = await uStore.getUser(a);
     if (user) {
-        let glava = user?.glavi[`Book-${b.text}`];
+      let glava = user?.glavi[`Book-${b.text}`];
       if (glava) {
+        if (a == b.avtor) 
+          return redirect("/myBook/" + bId+"/"+glava);
         return redirect("/book/" + bId);
       }
+
       settings = user.settings ?? settings;
     }
   }
 
   const author = await uStore.getUser(b.avtor);
-  if (b.public ||a==b.avtor) {
+  if (b.public || a == b.avtor) {
     // return a;
     //console.log(uStore.collection);
 
@@ -45,7 +48,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       user: a,
       aDescr: authorDescription,
       urlForImmage: "/img/question_mark.png",
-      isAvtor: a == b.avtor,//TODO: redirect
+      isAvtor: a == b.avtor, //TODO: redirect
     };
   }
   return redirect("/");
@@ -102,12 +105,11 @@ export default function Book1() {
       </Row>
       <Row>
         <Col>
-          <a href={
-            isAvtor?
-            "/myBook/see/" + book.text+"/1"
-            :
-            "/book/" + book.text
-            }>
+          <a
+            href={
+              isAvtor ? "/myBook/see/" + book.text + "/1" : "/book/" + book.text
+            }
+          >
             <Button variant="primary">Прочети Ме</Button>
           </a>
         </Col>

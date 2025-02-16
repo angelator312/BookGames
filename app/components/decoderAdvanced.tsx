@@ -4,6 +4,7 @@ import { propertiesForColumnsWidth2 } from "~/utils/columnStyles";
 import { useState } from "react";
 import ZarcheComponent from "./ZarcheComponent";
 import { regexForAdvancedDecoder as reg } from "~/utils/regex";
+import Markdown from "react-markdown";
 
 export interface Izbori {
   broiZarcheta: number;
@@ -144,7 +145,9 @@ export function DecoderAdvanced({
           <li key={i}>
             <Row>
               <Col {...propertiesForColumnsWidth2}>
-                <p className="text-bold">{e.text ? e.text : <pre> </pre>}</p>
+                <p className="text-bold">
+                  {e.text ? <Markdown>{e.text}</Markdown> : <pre> </pre>}
+                </p>
               </Col>
               {e.izb ? (
                 <Col sm="2">
