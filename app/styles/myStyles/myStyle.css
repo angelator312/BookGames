@@ -33,9 +33,6 @@ ul {
   list-style-image: url("/img/arrow_32.png");
 }
 
-.f-white {
-  color: var(--smoke-white);
-}
 .f-primary {
   color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity));
 }
@@ -45,10 +42,10 @@ ul {
 }
 .bg-book-c {
   background-color: var(--book-c);
-  color: var(--smoke-white);
+  /* color: var(--smoke-white); */
 }
 input.inp-bl {
-  color: var(--black);
+  color: var(--black) !important;
 }
 .bg-smkW {
   background-color: var(--smoke-white);
@@ -60,12 +57,14 @@ input.inp-bl {
   background-repeat: repeat;
 }
 .bg-intro {
-  background-image: url("/img/desktopImage.jpg");
+  /* background-image: url("/img/desktopImage.jpg"); */
   background-position: 0 -10em;
   background-size: cover;
   background-repeat: repeat;
 }
-
+.book-image {
+  display: inline-block;
+}
 .mt-3r {
   margin-top: 3rem !important;
 }
@@ -86,8 +85,7 @@ hr {
   border-top: 0.5px solid #ccc;
 }
 
-
-.modal-90w{
+.modal-90w {
   width: 90% !important;
-  max-width: none !important;;
+  max-width: none !important;
 }

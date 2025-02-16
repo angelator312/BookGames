@@ -1,10 +1,4 @@
-import {
-  Col,
-  Container,
-  Dropdown,
-  DropdownButton,
-  Row,
-} from "react-bootstrap";
+import { Col, Container, Dropdown, DropdownButton, Row } from "react-bootstrap";
 import { AuthorResume } from "./userResume";
 import type { UserData } from "~/utils/User";
 import type { BookInterface } from "~/utils/textStore";
@@ -20,12 +14,12 @@ export default function BookHeader({
 }) {
   if (!e) return;
   return (
-    <Container style={{ marginTop: "1rem" }} fluid>
+    <Container fluid className="my-2">
       <Row>
-        <Col>
-          <img src="/img/book.png" alt="Book" width={60} height={60} />
+        <Col xs={2} md={1}>
+          <img src="/img/book-60.png" alt="Book" className="book-image" />
         </Col>
-        <Col xs={6}>
+        <Col xs={6} md={7}>
           <a href={`/book/intro/${e.text}`}>
             <h3 className="text-bold text-dark">{e.id}</h3>
           </a>
@@ -34,8 +28,8 @@ export default function BookHeader({
           <AuthorResume authorData={authorData} authorName={e.avtor ?? ""} />
         </Col>
         {/* <br /> */}
-        {avt ? (
-          <Col className="text-center">
+        <Col className="text-center" xs={2}>
+          {avt ? (
             <DropdownButton title="Действия" id="dropdown-basic-button">
               <Dropdown.Item
                 //method=post
@@ -52,10 +46,10 @@ export default function BookHeader({
               </Dropdown.Item>
               <Dropdown.Item href={`/delete/${e.text}/`}>Изтрий</Dropdown.Item>
             </DropdownButton>
-          </Col>
-        ) : (
-          ""
-        )}
+          ) : (
+            ""
+          )}
+        </Col>
       </Row>
     </Container>
   );

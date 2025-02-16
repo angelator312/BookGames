@@ -8,6 +8,8 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import MenuForHome from "./home.menu";
 import type { SettingsInterface, User, UserData } from "~/utils/User";
 import { Link } from "react-bootstrap-icons";
+import Title from "./title";
+import SubTitle from "./subtitle";
 
 export default function Home({
   user,
@@ -25,7 +27,7 @@ export default function Home({
   // const userId = useLoaderData<string>();
   let oshte0 = false;
   let oshte1 = false;
-  let myBooks=books[0];
+  let myBooks = books[0];
   let otherBooks = books[1];
   // useEffect(() => {
   if (books[0].length > 5) {
@@ -67,10 +69,8 @@ export default function Home({
       />
       {/* <div className="m-l-15%"> */}
       <Row>
-        <Col style={{ marginTop: "1rem" }}>
-          <h1 className="text-slate-500 font-medium logo f-book-c">
-            Книги-игри
-          </h1>
+        <Col>
+          <Title />
         </Col>
       </Row>
 
@@ -80,7 +80,13 @@ export default function Home({
         </Col>
       </Row>
       {/* </div> */}
-      <Row className="mt-5">
+
+      <Row>
+        <Col>
+          <SubTitle  />
+        </Col>
+      </Row>
+      <Row>
         <Col>
           <div className="bg-white bg-opacity-25 rounded-3 p-3">
             {myBooks.map((e, i) => (
@@ -111,9 +117,14 @@ export default function Home({
           </div>
         </Col>
       </Row>
-      <Row className="mt-5">
+      <Row>
         <Col>
           <Container fluid className="bg-white bg-opacity-25 rounded-3 p-3">
+            <Row>
+              <Col>
+                <SubTitle title="Други книги" />
+              </Col>
+            </Row>
             <Row>
               <Col>
                 <SearchComponent />
@@ -135,7 +146,7 @@ export default function Home({
                     ""
                   )}
                   {oshte1 ? (
-                    <Row>
+                    <Row className="mt-5">
                       <Col>
                         <a
                           href={

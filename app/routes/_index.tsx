@@ -48,7 +48,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     if(user)
     {
       const searchParams = new URL(request.url).searchParams;
-      const knigite = await knigi(a, searchParams.get("query"));
+      let query=searchParams.get("query");
+      const knigite = await knigi(a,query);
       return [user,knigite, user.settings??getDefaultSettings(),await getUserDatas(knigite[1])];
     }
   }
@@ -57,6 +58,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 type loaderType=[User,BookInterface[],SettingsInterface,UserData[]]|null;
 export default function IndexRoute() {
   // console.log(1);
+  
   const loader = useLoaderData<loaderType>();
   if(loader)
   {

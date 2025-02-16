@@ -16,6 +16,7 @@ import bootstrapStyles from "~/styles/bootstrap.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import stylesUrl from "~/styles/index.css";
 import MenuForHome from "~/components/home.menu";
+import Title from "~/components/title";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: bootstrapStyles },
@@ -54,7 +55,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       ];
     }
   }
-  return redirect("/login?redirectTo="+request.url);
+  return redirect("/login?redirectTo=" + request.url);
 };
 type loaderType = [User, BookInterface[], SettingsInterface, UserData[]] | null;
 export default function AllBooksRoute() {
@@ -65,18 +66,18 @@ export default function AllBooksRoute() {
   return (
     <Container fluid className="bg-intro ">
       <Row>
-        <Col style={{ marginTop: "1rem" }}>
-          <h1 className="text-slate-500 font-medium logo f-book-c">
-            Книги-игри
-          </h1>
+        <Col>
+          <Title />
         </Col>
       </Row>
 
       <Row>
         <Col>
           <MenuForHome
-          //@ts-ignore
-          user={user} settings={settings} />
+            //@ts-ignore
+            user={user}
+            settings={settings}
+          />
         </Col>
       </Row>
       <Row>

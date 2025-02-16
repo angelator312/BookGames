@@ -15,6 +15,8 @@ import globalMediumStylesUrl from "~/styles/global-medium.css";
 import globalStylesUrl from "~/styles/global.css";
 import stylesUrl from "~/styles/index.css";
 import bootstrapStyles from "~/styles/bootstrap.css";
+import Title from "~/components/title";
+import SubTitle from "~/components/subtitle";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: bootstrapStyles },
@@ -78,33 +80,40 @@ export default function AllBooksRoute() {
       {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl  space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
       {/* <div className="m-l-15%"> */}
       <Row>
-        <Col style={{ marginTop: "1rem" }}>
-          <h1 className="text-slate-500 font-medium logo f-book-c">
-            Книги-игри
-          </h1>
+        <Col>
+          <Title />
         </Col>
       </Row>
-
       <Row>
         <Col>
           <MenuForIntro />
         </Col>
       </Row>
       {/* </div> */}
-      <Row className="mt-5">
+      <Row>
+        <Col>
+          <SubTitle />
+        </Col>
+      </Row>
+      <Row>
         <Col>
           <div className="bg-white bg-opacity-25 rounded-3 p-3">
-              <a href="/newBook">
-                <Button variant="outline-primary" className="text-sm">
-                  Тук Няма Никой,Създай книга:
-                </Button>
-              </a>
+            <a href="/newBook">
+              <Button variant="outline-primary" className="text-sm">
+                Тук Няма Никой,Създай книга:
+              </Button>
+            </a>
           </div>
         </Col>
       </Row>
       <Row className="mt-5">
         <Col>
           <Container fluid className="bg-white bg-opacity-25 rounded-3 p-3">
+            <Row>
+              <Col>
+                <SubTitle title="Други книги" />
+              </Col>
+            </Row>
             <Row>
               <Col>
                 <SearchComponent />
