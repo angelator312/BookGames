@@ -1,5 +1,5 @@
 import type { ObjectId } from "mongodb";
-import { VariableCollection, VariableInterface } from "./VariableThings";
+import type { VariableCollection, VariableInterface } from "./VariableThings";
 
 export interface Turneta {
   _id?: ObjectId;
@@ -10,7 +10,7 @@ export interface Turneta {
 }
 
 export interface User {
-  _id?: ObjectId;
+  _id?: ObjectId|string;
   glavi?: any;
   user: string;
   passH: string;

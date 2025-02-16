@@ -4,9 +4,9 @@ import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Search, X } from "react-bootstrap-icons";
 
 export default function SearchComponent() {
-  const qRef = useRef();
   const [params] = useSearchParams();
-  const query = params.get("query") ?? "";
+  let query = params.get("query") ?? "";
+  let qRef = useRef<HTMLInputElement>(null);
   return (
     <Form action="/" method="get">
       <Row>
@@ -27,15 +27,16 @@ export default function SearchComponent() {
               defaultValue={query}
               ref={qRef}
             />
-            {/* <Button
-              disabled={query.length == 0}
+            <Button
               variant="outline-secondary"
               id="button-add"
-              name="clear-query"
-              onClick={() => console.log(qRef)}
+              type="submit"
+              onClick={() => {
+                if (qRef.current) qRef.current.value = "";
+              }}
             >
               <X color="black" style={{ display: "inline" }} />
-            </Button> */}
+            </Button>
           </InputGroup>
         </Col>
       </Row>

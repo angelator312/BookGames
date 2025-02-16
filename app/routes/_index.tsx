@@ -15,7 +15,7 @@ import { getUserDatas, knigi, requireUserId } from "~/utils/session.server";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import getUserStore from "~/utils/userStore";
 import { getDefaultSettings } from "~/utils/User";
-import type { User , SettingsInterface, UserData } from "~/utils/User";
+import type { User, SettingsInterface, UserData } from "~/utils/User";
 import type { BookInterface } from "~/utils/textStore";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -45,35 +45,43 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   if (typeof a === "string") {
     const user = await (await getUserStore()).getUser(a);
-    if(user)
-    {
+    if (user) {
       const searchParams = new URL(request.url).searchParams;
-      let query=searchParams.get("query");
-      const knigite = await knigi(a,query);
-      return [user,knigite, user.settings??getDefaultSettings(),await getUserDatas(knigite[1])];
+      let query = searchParams.get("query");
+      const knigite = await knigi(a, query);
+      return [
+        user,
+        knigite,
+        user.settings ?? getDefaultSettings(),
+        await getUserDatas(knigite[1]),
+      ];
     }
+  } else {
+    const searchParams = new URL(request.url).searchParams;
+    const knigite = await knigi("", searchParams.get("query"));
+    return [{}, knigite, getDefaultSettings(), await getUserDatas(knigite[1])];
   }
-  return redirect("/intro");
+  return redirect("/");
 };
-type loaderType=[User,BookInterface[],SettingsInterface,UserData[]]|null;
+type loaderType = [User, BookInterface[][], SettingsInterface, UserData[]];
 export default function IndexRoute() {
   // console.log(1);
-  
+
   const loader = useLoaderData<loaderType>();
-  if(loader)
-  {
-    var [user, books, settings,dataNotMine] = loader;
-    //console.log(books[1]);
-    
-  }
-  
+  var [user, books, settings, dataNotMine] = loader;
+
   return (
     <div>
-      {loader ? (
-        // @ts-ignore
-        <Home dataMy={user.data} dataNotMine={dataNotMine} user={user} books={books} settings={settings} />
+      {loader?.length == 4 ? (
+        <Home
+          dataMy={user.data}
+          dataNotMine={dataNotMine}
+          user={user}
+          books={books}
+          settings={settings}
+        />
       ) : (
-        <Intro />
+        <Intro books={books} dataNotMine={dataNotMine} />
       )}
     </div>
   );

@@ -1,58 +1,114 @@
-import { Link } from "@remix-run/react";
-import { Button, Container, Row } from "react-bootstrap";
+import { useSearchParams } from "@remix-run/react";
+import type { BookInterface } from "~/utils/textStore";
+// import { HydrationProvider, Server } from "react-hydration-provider";
 
-export default function Intro() {
-  //   const user = useLoaderData<string>();
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { type UserData } from "~/utils/User";
+import BookHeader from "~/components/bookHeader";
+import SearchComponent from "~/components/Search";
+import MenuForIntro from "~/components/intro.menu";
+import Title from "~/components/title";
+import SubTitle from "~/components/subtitle";
+
+export default function AllBooksRoute({books,dataNotMine}:{books:BookInterface[][],dataNotMine:UserData[]}) {
+  let oshte1 = false;
+  let otherBooks = books[1];
+  // useEffect(() => {
+
+  if (books[1].length > 5) {
+    otherBooks = books[1].slice(0, 5);
+    oshte1 = true;
+  }
+  // const userId = useLoaderData<string>();
+  // console.log(books[1], oshte1);
+
+  const [searchParams] = useSearchParams();
+  let err = searchParams.get("err");
+  const errCode = searchParams.get("errCode");
+  if (!err)
+    switch (errCode) {
+      case "1":
+        err = `Книгата не е завършена!!!`;
+        break;
+      default:
+        break;
+    }
   return (
-    // <div className="text-center bg-intro">
-    <Container className="text-center">
+    <Container fluid className="bg-intro">
+      {/* <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl  space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6"> */}
+      {/* <div className="m-l-15%"> */}
       <Row>
-        <h1 className="text-slate-500 font-medium logo f-book-c p-3 line-height-1">
-          Добре дошли във виртуалната библиотека за книги игри
-        </h1>
+        <Col>
+          <Title />
+        </Col>
       </Row>
       <Row>
-        <h3 className="text-slate-500 font-medium logo text-dark text-bold p-3">
-          Здравей Анонимен!
-        </h3>
+        <Col>
+          <MenuForIntro />
+        </Col>
+      </Row>
+      {/* </div> */}
+      <Row>
+        <Col>
+          <SubTitle />
+        </Col>
       </Row>
       <Row>
-        <span className="text-slate-500 font-medium logo text-dark text-bold">
-          Това е виртуална библиотека с книги игри!
-        </span>
+        <Col>
+          <div className="bg-white bg-opacity-25 rounded-3 p-3">
+            <a href="/newBook">
+              <Button variant="outline-primary" className="text-sm">
+                Тук Няма Никой,Създай книга:
+              </Button>
+            </a>
+          </div>
+        </Col>
       </Row>
-      <Row>
-        <span className="text-slate-500 font-medium logo text-dark text-bold">
-          За да я разгледаш, трябва да се регистрираш!
-        </span>
+      <Row className="mt-5">
+        <Col>
+          <Container fluid className="bg-white bg-opacity-25 rounded-3 p-3">
+            <Row>
+              <Col>
+                <SubTitle title="Други книги" />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <SearchComponent />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <div>
+                  {otherBooks.map((e, i) => (
+                    <Row key={i}>
+                      <Col>
+                        <BookHeader authorData={dataNotMine[i]} e={e} />
+                      </Col>
+                    </Row>
+                  ))}
+                  {otherBooks.length <= 0 ? (
+                    <h3 className="centered text-bold">Няма Резултати</h3>
+                  ) : (
+                    ""
+                  )}
+                  {oshte1 ? (
+                    <Row>
+                      <Col>
+                        <a href={"/all"}>
+                          <Button variant="outline-primary" className="text-sm">
+                            Виж всички
+                          </Button>
+                        </a>
+                      </Col>
+                    </Row>
+                  ) : null}
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </Col>
       </Row>
-      <br />
-      <br />
-      <h2>
-        <Link to="/login">
-          {/* <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium"> */}
-          <Button variant="danger">Вход </Button>
-          {/* </span> */}
-        </Link>
-        <Link
-          to="/signup"
-          className="link-clear"
-          style={{ textDecoration: "none" }}
-        >
-          {/* <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium"> */}{" "}
-          <Button variant="secondary">Регистрация </Button>
-          {/* </span> */}
-        </Link>
-        <Link
-          to="/intro"
-          className="link-clear"
-          style={{ textDecoration: "none" }}
-        >
-          {/* <span className="text-slate-500 font-medium logo text-primary p-3 logo-medium"> */}{" "}
-          <Button variant="secondary">Проба </Button>
-          {/* </span> */}
-        </Link>
-      </h2>
     </Container>
   );
 }
