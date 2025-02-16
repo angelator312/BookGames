@@ -8,14 +8,7 @@ export default function RenderText({ texts }: { texts: string[] }) {
       {texts.map((e, i) => (
         <Row key={e + i}>
           <Col {...propertiesForColumnsWidth}>
-            {e.startsWith("image:") ? (
-              <img src={"/getImage/" + e.split(":")[1]} alt="any" />
-            ) : (
-              <>
-                <br />
-                <ReactMarkdown>{e}</ReactMarkdown>
-              </>
-            )}
+            <ReactMarkdown>{e}</ReactMarkdown>
           </Col>
         </Row>
       ))}

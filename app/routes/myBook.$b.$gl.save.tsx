@@ -9,11 +9,15 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const glava = params.gl;
   const book = params.b;
   if (!glava || Number.isNaN(parseInt(glava)))
-    return redirect(`/myBook/${book}/1`);
+  {
+
+    return false;
+  }
   if(!text2)
     text2="=>(Глава "+(1+ parseInt(glava) )+")[Следваща]"
   if (!text1 && !text2) {
-    return redirect(`/myBook/${book}/${glava}?errCode=1`);
+    return false;
+    // return redirect(`/myBook/${book}/${glava}?errCode=1`);
   }
   // let b = await getGorB("book");
   // console.log(b);
@@ -31,7 +35,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
     text2.toString() ?? ""
   );
 
-  return redirect(`/myBook/${book}/${glava}?feedCode=1`);
+  return true;
+  // return redirect(`/myBook/${book}/${glava}?feedCode=1`);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const glava = params.gl;

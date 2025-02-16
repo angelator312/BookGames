@@ -3,7 +3,6 @@ import { Decoder } from "./decoder";
 import { DecoderAdvanced } from "./decoderAdvanced";
 import { compileToString } from "~/utils/User";
 // const regImg = /=>\[(image:.*?)\]/gm;
-import { regexForImage as regImg } from "~/utils/regex";
 import RenderText from "./renderText";
 import RenderTextWithDecoder from "./renderText2";
 import type { VariableInterface } from "~/utils/VariableThings";
@@ -32,17 +31,7 @@ export default function Text({
   furst2Lines[0] = compileToStringM(furst2Lines[0]);
   furst2Lines[1] = compileToStringM(furst2Lines[1]);
   textLines = textLines.map((e) => compileToStringM(e));
-  let textsPlImage: string[] = [];
   // console.log(furst2Lines);
-
-  furst2Lines[1].split(regImg).forEach((line) => {
-    textsPlImage.push(line);
-  });
-  textLines.forEach((e) => {
-    for (const z of e.split(regImg)) {
-      textsPlImage.push(z);
-    }
-  });
 
   text2 = compileToStringM(text2);
   return (
@@ -60,7 +49,7 @@ export default function Text({
         </Col>
       </Row>
 
-      <RenderText texts={textsPlImage} />
+      <RenderText texts={textLines} />
       <Row>
         <Col>
           {!flag1 ? (

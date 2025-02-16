@@ -13,7 +13,6 @@ import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import EditText from "~/components/editText";
 import NavYesOrNo from "~/components/navbarYes";
 import Book from "~/components/book";
-import FormComponent from "~/components/formComp";
 import getUserStore from "~/utils/userStore";
 import type { User } from "~/utils/User";
 import BookSettingsComponent from "~/components/BookSettingsComponent";
@@ -225,8 +224,8 @@ export default function Book1() {
 
             {/* </Button> */}
             <Tab.Pane eventKey="editAndPreview" title="Редактирай">
-              <Container fluid>
-                <Row>
+              <Container fluid className="h-100">
+                <Row className="mt-3">
                   <Col>
                     <EditText
                       text={text}
@@ -239,7 +238,7 @@ export default function Book1() {
                       key={gl}
                     />
                   </Col>
-                  <Col>
+                  <Col style={{height:"80vh",overflow:"scroll"}}>
                     <Book
                       url={`/myBook/${bUrl}`}
                       title={b.id ?? "Книга " + bUrl}
@@ -260,25 +259,9 @@ export default function Book1() {
                   </Col>
                 </Row>
                 <Row>
-                  <Col sm="2"></Col>
-                  <Col sm="6">
-                    <FormComponent
-                      to="/"
-                      textForSubmit="Към главната страница"
-                      method="get"
-                      submitVariant="secondary"
-                    />
-                  </Col>
+
                   <Col>
-                    <FormComponent
-                      textsHidden={[
-                        text.replace(/\r/gm, "") ?? "a",
-                        text2.replace(/\r/gm, "") ?? "a",
-                      ]}
-                      to={`/myBook/${bUrl}/${gl}/save`}
-                      textForSubmit="Запази промените"
-                      submitVariant="danger"
-                    />
+                    
                   </Col>
                 </Row>
               </Container>

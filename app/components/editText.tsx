@@ -6,9 +6,10 @@ import {
   Dropdown,
   DropdownButton,
   Row,
+  Spinner,
 } from "react-bootstrap";
 import { Editor, type OnMount } from "@monaco-editor/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { editor } from "monaco-editor";
 import { ModalInsertChapterSimple } from "./ModalInsertChapterSimple";
 import { ModalInsertChapterSimpleWithScoreChange } from "./ModalInsertChapterSimpleWithScoreChange";
@@ -71,8 +72,9 @@ export default function EditText({
     insertText(`=>(Глава ${insertChapter})[${text ?? "AAAA"}]`);
     return setShowInsertChapter(false);
   }
-  function handleInsertImage(insertID: string) {
-    insertText(`=>[image:${insertID}]`);
+  function handleInsertImage(insertID: string,name?: string) {
+    if(!name)name="";
+    insertText(`![${name}](/getImage/${insertID} "${name}")`);
     return setShowInsertImage(false);
   }
   function handleInsertChapter2(
@@ -91,17 +93,54 @@ export default function EditText({
   const handleShowInsertChapter = () => setShowInsertChapter(true);
   const handleShowInsertImage = () => setShowInsertImage(true);
   const handleShowInsertChapter2 = () => setShowInsertChapter2(true);
+  const [saving, setSaving] = useState(false);
+  useEffect(()=>
+  {
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.key === "s") {
+        e.preventDefault(); // Prevent the Save dialog from opening
+        console.log("CTRL + S");
+        zapazi();
+      }
+    });
+  },[]);
+  async function zapazi() {
+    setSaving(true);
+    const formData = new FormData();
+    formData.append("text1", text);
+    formData.append("text2", text2);
+
+    await fetch(`/myBook/${bUrl}/${glava}/save`, {
+      method: "POST",
+      body: formData,
+    });
+    setSaving(false);
+  }
   return (
     <Container fluid>
       <Row>
         <Col>
           <ButtonGroup>
             {/* <Button onClick={() => setText("")}>Изчисти</Button> */}
+            {/* <FormComponent
+              textsHidden={[
+                text.replace(/\r/gm, "") ?? "a",
+                text2.replace(/\r/gm, "") ?? "a",
+                ]}
+              to={`/myBook/${bUrl}/${glava}/save`}
+              textForSubmit="Запази промените"
+              submitVariant="danger"
+            /> */}
             <Button
-              variant="secondary"
-              onClick={() => window.open("/helpLanguage")}
+              variant="success"
+              onClick={() =>zapazi()}
             >
-              Помощ{" "}
+              {saving ? (
+                <Spinner animation="border" role="status" size="sm">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              ) : null}
+              Запази{" "}
             </Button>
             <DropdownButton
               as={ButtonGroup}
@@ -118,6 +157,12 @@ export default function EditText({
                 На Картинка
               </Dropdown.Item>
             </DropdownButton>
+            <Button
+              variant="secondary"
+              onClick={() => window.open("/helpLanguage")}
+            >
+              Помощ{" "}
+            </Button>
           </ButtonGroup>
         </Col>
       </Row>
@@ -126,35 +171,26 @@ export default function EditText({
           <br />
         </Col>
       </Row>
-      <Editor
-        options={{
-          unicodeHighlight: {
-            ambiguousCharacters: false,
-          },
-        }}
-        onMount={editorMount}
-        height="20vh"
-        defaultLanguage="bg"
-        onChange={handleEditorChange}
-        // name="text"
-        // placeholder="Здравей,Човече"
-        defaultValue={
-          (text == "" ? "Здравей,Човече" : text) + "\n---\n" + text2
-        }
-      />
       <Row>
-        <Col></Col>
+        <Col>
+          <Editor
+            options={{
+              unicodeHighlight: {
+                ambiguousCharacters: false,
+              },
+            }}
+            onMount={editorMount}
+            height="74vh"
+            defaultLanguage="bg"
+            onChange={handleEditorChange}
+            // name="text"
+            // placeholder="Здравей,Човече"
+            defaultValue={
+              (text == "" ? "Здравей,Човече" : text) + "\n---\n" + text2
+            }
+          />
+        </Col>
       </Row>
-      <p>
-        изборите са след --- <br />
-        Всичко е описано в Помощ и нещата за вмъкване се вмъкват чрез бутона
-        <br />
-        Ако искате да ви е по-лесно редактирайте в уголемен прозорец
-        <br />
-        Поддържаме{" "}
-        <a href="s" onClick={()=>window.open("https://www.markdownguide.org/basic-syntax/")}>Markdown</a>
-        <br />
-      </p>
 
       <br />
       <ModalInsertChapterSimple
