@@ -5,7 +5,6 @@ import { useState } from "react";
 import ZarcheComponent from "./ZarcheComponent";
 import { regexForAdvancedDecoder as reg } from "~/utils/regex";
 import Markdown from "react-markdown";
-import { parse } from "path";
 
 export interface Izbori {
   broiZarcheta: number;
@@ -36,20 +35,33 @@ export function DecoderAdvanced({
   if (!text2) return <></>;
 
   const tM = [...text.matchAll(reg)];
+  let broiZarcheta = 0;
   let arr: { izb: Izbor; text: string }[] = tM.map((m) => {
-    
+    let zars:number[]=[];
+    let disabled = false;
+    if (m[4]) {
+      disabled = true;
+      let e=0;
+      zars=m[4]?.split(",").map((m) => {
+        e=parseInt(m, 10);
+        if(zarValue==e)
+          disabled=false;
+        broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
+        return e;
+      });
+    }
     return {
       text: m[1],
       izb: {
         isText: false,
         glava: parseInt(m[2], 10),
-        zar: m[4]?.split(",").map((m) => parseInt(m, 10)),
-        scoreChange: parseInt(m[3]??"0", 10),
+        zar: zars,
+        scoreChange: parseInt(m[3] ?? "0", 10),
         text: m[5],
+        disabled,
       },
     };
   });
- let broiZarcheta=0;
   // console.log(text2Lines);
   // console.log(a);
   // console.log(text2Lines);

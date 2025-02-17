@@ -14,6 +14,7 @@ import type { editor } from "monaco-editor";
 import { ModalInsertChapterSimple } from "./ModalInsertChapterSimple";
 import { ModalInsertChapterSimpleWithScoreChange } from "./ModalInsertChapterSimpleWithScoreChange";
 import GetImagesModal from "./getImages";
+import { pomoshti } from "~/helps/pomoshti";
 export default function EditText({
   text,
   text2,
@@ -52,6 +53,23 @@ export default function EditText({
       monacoInstance.executeEdits("my-source", [op]);
     }
   };
+  const setEntireEditor = (text: string) => {
+    if (monacoInstance) {
+      const id = { major: 1, minor: 1 };
+      const op = {
+        identifier: id,
+        range: {
+          startLineNumber: 1,
+          startColumn: 1,
+          endLineNumber: 100000,
+          endColumn: 10000000,
+        },
+        text,
+        forceMoveMarkers: true,
+      };
+      monacoInstance.executeEdits("my-source", [op]);
+    }
+  };
 
   const editorMount: OnMount = (editorL: editor.IStandaloneCodeEditor) => {
     setMonacoInstance(editorL);
@@ -72,8 +90,8 @@ export default function EditText({
     insertText(`=>(Глава ${insertChapter})[${text ?? "AAAA"}]`);
     return setShowInsertChapter(false);
   }
-  function handleInsertImage(insertID: string,name?: string) {
-    if(!name)name="";
+  function handleInsertImage(insertID: string, name?: string) {
+    if (!name) name = "";
     insertText(`![${name}](/getImage/${insertID} "${name}")`);
     return setShowInsertImage(false);
   }
@@ -94,8 +112,7 @@ export default function EditText({
   const handleShowInsertImage = () => setShowInsertImage(true);
   const handleShowInsertChapter2 = () => setShowInsertChapter2(true);
   const [saving, setSaving] = useState(false);
-  useEffect(()=>
-  {
+  useEffect(() => {
     document.addEventListener("keydown", (e) => {
       if (e.ctrlKey && e.key === "s") {
         e.preventDefault(); // Prevent the Save dialog from opening
@@ -103,7 +120,7 @@ export default function EditText({
         zapazi();
       }
     });
-  },[]);
+  }, []);
   async function zapazi() {
     setSaving(true);
     const formData = new FormData();
@@ -116,6 +133,7 @@ export default function EditText({
     });
     setSaving(false);
   }
+
   return (
     <Container fluid>
       <Row>
@@ -131,10 +149,7 @@ export default function EditText({
               textForSubmit="Запази промените"
               submitVariant="danger"
             /> */}
-            <Button
-              variant="success"
-              onClick={() =>zapazi()}
-            >
+            <Button variant="success" onClick={() => zapazi()}>
               {saving ? (
                 <Spinner animation="border" role="status" size="sm">
                   <span className="visually-hidden">Loading...</span>
@@ -157,12 +172,27 @@ export default function EditText({
                 На Картинка
               </Dropdown.Item>
             </DropdownButton>
-            <Button
+            <DropdownButton
+              as={ButtonGroup}
               variant="secondary"
-              onClick={() => window.open("/helpLanguage")}
+              title="Помощ"
+              id="bg-nested-dropdown"
             >
-              Помощ{" "}
-            </Button>
+              <Dropdown.Item
+                eventKey="1"
+                onClick={() => setEntireEditor(pomoshti["Примерна Глава"])}
+              >
+                Примерна глава(всичко което сте написали в главата ще бъде
+                махнато)
+              </Dropdown.Item>
+
+              <Dropdown.Item eventKey="2" onClick={()=>window.open("/helpLanguage")}>
+                Документация на езика
+              </Dropdown.Item>
+              {/* <Dropdown.Item eventKey="2" onClick={handleShowInsertImage}>
+                На Картинка
+              </Dropdown.Item> */}
+            </DropdownButton>
           </ButtonGroup>
         </Col>
       </Row>
