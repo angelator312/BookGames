@@ -2,7 +2,7 @@ import { useLoaderData } from "@remix-run/react";
 // import menu from "~/helps/menu.png";
 import Text from "./text";
 import FormComponent from "./formComp";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
 import MenuForHome from "./home.menu";
@@ -10,6 +10,7 @@ import type { User } from "~/utils/User";
 import { getDefaultSettings, getDefaultUser } from "~/utils/User";
 import type { VariableInterface } from "~/utils/VariableThings";
 import { getDefaultVariable } from "~/utils/VariableThings";
+import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 
 interface Params {
   text: string;
@@ -54,8 +55,6 @@ export default function Book({
   // console.log(flag,text,glava,text2);
 
   let textLines = text.replace(/\r/gm, "").split("\n\n");
-  let furst2Lines = [textLines[0], textLines[1] ?? ""];
-  textLines = textLines.slice(2);
   const [timeIn] = useState(Date.now());
   useEffect(() => {
     // const handleUnload = async() => {
@@ -77,53 +76,56 @@ export default function Book({
 
   // const {book}= useLoaderData<string>();
   return (
-    <div className="text-center space-y-2 sm:text-left bg-i">
-      <h1 className="p-1 text-dark text-center">{title} </h1>
-      <div className="space-y-0.5 bg-i">
-        <MenuForHome
-          //@ts-ignore
-          user={user}
-          settings={user.settings ??getDefaultSettings()}
-        />
-        <Text
-          variables={variables ?? [getDefaultVariable()]}
-          furst2Lines={furst2Lines}
-          glava={glava}
-          url={url}
-          textLines={textLines}
-          text2Lines={text2}
-          flag1={!flag}
-        />
-        {kr ? (
-          <div className="m-l-35%">
-            <Row>
-              {/* <Col>
+    <Container className="text-center space-y-2 sm:text-left bg-i">
+      <Row>
+        <Col {...propertiesForColumnsWidth}>
+          <h1 className="p-1 text-dark text-center">{title} </h1>
+        </Col>
+      </Row>
+      <MenuForHome
+        //@ts-ignore
+        user={user}
+        settings={user.settings ?? getDefaultSettings()}
+      />
+      <Row>
+        <Col>
+          <Text
+            variables={variables ?? [getDefaultVariable()]}
+            glava={glava}
+            url={url}
+            textLines={textLines}
+            text2Lines={text2}
+            flag1={!flag}
+          />
+        </Col>
+      </Row>
+      {kr ? (
+        <Row>
+          {/* <Col>
                 <FormComponent
                   submitVariant="secondary"
                   to={`${url}/${glava}/idea`}
                   textForSubmit="Коментирай!"
                 />
               </Col> */}
-              {/* <button type="submit" className="logo ">
+          {/* <button type="submit" className="logo ">
                 Коментирай!
               </button>
             </form> */}
-              <Col>
-                <FormComponent
-                  submitVariant="danger"
-                  to={"/analyses/timeForUser"}
-                  method="GET"
-                  textForSubmit="Начало"
-                  namesHidden={["time", "user", "book"]}
-                  textsHidden={[timeIn.toString(), user.user, book.text]}
-                />
-              </Col>
-            </Row>
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-    </div>
+          <Col>
+            <FormComponent
+              submitVariant="danger"
+              to={"/analyses/timeForUser"}
+              method="GET"
+              textForSubmit="Начало"
+              namesHidden={["time", "user", "book"]}
+              textsHidden={[timeIn.toString(), user.user, book.text]}
+            />
+          </Col>
+        </Row>
+      ) : (
+        ""
+      )}
+    </Container>
   );
 }

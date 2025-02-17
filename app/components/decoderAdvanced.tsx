@@ -62,12 +62,9 @@ export function DecoderAdvanced({
       },
     };
   });
-  // console.log(text2Lines);
-  // console.log(a);
-  // console.log(text2Lines);
-  // console.log(text2);
-  // console.log(text);
-  // console.log(arr);
+  broiZarcheta=Math.floor(broiZarcheta);
+  console.log(broiZarcheta);
+  
   return (
     <>
       {broiZarcheta ? (

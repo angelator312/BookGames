@@ -4,12 +4,11 @@ import { DecoderAdvanced } from "./decoderAdvanced";
 import { compileToString } from "~/utils/User";
 // const regImg = /=>\[(image:.*?)\]/gm;
 import RenderText from "./renderText";
-import RenderTextWithDecoder from "./renderText2";
 import type { VariableInterface } from "~/utils/VariableThings";
+import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 
 export default function Text({
   glava,
-  furst2Lines,
   textLines,
   text2Lines: text2,
   flag1 = true,
@@ -17,7 +16,6 @@ export default function Text({
   variables = {},
 }: {
   glava: string | number;
-  furst2Lines: string[];
   textLines: string[];
   text2Lines: string;
   flag1?: boolean;
@@ -28,8 +26,7 @@ export default function Text({
   function compileToStringM(a: string) {
     return compileToString(a, variables);
   }
-  furst2Lines[0] = compileToStringM(furst2Lines[0]);
-  furst2Lines[1] = compileToStringM(furst2Lines[1]);
+
   textLines = textLines.map((e) => compileToStringM(e));
   // console.log(furst2Lines);
 
@@ -37,19 +34,15 @@ export default function Text({
   return (
     <Container className="bg-i p-4" style={{ textIndent: 20 }}>
       <Row>
-        <Col>
+        <Col  {...propertiesForColumnsWidth}>
           <h2 className="">Глава {glava} </h2>
         </Col>
       </Row>
       <Row>
         <Col>
-          <h2 className="p-3">
-            <RenderTextWithDecoder texts={furst2Lines[0]} />
-          </h2>
+          <RenderText texts={textLines} />
         </Col>
       </Row>
-
-      <RenderText texts={textLines} />
       <Row>
         <Col>
           {!flag1 ? (
