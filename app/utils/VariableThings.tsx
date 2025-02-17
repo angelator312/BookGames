@@ -18,6 +18,6 @@ export function getDefaultVariable(): VariableInterface {
 }
 export function getDefaultVariables(): VariableCollection {
   return {
-    rezultat:getDefaultVariable(),
+    резултат:getDefaultVariable(),
   }
 }

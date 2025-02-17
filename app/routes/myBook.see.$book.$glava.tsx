@@ -45,6 +45,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
           name: key,
           value: num,
         };
+      console.log(key, values[key]);
     }
   });
 
@@ -56,7 +57,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const outUrl =
     request.url.substring(0, request.url.lastIndexOf("/")) + "/" + glava;
   console.log();
-  
+
   return redirect(outUrl);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
