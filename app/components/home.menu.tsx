@@ -6,7 +6,9 @@ import type { SettingsInterface, User } from "~/utils/User";
 function MenuForHome({
   settings,
   user,
+  logout = true,
 }: {
+  logout?: boolean;
   settings: SettingsInterface;
   user: User;
 }) {
@@ -44,12 +46,12 @@ function MenuForHome({
           className="offcanvas-without-linkProblems"
         >
           <Row>
-            <Col style={{ marginTop: "1rem" }}>
+            <Col className="mt-2">
               <h3 className="font-medium text-dark">Здравей {user.user}</h3>
             </Col>
           </Row>{" "}
           <Row>
-            <Col style={{ marginTop: "1rem" }}>
+            <Col className="mt-2">
               <a href="/" className="">
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Начало
@@ -58,7 +60,7 @@ function MenuForHome({
             </Col>
           </Row>
           <Row>
-            <Col style={{ marginTop: "1rem" }}>
+            <Col className="mt-2">
               <a href="/Profil" className="">
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Профил
@@ -68,7 +70,7 @@ function MenuForHome({
           </Row>
           {/* {settings.tutorial ? (
             <Row>
-              <Col style={{ marginTop: "1rem" }}>
+              <Col className="mt-2">
                 <a href="/profil/stopTutorial" className="">
                   <span className="text-slate-500 font-medium logo  text-primary">
                     Спри подсказките
@@ -80,7 +82,7 @@ function MenuForHome({
             ""
           )} */}
           <Row>
-            <Col style={{ marginTop: "1rem" }}>
+            <Col className="mt-2">
               <a href="/newBook" className="">
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Нова книга
@@ -89,7 +91,7 @@ function MenuForHome({
             </Col>
           </Row>
           <Row>
-            <Col style={{ marginTop: "1rem" }}>
+            <Col className="mt-2">
               <a
                 href="https://github.com/angelator312/Systezanie-1"
                 className=""
@@ -102,7 +104,7 @@ function MenuForHome({
           </Row>
           {user.admin ? (
             <Row>
-              <Col style={{ marginTop: "1rem" }}>
+              <Col className="mt-2">
                 <a href="/admin" className="">
                   <span className="text-slate-500 font-medium logo  text-primary">
                     Администрация
@@ -114,15 +116,27 @@ function MenuForHome({
             ""
           )}
           {/* Винаги на края е това↓↓↓ */}
-          <Row>
-            <Col style={{ marginTop: "1rem" }}>
-              <a color="red" href="/logout" className="">
-                <span className="text-slate-500 font-medium logo text-primary">
-                  Излез от профила
-                </span>
-              </a>
-            </Col>
-          </Row>
+          {logout ? (
+            <Row>
+              <Col className="mt-2">
+                <a color="red" href="/logout" className="">
+                  <span className="text-slate-500 font-medium logo text-primary">
+                    Излез от профила
+                  </span>
+                </a>
+              </Col>
+            </Row>
+          ) : (
+            <Row>
+              <Col className="mt-2">
+                <a color="red" href="/signup" className="">
+                  <span className="text-slate-500 font-medium logo text-primary">
+                    Регистрация
+                  </span>
+                </a>
+              </Col>
+            </Row>
+          )}
         </Offcanvas.Body>
       </Offcanvas>
     </div>

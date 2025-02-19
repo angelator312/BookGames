@@ -76,14 +76,18 @@ export default function Home({
 
       <Row>
         <Col>
-          <MenuForHome user={user} settings={settings} />
+          <MenuForHome
+            user={user}
+            settings={settings}
+            logout={user.user == "Анонимен" ? false : true}
+          />
         </Col>
       </Row>
       {/* </div> */}
 
       <Row>
         <Col>
-          <SubTitle  />
+          <SubTitle />
         </Col>
       </Row>
       <Row>
@@ -98,7 +102,7 @@ export default function Home({
             ))}
             {myBooks.length == 0 ? (
               <a href="/newBook">
-                <Button variant="primary" className="text-sm">
+                <Button variant="outline-primary" className="text-sm">
                   Тук Няма Никой,Създай книга:
                 </Button>
               </a>

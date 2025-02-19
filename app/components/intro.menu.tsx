@@ -25,7 +25,8 @@ function MenuForIntro() {
         className="offcanvas-without-linkProblems"
         show={show}
         onHide={handleClose}
-        style={{ width: "45%" }}
+        style={{ width: "15%" }}
+        placement="end"
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title className="text-slate-500 font-medium logo f-book-c">
@@ -37,7 +38,7 @@ function MenuForIntro() {
           className="offcanvas-without-linkProblems"
         >
           <Row>
-            <Col style={{ marginTop: "1rem" }}>
+            <Col >
               <h3 className="font-medium text-dark">Здравей Анонимен </h3>
             </Col>
           </Row>{" "}

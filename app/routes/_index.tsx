@@ -5,7 +5,6 @@ import {
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Home from "~/components/home";
-import Intro from "~/components/intro";
 import globalLargeStylesUrl from "~/styles/global-large.css";
 import globalMediumStylesUrl from "~/styles/global-medium.css";
 import globalStylesUrl from "~/styles/global.css";
@@ -59,7 +58,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   } else {
     const searchParams = new URL(request.url).searchParams;
     const knigite = await knigi("", searchParams.get("query"));
-    return [{}, knigite, getDefaultSettings(), await getUserDatas(knigite[1])];
+    return [{user:"Анонимен"}, knigite, getDefaultSettings(), await getUserDatas(knigite[1])];
   }
   return redirect("/");
 };
@@ -68,21 +67,17 @@ export default function IndexRoute() {
   // console.log(1);
 
   const loader = useLoaderData<loaderType>();
+  // console.log(loader);
+
   var [user, books, settings, dataNotMine] = loader;
 
   return (
-    <div>
-      {loader?.length == 4 ? (
-        <Home
-          dataMy={user.data}
-          dataNotMine={dataNotMine}
-          user={user}
-          books={books}
-          settings={settings}
-        />
-      ) : (
-        <Intro books={books} dataNotMine={dataNotMine} />
-      )}
-    </div>
+    <Home
+      dataMy={user.data}
+      dataNotMine={dataNotMine}
+      user={user}
+      books={books}
+      settings={settings}
+    />
   );
 }

@@ -51,7 +51,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       ];
     }
   }
-  return redirect("/");
+  return redirect("/login?redirectTo="+request.url);
 };
 type loaderType = [User, SettingsInterface, UserData, MiniInterface[]];
 export default function Settings() {
