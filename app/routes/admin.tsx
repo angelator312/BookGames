@@ -57,7 +57,13 @@ export default function AdminRoute() {
           </Form>
         </Col>
       </Row>
-
+      <Row>
+        <Col>
+          <Form method="POST" action="/admin/db/updateGp">
+            <Form.Control type="submit" value={"Update Голямото приключение"} />
+          </Form>
+        </Col>
+      </Row>
       <MenuForHome
         //@ts-ignore
         user={user}
