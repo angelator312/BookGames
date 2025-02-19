@@ -76,12 +76,7 @@ export default function Book({
 
   // const {book}= useLoaderData<string>();
   return (
-    <Container className="text-center space-y-2 sm:text-left bg-i">
-      <Row>
-        <Col {...propertiesForColumnsWidth}>
-          <h1 className="p-1 text-dark text-center">{title} </h1>
-        </Col>
-      </Row>
+    <Container className="space-y-2 sm:text-left bg-i">
       <MenuForHome
         //@ts-ignore
         user={user}
@@ -96,6 +91,7 @@ export default function Book({
             textLines={textLines}
             text2Lines={text2}
             flag1={!flag}
+            title={title}
           />
         </Col>
       </Row>

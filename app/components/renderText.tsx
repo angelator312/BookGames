@@ -4,7 +4,7 @@ import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 
 export default function RenderText({ texts }: { texts: string[] }) {
   return (
-    <div>
+    <div className="chapter-text">
       {texts.map((e, i) => (
         <Row key={e + i}>
           <Col {...propertiesForColumnsWidth}>

@@ -14,6 +14,7 @@ export default function Text({
   flag1 = true,
   url,
   variables = {},
+  title,
 }: {
   glava: string | number;
   textLines: string[];
@@ -21,6 +22,7 @@ export default function Text({
   flag1?: boolean;
   url: string;
   variables: { [key: string]: VariableInterface };
+  title:string;
 }) {
   // console.log("vars:", variables);
   function compileToStringM(a: string) {
@@ -34,8 +36,11 @@ export default function Text({
   return (
     <Container className="bg-i p-4" style={{ textIndent: 20 }}>
       <Row>
-        <Col  {...propertiesForColumnsWidth}>
-          <h2 className="">Глава {glava} </h2>
+        <Col {...propertiesForColumnsWidth}>
+          <h1 className="p-1 text-dark text-center">{title} </h1>
+        </Col>
+        <Col {...propertiesForColumnsWidth}>
+          <h2 className="text-center">Глава {glava} </h2>
         </Col>
       </Row>
       <Row>

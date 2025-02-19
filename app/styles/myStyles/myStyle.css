@@ -89,3 +89,30 @@ hr {
   width: 90% !important;
   max-width: none !important;
 }
+
+.chapter-text h1 {
+  text-align: center !important;
+}
+
+.chapter-text h2 {
+  text-align: center !important;
+}
+.chapter-text h3 {
+  text-align: center !important;
+}
+.chapter-text h4 {
+  text-align: center !important;
+}
+.chapter-text h5 {
+  text-align: center !important;
+}
+.chapter-text h6 {
+  text-align: center !important;
+}
+
+/* .chapter-text p img {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display:inline-block !important;
+} */
