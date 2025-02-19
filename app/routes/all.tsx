@@ -2,9 +2,6 @@ import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getDefaultSettings } from "http2";
-import { Row, Col, Container } from "react-bootstrap";
-import BookHeader from "~/components/bookHeader";
-import SearchComponent from "~/components/Search";
 import { requireUserId, knigi, getUserDatas } from "~/utils/session.server";
 import type { BookInterface } from "~/utils/textStore";
 import type { User, SettingsInterface, UserData } from "~/utils/User";
@@ -15,6 +12,8 @@ import globalStylesUrl from "~/styles/global.css";
 import bootstrapStyles from "~/styles/bootstrap.css";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import stylesUrl from "~/styles/index.css";
+import RenderBooks from "~/components/renderBooks";
+import { Container, Row, Col } from "react-bootstrap";
 import MenuForHome from "~/components/home.menu";
 import Title from "~/components/title";
 export const links: LinksFunction = () => [
@@ -63,6 +62,7 @@ export default function AllBooksRoute() {
   if (loader) {
     var [user, books, settings, dataNotMine] = loader;
   } else return;
+
   return (
     <Container fluid className="bg-intro ">
       <Row>
@@ -82,33 +82,57 @@ export default function AllBooksRoute() {
       </Row>
       <Row>
         <Col>
-          <Container fluid className=" bg-opacity-25 rounded-3 p-3">
-            <Row>
-              <Col>
-                <SearchComponent />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <div>
-                  {books.map((e, i) => (
-                    <Row key={i}>
-                      <Col>
-                        <BookHeader authorData={dataNotMine[i]} e={e} />
-                      </Col>
-                    </Row>
-                  ))}
-                  {books.length <= 0 ? (
-                    <h3 className="centered text-bold">Няма Резултати</h3>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </Col>
-            </Row>
-          </Container>
+          <RenderBooks books={books} dataInThem={dataNotMine} />
         </Col>
       </Row>
     </Container>
   );
+  // return (
+  //   <Container fluid className="bg-intro ">
+  //     <Row>
+  //       <Col>
+  //         <Title />
+  //       </Col>
+  //     </Row>
+
+  //     <Row>
+  //       <Col>
+  //         <MenuForHome
+  //           //@ts-ignore
+  //           user={user}
+  //           settings={settings}
+  //         />
+  //       </Col>
+  //     </Row>
+  //     <Row>
+  //       <Col>
+  //         <Container fluid className=" bg-opacity-25 rounded-3 p-3">
+  //           <Row>
+  //             <Col>
+  //               <SearchComponent />
+  //             </Col>
+  //           </Row>
+  //           <Row>
+  //             <Col>
+  //               <div>
+  //                 {books.map((e, i) => (
+  //                   <Row key={i}>
+  //                     <Col>
+  //                       <BookHeader authorData={dataNotMine[i]} e={e} />
+  //                     </Col>
+  //                   </Row>
+  //                 ))}
+  //                 {books.length <= 0 ? (
+  //                   <h3 className="centered text-bold">Няма Резултати</h3>
+  //                 ) : (
+  //                   ""
+  //                 )}
+  //               </div>
+  //             </Col>
+  //           </Row>
+  //         </Container>
+  //       </Col>
+  //     </Row>
+  //   </Container>
+  // );
 }

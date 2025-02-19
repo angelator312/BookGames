@@ -1,4 +1,4 @@
-import { useSearchParams } from "@remix-run/react";
+import { useLocation, useSearchParams } from "@remix-run/react";
 import { useRef } from "react";
 import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Search, X } from "react-bootstrap-icons";
@@ -7,8 +7,9 @@ export default function SearchComponent() {
   const [params] = useSearchParams();
   let query = params.get("query") ?? "";
   let qRef = useRef<HTMLInputElement>(null);
+  const location=useLocation();
   return (
-    <Form action="/" method="get">
+    <Form action={location.pathname} method="get">
       <Row>
         <Col>
           <InputGroup className="mb-3">
