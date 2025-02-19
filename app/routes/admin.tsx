@@ -4,8 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import MenuForHome from "~/components/home.menu";
 import { requireUserId } from "~/utils/session.server";
-import type { SettingsInterface } from "~/utils/User";
-import type { User } from "~/utils/User";
+import type { SettingsInterface, User } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
 export const action = async ({ request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
@@ -26,7 +25,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   if (typeof a === "string") {
     const uStore = await getUserStore();
     const user = await uStore.getUser(a);
-    if (user&&Object.hasOwn(user,"admin"))
+    if (user && Object.hasOwn(user, "admin"))
       if (user.admin == true) {
         return [user, user.settings ?? uStore.getDefaultSettings()];
       }
@@ -36,7 +35,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 type loaderType = [User, SettingsInterface];
 export default function AdminRoute() {
-
   const [user, settings] = useLoaderData<loaderType>();
   return (
     <Container>
