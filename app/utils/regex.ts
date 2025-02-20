@@ -1,5 +1,6 @@
 export const regexForImage = /=>\[(image:.*?)\]/gm;
 
+export const isEmptyLine = /\n\s*\n/g;
 export const regexForAdvancedDecoder =
   /(.*?)\s*=>\s*\(Глава (\d+)\)\s*(?:\(резултат (.*?)\))?\s*(?:\(на зар ([\d,]+)\))?\s*\[([^\]]+)\]/gm;
 

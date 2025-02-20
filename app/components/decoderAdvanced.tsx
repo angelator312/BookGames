@@ -3,7 +3,7 @@ import IzborComponent from "./IzborComponent";
 import { propertiesForColumnsWidth2 } from "~/utils/columnStyles";
 import { useState } from "react";
 import ZarcheComponent from "./ZarcheComponent";
-import { regexForAdvancedDecoder as reg } from "~/utils/regex";
+import { isEmptyLine, regexForAdvancedDecoder as reg } from "~/utils/regex";
 import Markdown from "react-markdown";
 
 function matchAll(str: string): Array<Izbor | string> {
@@ -22,10 +22,20 @@ function matchAll(str: string): Array<Izbor | string> {
       });
     }
     if (reg.lastIndex > 0) {
-      let sbstr = str
-        .substring(predLastIndex, reg.lastIndex - m[0].length)
-        .trim();
-      if (sbstr) out.push(sbstr);
+      let sbstr = str.substring(predLastIndex, reg.lastIndex - m[0].length);
+
+      if (sbstr.match(isEmptyLine)) {
+        let arr = sbstr.split(isEmptyLine);
+        // console.log(arr);
+        arr.forEach((e) => {
+          if (e.trim()) {
+            out.push(e.trim());
+          } else out.push("\n");
+        });
+      } else {
+        sbstr = sbstr.trim();
+        if (sbstr) out.push(sbstr);
+      }
       predLastIndex = reg.lastIndex;
     }
     out.push(m[1]);
@@ -77,7 +87,6 @@ export function DecoderAdvanced({
   let broiZarcheta = 0;
   let arr2 = matchAll(text);
   // console.log(arr2);
-
   let arr: { izb?: Izbor; text: string }[] = [];
   for (let i = 0; i < arr2.length; i++) {
     let m = arr2[i];
@@ -92,7 +101,7 @@ export function DecoderAdvanced({
       let disabled = false;
 
       if (zars.length > 0) {
-        console.log(zars);
+        // console.log(zars);
         disabled = true;
         zars.forEach((e) => {
           // e = parseInt(m, 10);
@@ -100,15 +109,33 @@ export function DecoderAdvanced({
           broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
         });
         m.disabled = disabled;
-        console.log(m);
+        // console.log(m);
       }
       if (arr[arr.length - 1].izb) {
         arr.push({ izb: m, text: "" });
       } else arr[arr.length - 1].izb = m;
     }
   }
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].izb) {
+      let poslLine = "";
+      for (let j = i - 1; j >= 0; ) {
+        if (arr[j].izb) break;
+        if (arr[j].text == "\n") {
+          break;
+        }
+        poslLine += arr[j].text;
+        arr[j].text="\n";
+      }
+      poslLine += arr[i].text;
+      poslLine += "\n";
+      arr[i].text = poslLine;
+    }
+  }
+  arr=arr.filter((e)=>!e.text.match(isEmptyLine));
+  // console.log(arr);
   broiZarcheta = Math.floor(broiZarcheta);
-  console.log(broiZarcheta);
+  // console.log(broiZarcheta);
 
   return (
     <>
@@ -129,7 +156,7 @@ export function DecoderAdvanced({
             <Row>
               <Col {...propertiesForColumnsWidth2}>
                 {/* <p className=""> */}
-                  <Markdown>{e.text}</Markdown>
+                <Markdown>{e.text}</Markdown>
                 {/* </p> */}
               </Col>
               <Col sm="2">
