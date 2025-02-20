@@ -14,7 +14,6 @@ export function AuthorResume({
 }) {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
-  let a:number;
   return (
     <div className="author-resume">
       <Row>
