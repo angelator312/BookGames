@@ -10,7 +10,6 @@ import type { User } from "~/utils/User";
 import { getDefaultSettings, getDefaultUser } from "~/utils/User";
 import type { VariableInterface } from "~/utils/VariableThings";
 import { getDefaultVariable } from "~/utils/VariableThings";
-import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 
 interface Params {
   text: string;
@@ -73,7 +72,6 @@ export default function Book({
   // console.log(12);
   //  "0".matchAll(reg);
   // Array.from(text2.matchAll(reg));
-
   // const {book}= useLoaderData<string>();
   return (
     <Container className="space-y-2 sm:text-left bg-i">

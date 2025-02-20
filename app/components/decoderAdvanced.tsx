@@ -94,11 +94,10 @@ export function DecoderAdvanced({
       if (zars.length > 0) {
         console.log(zars);
         disabled = true;
-        zars = zars.map((e) => {
+        zars.forEach((e) => {
           // e = parseInt(m, 10);
           if (zarValue == e) disabled = false;
-          broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
-          return e;
+          broiZarcheta = Math.max((e + 5) / 6,broiZarcheta);
         });
         m.disabled = disabled;
         console.log(m);
