@@ -97,13 +97,14 @@ export function DecoderAdvanced({
         zars.forEach((e) => {
           // e = parseInt(m, 10);
           if (zarValue == e) disabled = false;
-          broiZarcheta = Math.max((e + 5) / 6,broiZarcheta);
+          broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
         });
         m.disabled = disabled;
         console.log(m);
       }
-
-      arr[arr.length - 1].izb = m;
+      if (arr[arr.length - 1].izb) {
+        arr.push({ izb: m, text: "" });
+      } else arr[arr.length - 1].izb = m;
     }
   }
   broiZarcheta = Math.floor(broiZarcheta);
@@ -127,9 +128,9 @@ export function DecoderAdvanced({
           {e.izb ? (
             <Row>
               <Col {...propertiesForColumnsWidth2}>
-                <p className="text-bold">
+                {/* <p className=""> */}
                   <Markdown>{e.text}</Markdown>
-                </p>
+                {/* </p> */}
               </Col>
               <Col sm="2">
                 <IzborComponent izbor={e.izb} url={url} flag={flag1} />

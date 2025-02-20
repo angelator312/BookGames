@@ -55,7 +55,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
         }
       }
     }
-    return redirect(new URL(request.url).pathname);
+    return redirect(new URL(request.url).pathname+"?default=2");
   }
   return redirect("/login");
 }
@@ -178,7 +178,7 @@ export default function Book1() {
       <NavYesOrNo text={feedMsg ?? ""} />
       <NavYesOrNo text={errMsg ?? ""} yes={false} />
       <br />
-      <Tab.Container id="left-tabs-example" defaultActiveKey="editAndPreview">
+      <Tab.Container id="left-tabs-example" defaultActiveKey={searchParams.get("default")=="2"?"settings":"editAndPreview"}>
         <Row>
           <Nav>
             <Col>
