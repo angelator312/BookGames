@@ -20,6 +20,5 @@
     "noEmit": true
   },
   "rules":{
-    "@typescript/no-unused-vars": ["warn"] // also add this if you're using typescript
   }  
 }

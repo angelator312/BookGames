@@ -17,6 +17,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
   const tStore = await getTextStore();
 // console.log( );
   const u=await requireUserId(request);
+  if(!u)return redirect("/login");
   await tStore.addComment(params.b ?? "", gl ?? "", u,comment.toString());
   return redirect(request.url);
 }

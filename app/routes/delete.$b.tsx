@@ -8,6 +8,7 @@ import getTextStore from "~/utils/textStore";
 export async function action({ params, request }: ActionFunctionArgs) {
   const a = await requireUserId(request, true);
   const b = params.b;
+  if(!a)return redirect("/login");
   if (typeof b !== "string") return redirect("/");
   const tStore = await getTextStore();
   tStore.deleteBook(b,a);
