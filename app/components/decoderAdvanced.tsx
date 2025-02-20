@@ -76,28 +76,34 @@ export function DecoderAdvanced({
   // const tM = [...text.matchAll(reg)];
   let broiZarcheta = 0;
   let arr2 = matchAll(text);
-  console.log(arr2);
+  // console.log(arr2);
 
   let arr: { izb?: Izbor; text: string }[] = [];
   for (let i = 0; i < arr2.length; i++) {
     let m = arr2[i];
-    // let zars: number[] = [];
-    // let disabled = false;
-    // if (zar) {
-    //   disabled = true;
-    //   let e = 0;
-    //   zars = m[4]?.split(",").map((m) => {
-    //     e = parseInt(m, 10);
-    //     // if (zarValue == e) disabled = false;
-    //     // broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
-    //     return e;
-    //   });
-    // }
     if (typeof m === "string") {
       arr.push({ text: m });
     } else if (i == 0) {
       arr.push({ text: "", izb: m });
     } else {
+      let zars: number[] = [];
+      if (Array.isArray(m.zar)) zars = m.zar;
+      else zars = [m.zar];
+      let disabled = false;
+
+      if (zars.length > 0) {
+        console.log(zars);
+        disabled = true;
+        zars = zars.map((e) => {
+          // e = parseInt(m, 10);
+          if (zarValue == e) disabled = false;
+          broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
+          return e;
+        });
+        m.disabled = disabled;
+        console.log(m);
+      }
+
       arr[arr.length - 1].izb = m;
     }
   }
