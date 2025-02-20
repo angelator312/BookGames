@@ -17,6 +17,7 @@ import {
 import MenuForHome from "~/components/home.menu";
 import NavYesOrNo from "~/components/navbarYes";
 import PreviewImages from "~/components/previewOnImages";
+import { AuthorResume } from "~/components/userResume";
 import getImageStore from "~/utils/fileStore";
 import type { MiniInterface } from "~/utils/ImageThings";
 import { requireUserId } from "~/utils/session.server";
@@ -51,7 +52,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       ];
     }
   }
-  return redirect("/login?redirectTo="+request.url);
+  return redirect("/login?redirectTo=" + request.url);
 };
 type loaderType = [User, SettingsInterface, UserData, MiniInterface[]];
 export default function Settings() {
@@ -129,7 +130,10 @@ export default function Settings() {
                 <Row>
                   <Col>
                     <Form.Label column sm={10}>
-                      Резюме
+                      <AuthorResume
+                        authorData={user.data}
+                        authorName={user.user}
+                      />
                     </Form.Label>
                   </Col>
                 </Row>
@@ -184,7 +188,9 @@ export default function Settings() {
                     max={50}
                     type="number"
                     value={fontSize}
-                    onChange={(e) => setFontSize(parseInt(e.target.value ?? 2))}
+                    onChange={(e) =>
+                      setFontSize(Math.min(parseInt(e.target.value ?? 2), 50))
+                    }
                     name="fontSize"
                   />
                   <Form.Control

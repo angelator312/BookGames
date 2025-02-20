@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Col, Modal, Row } from "react-bootstrap";
 import type { Turneta, UserData } from "~/utils/User";
 import IsProUser from "./IsPayUser";
+import Markdown from "react-markdown";
 export function AuthorResume({
   authorName,
   authorData,
@@ -38,7 +39,7 @@ export function AuthorResume({
           </Row>
           <Row>
             <Col>
-              <p>{authorData.forMe}</p>
+              <Markdown>{authorData.forMe}</Markdown>
             </Col>
           </Row>
           {turneta ? (

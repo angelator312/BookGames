@@ -21,6 +21,7 @@ import { getDefaultVariables } from "~/utils/VariableThings";
 export async function action({ request, params }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
   if (userId) {
+    let addP = false;
     const formData = await request.formData();
     if (formData) {
       const tags = formData.get("tags")?.toString();
@@ -52,10 +53,11 @@ export async function action({ request, params }: ActionFunctionArgs) {
           console.log("values:", values);
           const vStore = await getTextStore();
           await vStore.saveDefaultVariables(bId, values);
+          addP = true;
         }
       }
     }
-    return redirect(new URL(request.url).pathname+"?default=2");
+    return redirect(new URL(request.url).pathname + addP ?  "":"?default=2" );
   }
   return redirect("/login");
 }
@@ -178,7 +180,12 @@ export default function Book1() {
       <NavYesOrNo text={feedMsg ?? ""} />
       <NavYesOrNo text={errMsg ?? ""} yes={false} />
       <br />
-      <Tab.Container id="left-tabs-example" defaultActiveKey={searchParams.get("default")=="2"?"settings":"editAndPreview"}>
+      <Tab.Container
+        id="left-tabs-example"
+        defaultActiveKey={
+          searchParams.get("default") == "2" ? "settings" : "editAndPreview"
+        }
+      >
         <Row>
           <Nav>
             <Col>
@@ -238,7 +245,7 @@ export default function Book1() {
                       key={gl}
                     />
                   </Col>
-                  <Col style={{height:"80vh",overflow:"scroll"}}>
+                  <Col style={{ height: "80vh", overflow: "scroll" }}>
                     <Book
                       url={`/myBook/${bUrl}`}
                       title={b.id ?? "Книга " + bUrl}
@@ -259,10 +266,7 @@ export default function Book1() {
                   </Col>
                 </Row>
                 <Row>
-
-                  <Col>
-                    
-                  </Col>
+                  <Col></Col>
                 </Row>
               </Container>
             </Tab.Pane>
