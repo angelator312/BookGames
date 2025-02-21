@@ -5,15 +5,18 @@ import { useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import {
   Button,
+  ButtonGroup,
   Col,
   Container,
   Form,
+  InputGroup,
   Modal,
   Row,
   Spinner,
   Tab,
   Tabs,
 } from "react-bootstrap";
+import FormComponent from "~/components/formComp";
 import MenuForHome from "~/components/home.menu";
 import NavYesOrNo from "~/components/navbarYes";
 import PreviewImages from "~/components/previewOnImages";
@@ -126,46 +129,56 @@ export default function Settings() {
         <Tab title="За мен" eventKey={"1"}>
           <Row>
             <Col>
-              <Form action="/zapaziForMe">
-                <Row>
-                  <Col>
-                    <Form.Label column sm={10}>
-                      <AuthorResume
-                        authorData={user.data}
-                        authorName={user.user}
-                      />
-                    </Form.Label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Editor
-                      options={{
-                        unicodeHighlight: {
-                          ambiguousCharacters: false,
-                        },
-                      }}
-                      height="20vh"
-                      defaultLanguage="bg"
-                      onChange={handleEditorChange}
-                      // name="text"
-                      // placeholder="Здравей,Човече"
-                      defaultValue={text == "" ? "Здравей,Човече" : text}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Form.Control type="submit" value={"Запази"} />
+              {/* <Form action="/zapaziForMe"> */}
+              <Row>
+                <Col>
+                  {/* <Form.Label column sm={10}> */}
+                  <AuthorResume
+                    authorData={{
+                      ...user.data,
+                      forMe: text,
+                    }}
+                    authorName={user.user}
+                  />
+                  {/* </Form.Label> */}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Editor
+                    options={{
+                      unicodeHighlight: {
+                        ambiguousCharacters: false,
+                      },
+                    }}
+                    height="20vh"
+                    defaultLanguage="bg"
+                    onChange={handleEditorChange}
+                    // name="text"
+                    // placeholder="Здравей,Човече"
+                    defaultValue={text == "" ? "Здравей,Човече" : text}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <FormComponent
+                    method="get"
+                    textForSubmit={"Запази"}
+                    to={"/zapaziForMe"}
+                    namesHidden={["forMe", "toUrl"]}
+                    textsHidden={[text, "/Profil?koe=1"]}
+                  />
+                  {/* <Form.Control type="submit" value={"Запази"} />
                     <Form.Control type="hidden" value={text} name="forMe" />
                     <Form.Control
                       type="hidden"
                       value="/Profil?koe=1"
                       name="toUrl"
-                    />
-                  </Col>
-                </Row>
-              </Form>
+                    /> */}
+                </Col>
+              </Row>
+              {/* </Form> */}
             </Col>
           </Row>
         </Tab>
@@ -264,7 +277,7 @@ export default function Settings() {
                     return;
                   }}
                   options={{
-                    names:false,
+                    names: false,
                     delete: true,
                     handleDeleteImage: (id) => {
                       setIdDeleteModal(id);
@@ -283,18 +296,19 @@ export default function Settings() {
             encType="multipart/form-data"
             method="post"
           >
-            <Form.Group controlId="formFile" className="mb-3">
-              <Form.Label>Изберете изображение за качване</Form.Label>
+            <InputGroup className="mb-3">
+              <InputGroup.Text>Изберете изображение за качване</InputGroup.Text>
               <Form.Control
                 type="file"
                 name="file"
                 onChange={() => setDisabled(false)}
               />
               <Form.Control type="hidden" value="/profil?koe=3" name="toUrl" />
+              {/* <Form.Control value="Качи" type="submit" disabled={disabled} /> */}
               <Button type="submit" disabled={disabled}>
                 Качи
               </Button>
-            </Form.Group>
+            </InputGroup>
           </Form>
           <Modal
             show={idDeleteModal != "ne"}
