@@ -1,6 +1,6 @@
 import RenderText from "./renderText";
 
-export default function RenderTextWithDecoder({ texts }: { texts: string }) {
+export default function RenderText2({ texts }: { texts: string }) {
   return (
     <RenderText texts={[texts]}/>
   );

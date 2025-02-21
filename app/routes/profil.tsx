@@ -264,6 +264,7 @@ export default function Settings() {
                     return;
                   }}
                   options={{
+                    names:false,
                     delete: true,
                     handleDeleteImage: (id) => {
                       setIdDeleteModal(id);

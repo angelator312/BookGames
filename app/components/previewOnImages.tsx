@@ -4,14 +4,15 @@ import type { MiniInterface } from "~/utils/ImageThings";
 export default function PreviewImages({
   minis,
   handleInsertImage,
-  options = { delete: false, handleDeleteImage: () => {} },
+  options = { delete: false, names: true, handleDeleteImage: () => {} },
 }: {
   minis: MiniInterface[];
   handleInsertImage: (insertID: string) => void;
   options?: {
     delete: boolean;
-    handleDeleteImage: (id:string) => void;
+    handleDeleteImage: (id: string) => void;
     insert?: boolean;
+    names: boolean;
   };
 }) {
   return (
@@ -20,13 +21,13 @@ export default function PreviewImages({
         <Col sm="4" md="3" lg="2" xxl="1" key={e.id} className="m-2">
           <Card onClick={() => handleInsertImage(e.id)}>
             <Card.Img
-              //style={{ width: "128px", height: "128px" }}
+              // style={{ width: "128px", height: "128px" }}
               src={`data:image/png;base64,${e.thumbnail}`}
               alt="thumbnail"
             />
             <Card.Body>
-              <Card.Title>{e.name}</Card.Title>
-              {options.delete? (
+              <Card.Title>{options.names ? e.name : ""}</Card.Title>
+              {options.delete ? (
                 <Button
                   variant="danger"
                   onClick={() => options.handleDeleteImage(e.id)}

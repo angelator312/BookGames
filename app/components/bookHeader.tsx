@@ -20,7 +20,7 @@ export default function BookHeader({
           <img src="/img/book-60.png" alt="Book" className="book-image" />
         </Col>
         <Col xs={9} md={7}>
-          <a href={`/book/intro/${e.text}`}>
+          <a href={!avt ? `/book/intro/${e.text}` : `/myBook/${e.text}`}>
             <h3 className="text-bold text-dark">{e.id}</h3>
           </a>
           <AuthorResume authorData={authorData} authorName={e.avtor ?? ""} />
@@ -33,9 +33,9 @@ export default function BookHeader({
             <DropdownButton title="Действия" id="dropdown-basic-button">
               <Dropdown.Item
                 //method=post
-                href={`/myBook/${e.text}/`}
+                href={`/book/intro/${e.text}/`}
               >
-                Редактирай
+                Прочети ме
               </Dropdown.Item>
               <Dropdown.Item
                 //method=post

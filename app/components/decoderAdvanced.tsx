@@ -4,7 +4,7 @@ import { propertiesForColumnsWidth2 } from "~/utils/columnStyles";
 import { useState } from "react";
 import ZarcheComponent from "./ZarcheComponent";
 import { isEmptyLine, regexForAdvancedDecoder as reg } from "~/utils/regex";
-import Markdown from "react-markdown";
+import ReactMarkdown from "react-markdown";
 
 function matchAll(str: string): Array<Izbor | string> {
   let out: Array<Izbor | string> = [];
@@ -156,7 +156,7 @@ export function DecoderAdvanced({
             <Row>
               <Col {...propertiesForColumnsWidth2}>
                 {/* <p className=""> */}
-                <Markdown>{e.text}</Markdown>
+                <ReactMarkdown>{e.text}</ReactMarkdown>
                 {/* </p> */}
               </Col>
               <Col sm="2">
@@ -164,7 +164,7 @@ export function DecoderAdvanced({
               </Col>
             </Row>
           ) : (
-            <Markdown>{e.text}</Markdown>
+            <ReactMarkdown>{e.text}</ReactMarkdown>
           )}
         </div>
       ))}

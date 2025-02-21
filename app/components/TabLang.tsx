@@ -33,7 +33,7 @@ export function TabLang() {
                 window.open("https://www.markdownguide.org/basic-syntax/")
               }
             >
-              Markdown
+              ReactMarkdown
             </a>
             <br />
           </p>

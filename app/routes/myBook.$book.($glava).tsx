@@ -57,7 +57,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
         }
       }
     }
-    return redirect(new URL(request.url).pathname + addP ?  "":"?default=2" );
+    return redirect(new URL(request.url).pathname + addP ? "" : "?default=2");
   }
   return redirect("/login");
 }
@@ -117,9 +117,9 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 export default function Book1() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [b, gl, t, doN, comments, user, vars, bookResume, tags] =
+  const [book, gl, t, doN, comments, user, vars, bookResume, tags] =
     useLoaderData<loaderData>();
-  const bUrl = b.text;
+  const bUrl = book.text;
   let comm = comments;
   function update() {
     textLines = text.split("\n\n");
@@ -248,7 +248,7 @@ export default function Book1() {
                   <Col style={{ height: "80vh", overflow: "scroll" }}>
                     <Book
                       url={`/myBook/${bUrl}`}
-                      title={b.id ?? "Книга " + bUrl}
+                      title={book.id ?? "Книга " + bUrl}
                       almP={`/myBook/${bUrl}/`}
                       flag={3}
                       params={{
@@ -272,6 +272,7 @@ export default function Book1() {
             </Tab.Pane>
             <Tab.Pane eventKey="settings" title="Настройки">
               <BookSettingsComponent
+                bName={book.id ?? ""}
                 //@ts-ignore
                 user={
                   user

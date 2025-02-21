@@ -5,7 +5,8 @@ import getUserStore from "~/utils/userStore";
 import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import RenderTextWithDecoder from "~/components/renderText2";
+import RenderText2 from "~/components/renderText2";
+import BookIntro from "~/components/bookIntro";
 export async function action({ params, request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
@@ -24,9 +25,9 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     if (user) {
       let glava = user?.glavi[`Book-${b.text}`];
       if (glava) {
-        if (a == b.avtor) 
-          return redirect("/myBook/" + bId+"/"+glava);
-        return redirect("/book/" + bId);
+        if (a != b.avtor)
+          // return redirect("/myBook/" + bId+"/"+glava);
+          return redirect("/book/" + bId);
       }
 
       settings = user.settings ?? settings;
@@ -72,37 +73,13 @@ export default function Book1() {
       fluid
       style={{ fontSize: (settings.fontSize ?? 10) / 10 + "rem" }}
     >
-      <Row className="centered">
-        <Col>
-          <h1>
-            {/* <a href={"/book/" + book.b.text} style={{ textDecoration: "none" }}> */}
-            {book.id}
-            {/* </a> */}
-          </h1>
-        </Col>
-      </Row>
-      <Row sm="8" className="centered">
-        <Col>
-          {/* Za knigata */}
-          <RenderTextWithDecoder texts={smallDescription} />
-        </Col>
-        <Col sm="4" className="centered">
-          {/* Za Avtora */}
-          <Card>
-            <Card.Img
-              className="centered"
-              style={{ width: "102px", height: "118px" }}
-              src={b.urlForImmage}
-            />
-            <Card.Body>
-              <Card.Title>{book.avtor}</Card.Title>
-              <Card.Text>
-                <RenderTextWithDecoder texts={aDescr} />
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+      <BookIntro
+        smallDescription={smallDescription}
+        urlForImage={b.urlForImmage}
+        avtor={book.avtor}
+        avtorDesc={b.aDescr}
+        bName={book.id??""}
+      />
       <Row>
         <Col>
           <a

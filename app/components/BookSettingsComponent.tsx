@@ -9,6 +9,7 @@ import type {
   VariableCollection,
   VariableInterface,
 } from "~/utils/VariableThings";
+import BookIntro from "./bookIntro";
 
 export const loader = async () => {
   return;
@@ -19,19 +20,22 @@ export const action = async () => {
 
 export default function BookSettingsComponent({
   bookResume,
-  name,
+  name: bId,
   tags = [],
   user,
   vars,
+  bName,
 }: {
   name: string;
   tags?: string[];
   bookResume: string;
   user: User;
   vars: VariableCollection;
+  bName: string;
 }) {
   const settings: SettingsInterface = user.settings ?? getDefaultSettings();
   const [text, setText] = useState(bookResume);
+  const [show, setShow] = useState(false);
   // const [tagsList, setTagsList] = useState(tags);
   function handleEditorChange(value: any, event: any) {
     setText(value);
@@ -55,11 +59,22 @@ export default function BookSettingsComponent({
             // placeholder="Здравей,Човече"
             defaultValue={text}
           />
+          <Button className="mt-3" onClick={() => setShow(!show)}>
+            {show ? "Скрий" : "Покажи"}
+          </Button>
+          <BookIntro
+            show={show}
+            smallDescription={text}
+            urlForImage={"/img/question_mark.png"}
+            avtor={user.user}
+            avtorDesc={user.data.forMe}
+            bName={bName}
+          />
           <FormComponent
             to="/zapaziBookResume"
             textForSubmit="Запази"
             namesHidden={["text", "book"]}
-            textsHidden={[text, name]}
+            textsHidden={[text, bId]}
           />
         </Col>
         <Form method="post">
@@ -85,11 +100,7 @@ export default function BookSettingsComponent({
                 <h4>Първоначалните стойности на променливите</h4>
               </Card.Title>
               <Form method="post">
-                <Form.Control
-                  type="hidden"
-                  name="isHavingVars"
-                  value={"yes"}
-                />
+                <Form.Control type="hidden" name="isHavingVars" value={"yes"} />
                 {Object.values(vars).map((varItem: VariableInterface) => {
                   return (
                     <Col key={varItem.name}>
@@ -100,7 +111,6 @@ export default function BookSettingsComponent({
                           name={"var/" + varItem.name}
                           defaultValue={varItem.value}
                           placeholder={varItem.name}
-
                         />
                       </Form.Group>
                     </Col>
