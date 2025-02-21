@@ -33,7 +33,7 @@ export default function LogoutRoute() {
       </Row>
       <Row className="m-5">
         <Col>
-          <Form>
+          <Form method="post">
             <Button type="submit" variant="danger">
               {"Да"}
             </Button>
