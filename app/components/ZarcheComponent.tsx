@@ -24,7 +24,7 @@ export default function ZarcheComponent({
   }
   return (
     <div
-      className="dice"
+      className="dice centered"
       data-side="1"
       onClick={(e) => {
         if (value == 0) {
