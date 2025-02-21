@@ -17,7 +17,7 @@ export async function loader({ params, request }: ActionFunctionArgs) {
     true,
     targetBook?.text2??"",
     targetBook?.doGl??"",
-    parseInt(targetBook?.text.at(-1)??"-1")
+    parseInt(targetBook?.text.substring(2)??"-1")
   );
 
   return redirect(`/myBook/${book}/1?feedCode=2`);
