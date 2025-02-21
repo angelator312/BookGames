@@ -2,8 +2,7 @@ import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
 import { logout } from "~/utils/session.server";
 import stylesUrl from "~/styles/login.css";
 import { Link } from "@remix-run/react";
-import { Button, Row } from "react-bootstrap";
-import FormComponent from "~/components/formComp";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   return await logout(request);
@@ -17,27 +16,35 @@ export default function LogoutRoute() {
   //   eslint-disable-next-line @typescript-eslint/no-unused-vars
   //   const [searchParams] = useSearchParams();
   return (
-    <main className="login-main bg-i">
-      <div className="container bg-i">
-        <div className="bg-white bg-i">
-          <h1 className="home-link ">
-            <span className="text-slate-500 text-center text-dark">
-              Излизане от профила
-            </span>
+    <Container className="bg-i">
+      <Row>
+        <Col>
+          <h1 className="text-slate-500 text-center text-dark">
+            Излизане от профила
           </h1>
-          <div>
-            <h2 className="text-slate-500 text-center text-dark">
-              Сигурен ли си ,че искаш да излезеш от профила си?
-            </h2>
-          </div>
-          <FormComponent textForSubmit={"Да"} to={"/logout"} submitVariant="danger" />
-          <Row>
-            <Link to="/">
-              <Button variant="secondary">Не</Button>
-            </Link>
-          </Row>{" "}
-        </div>
-      </div>
-    </main>
+        </Col>
+      </Row>
+      <Row className="m-2">
+        <Col>
+          <h2 className="text-slate-500 text-center text-dark">
+            Сигурен ли си ,че искаш да излезеш от профила си?
+          </h2>
+        </Col>
+      </Row>
+      <Row className="m-5">
+        <Col>
+          <Form>
+            <Button type="submit" variant="danger">
+              {"Да"}
+            </Button>
+          </Form>
+        </Col>
+        <Col>
+          <Link to="/">
+            <Button variant="secondary">Не</Button>
+          </Link>
+        </Col>
+      </Row>
+    </Container>
   );
 }

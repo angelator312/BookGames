@@ -80,6 +80,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       if (!text || !glava) {
         //@ts-ignore
         tStore.addComment(params.book, glava, uId, "Довършете си книгата");
+        uStore.editUserSGlava(uId, `Book-${b.text}`, "1");
         return redirect(`/?errCode=1`);
       }
       let segG = text?.text;

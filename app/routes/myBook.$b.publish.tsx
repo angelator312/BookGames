@@ -12,7 +12,7 @@ export async function loader({ params, request }: ActionFunctionArgs) {
   const targetBook = await tStore.getBook(`${book}`);
   
   await tStore.addBook(
-    targetBook?.id?.substring(5, targetBook.id?.length - 3)??"",
+    targetBook?.id??"",
     targetBook?.avtor ?? "",
     true,
     targetBook?.text2??"",

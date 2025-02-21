@@ -14,7 +14,7 @@ export default function BookHeader({
 }) {
   if (!e) return;
   return (
-    <Container fluid className="my-2">
+    <Container fluid className="mb-4">
       <Row>
         <Col xs={3} md={1}>
           <img src="/img/book-60.png" alt="Book" className="book-image" />

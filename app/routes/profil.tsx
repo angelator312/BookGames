@@ -216,9 +216,9 @@ export default function Settings() {
               </Form>
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-4">
             <Col>
-              <h1>Смяна на паролата</h1>
+              <h2>Смяна на паролата</h2>
             </Col>
           </Row>
           <Row>
@@ -282,6 +282,7 @@ export default function Settings() {
                     handleDeleteImage: (id) => {
                       setIdDeleteModal(id);
                     },
+                    xxl: 2,
                   }}
                 />
               ) : (
@@ -324,6 +325,7 @@ export default function Settings() {
                 handleInsertImage={(a) => {
                   return;
                 }}
+                options={{ names: false, xxl: 5 }}
               />
               <Row>
                 <Col>
@@ -338,13 +340,16 @@ export default function Settings() {
                       value="/profil?koe=3"
                       name="toUrl"
                     />
-                    <Button type="submit">Премахни</Button>
+                    <Button type="submit" className="mx-2">
+                      Премахни
+                    </Button>
+                    <Button
+                      className="mx-2"
+                      onClick={() => setIdDeleteModal("ne")}
+                    >
+                      Отказ
+                    </Button>
                   </Form>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Button onClick={() => setIdDeleteModal("ne")}>Отказ</Button>
                 </Col>
               </Row>
             </Modal.Body>

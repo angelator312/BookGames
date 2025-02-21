@@ -9,16 +9,28 @@ export default function PreviewImages({
   minis: MiniInterface[];
   handleInsertImage: (insertID: string) => void;
   options?: {
-    delete: boolean;
-    handleDeleteImage: (id: string) => void;
+    delete?: boolean;
+    handleDeleteImage?: (id: string) => void;
     insert?: boolean;
-    names: boolean;
+    names?: boolean;
+    xxl?: number;
+    sm?: number;
+    md?: number;
+    lg?: number;
   };
 }) {
+  if (options.delete && !options.handleDeleteImage) options.delete = false;
   return (
     <Row className="justify-content-center">
       {minis.map((e) => (
-        <Col sm="4" md="3" lg="2" xxl="1" key={e.id} className="m-2">
+        <Col
+          sm={options.sm ?? "4"}
+          md={options.md ?? "3"}
+          lg={options.lg ?? "2"}
+          xxl={options.xxl ?? "1"}
+          key={e.id}
+          className="m-2"
+        >
           <Card onClick={() => handleInsertImage(e.id)}>
             <Card.Img
               // style={{ width: "128px", height: "128px" }}
@@ -30,6 +42,7 @@ export default function PreviewImages({
               {options.delete ? (
                 <Button
                   variant="danger"
+                  //@ts-ignore
                   onClick={() => options.handleDeleteImage(e.id)}
                 >
                   Delete
