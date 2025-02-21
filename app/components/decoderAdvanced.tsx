@@ -125,14 +125,14 @@ export function DecoderAdvanced({
           break;
         }
         poslLine += arr[j].text;
-        arr[j].text="\n";
+        arr[j].text = "\n";
       }
       poslLine += arr[i].text;
       poslLine += "\n";
       arr[i].text = poslLine;
     }
   }
-  arr=arr.filter((e)=>!e.text.match(isEmptyLine));
+  arr = arr.filter((e) => !e.text.match(isEmptyLine));
   // console.log(arr);
   broiZarcheta = Math.floor(broiZarcheta);
   // console.log(broiZarcheta);
@@ -140,14 +140,12 @@ export function DecoderAdvanced({
   return (
     <>
       {broiZarcheta ? (
-        <div className="mb-5">
-          <ZarcheComponent
-            onResult={(val) => {
-              setZarValue(val);
-            }}
-            broiZarcheta={broiZarcheta}
-          />
-        </div>
+        <ZarcheComponent
+          onResult={(val) => {
+            setZarValue(val);
+          }}
+          broiZarcheta={broiZarcheta}
+        />
       ) : null}
       {/* <ul> */}
       {arr.map((e, i) => (

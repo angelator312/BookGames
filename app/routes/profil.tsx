@@ -138,7 +138,7 @@ export default function Settings() {
                       ...user.data,
                       forMe: text,
                     }}
-                    authorName={user.user}
+                    authorName={"За мен(Преглед)"}
                   />
                   {/* </Form.Label> */}
                 </Col>
