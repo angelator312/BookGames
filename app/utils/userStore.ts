@@ -2,7 +2,7 @@ import type { Collection } from "mongodb";
 import { MongoClient } from "mongodb";
 import bcrypt from "bcryptjs";
 import type { SettingsInterface, User, UserData } from "./User";
-import { getDefaultSettings, getDefaultUserData } from "./User";
+import { getDefaultSettings, getDefaultUser, getDefaultUserData } from "./User";
 import { getDefaultVariable } from "./VariableThings";
 export class UserStore {
   FixDatabase() {
@@ -53,11 +53,9 @@ export class UserStore {
   async addUser(user: string, pass: string): Promise<User> {
     const passH = this.hash(pass);
     const v: User = {
+      ...getDefaultUser(),
       user,
       passH,
-      glavi: {},
-      data: getDefaultUserData(),
-      admin: false,
     };
     const i = await this.collection.replaceOne({ user: user }, v, {
       upsert: true,
@@ -100,7 +98,7 @@ export class UserStore {
   async changePassword(user: string, newPass: string): Promise<boolean> {
     const passH = this.hash(newPass);
     const data = await this.getUser(user);
-    if(!data)return false;
+    if (!data) return false;
     const v: User = {
       ...data,
       passH,
@@ -202,5 +200,3 @@ export default async function getUserStore(
   }
   return ObUser[collectionName];
 }
-
-

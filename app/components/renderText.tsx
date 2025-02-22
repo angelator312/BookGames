@@ -1,5 +1,5 @@
 import { Row, Col } from "react-bootstrap";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 
 export default function RenderText({ texts }: { texts: string[] }) {
@@ -8,7 +8,7 @@ export default function RenderText({ texts }: { texts: string[] }) {
       {texts.map((e, i) => (
         <Row key={e + i}>
           <Col {...propertiesForColumnsWidth}>
-            <ReactMarkdown>{e}</ReactMarkdown>
+            <Markdown>{e}</Markdown>
           </Col>
         </Row>
       ))}

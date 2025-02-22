@@ -20,7 +20,7 @@ const storage = createCookieSessionStorage({
     secrets: [sessionSecret],
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24*30,
+    maxAge: 60 * 60 * 24 * 30,
     httpOnly: true,
   },
 });
@@ -41,18 +41,14 @@ export async function getUserId(request: Request) {
 
 export async function requireUserId(
   request: Request,
-  t = false,
+  t = true,
   redirectTo: string = new URL(request.url).pathname
-):Promise<string|null> {
+): Promise<string | null> {
   const session = await getUserSession(request);
   const userId = session.get("userId");
   if (!userId || typeof userId !== "string") {
-    if (t)
-    {
-      // const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
-      return null;
-    }
-      
+    // const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+    return null;
   }
   return userId;
 }
@@ -91,19 +87,18 @@ export async function createGorB(key: string, value: string, request: Request) {
 export async function getGorB(key: string) {
   const session = await storage.getSession();
   let e = session.get(key);
-// console.log(e);
+  // console.log(e);
   // if (typeof e !=="string") {
   //   e=e.toString();
   // }
-  return e ;
+  return e;
 }
-export async function knigi(user:string,query:string|null) {
-  const tStore=await getTextStore();
-  const a = await tStore.getPublicBooks(user,query);
+export async function knigi(user: string, query: string | null) {
+  const tStore = await getTextStore();
+  const a = await tStore.getPublicBooks(user, query);
   const b = await tStore.getMyBooks(user);
-  if(b)
-    return [b,a];
-  return [[],a];
+  if (b) return [b, a];
+  return [[], a];
 }
 export async function loadSettings(user: string) {
   const tStore = await getUserStore();
@@ -111,10 +106,9 @@ export async function loadSettings(user: string) {
   return a;
 }
 
-export async function getUserDatas(books:BookInterface[])
-{
+export async function getUserDatas(books: BookInterface[]) {
   const uStore = await getUserStore();
-  return books.map(async book =>{
-    return (await uStore.getUser(book.avtor))?.data??getDefaultUserData();
-  })
+  return books.map(async (book) => {
+    return (await uStore.getUser(book.avtor))?.data ?? getDefaultUserData();
+  });
 }

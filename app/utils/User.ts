@@ -14,7 +14,7 @@ export interface User {
   glavi?: any;
   user: string;
   passH: string;
-  settings?: SettingsInterface;
+  settings: SettingsInterface;
   data: UserData;
   admin: boolean;
   variables?: { [key: string]: VariableInterface };
@@ -51,6 +51,7 @@ export function getDefaultUser(): User {
     user: "",
     data: getDefaultUserData(),
     admin: false,
+    settings: getDefaultSettings(),
   };
   return settings;
 }

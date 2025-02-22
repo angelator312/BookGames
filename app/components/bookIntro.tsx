@@ -1,7 +1,7 @@
 import { Row, Col, Card } from "react-bootstrap";
 import book from "./book";
 import RenderText2 from "./renderText2";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
 
 export default function BookIntro({
   smallDescription,
@@ -46,7 +46,7 @@ export default function BookIntro({
             <Card.Body>
               <Card.Title>{avtor}</Card.Title>
               <Card.Text>
-                <ReactMarkdown>{avtorDesc}</ReactMarkdown>
+                <Markdown>{avtorDesc}</Markdown>
               </Card.Text>
             </Card.Body>
           </Card>
