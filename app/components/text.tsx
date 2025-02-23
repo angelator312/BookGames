@@ -22,7 +22,7 @@ export default function Text({
   flag1?: boolean;
   url: string;
   variables: { [key: string]: VariableInterface };
-  title:string;
+  title: string;
 }) {
   // console.log("vars:", variables);
   function compileToStringM(a: string) {
@@ -31,18 +31,16 @@ export default function Text({
 
   textLines = textLines.map((e) => compileToStringM(e));
   // console.log(furst2Lines);
-
+  // textLines
   text2 = compileToStringM(text2);
   return (
-    <Container className="bg-i p-4" style={{ textIndent: 20 }}>
-      <Row>
-        <Col {...propertiesForColumnsWidth}>
-          <h1 className="p-1 text-dark text-center">{title} </h1>
-        </Col>
-        <Col {...propertiesForColumnsWidth}>
-          <h2 className="text-center">Глава {glava} </h2>
-        </Col>
-      </Row>
+    <Container className="m-4" style={{ textIndent: 20 }}>
+      <div className="chapter-text">
+        <div className="mb-3" style={{ width: "100%" }}>
+          <div className="centered book-main">{title}</div>
+          <div className="centered book-main fst-italic">Глава {glava} </div>
+        </div>
+      </div>
       <Row>
         <Col>
           <RenderText texts={textLines} />

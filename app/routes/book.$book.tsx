@@ -113,6 +113,7 @@ export default function Book1() {
         url={`/book/${book.b.text}`}
         title={zagl ?? ""}
         almP={`/img/${book.b.text}-`}
+        kr={false}
       />
     </div>
   );

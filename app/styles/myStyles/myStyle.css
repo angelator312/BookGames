@@ -64,6 +64,7 @@ input.inp-bl {
   /* filter: blur(8px);
   -webkit-filter: blur(8px); */
 }
+
 .book-image {
   display: inline-block;
 }
@@ -93,9 +94,14 @@ hr {
 }
 
 .chapter-text h1 {
+  color: var(--black) !important;
+  font-weight: 700 !important;
   text-align: center !important;
 }
-
+.chapter-text img {
+  margin: auto !important;
+  display: block !important;
+}
 .chapter-text h2 {
   text-align: center !important;
 }
@@ -112,6 +118,10 @@ hr {
   text-align: center !important;
 }
 
+
+.book-main{
+  font-size: 50%;
+}
 /* .chapter-text p img {
   text-align: center !important;
   margin-left: auto !important;
