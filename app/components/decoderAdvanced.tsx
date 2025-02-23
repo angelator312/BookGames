@@ -13,20 +13,18 @@ function matchAll(str: string): Array<Izbor | string> {
   while ((m = reg.exec(str)) !== null) {
     let zars: number[] = [];
     let disabled = false;
-    if (m[4]) {
+    if (m[3]) {
       disabled = true;
       let e = 0;
-      zars = m[4]?.split(",").map((m) => {
+      zars = m[3]?.split(",").map((m) => {
         e = parseInt(m, 10);
         return e;
       });
     }
     if (reg.lastIndex > 0) {
       let sbstr = str.substring(predLastIndex, reg.lastIndex - m[0].length);
-
       if (sbstr.match(isEmptyLine)) {
         let arr = sbstr.split(isEmptyLine);
-        // console.log(arr);
         arr.forEach((e) => {
           if (e.trim()) {
             out.push(e.trim());
@@ -38,13 +36,15 @@ function matchAll(str: string): Array<Izbor | string> {
       }
       predLastIndex = reg.lastIndex;
     }
-    out.push(m[1]);
+    // console.log(JSON.stringify(m[0]));
+
+    // out.push(m[0]);
     out.push({
       isText: false,
-      glava: parseInt(m[2], 10),
+      glava: parseInt(m[1], 10),
       zar: zars,
-      scoreChange: parseInt(m[3] ?? "0", 10),
-      text: m[5],
+      scoreChange: parseInt(m[2] ?? "0", 10),
+      text: m[4],
       disabled,
     });
   }
@@ -86,7 +86,7 @@ export function DecoderAdvanced({
   // const tM = [...text.matchAll(reg)];
   let broiZarcheta = 0;
   let arr2 = matchAll(text);
-  // console.log(arr2);
+  console.log(arr2);
   let arr: { izb?: Izbor; text: string }[] = [];
   for (let i = 0; i < arr2.length; i++) {
     let m = arr2[i];
@@ -113,9 +113,11 @@ export function DecoderAdvanced({
       }
       if (arr[arr.length - 1].izb) {
         arr.push({ izb: m, text: "" });
-      } else arr[arr.length - 1].izb = m;
+      } else if (arr[arr.length - 1].text != "\n") arr[arr.length - 1].izb = m;
+      else arr.push({ izb: m, text: "" });
     }
   }
+  console.log(arr);
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].izb) {
       let poslLine = "";
@@ -133,7 +135,6 @@ export function DecoderAdvanced({
     }
   }
   arr = arr.filter((e) => !e.text.match(isEmptyLine));
-  // console.log(arr);
   broiZarcheta = Math.floor(broiZarcheta);
   // console.log(broiZarcheta);
 
@@ -152,12 +153,17 @@ export function DecoderAdvanced({
         <div key={i}>
           {e.izb ? (
             <Row>
-              <Col {...propertiesForColumnsWidth2}>
-                {/* <p className=""> */}
-                <Markdown>{e.text}</Markdown>
-                {/* </p> */}
-              </Col>
-              <Col sm="2">
+              {e.text.trim() ? (
+                <Col {...propertiesForColumnsWidth2}>
+                  {/* <p className=""> */}
+                  <Markdown>{e.text}</Markdown>
+                  {/* </p> */}
+                </Col>
+              ) : null}
+              <Col
+                sm={e.text.trim() ? "2" : "12"}
+                className={e.text.trim() ? "" : "centered"}
+              >
                 <IzborComponent izbor={e.izb} url={url} flag={flag1} />
               </Col>
             </Row>

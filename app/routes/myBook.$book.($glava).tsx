@@ -122,8 +122,6 @@ export default function Book1() {
   const bUrl = book.text;
   let comm = comments;
   function update() {
-    textLines = text.split("\n\n");
-    textLines = textLines.slice(2);
   }
   const [text, setText] = useState(
     //@ts-ignore

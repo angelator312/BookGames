@@ -53,7 +53,7 @@ export default function Book({
   //  { text, glava, text2 } = useLoaderData<typeof loader>();
   // console.log(flag,text,glava,text2);
 
-  let textLines = text.replace(/\r/gm, "").split("\n\n");
+  let textLines = text.replaceAll("\r", "").split("\n\n");
   const [timeIn] = useState(Date.now());
   useEffect(() => {
     // const handleUnload = async() => {
@@ -87,7 +87,7 @@ export default function Book({
             glava={glava}
             url={url}
             textLines={textLines}
-            text2Lines={text2}
+            text2Lines={text2.replaceAll("\r", "")}
             flag1={!flag}
             title={title}
           />

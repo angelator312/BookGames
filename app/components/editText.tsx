@@ -72,11 +72,15 @@ export default function EditText({
   };
 
   const editorMount: OnMount = (editorL: editor.IStandaloneCodeEditor) => {
+    // let md = editorL.getModel();
+    // md.setEOL(1);
+    // // md?.setEOL(0);
+    // editorL.setModel(md);
     setMonacoInstance(editorL);
   };
 
   function handleEditorChange(value: any, event: any) {
-    const arr = (value.replace(/\r/gm, "") ?? "").split(/^---\s*$/gm);
+    const arr = (value ?? "").split(/^---\s*$/gm);
     setText(arr[0]);
     setText2(arr[1] ?? "");
     if (priIzvikvane) {
@@ -186,7 +190,10 @@ export default function EditText({
                 махнато)
               </Dropdown.Item>
 
-              <Dropdown.Item eventKey="2" onClick={()=>window.open("/helpLanguage")}>
+              <Dropdown.Item
+                eventKey="2"
+                onClick={() => window.open("/helpLanguage")}
+              >
                 Документация на езика
               </Dropdown.Item>
               {/* <Dropdown.Item eventKey="2" onClick={handleShowInsertImage}>

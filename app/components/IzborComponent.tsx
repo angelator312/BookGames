@@ -1,17 +1,34 @@
+import { Button, Form } from "react-bootstrap";
 import type { Izbor } from "./decoderAdvanced";
-import FormComponent from "./formComp";
 
-export default function IzborComponent({izbor,url,flag}: {izbor:Izbor,url:string,flag:boolean}) {
+export default function IzborComponent({
+  izbor,
+  url,
+  flag,
+}: {
+  izbor: Izbor;
+  url: string;
+  flag: boolean;
+}) {
   // [number,number,number,string]} ) {
   // console.log(izbor);
   return (
-      <FormComponent
-        disabled={izbor.disabled}
-        textForSubmit={izbor.text}
-        to={flag ? `${url}` : `${url}/${izbor.glava}`}
-        textsHidden={[izbor.glava.toString(),izbor.scoreChange.toString()]}
-        namesHidden={["to","var/резултат"]}
-        submitVariant="outline-secondary"
+    <Form className="my-2" action={flag ? `${url}` : `${url}/${izbor.glava}`}>
+      <Form.Control type="hidden" name="to" value={izbor.glava.toString()} />
+      <Form.Control
+        type="hidden"
+        name="var/резултат"
+        value={izbor.scoreChange.toString()}
       />
+      <Button variant="outline-primary" type="submit">{izbor.text}</Button>
+    </Form>
+    // <FormComponent
+    //   disabled={izbor.disabled}
+    //   textForSubmit={izbor.text}
+    //   to={flag ? `${url}` : `${url}/${izbor.glava}`}
+    //   textsHidden={[izbor.glava.toString(),izbor.scoreChange.toString()]}
+    //   namesHidden={["to","var/резултат"]}
+    //   submitVariant="outline-secondary"
+    // />
   );
 }
