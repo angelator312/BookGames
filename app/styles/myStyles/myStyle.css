@@ -60,7 +60,7 @@ input.inp-bl {
   background-image: url("/img/desktopImage.jpg");
   background-position: 0 -10em;
   background-size: cover;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   /* filter: blur(8px);
   -webkit-filter: blur(8px); */
 }
