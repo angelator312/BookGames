@@ -52,7 +52,7 @@ export default function RenderBooks({
   const [searchParams] = useSearchParams();
 
   return (
-    <Container fluid className=" bg-opacity-25 rounded-3 p-3">
+    <Container fluid className="bg-white bg-opacity-25 rounded-3 p-3">
       {searchUnit ? (
         <Row>
           <Col>

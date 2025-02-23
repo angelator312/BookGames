@@ -1,5 +1,5 @@
 .link-clear {
-  text-decoration: none;
+  text-decoration: none !important;
   text-decoration-color: white;
 }
 .p-1 {
@@ -57,10 +57,12 @@ input.inp-bl {
   background-repeat: repeat;
 }
 .bg-intro {
-  /* background-image: url("/img/desktopImage.jpg"); */
+  background-image: url("/img/desktopImage.jpg");
   background-position: 0 -10em;
   background-size: cover;
   background-repeat: repeat;
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
 }
 .book-image {
   display: inline-block;

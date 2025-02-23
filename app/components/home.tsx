@@ -28,7 +28,6 @@ export default function Home({
   let otherBooks = books[1];
   // useEffect(() => {
 
-
   // },[books]);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -79,10 +78,19 @@ export default function Home({
           <SubTitle />
         </Col>
       </Row>
-      <RenderAuthorBooks books={myBooks} dataInThem={dataMy} lastNum={5} toUrl="/mine"/>
       <Row>
         <Col>
-          <Container fluid className="bg-white bg-opacity-25 rounded-3 p-3">
+          <RenderAuthorBooks
+            books={myBooks}
+            dataInThem={dataMy}
+            lastNum={5}
+            toUrl="/mine"
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Container fluid>
             <Row>
               <Col>
                 <SubTitle title="Други книги" />

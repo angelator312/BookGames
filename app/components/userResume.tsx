@@ -26,7 +26,7 @@ export function AuthorResume({
           </span>
         </Col>
       </Row>
-      <Modal show={showModal} onHide={handleCloseModal}>
+      <Modal show={showModal} size="xl" onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title className="text-bold"> {authorName}</Modal.Title>
         </Modal.Header>

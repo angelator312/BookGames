@@ -20,7 +20,7 @@ export default function BookHeader({
           <img src="/img/book-60.png" alt="Book" className="book-image" />
         </Col>
         <Col xs={9} md={7}>
-          <a href={!avt ? `/book/intro/${e.text}` : `/myBook/${e.text}`}>
+          <a className="link-clear" href={!avt ? `/book/intro/${e.text}` : `/myBook/${e.text}`}>
             <h3 className="text-bold text-dark">{e.id}</h3>
           </a>
           <AuthorResume authorData={authorData} authorName={e.avtor ?? ""} />
