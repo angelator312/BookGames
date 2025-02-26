@@ -1,6 +1,7 @@
 import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { neDumi } from "~/helps/dumiNe";
+import { neEn } from "~/helps/dumiNeEn";
 import getTextStore from "~/utils/textStore";
 export async function action({ params, request }: ActionFunctionArgs) {
   const form = await request.formData();
@@ -8,13 +9,10 @@ export async function action({ params, request }: ActionFunctionArgs) {
   let text2 = form.get("text2") ?? " ";
   const glava = params.gl;
   const book = params.b;
-  if (!glava || Number.isNaN(parseInt(glava)))
-  {
-
+  if (!glava || Number.isNaN(parseInt(glava))) {
     return false;
   }
-  if(!text2)
-    text2="=>(Глава "+(1+ parseInt(glava) )+")[Следваща]"
+  if (!text2) text2 = "=>(Глава " + (1 + parseInt(glava)) + ")[Следваща]";
   if (!text1 && !text2) {
     return false;
     // return redirect(`/myBook/${book}/${glava}?errCode=1`);
@@ -23,8 +21,13 @@ export async function action({ params, request }: ActionFunctionArgs) {
   // console.log(b);
   for (let i = 0; i < neDumi.length; i++) {
     // console.log(neDumi[i]);
-    text1= text1.toString().replaceAll(neDumi[i],"duma");
-    text2= text2.toString().replaceAll(neDumi[i],"duma");
+    text1 = text1.toString().replaceAll(neDumi[i], "duma");
+    text2 = text2.toString().replaceAll(neDumi[i], "duma");
+  }
+  for (let i = 0; i < neEn.length; i++) {
+    // console.log(neDumi[i]);
+    text1 = text1.toString().replaceAll(neEn[i], "duma");
+    text2 = text2.toString().replaceAll(neEn[i], "duma");
   }
 
   const tStore = await getTextStore();
