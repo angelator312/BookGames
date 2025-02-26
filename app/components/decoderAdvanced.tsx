@@ -86,7 +86,7 @@ export function DecoderAdvanced({
   // const tM = [...text.matchAll(reg)];
   let broiZarcheta = 0;
   let arr2 = matchAll(text);
-  console.log(arr2);
+  // console.log(arr2);
   let arr: { izb?: Izbor; text: string }[] = [];
   for (let i = 0; i < arr2.length; i++) {
     let m = arr2[i];
@@ -117,7 +117,7 @@ export function DecoderAdvanced({
       else arr.push({ izb: m, text: "" });
     }
   }
-  console.log(arr);
+  // console.log(arr);
   for (let i = 0; i < arr.length; i++) {
     if (arr[i].izb) {
       let poslLine = "";

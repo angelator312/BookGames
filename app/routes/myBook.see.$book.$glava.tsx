@@ -45,18 +45,17 @@ export async function action({ params, request }: ActionFunctionArgs) {
           name: key,
           value: num,
         };
-      console.log(key, values[key]);
+      // console.log(key, values[key]);
     }
   });
 
-  console.log("values:", values);
+  // console.log("values:", values);
   await vStore.setVariables(uId, bId, values);
 
   // @ts-ignore Заради uId:string|null
   await userStore.editUserSGlava(uId, `Book-${bId}`, glava);
   const outUrl =
     request.url.substring(0, request.url.lastIndexOf("/")) + "/" + glava;
-  console.log();
 
   return redirect(outUrl);
 }
@@ -112,7 +111,7 @@ export default function Book1() {
   //   style={{ padding: 15.4 }}
   //   console.log(book);
   const zagl = book.b.id;
-  console.log(book.text2);
+  // console.log(book.text2);
 
   return (
     <div style={{ fontSize: (book.settings.fontSize ?? 10) / 10 + "rem" }}>

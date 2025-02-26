@@ -30,7 +30,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
         const tagList = tags.split(",").map((tag) => tag.trim());
         const bId = params.book;
         if (bId) {
-          console.log("tags:", tagList);
+          // console.log("tags:", tagList);
           const tStore = await getTextStore();
           await tStore.setBook(bId, { tags: tagList });
         }
@@ -50,7 +50,7 @@ export async function action({ request, params }: ActionFunctionArgs) {
         });
         const bId = params.book;
         if (bId) {
-          console.log("values:", values);
+          // console.log("values:", values);
           const vStore = await getTextStore();
           await vStore.saveDefaultVariables(bId, values);
           addP = true;

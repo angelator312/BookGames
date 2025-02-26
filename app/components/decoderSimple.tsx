@@ -20,7 +20,7 @@ export function DecoderSimple({
   if (Array.isArray(text)) text2 = text[0];
   else text2 = text;
   if (!text2) return <></>;
-  let text2Lines = text2.replace(/\r/gm, "").split(reg);
+  let text2Lines = text2.replaceAll(/\r/gm, "").split(reg);
   let a = [];
   for (let i = 0; i < text2Lines.length; i += 2) {
     const e = text2Lines[i];
@@ -34,26 +34,26 @@ export function DecoderSimple({
   return (
     <ul>
       {a.map((e, i) => (
-        <li key={i}>
-          <Row>
-            <Col {...propertiesForColumnsWidth2}>
-              <p className="text-bold">{e.b}</p>
+        // <li key={i}>
+        <Row key={i}>
+          <Col {...propertiesForColumnsWidth2}>
+            <p className="text-bold">{e.b}</p>
+          </Col>
+          {e.e && e.e[0] != null ? (
+            <Col sm="2">
+              <FormComponent
+                textForSubmit={"Глава " + e.e[0]}
+                to={flag1 ? `${url}` : `${url}/${e}`}
+                textsHidden={e.e}
+                namesHidden={["to"]}
+                submitVariant="outline-secondary"
+              />
             </Col>
-            {e.e && e.e[0] != null ? (
-              <Col sm="2">
-                <FormComponent
-                  textForSubmit={"Глава " + e.e[0]}
-                  to={flag1 ? `${url}` : `${url}/${e}`}
-                  textsHidden={e.e}
-                  namesHidden={["to"]}
-                  submitVariant="outline-secondary"
-                />
-              </Col>
-            ) : (
-              ""
-            )}
-          </Row>
-        </li>
+          ) : (
+            ""
+          )}
+        </Row>
+        // </li>
       ))}
     </ul>
   );

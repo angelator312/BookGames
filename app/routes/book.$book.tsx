@@ -46,7 +46,7 @@ export async function action({ params, request }: ActionFunctionArgs) {
     }
   });
 
-  console.log("values:", values);
+  // console.log("values:", values);
   await vStore.setVariables(uId, bId, values);
 
   // @ts-ignore Заради uId:string|null
@@ -84,7 +84,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       const settings = await uStore.getMySettings(uId);
       const vStore = await getVariableStore();
       const vars = await vStore.getVariables(uId, book);
-      console.log(vars);
+      // console.log(vars);
 
       return {
         text: segG,
