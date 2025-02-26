@@ -23,8 +23,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
   // console.log(b);
   for (let i = 0; i < neDumi.length; i++) {
     // console.log(neDumi[i]);
-    text1= text1.toString().replace(neDumi[i],"duma");
-    text2= text2.toString().replace(neDumi[i],"duma");
+    text1= text1.toString().replaceAll(neDumi[i],"duma");
+    text2= text2.toString().replaceAll(neDumi[i],"duma");
   }
 
   const tStore = await getTextStore();
