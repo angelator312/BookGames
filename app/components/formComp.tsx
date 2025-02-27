@@ -1,6 +1,6 @@
 import { Button, Form, InputGroup, Row } from "react-bootstrap";
 export default function FormComponent({
-  to,
+  to: toUrl,
   textForSubmit,
   texts = [],
   names = [],
@@ -23,7 +23,7 @@ export default function FormComponent({
   handleClick?: () => void;
 }) {
   return (
-    <Form method={method} action={to} >
+    <Form method={method} action={toUrl} >
       <InputGroup className="mb-3">
         {texts.map((e, i) => (
           <Form.Group

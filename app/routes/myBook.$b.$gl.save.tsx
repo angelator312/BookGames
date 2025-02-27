@@ -5,15 +5,15 @@ import { neEn } from "~/helps/dumiNeEn";
 import getTextStore from "~/utils/textStore";
 export async function action({ params, request }: ActionFunctionArgs) {
   const form = await request.formData();
-  let text1 = form.get("text1") ?? " ";
-  let text2 = form.get("text2") ?? " ";
+  let istoriaText = form.get("text1") ?? " ";
+  let izboriText = form.get("text2") ?? " ";
   const glava = params.gl;
   const book = params.b;
   if (!glava || Number.isNaN(parseInt(glava))) {
     return false;
   }
-  if (!text2) text2 = "=>(Глава " + (1 + parseInt(glava)) + ")[Следваща]";
-  if (!text1 && !text2) {
+  if (!izboriText) izboriText = "=>(Глава " + (1 + parseInt(glava)) + ")[Следваща]";
+  if (!istoriaText && !izboriText) {
     return false;
     // return redirect(`/myBook/${book}/${glava}?errCode=1`);
   }
@@ -21,21 +21,21 @@ export async function action({ params, request }: ActionFunctionArgs) {
   // console.log(b);
   for (let i = 0; i < neDumi.length; i++) {
     // console.log(neDumi[i]);
-    text1 = text1.toString().replaceAll(neDumi[i], "duma");
-    text2 = text2.toString().replaceAll(neDumi[i], "duma");
+    istoriaText = istoriaText.toString().replaceAll(neDumi[i], "duma");
+    izboriText = izboriText.toString().replaceAll(neDumi[i], "duma");
   }
   for (let i = 0; i < neEn.length; i++) {
     // console.log(neDumi[i]);
-    text1 = text1.toString().replaceAll(neEn[i], "duma");
-    text2 = text2.toString().replaceAll(neEn[i], "duma");
+    istoriaText = istoriaText.toString().replaceAll(neEn[i], "duma");
+    izboriText = izboriText.toString().replaceAll(neEn[i], "duma");
   }
 
   const tStore = await getTextStore();
   //@ts-ignore
   await tStore.addText(
     `${book}-${glava}`,
-    text1.toString(),
-    text2.toString() ?? ""
+    istoriaText.toString(),
+    izboriText.toString() ?? ""
   );
 
   return true;

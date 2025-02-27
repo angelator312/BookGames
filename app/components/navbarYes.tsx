@@ -3,7 +3,7 @@ import { Alert } from "react-bootstrap";
 export default function NavYesOrNo({
   text,
   yes = true,
-  f = (a:any) => {},
+  f: functionOnClose = (a:any) => {},
 }: {
   text: string;
   yes?: boolean;
@@ -15,7 +15,7 @@ export default function NavYesOrNo({
     return (
       <Alert
         variant={yes ? "success" : "danger"}
-        onClose={() =>{ setShow(false);f(1);}}
+        onClose={() =>{ setShow(false);functionOnClose(1);}}
         dismissible
       >
         <Alert.Heading>{text}</Alert.Heading>

@@ -6,8 +6,9 @@ import {
   regexForSimpleDecoder2 as reg2,
 } from "~/utils/regex";
 
+//Deprecated, used only for the old book "Голямото приключение"
 export function DecoderSimple({
-  text2: text,
+  text2: textForDecoding,
   flag1 = true,
   url,
 }: {
@@ -15,17 +16,17 @@ export function DecoderSimple({
   flag1?: boolean;
   url: string;
 }) {
-  let text2: string;
+  let tmpText: string;
   // console.log(text2);
-  if (Array.isArray(text)) text2 = text[0];
-  else text2 = text;
-  if (!text2) return <></>;
-  let text2Lines = text2.replaceAll(/\r/gm, "").split(reg);
-  let a = [];
-  for (let i = 0; i < text2Lines.length; i += 2) {
-    const e = text2Lines[i];
-    let b = e.replace(/\r/gm, "").split(reg2);
-    a.push({ b, e: [text2Lines[i + 1]] });
+  if (Array.isArray(textForDecoding)) tmpText = textForDecoding[0];
+  else tmpText = textForDecoding;
+  if (!tmpText) return <></>;
+  let text2Lines = tmpText.replaceAll(/\r/gm, "").split(reg);
+  let arrayForRender = [];
+  for (let ind = 0; ind < text2Lines.length; ind += 2) {
+    const elNow = text2Lines[ind];
+    let textBeforeIzbor = elNow.replace(/\r/gm, "").split(reg2);
+    arrayForRender.push({ textBeforeIzbor, e: [text2Lines[ind + 1]] });
   }
   // console.log(a);
   // console.log(text2Lines);
@@ -33,11 +34,11 @@ export function DecoderSimple({
   // console.log(text);
   return (
     <ul>
-      {a.map((e, i) => (
+      {arrayForRender.map((e, i) => (
         // <li key={i}>
         <Row key={i}>
           <Col {...propertiesForColumnsWidth2}>
-            <p className="text-bold">{e.b}</p>
+            <p className="text-bold">{e.textBeforeIzbor}</p>
           </Col>
           {e.e && e.e[0] != null ? (
             <Col sm="2">

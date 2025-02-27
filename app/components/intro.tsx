@@ -9,7 +9,9 @@ import SearchComponent from "~/components/Search";
 import MenuForIntro from "~/components/intro.menu";
 import Title from "~/components/title";
 import SubTitle from "~/components/subtitle";
+import RenderBooks from "./renderBooks";
 
+// Note: This is a component that is used nowhere.
 export default function AllBooksRoute({books,dataNotMine}:{books:BookInterface[][],dataNotMine:UserData[]}) {
   let oshte1 = false;
   let otherBooks = books[1];
@@ -79,31 +81,7 @@ export default function AllBooksRoute({books,dataNotMine}:{books:BookInterface[]
             </Row>
             <Row>
               <Col>
-                <div>
-                  {otherBooks.map((e, i) => (
-                    <Row key={i}>
-                      <Col>
-                        <BookHeader authorData={dataNotMine[i]} e={e} />
-                      </Col>
-                    </Row>
-                  ))}
-                  {otherBooks.length <= 0 ? (
-                    <h3 className="centered text-bold">Няма Резултати</h3>
-                  ) : (
-                    ""
-                  )}
-                  {oshte1 ? (
-                    <Row>
-                      <Col>
-                        <a href={"/all"}>
-                          <Button variant="outline-primary" className="text-sm">
-                            Виж всички
-                          </Button>
-                        </a>
-                      </Col>
-                    </Row>
-                  ) : null}
-                </div>
+              <RenderBooks books={otherBooks} dataInThem={dataNotMine} lastNum={5} />
               </Col>
             </Row>
           </Container>

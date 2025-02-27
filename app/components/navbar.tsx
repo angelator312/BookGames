@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button, Offcanvas } from "react-bootstrap";
 import menu from "~/helps/menu.png";
 
-function Example({
+//Note: This is used nowhere.
+function ImageNavbar({
   path,
   title,
   glava,
@@ -47,4 +48,4 @@ function Example({
   );
 }
 
-export default Example;
+export default ImageNavbar;

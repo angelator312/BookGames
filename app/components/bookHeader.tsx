@@ -4,7 +4,7 @@ import type { UserData } from "~/utils/User";
 import type { BookInterface } from "~/utils/textStore";
 
 export default function BookHeader({
-  e,
+  e: bookForPreview,
   avt = false,
   authorData,
 }: {
@@ -12,7 +12,7 @@ export default function BookHeader({
   e: BookInterface;
   avt?: boolean;
 }) {
-  if (!e) return;
+  if (!bookForPreview) return;
   return (
     <Container fluid className="mb-4">
       <Row>
@@ -20,10 +20,10 @@ export default function BookHeader({
           <img src="/img/book-60.png" alt="Book" className="book-image" />
         </Col>
         <Col xs={9} md={7}>
-          <a className="link-clear" href={!avt ? `/book/intro/${e.text}` : `/myBook/${e.text}`}>
-            <h3 className="text-bold text-dark">{e.id}</h3>
+          <a className="link-clear" href={!avt ? `/book/intro/${bookForPreview.text}` : `/myBook/${bookForPreview.text}`}>
+            <h3 className="text-bold text-dark">{bookForPreview.id}</h3>
           </a>
-          <AuthorResume authorData={authorData} authorName={e.avtor ?? ""} />
+          <AuthorResume authorData={authorData} authorName={bookForPreview.avtor ?? ""} />
         </Col>
         {/* <Col className="text-bold text-dark" xs={6} md={2}> */}
         {/* </Col> */}
@@ -33,18 +33,18 @@ export default function BookHeader({
             <DropdownButton title="Действия" id="dropdown-basic-button">
               <Dropdown.Item
                 //method=post
-                href={`/book/intro/${e.text}/`}
+                href={`/book/intro/${bookForPreview.text}/`}
               >
                 Прочети ме
               </Dropdown.Item>
               <Dropdown.Item
                 //method=post
-                href={`/myBook/${e.text}/publish`}
-                disabled={e.public}
+                href={`/myBook/${bookForPreview.text}/publish`}
+                disabled={bookForPreview.public}
               >
                 Публикувай
               </Dropdown.Item>
-              <Dropdown.Item href={`/delete/${e.text}/`}>Изтрий</Dropdown.Item>
+              <Dropdown.Item href={`/delete/${bookForPreview.text}/`}>Изтрий</Dropdown.Item>
             </DropdownButton>
           ) : (
             ""

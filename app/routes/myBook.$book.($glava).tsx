@@ -12,27 +12,27 @@ import { useEffect, useState } from "react";
 import { Col, Container, Nav, Row, Tab } from "react-bootstrap";
 import EditText from "~/components/editText";
 import NavYesOrNo from "~/components/navbarYes";
-import Book from "~/components/book";
+import BookPreview from "~/components/book";
 import getUserStore from "~/utils/userStore";
 import type { User } from "~/utils/User";
-import BookSettingsComponent from "~/components/BookSettingsComponent";
+import MyBookSettingsComponent from "~/components/BookSettingsComponent";
 import type { VariableCollection } from "~/utils/VariableThings";
 import { getDefaultVariables } from "~/utils/VariableThings";
 export async function action({ request, params }: ActionFunctionArgs) {
   const userId = await requireUserId(request);
   if (userId) {
-    let addP = false;
+    let isInBookSettings = false;
     const formData = await request.formData();
     if (formData) {
       const tags = formData.get("tags")?.toString();
       //for tags
       if (typeof tags === "string") {
         const tagList = tags.split(",").map((tag) => tag.trim());
-        const bId = params.book;
-        if (bId) {
+        const bookId = params.book;
+        if (bookId) {
           // console.log("tags:", tagList);
           const tStore = await getTextStore();
-          await tStore.setBook(bId, { tags: tagList });
+          await tStore.setBook(bookId, { tags: tagList });
         }
       }
       // for Variables
@@ -51,13 +51,13 @@ export async function action({ request, params }: ActionFunctionArgs) {
         const bId = params.book;
         if (bId) {
           // console.log("values:", values);
-          const vStore = await getTextStore();
-          await vStore.saveDefaultVariables(bId, values);
-          addP = true;
+          const tStore = await getTextStore();
+          await tStore.saveDefaultVariables(bId, values);
+          isInBookSettings = true;
         }
       }
     }
-    return redirect(new URL(request.url).pathname + addP ? "" : "?default=2");
+    return redirect(new URL(request.url).pathname + isInBookSettings ? "" : "?default=2");
   }
   return redirect("/login");
 }
@@ -80,7 +80,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   if (!bId) return;
   if (!glava || Number.isNaN(parseInt(glava)))
     return redirect(`/myBook/${bId}/1`);
-  const a = await requireUserId(request, false);
+  const userId = await requireUserId(request, false);
   const tStore = await getTextStore();
   let book = await tStore.getBook(bId ?? "");
   if (!book) return redirect(`/`);
@@ -93,18 +93,18 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
     }
   }
   // console.log(glava);
-  if (typeof a === "string") {
-    if (book.avtor == a) {
+  if (typeof userId === "string") {
+    if (book.avtor == userId) {
       const uStore = await getUserStore();
       const comments = await tStore.getComments(bId ?? "", glava);
-      let t = await tStore.getText(`${bId}-${glava}`);
+      let glavaOtText = await tStore.getText(`${bId}-${glava}`);
       return [
         await tStore.getBook(bId),
         glava,
-        t ?? tStore.prototypeOfText(),
+        glavaOtText ?? tStore.prototypeOfText(),
         book.doGl,
         comments,
-        await uStore.getUser(a),
+        await uStore.getUser(userId),
         book.defaultVariables ?? getDefaultVariables(),
         book.text2,
         book.tags ?? [],
@@ -114,29 +114,29 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   }
   return redirect("/login?redirectTo=" + request.url);
 }
-export default function Book1() {
+export default function MyBookRoute() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [book, gl, t, doN, comments, user, vars, bookResume, tags] =
+  const [book, glavaString, glavaOtText, doN, commentsOrg, user, vars, bookResume, tags] =
     useLoaderData<loaderData>();
-  const bUrl = book.text;
-  let comm = comments;
+  const bookUrl = book.text;// otherName is bookID(gb10/gb18)
+  let comments = commentsOrg;
   function update() {
   }
-  const [text, setText] = useState(
+  const [istoriaText, setIstoriaText] = useState(
     //@ts-ignore
-    typeof t === "string" ? "проба" : t?.text ?? "проба"
+    typeof glavaOtText === "string" ? "проба" : glavaOtText?.text ?? "проба"
   );
-  const [text2, setText2] = useState(
+  const [variantiText, setVariantiText] = useState(
     //@ts-ignore
-    typeof t === "string" ? "проба" : t?.text2 ?? "проба"
+    typeof glavaOtText === "string" ? "проба" : glavaOtText?.text2 ?? "проба"
   );
   useEffect(() => {
     //@ts-ignore
-    setText(typeof t === "string" ? "проба" : t?.text ?? "проба");
+    setIstoriaText(typeof glavaOtText === "string" ? "проба" : glavaOtText?.text ?? "проба");
     //@ts-ignore
-    setText2(typeof t === "string" ? "проба" : t?.text2 ?? "проба");
-  }, [gl, t]);
+    setVariantiText(typeof glavaOtText === "string" ? "проба" : glavaOtText?.text2 ?? "проба");
+  }, [glavaString, glavaOtText]);
   const feedCode = searchParams.get("feedCode");
   const errCode = searchParams.get("errCode");
   let [feedMsg] = useState(searchParams.get("feed"));
@@ -167,9 +167,9 @@ export default function Book1() {
     }
   }
 
-  let textLines = text.replace("\r", "\n").split("\n\n");
+  let istoriaLines = istoriaText.replace("\r", "\n").split("\n\n");
   // let furst2Lines = [textLines[0], textLines[1]];
-  textLines = textLines.slice(2);
+  istoriaLines = istoriaLines.slice(2);
   // console.log("t",t);
   // console.log(text, gl, text2);
 
@@ -198,11 +198,11 @@ export default function Book1() {
             </Col>
             <Col>
               <DropDown1
-                url={`/myBook/${bUrl}`}
+                url={`/myBook/${bookUrl}`}
                 // @ts-ignore
                 doN={parseInt(doN ?? "15")}
                 // @ts-ignore
-                activeDrop={parseInt(gl)}
+                activeDrop={parseInt(glavaString)}
               />
             </Col>
             <Col>
@@ -210,7 +210,7 @@ export default function Book1() {
                 <Nav.Link
                   eventKey="editAndPreview"
                   onClick={() => {
-                    window.open(`/myBook/see/${bUrl}/${gl}`);
+                    window.open(`/myBook/see/${bookUrl}/${glavaString}`);
                   }}
                 >
                   Преглед
@@ -233,29 +233,29 @@ export default function Book1() {
                 <Row className="mt-3">
                   <Col>
                     <EditText
-                      text={text}
-                      text2={text2}
-                      glava={gl ?? "1"}
-                      bUrl={`${bUrl}`}
-                      setText={setText}
-                      setText2={setText2}
+                      text={istoriaText}
+                      text2={variantiText}
+                      glava={glavaString ?? "1"}
+                      bUrl={`${bookUrl}`}
+                      setText={setIstoriaText}
+                      setText2={setVariantiText}
                       priIzvikvane={update}
-                      key={gl}
+                      key={glavaString}
                     />
                   </Col>
                   <Col style={{ height: "80vh", overflow: "scroll" }}>
-                    <Book
-                      url={`/myBook/${bUrl}`}
-                      title={book.id ?? "Книга " + bUrl}
-                      almP={`/myBook/${bUrl}/`}
+                    <BookPreview
+                      url={`/myBook/${bookUrl}`}
+                      title={book.id ?? "Книга " + bookUrl}
+                      almP={`/myBook/${bookUrl}/`}
                       flag={3}
                       params={{
-                        text,
-                        glava: gl,
-                        text2,
+                        text: istoriaText,
+                        glava: glavaString,
+                        text2: variantiText,
                         //@ts-ignore
                         user: user ?? "",
-                        book: { text: bUrl },
+                        book: { text: bookUrl },
                         //@ts-ignore
                         variables: vars,
                       }}
@@ -269,7 +269,7 @@ export default function Book1() {
               </Container>
             </Tab.Pane>
             <Tab.Pane eventKey="settings" title="Настройки">
-              <BookSettingsComponent
+              <MyBookSettingsComponent
                 bName={book.id ?? ""}
                 //@ts-ignore
                 user={
@@ -281,21 +281,21 @@ export default function Book1() {
                 }
                 tags={tags}
                 bookResume={bookResume}
-                name={bUrl}
+                name={bookUrl}
                 vars={vars}
               />
             </Tab.Pane>
           </Tab.Content>
           <Container>
             {/* @ts-ignore */}
-            {comm.map((e, i) => (
+            {comments.map((e, i) => (
               <Row key={i}>
                 <Col sm="7">
                   <NavYesOrNo
                     text={e[0].length > 0 ? `${e[0]}\n от ${e[1]}` : ""}
                     f={(a: any) => {
                       navigate(
-                        `/myBook/${bUrl}/${gl}/deleteComment/${i}?p="sx"`
+                        `/myBook/${bookUrl}/${glavaString}/deleteComment/${i}?p="sx"`
                       );
                     }}
                   />

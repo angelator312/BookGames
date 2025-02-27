@@ -1,5 +1,4 @@
 import { Tab, Tabs } from "react-bootstrap";
-import { DecoderSimple } from "./decoderSimple";
 import { DecoderAdvanced } from "./decoderAdvanced";
 import { useSearchParams } from "@remix-run/react";
 
@@ -71,10 +70,10 @@ export function TabLang() {
         />
       </Tab>
       <Tab
-        eventKey={"Неработещи неща от маркдауна"}
-        title={"Неработещи неща от маркдауна"}
+        eventKey={"Не работещи неща от маркдауна"}
+        title={"Не работещи неща от маркдауна"}
       >
-        <h1>{"Неработещи неща от маркдауна"}</h1>
+        <h1>{"Не работещи неща от маркдауна"}</h1>
         <ul>
           <li>
             Таблиците

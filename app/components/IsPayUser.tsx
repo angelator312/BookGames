@@ -1,9 +1,9 @@
 import { PersonCheckFill } from "react-bootstrap-icons";
 import type { UserData } from "~/utils/User";
 
-export default function IsProUser({usD}: {usD: UserData}) {
-   if (usD.isPro) {
-    if (usD.verifiedAuthor) {
+export default function IsProUser({usD: userData}: {usD: UserData}) {
+   if (userData.isPro) {
+    if (userData.verifiedAuthor) {
       return (
         <span>
           <PersonCheckFill />
@@ -11,7 +11,7 @@ export default function IsProUser({usD}: {usD: UserData}) {
         </span>
       );
     }
-  } else if (usD.verifiedAuthor) {
+  } else if (userData.verifiedAuthor) {
     return (
       <span>
         <PersonCheckFill />

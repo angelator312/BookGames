@@ -7,9 +7,9 @@ export const loader = async () => {
 export const action = async () => {
   return;
 };
-
-export default function Sandwiches() {
-  const data = useLoaderData<typeof loader>();
+//Component ForCopy
+export default function ComponentName() {
+  const dataFromLoader = useLoaderData<typeof loader>();
 // console.log(data);
 
   return (

@@ -9,7 +9,7 @@ function MenuForHome({
   logout = true,
 }: {
   logout?: boolean;
-  settings: SettingsInterface;
+  settings?: SettingsInterface;
   user: User;
 }) {
   //@ts-ignore

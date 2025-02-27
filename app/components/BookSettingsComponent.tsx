@@ -18,13 +18,13 @@ export const action = async () => {
   return;
 };
 
-export default function BookSettingsComponent({
+export default function MyBookSettingsComponent({
   bookResume,
   name: bId,
   tags = [],
   user,
-  vars,
-  bName,
+  vars: userVariables,
+  bName: bookName,
 }: {
   name: string;
   tags?: string[];
@@ -68,7 +68,7 @@ export default function BookSettingsComponent({
             urlForImage={"/img/question_mark.png"}
             avtor={user.user}
             avtorDesc={user.data.forMe}
-            bName={bName}
+            bName={bookName}
           />
           <FormComponent
             to="/zapaziBookResume"
@@ -101,7 +101,7 @@ export default function BookSettingsComponent({
               </Card.Title>
               <Form method="post">
                 <Form.Control type="hidden" name="isHavingVars" value={"yes"} />
-                {Object.values(vars).map((varItem: VariableInterface) => {
+                {Object.values(userVariables).map((varItem: VariableInterface) => {
                   return (
                     <Col key={varItem.name}>
                       <Form.Group>

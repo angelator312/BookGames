@@ -1,7 +1,7 @@
 import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import Book from "~/components/book";
+import BookPreview from "~/components/book";
 import getUserStore from "~/utils/userStore";
 import getTextStore from "~/utils/textStore";
 import { createGorB, getUserId, requireUserId } from "~/utils/session.server";
@@ -115,7 +115,7 @@ export default function Book1() {
 
   return (
     <div style={{ fontSize: (book.settings.fontSize ?? 10) / 10 + "rem" }}>
-      <Book
+      <BookPreview
         url={`/myBook/see/${book.b.text}/${book.glava}`}
         title={zagl ?? ""}
         almP={`/img/${book.b.text}-`}

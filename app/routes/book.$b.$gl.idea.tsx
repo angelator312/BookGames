@@ -1,7 +1,7 @@
 import { redirect } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import Book from "~/components/book";
+import BookPreview from "~/components/book";
 import IdeaComp from "~/components/idea";
 import getUserStore from "~/utils/userStore";
 import getTextStore from "~/utils/textStore";
@@ -56,7 +56,7 @@ export default function Idea() {
   return (
     <div>
       <Row style={{ fontSize: (settings.fontSize ?? 10) / 10 + "rem" }}>
-        <Book
+        <BookPreview
           url={`/book/${book.b.text}`}
           title={zagl ?? ""}
           almP={`/img/${book.b.text}-`}

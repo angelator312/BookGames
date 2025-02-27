@@ -2,7 +2,7 @@ import { Col, Card, Row, Button } from "react-bootstrap";
 import type { MiniInterface } from "~/utils/ImageThings";
 
 export default function PreviewImages({
-  minis,
+  minis: arrayOfMinimizedImages,
   handleInsertImage,
   options = { delete: false, names: true, handleDeleteImage: () => {} },
 }: {
@@ -22,7 +22,7 @@ export default function PreviewImages({
   if (options.delete && !options.handleDeleteImage) options.delete = false;
   return (
     <Row className="justify-content-center">
-      {minis.map((e) => (
+      {arrayOfMinimizedImages.map((e) => (
         <Col
           sm={options.sm ?? "4"}
           md={options.md ?? "3"}

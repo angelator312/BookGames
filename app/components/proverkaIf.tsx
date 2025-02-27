@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 const reg = /if\((.+\|\d+\|\d+)/g;
 const reg2 = /(.+)/g;
+//Note: This component is used nowhere.
 export function ProverkaIf({
   e2,
   url,

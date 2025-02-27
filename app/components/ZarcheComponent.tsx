@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function ZarcheComponent({
   broiZarcheta,
-  onResult,
+  onResult: onResultFunction,
 }: {
   broiZarcheta: number;
   onResult: (val: number) => void;
@@ -32,7 +32,7 @@ export default function ZarcheComponent({
 
           rollDice(a, e.currentTarget);
           setValue(a);
-          onResult(a);
+          onResultFunction(a);
         }
       }}
     >

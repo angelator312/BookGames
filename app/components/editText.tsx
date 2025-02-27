@@ -16,12 +16,12 @@ import { ModalInsertChapterSimpleWithScoreChange } from "./ModalInsertChapterSim
 import GetImagesModal from "./getImages";
 import { pomoshti } from "~/helps/pomoshti";
 export default function EditText({
-  text,
-  text2,
+  text: istoriaText,
+  text2: variantiText,
   glava,
   bUrl,
-  setText,
-  setText2,
+  setText: setIstoriaText,
+  setText2: setVariantiText,
   priIzvikvane,
 }: {
   text: string;
@@ -81,8 +81,8 @@ export default function EditText({
 
   function handleEditorChange(value: any, event: any) {
     const arr = (value ?? "").split(/^---\s*$/gm);
-    setText(arr[0]);
-    setText2(arr[1] ?? "");
+    setIstoriaText(arr[0]);
+    setVariantiText(arr[1] ?? "");
     if (priIzvikvane) {
       priIzvikvane();
     }
@@ -128,8 +128,8 @@ export default function EditText({
   async function zapazi() {
     setSaving(true);
     const formData = new FormData();
-    formData.append("text1", text);
-    formData.append("text2", text2);
+    formData.append("text1", istoriaText);
+    formData.append("text2", variantiText);
 
     await fetch(`/myBook/${bUrl}/${glava}/save`, {
       method: "POST",
@@ -223,7 +223,7 @@ export default function EditText({
             // name="text"
             // placeholder="Здравей,Човече"
             defaultValue={
-              (text == "" ? "Здравей,Човече" : text) + "\n---\n" + text2
+              (istoriaText == "" ? "Здравей,Човече" : istoriaText) + "\n---\n" + variantiText
             }
           />
         </Col>

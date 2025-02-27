@@ -67,8 +67,8 @@ export interface Izbor {
   disabled?: boolean;
 }
 export function DecoderAdvanced({
-  text2: text,
-  flag1 = true,
+  text2: textForDecoding,
+  flag1: flagIsOthersBook = true,
   url,
 }: {
   text2: string;
@@ -76,65 +76,65 @@ export function DecoderAdvanced({
   url: string;
 }) {
   let text2: string;
-  // console.log(text2
-  //TODO:Working Zar
+  // console.log(text2);
   const [zarValue, setZarValue] = useState(-1);
-  if (Array.isArray(text)) text2 = text[0];
-  else text2 = text;
+  if (Array.isArray(textForDecoding)) text2 = textForDecoding[0]; 
+  else text2 = textForDecoding;
   if (!text2) return <></>;
 
   // const tM = [...text.matchAll(reg)];
   let broiZarcheta = 0;
-  let arr2 = matchAll(text);
+  let arrayBetaV = matchAll(textForDecoding);
   // console.log(arr2);
-  let arr: { izb?: Izbor; text: string }[] = [];
-  for (let i = 0; i < arr2.length; i++) {
-    let m = arr2[i];
-    if (typeof m === "string") {
-      arr.push({ text: m });
+  let arrayForRender: { izbor?: Izbor; text: string }[] = [];
+  for (let i = 0; i < arrayBetaV.length; i++) {
+    let element = arrayBetaV[i];
+    if (typeof element === "string") {
+      arrayForRender.push({ text: element });
     } else if (i == 0) {
-      arr.push({ text: "", izb: m });
+      arrayForRender.push({ text: "", izbor: element });
     } else {
-      let zars: number[] = [];
-      if (Array.isArray(m.zar)) zars = m.zar;
-      else zars = [m.zar];
+      let zarove: number[] = [];
+      if (Array.isArray(element.zar)) zarove = element.zar;
+      else zarove = [element.zar];
       let disabled = false;
 
-      if (zars.length > 0) {
+      if (zarove.length > 0) {
         // console.log(zars);
         disabled = true;
-        zars.forEach((e) => {
+        zarove.forEach((e) => {
           // e = parseInt(m, 10);
           if (zarValue == e) disabled = false;
           broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
         });
-        m.disabled = disabled;
+        element.disabled = disabled;
         // console.log(m);
       }
-      if (arr[arr.length - 1].izb) {
-        arr.push({ izb: m, text: "" });
-      } else if (arr[arr.length - 1].text != "\n") arr[arr.length - 1].izb = m;
-      else arr.push({ izb: m, text: "" });
+      if (arrayForRender[arrayForRender.length - 1].izbor) {
+        arrayForRender.push({ izbor: element, text: "" });
+      } else if (arrayForRender[arrayForRender.length - 1].text != "\n") arrayForRender[arrayForRender.length - 1].izbor = element;
+      else arrayForRender.push({ izbor: element, text: "" });
     }
   }
   // console.log(arr);
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i].izb) {
+  // Deleting "\n" and making render multiline
+  for (let i = 0; i < arrayForRender.length; i++) {
+    if (arrayForRender[i].izbor) {
       let poslLine = "";
       for (let j = i - 1; j >= 0; ) {
-        if (arr[j].izb) break;
-        if (arr[j].text == "\n") {
+        if (arrayForRender[j].izbor) break;
+        if (arrayForRender[j].text == "\n") {
           break;
         }
-        poslLine += arr[j].text;
-        arr[j].text = "\n";
+        poslLine += arrayForRender[j].text;
+        arrayForRender[j].text = "\n";
       }
-      poslLine += arr[i].text;
+      poslLine += arrayForRender[i].text;
       poslLine += "\n";
-      arr[i].text = poslLine;
+      arrayForRender[i].text = poslLine;
     }
   }
-  arr = arr.filter((e) => !e.text.match(isEmptyLine));
+  arrayForRender = arrayForRender.filter((e) => !e.text.match(isEmptyLine));
   broiZarcheta = Math.floor(broiZarcheta);
   // console.log(broiZarcheta);
 
@@ -149,26 +149,26 @@ export function DecoderAdvanced({
         />
       ) : null}
       {/* <ul> */}
-      {arr.map((e, i) => (
-        <div key={i}>
-          {e.izb ? (
+      {arrayForRender.map((el, index) => (
+        <div key={index+el.text}>
+          {el.izbor ? (
             <Row>
-              {e.text.trim() ? (
+              {el.text.trim() ? (
                 <Col {...propertiesForColumnsWidth2}>
                   {/* <p className=""> */}
-                  <Markdown>{e.text}</Markdown>
+                  <Markdown>{el.text}</Markdown>
                   {/* </p> */}
                 </Col>
               ) : null}
               <Col
-                sm={e.text.trim() ? "2" : "12"}
-                className={e.text.trim() ? "" : "centered"}
+                sm={el.text.trim() ? "2" : "12"}
+                className={el.text.trim() ? "" : "centered"}
               >
-                <IzborComponent izbor={e.izb} url={url} flag={flag1} />
+                <IzborComponent izbor={el.izbor} url={url} flag={flagIsOthersBook} />
               </Col>
             </Row>
           ) : (
-            <Markdown>{e.text}</Markdown>
+            <Markdown>{el.text}</Markdown>
           )}
         </div>
       ))}

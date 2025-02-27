@@ -20,7 +20,7 @@ interface Params {
   variables: { [key: string]: VariableInterface };
 }
 
-export default function Book({
+export default function BookPreview({
   url,
   title,
   almP,

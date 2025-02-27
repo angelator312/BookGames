@@ -5,7 +5,7 @@ import getUserStore from "~/utils/userStore";
 import getTextStore from "~/utils/textStore";
 import { requireUserId } from "~/utils/session.server";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import RenderText2 from "~/components/renderText2";
+import RenderTextFrom1String from "~/components/renderText2";
 import BookIntro from "~/components/bookIntro";
 export async function action({ params, request }: ActionFunctionArgs) {
   return redirect(request.url);

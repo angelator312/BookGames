@@ -6,7 +6,7 @@ import { Search, X } from "react-bootstrap-icons";
 export default function SearchComponent() {
   const [params] = useSearchParams();
   let query = params.get("query") ?? "";
-  let qRef = useRef<HTMLInputElement>(null);
+  let searchReference = useRef<HTMLInputElement>(null);
   const location=useLocation();
   return (
     <Form action={location.pathname} method="get">
@@ -26,14 +26,14 @@ export default function SearchComponent() {
               name="query"
               placeholder="Търси"
               defaultValue={query}
-              ref={qRef}
+              ref={searchReference}
             />
             <Button
               variant="outline-secondary"
               id="button-add"
               type="submit"
               onClick={() => {
-                if (qRef.current) qRef.current.value = "";
+                if (searchReference.current) searchReference.current.value = "";
               }}
             >
               <X color="black" style={{ display: "inline" }} />

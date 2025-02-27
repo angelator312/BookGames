@@ -12,7 +12,7 @@ import RenderAuthorBooks from "./renderAuthorBooks";
 
 export default function Home({
   user,
-  books,
+  books,//my and other's books
   settings,
   dataMy,
   dataNotMine,

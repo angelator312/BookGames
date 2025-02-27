@@ -5,12 +5,11 @@ import { compileToString } from "~/utils/User";
 // const regImg = /=>\[(image:.*?)\]/gm;
 import RenderText from "./renderText";
 import type { VariableInterface } from "~/utils/VariableThings";
-import { propertiesForColumnsWidth } from "~/utils/columnStyles";
 
 export default function Text({
   glava,
-  textLines,
-  text2Lines: text2,
+  textLines: istoriaTextLines,
+  text2Lines: textForDecoder,
   flag1 = true,
   url,
   variables = {},
@@ -29,10 +28,10 @@ export default function Text({
     return compileToString(a, variables);
   }
 
-  textLines = textLines.map((e) => compileToStringM(e));
+  istoriaTextLines = istoriaTextLines.map((e) => compileToStringM(e));
   // console.log(furst2Lines);
   // textLines
-  text2 = compileToStringM(text2);
+  textForDecoder = compileToStringM(textForDecoder);
   return (
     <Container className="m-4" style={{ textIndent: 20 }}>
       <div className="chapter-text">
@@ -43,15 +42,15 @@ export default function Text({
       </div>
       <Row>
         <Col>
-          <RenderText texts={textLines} />
+          <RenderText texts={istoriaTextLines} />
         </Col>
       </Row>
       <Row>
         <Col>
           {!flag1 ? (
-            <DecoderAdvanced text2={text2} url={url} flag1={flag1} />
+            <DecoderAdvanced text2={textForDecoder} url={url} flag1={flag1} />
           ) : (
-            <Decoder text2={text2} url={url} flag1={flag1} />
+            <Decoder text2={textForDecoder} url={url} flag1={flag1} />
           )}
         </Col>
       </Row>

@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 
+//Note: Is used nowhere!
 function IdeaComp({ url, comments }: { url: string; comments: string[] }) {
   return (
     <div>
