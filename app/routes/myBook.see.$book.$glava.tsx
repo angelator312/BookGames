@@ -78,9 +78,8 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       let text = await tStore.getText(`${b.text}-${glava}`);
       if (!text || !glava) {
         //@ts-ignore
-        tStore.addComment(params.book, glava, uId, "Довършете си книгата");
         uStore.editUserSGlava(uId, `Book-${b.text}`, "1");
-        return redirect(`/?errCode=1`);
+        return redirect(`/myBook/${b.text}/${glava}?errCode=1`);
       }
       let segG = text?.text;
       let spec = text?.text2;

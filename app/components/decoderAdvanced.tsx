@@ -106,13 +106,11 @@ export function DecoderAdvanced({
           // e = parseInt(m, 10);
           
           if (zarValue == e) disabled = false;
-          console.log(zarValue, e,disabled);
           broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
         });
         element.disabled = disabled;
         // console.log(m);
       }
-      console.log(disabled);
       
       if (arrayForRender[arrayForRender.length - 1].izbor) {
         arrayForRender.push({ izbor: element, text: "" });

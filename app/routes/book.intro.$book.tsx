@@ -23,13 +23,14 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   if (typeof a === "string") {
     const user = await uStore.getUser(a);
     if (user) {
-      let glava = user?.glavi[`Book-${b.text}`];
-      if (glava) {
-        if (a != b.avtor)
-          // return redirect("/myBook/" + bId+"/"+glava);
-          return redirect("/book/" + bId);
+      if (user.glavi) {
+        let glava = user.glavi[`Book-${b.text}`];
+        if (glava&&a!=b.avtor) {
+          if (a != b.avtor)
+            // return redirect("/myBook/" + bId+"/"+glava);
+            return redirect("/book/" + bId);
+        }
       }
-
       settings = user.settings ?? settings;
     }
   }
@@ -49,7 +50,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       user: a,
       aDescr: authorDescription,
       urlForImmage: "/img/question_mark.png",
-      isAvtor: a == b.avtor, //TODO: redirect
+      isAvtor: a == b.avtor, 
     };
   }
   return redirect("/");
@@ -78,7 +79,7 @@ export default function Book1() {
         urlForImage={b.urlForImmage}
         avtor={book.avtor}
         avtorDesc={b.aDescr}
-        bName={book.id??""}
+        bName={book.id ?? ""}
       />
       <Row>
         <Col>

@@ -113,7 +113,7 @@ export class BookStore {
       text2: smallDescription,
       data: this.prototypeOfBookData(),
     };
-    console.log(v);
+    // console.log(v);
     
     await this.collection.replaceOne({ text: `gb${numSmallName}` }, v, {
       upsert: true,

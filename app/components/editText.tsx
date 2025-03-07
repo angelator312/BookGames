@@ -223,7 +223,7 @@ export default function EditText({
             // name="text"
             // placeholder="Здравей,Човече"
             defaultValue={
-              (istoriaText == "" ? "Здравей,Човече" : istoriaText) + "\n---\n" + variantiText
+              istoriaText + "\n---\n" + variantiText
             }
           />
         </Col>
