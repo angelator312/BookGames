@@ -29,7 +29,6 @@ export default function ZarcheComponent({
       onClick={(e) => {
         if (value == 0) {
           const a = rand();
-
           rollDice(a, e.currentTarget);
           setValue(a);
           onResultFunction(a);

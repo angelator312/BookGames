@@ -78,7 +78,7 @@ export function DecoderAdvanced({
   let text2: string;
   // console.log(text2);
   const [zarValue, setZarValue] = useState(-1);
-  if (Array.isArray(textForDecoding)) text2 = textForDecoding[0]; 
+  if (Array.isArray(textForDecoding)) text2 = textForDecoding[0];
   else text2 = textForDecoding;
   if (!text2) return <></>;
 
@@ -104,15 +104,20 @@ export function DecoderAdvanced({
         disabled = true;
         zarove.forEach((e) => {
           // e = parseInt(m, 10);
+          
           if (zarValue == e) disabled = false;
+          console.log(zarValue, e,disabled);
           broiZarcheta = Math.max((e + 5) / 6, broiZarcheta);
         });
         element.disabled = disabled;
         // console.log(m);
       }
+      console.log(disabled);
+      
       if (arrayForRender[arrayForRender.length - 1].izbor) {
         arrayForRender.push({ izbor: element, text: "" });
-      } else if (arrayForRender[arrayForRender.length - 1].text != "\n") arrayForRender[arrayForRender.length - 1].izbor = element;
+      } else if (arrayForRender[arrayForRender.length - 1].text != "\n")
+        arrayForRender[arrayForRender.length - 1].izbor = element;
       else arrayForRender.push({ izbor: element, text: "" });
     }
   }
@@ -150,7 +155,7 @@ export function DecoderAdvanced({
       ) : null}
       {/* <ul> */}
       {arrayForRender.map((el, index) => (
-        <div key={index+el.text}>
+        <div key={index + el.text}>
           {el.izbor ? (
             <Row>
               {el.text.trim() ? (
@@ -164,7 +169,11 @@ export function DecoderAdvanced({
                 sm={el.text.trim() ? "2" : "12"}
                 className={el.text.trim() ? "" : "centered"}
               >
-                <IzborComponent izbor={el.izbor} url={url} flag={flagIsOthersBook} />
+                <IzborComponent
+                  izbor={el.izbor}
+                  url={url}
+                  flag={flagIsOthersBook}
+                />
               </Col>
             </Row>
           ) : (

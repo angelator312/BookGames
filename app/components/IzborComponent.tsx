@@ -13,14 +13,14 @@ export default function IzborComponent({
   // [number,number,number,string]} ) {
   // console.log(izbor);
   return (
-    <Form className="my-2" action={flag ? `${url}` : `${url}/${izbor.glava}`}>
+    <Form className="my-2" method="post" action={flag ? `${url}` : `${url}/${izbor.glava}`}>
       <Form.Control type="hidden" name="to" value={izbor.glava.toString()} />
       <Form.Control
         type="hidden"
         name="var/резултат"
         value={izbor.scoreChange.toString()}
       />
-      <Button variant="outline-primary" type="submit">{izbor.text}</Button>
+      <Button variant="outline-primary" type="submit" disabled={izbor.disabled}>{izbor.text}</Button>
     </Form>
     // <FormComponent
     //   disabled={izbor.disabled}
