@@ -5,6 +5,7 @@ import {
   unstable_createMemoryUploadHandler,
   unstable_parseMultipartFormData,
 } from "@remix-run/node";
+import { MAX_FILE_SIZE } from "~/utils/Consts";
 import getImageStore from "~/utils/fileStore";
 import { requireUserId } from "~/utils/session.server";
 
@@ -32,14 +33,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         arr.push(chunk);
       }
       const fileStore = await getImageStore();
-      return (
-        await fileStore.addImage(
-          filename,
-          userId,
-          contentType,
-          Buffer.concat(arr)
-        )
-      ).id;
+      const poslArray = Buffer.concat(arr);
+      if (poslArray.byteLength < MAX_FILE_SIZE)
+        return (
+          await fileStore.addImage(filename, userId, contentType, poslArray)
+        ).id;
     },
     // fallback to memory for everything else
     unstable_createMemoryUploadHandler()

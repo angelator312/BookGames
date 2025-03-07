@@ -26,6 +26,8 @@ import type { MiniInterface } from "~/utils/ImageThings";
 import { requireUserId } from "~/utils/session.server";
 import type { SettingsInterface, User, UserData } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
+import { MAX_FILE_SIZE } from "../utils/Consts";
+
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const a = await requireUserId(request, false);
@@ -302,7 +304,18 @@ export default function Settings() {
               <Form.Control
                 type="file"
                 name="file"
-                onChange={() => setDisabled(false)}
+                accept=".png,.jpeg,.jpg"
+                onChange={(e) =>
+                  {
+                    setDisabled(false)
+                    if(e.target.files[0].size>MAX_FILE_SIZE)
+                    {
+                      setDisabled(true)
+                      e.target.setCustomValidity("Файлът е твърде голям(най-много 5mb)!");
+                      e.target.reportValidity();
+                    }
+                  } 
+                }
               />
               <Form.Control type="hidden" value="/profil?koe=3" name="toUrl" />
               {/* <Form.Control value="Качи" type="submit" disabled={disabled} /> */}

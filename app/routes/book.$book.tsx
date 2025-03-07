@@ -68,33 +68,38 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       //console.log(uStore.collection);
 
       const user = await uStore.getUser(uId);
-      let glava = user?.glavi[`Book-${b.text}`] ?? "1";
-      let text = await tStore.getText(`${b.text}-${glava}`);
-      if (!text || !glava) {
-        //@ts-ignore
-        tStore.addComment(book, glava, uId, "Довършете си книгата");
-        uStore.editUserSGlava(uId, `Book-${b.text}`, "1");
-        return redirect(`/?errCode=1`);
-      }
-      let segG = text?.text;
-      let spec = text?.text2;
-      // console.log({ text: segG, glava, text2: spec, b });
-      createGorB("glava", glava, request);
-      createGorB("book", b.text, request);
-      const settings = await uStore.getMySettings(uId);
-      const vStore = await getVariableStore();
-      const vars = await vStore.getVariables(uId, book);
-      // console.log(vars);
+      if (user) {
+        let glava = "1";
+        if (user.glavi) {
+          glava=user.glavi[`Book-${b.text}`] ?? "1";
+        }
+        let text = await tStore.getText(`${b.text}-${glava}`);
+        if (!text || !glava) {
+          //@ts-ignore
+          tStore.addComment(book, glava, uId, "Довършете си книгата");
+          uStore.editUserSGlava(uId, `Book-${b.text}`, "1");
+          return redirect(`/?errCode=1`);
+        }
+        let segG = text?.text;
+        let spec = text?.text2;
+        // console.log({ text: segG, glava, text2: spec, b });
+        createGorB("glava", glava, request);
+        createGorB("book", b.text, request);
+        const settings = await uStore.getMySettings(uId);
+        const vStore = await getVariableStore();
+        const vars = await vStore.getVariables(uId, book);
+        // console.log(vars);
 
-      return {
-        text: segG,
-        glava,
-        text2: spec,
-        b,
-        settings,
-        user: uId,
-        variables: vars,
-      };
+        return {
+          text: segG,
+          glava,
+          text2: spec,
+          b,
+          settings,
+          user: user,
+          variables: vars,
+        };
+      }
     }
     return redirect("/");
   }
