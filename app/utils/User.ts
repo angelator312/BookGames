@@ -52,6 +52,7 @@ export function getDefaultUser(): User {
     data: getDefaultUserData(),
     admin: false,
     settings: getDefaultSettings(),
+    glavi:{},
   };
   return settings;
 }

@@ -74,6 +74,7 @@ export class UserStore {
     let v: User = {
       ...data,
     };
+    if(!v.glavi)v.glavi={};
     v.glavi[id] = glava;
     const i = await this.collection.replaceOne({ user }, v);
     v._id = i.upsertedId;
