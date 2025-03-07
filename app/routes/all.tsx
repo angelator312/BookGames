@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import { getDefaultSettings } from "http2";
 import { requireUserId, knigi, getUserDatas } from "~/utils/session.server";
 import type { BookInterface } from "~/utils/textStore";
-import type { User, SettingsInterface, UserData } from "~/utils/User";
+import { type User, type SettingsInterface, type UserData, getDefaultUser } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
 import globalLargeStylesUrl from "~/styles/global-large.css";
 import globalMediumStylesUrl from "~/styles/global-medium.css";
@@ -41,20 +41,28 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   // console.log(a);
   // console.log(await knigi(a));
 
+  const searchParams = new URL(request.url).searchParams;
+  const knigite = await knigi(a??"", searchParams.get("query"));
   if (typeof a === "string") {
     const user = await (await getUserStore()).getUser(a);
     if (user) {
-      const searchParams = new URL(request.url).searchParams;
-      const knigite = await knigi(a, searchParams.get("query"));
       return [
         user,
         knigite[1],
         user.settings ?? getDefaultSettings(),
         await getUserDatas(knigite[1]),
       ];
-    }
+    } 
   }
-  return redirect("/login?redirectTo=" + request.url);
+  return [
+    {
+      ...getDefaultUser(),
+      user:"Анонимен"
+    },
+    knigite[1],
+    getDefaultSettings(),
+    await getUserDatas(knigite[1]),
+  ];
 };
 type loaderType = [User, BookInterface[], SettingsInterface, UserData[]] | null;
 export default function AllBooksRoute() {
@@ -76,7 +84,7 @@ export default function AllBooksRoute() {
           <MenuForHome
             //@ts-ignore
             user={user}
-            settings={settings}
+            logout={user.user !== "Анонимен"}
           />
         </Col>
       </Row>
