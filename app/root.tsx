@@ -23,7 +23,7 @@ import { Button, Col, Row } from "react-bootstrap";
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: myStyle2 },
-  { rel: "stylesheet", href:  myDice },
+  { rel: "stylesheet", href: myDice },
   { rel: "stylesheet", href: myStyles },
   { rel: "stylesheet", href: bootstrapStyles },
   // { rel: "stylesheet", href: globalStylesUrl },
@@ -52,6 +52,10 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Сайт за книги-игри, който предлага четене,писане и споделяне на книги-игри!"
+        />
         <title>BookGames Книги игри</title>
         <Links />
         <Scripts />
@@ -82,10 +86,10 @@ export function ErrorBoundary() {
         <Row>
           <Col sm="3">( Опитваме се да го оправим! )</Col>
           <br />
-              <Col sm="3">
-          <Button variant="success" onClick={() => navigate(-1)}>
-            Върни се назад
-          </Button>
+          <Col sm="3">
+            <Button variant="success" onClick={() => navigate(-1)}>
+              Върни се назад
+            </Button>
           </Col>
         </Row>
         {/* add the UI you want your users to see */}
