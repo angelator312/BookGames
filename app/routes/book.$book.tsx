@@ -50,7 +50,6 @@ export async function action({ params, request }: ActionFunctionArgs) {
   // console.log("values:", values);
   await vStore.setVariables(uId, bId, values);
   const lastStore=await getLastTimeStore();
-  console.log(glava);
   await lastStore.editUserSChapter(uId, `${params.book}`, parseInt(glava, 10));
   return redirect(request.url);
 }

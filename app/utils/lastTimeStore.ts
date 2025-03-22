@@ -30,7 +30,7 @@ export class LastTimeStore {
     {
       v=await this.addTime(user,book);
     }
-    console.log(v);
+    // console.log(v);
     
     return v;
   }
@@ -61,7 +61,7 @@ export class LastTimeStore {
     const arr = await this.collection
       .find({ user }, { sort: { time: -1 } })
       .toArray();
-    console.log(arr);
+    // console.log(arr);
 
     return arr;
   }
