@@ -6,15 +6,9 @@ export function replaceNulls(
   requiredThings = {},
   avoidKeys: Array<string>
 ) {
-  Object.entries(defaultThing).forEach((key, i) => {
-    replaceKeyValue(
-      key[0],
-      key[1],
-      collection,
-      requiredThings,
-      avoidKeys
-    );
-  });
+  for (const [key, value] of Object.entries(defaultThing)) {
+    replaceKeyValue(key, value, collection, requiredThings, avoidKeys);
+  }
 }
 function replaceKeyValue(
   key: string,
@@ -25,15 +19,15 @@ function replaceKeyValue(
 ) {
   if (avoidKeys.includes(key)) return;
   if (typeof value == "object") {
-    Object.entries(value).forEach((key2, i) => {
+    for (const [key2, value2] of Object.entries(value)) {
       replaceKeyValue(
-        key + "." + key2[0],
-        key2[1],
+        key + "." + key2,
+        value2,
         collection,
         requiredThings,
         avoidKeys
       );
-    });
+    }
   } else {
     console.log("key:", { ...requiredThings, [`${key}`]: undefined });
 
