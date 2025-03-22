@@ -43,10 +43,16 @@ export interface SpecInterface {
 
 export class BookStore {
   async FixDatabase() {
-    this.collection.updateMany(
-      { isBook: true, data: undefined },
-      { $set: { data: { clicks: 0, timeForUser: {} } } }
-    );
+    const defaultBookData = this.getDefaultBook();
+    const defaultBookThings = Object.values(defaultBookData);
+    Object.keys(defaultBookData)
+      .filter((e) => e != "isBook")
+      .forEach((key, i) => {
+        this.collection.updateMany(
+          { isBook: true, [`${key}`]: undefined },
+          { $set: { [`${key}`]: defaultBookThings[i] } }
+        );
+      });
     const books = await this.collection
       .find({ isBook: true, id: { $regex: /^Book/ } })
       .toArray();
@@ -56,12 +62,6 @@ export class BookStore {
         { $set: { id: e.id?.substring(5, e.id.length - 3) } }
       );
     }
-    this.collection.updateMany(
-      { isBook: true, "author.data.isPro": false },
-      {
-        $set: { author: undefined },
-      }
-    );
   }
   async setBook(
     bId: string, //gbX X:number
@@ -69,7 +69,7 @@ export class BookStore {
       // id?: string;// Голямото приключение (името на книгата)
       text2?: string; // Хубава книга разказваща за ... (Описанието на книгата)
       tags?: string[];
-      doGl?:string;
+      doGl?: string;
     }
   ): Promise<boolean> {
     const b = await this.getBook(bId);
@@ -111,10 +111,10 @@ export class BookStore {
       comments: [],
       tags: [],
       text2: smallDescription,
-      data: this.prototypeOfBookData(),
+      data: this.getDefaultBookData(),
     };
     // console.log(v);
-    
+
     await this.collection.replaceOne({ text: `gb${numSmallName}` }, v, {
       upsert: true,
     });
@@ -249,7 +249,10 @@ export class BookStore {
     const a = bookL.comments[parseInt(gl.toString()) - 1] ?? [];
     return a.map((e, i) => (e[1] == avt ? e[0] : ""));
   }
-  async searchWithQuery(query: string, books: BookInterface[]): Promise<BookInterface[]> {
+  async searchWithQuery(
+    query: string,
+    books: BookInterface[]
+  ): Promise<BookInterface[]> {
     function includes(queryOrg: string, str: string): number {
       const query = queryOrg;
       let br = 0;
@@ -315,7 +318,10 @@ export class BookStore {
     const out = data2;
     return out;
   }
-  async getPublicBooks(avt: string, query: string | null): Promise<BookInterface[]> {
+  async getPublicBooks(
+    avt: string,
+    query: string | null
+  ): Promise<BookInterface[]> {
     //@ts-ignore
     const data: BookInterface[] = await this.collection
       .find({ public: true, isBook: true }, { sort: { time: "ascending" } })
@@ -359,7 +365,11 @@ export class BookStore {
     this.collection = database.collection(this.collectionName);
     // console.log(this.collectionName, this.collection);
   }
-  async addText(id: string, text: string, text2: string): Promise<TextInterface> {
+  async addText(
+    id: string,
+    text: string,
+    text2: string
+  ): Promise<TextInterface> {
     const v: TextInterface = {
       id: id,
       text,
@@ -389,7 +399,11 @@ export class BookStore {
     return data;
   }
   async addSpec(nom: number): Promise<SpecInterface> {
-    const v: SpecInterface = { isBook: false, bookNom: nom, id: "Spec--1--cepS" };
+    const v: SpecInterface = {
+      isBook: false,
+      bookNom: nom,
+      id: "Spec--1--cepS",
+    };
     await this.collection.replaceOne(
       { id: "Spec--1--cepS", isBook: false },
       v,
@@ -400,7 +414,7 @@ export class BookStore {
 
     return v;
   }
-  prototypeOfText(): TextInterface {
+  getDefaultText(): TextInterface {
     return {
       isBook: false,
       text: "",
@@ -409,7 +423,7 @@ export class BookStore {
       avtor: "",
     };
   }
-  prototypeOfBook(): BookInterface {
+  getDefaultBook(): BookInterface {
     return {
       isBook: true,
       text: "",
@@ -417,7 +431,7 @@ export class BookStore {
       public: false,
       avtor: "",
       text2: "",
-      data: this.prototypeOfBookData(),
+      data: this.getDefaultBookData(),
     };
   }
   //Analyzer
@@ -451,9 +465,8 @@ export class BookStore {
     if (Number.isNaN(timeM)) return;
     const book = await this.getBook(bookName);
     if (!book) return;
-    if(!book.data)
-    {
-      book.data = this.prototypeOfBookData();
+    if (!book.data) {
+      book.data = this.getDefaultBookData();
     }
     const v: BookInterface = book;
     if (Number.isNaN(v.data.timeForUser[user])) v.data.timeForUser[user] = 0;
@@ -463,7 +476,7 @@ export class BookStore {
     });
   }
 
-  prototypeOfBookData(): BookData {
+  getDefaultBookData(): BookData {
     const d: BookData = {
       clicks: 0,
       timeForUser: {},

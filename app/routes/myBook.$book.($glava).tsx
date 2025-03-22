@@ -101,7 +101,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       return [
         await tStore.getBook(bId),
         glava,
-        glavaOtText ?? tStore.prototypeOfText(),
+        glavaOtText ?? tStore.getDefaultText(),
         book.doGl,
         comments,
         await uStore.getUser(userId),

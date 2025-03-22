@@ -65,7 +65,7 @@ export class UserStore {
   }
   async editUserSGlava(
     user: string,
-    id: string,
+    id: string,//id of book (gbX)
     glava: string
   ): Promise<User | null> {
     const data = await this.getUser(user);
