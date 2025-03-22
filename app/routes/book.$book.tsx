@@ -8,11 +8,12 @@ import { createGorB, getUserId, requireUserId } from "~/utils/session.server";
 import type { loaderBook } from "~/utils/loaderTypes";
 import getVariableStore from "~/utils/variableStore";
 import type { VariableCollection } from "~/utils/VariableThings";
+import getLastTimeStore from "~/utils/lastTimeStore";
 export async function action({ params, request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const bId = params.book;
   if (!bId) return redirect("/");
-  let glava = formData.get("to");
+  let glava:string = formData.get("to")?.toString()??"";
   // console.log(glava);
   if (!glava) glava = "1";
   const userStore = await getUserStore();
@@ -48,53 +49,53 @@ export async function action({ params, request }: ActionFunctionArgs) {
 
   // console.log("values:", values);
   await vStore.setVariables(uId, bId, values);
-
-  // @ts-ignore Заради uId:string|null
-  await userStore.editUserSGlava(uId, `Book-${params.book}`, glava);
+  const lastStore=await getLastTimeStore();
+  console.log(glava);
+  await lastStore.editUserSChapter(uId, `${params.book}`, parseInt(glava, 10));
   return redirect(request.url);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const uId = await requireUserId(request, false);
-  const book = params.book;
-  if (!book) return redirect("/");
+  const bId = params.book;
+  if (!bId) return redirect("/");
   const tStore = await getTextStore();
   const uStore = await getUserStore();
-  const b = await tStore.getBook2(book ?? " ");
+  const lastStore = await getLastTimeStore();
+  const book = await tStore.getBook2(bId ?? " ");
   // console.log(b);
   if (typeof uId === "string") {
-    if (b?.avtor == uId) return redirect("/myBook/" + book);
-    if (b?.public) {
+    if (book?.avtor == uId) return redirect("/myBook/" + bId);
+    if (book?.public) {
       // return a;
       //console.log(uStore.collection);
 
       const user = await uStore.getUser(uId);
       if (user) {
         let glava = "1";
-        if (user.glavi) {
-          glava=user.glavi[`Book-${b.text}`] ?? "1";
-        }
-        let text = await tStore.getText(`${b.text}-${glava}`);
+        glava=(await lastStore.getTime(uId,bId)).chapter.toString();
+        
+        let text = await tStore.getText(`${book.text}-${glava}`);
         if (!text || !glava) {
           //@ts-ignore
-          tStore.addComment(book, glava, uId, "Довършете си книгата");
-          uStore.editUserSGlava(uId, `Book-${b.text}`, "1");
+          tStore.addComment(bId, glava, uId, "Довършете си книгата");
+          (await getLastTimeStore()).editUserSChapter(uId, `${book.text}`, 1);
           return redirect(`/?errCode=1`);
         }
         let segG = text?.text;
         let spec = text?.text2;
         // console.log({ text: segG, glava, text2: spec, b });
         createGorB("glava", glava, request);
-        createGorB("book", b.text, request);
+        createGorB("book", book.text, request);
         const settings = await uStore.getMySettings(uId);
         const vStore = await getVariableStore();
-        const vars = await vStore.getVariables(uId, book);
+        const vars = await vStore.getVariables(uId, bId);
         // console.log(vars);
 
         return {
           text: segG,
           glava,
           text2: spec,
-          b,
+          b: book,
           settings,
           user: user,
           variables: vars,

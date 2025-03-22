@@ -8,9 +8,10 @@ import { createGorB, getUserId, requireUserId } from "~/utils/session.server";
 import type { loaderBook } from "~/utils/loaderTypes";
 import getVariableStore from "~/utils/variableStore";
 import type { VariableCollection } from "~/utils/VariableThings";
+import getLastTimeStore from "~/utils/lastTimeStore";
 export async function action({ params, request }: ActionFunctionArgs) {
   const formData = await request.formData();
-  let glava = formData.get("to");
+  let glava: string = formData.get("to")?.toString() ?? "";
   //console.log(glava);\
   const bId = params.book;
   if (!bId) return redirect("/");
@@ -51,9 +52,8 @@ export async function action({ params, request }: ActionFunctionArgs) {
 
   // console.log("values:", values);
   await vStore.setVariables(uId, bId, values);
-
-  // @ts-ignore Заради uId:string|null
-  await userStore.editUserSGlava(uId, `Book-${bId}`, glava);
+  const lastStore = await getLastTimeStore();  
+  await lastStore.editUserSChapter(uId, `${bId}`, parseInt(glava, 10));
   const outUrl =
     request.url.substring(0, request.url.lastIndexOf("/")) + "/" + glava;
 
@@ -77,8 +77,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       let glava = params.glava;
       let text = await tStore.getText(`${b.text}-${glava}`);
       if (!text || !glava) {
-        //@ts-ignore
-        uStore.editUserSGlava(uId, `Book-${b.text}`, "1");
+        (await getLastTimeStore()).editUserSChapter(uId, b.text, 1);
         return redirect(`/myBook/${b.text}/${glava}?errCode=1`);
       }
       let segG = text?.text;

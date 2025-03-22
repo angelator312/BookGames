@@ -29,7 +29,7 @@ function replaceKeyValue(
       );
     }
   } else {
-    console.log("key:", { ...requiredThings, [`${key}`]: undefined });
+    // console.log("key:", { ...requiredThings, [`${key}`]: undefined });
 
     collection.updateMany(
       { ...requiredThings, [`${key}`]: undefined },

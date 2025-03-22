@@ -12,7 +12,6 @@ export interface Turneta {
 
 export interface User {
   _id?: ObjectId | string;
-  glavi?: any;
   user: string;
   passH: string;
   settings: SettingsInterface;
@@ -53,7 +52,6 @@ export function getDefaultUser(): User {
     data: getDefaultUserData(),
     admin: false,
     settings: getDefaultSettings(),
-    glavi: {},
   };
   return user;
 }

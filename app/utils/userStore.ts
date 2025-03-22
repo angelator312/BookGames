@@ -42,23 +42,6 @@ export class UserStore {
     v._id = i.upsertedId;
     return v;
   }
-  async editUserSGlava(
-    user: string,
-    id: string, //id of book (gbX)
-    glava: string
-  ): Promise<User | null> {
-    const data = await this.getUser(user);
-    if (!data) return null;
-
-    let v: User = {
-      ...data,
-    };
-    if (!v.glavi) v.glavi = {};
-    v.glavi[id] = glava;
-    const i = await this.collection.replaceOne({ user }, v);
-    v._id = i.upsertedId;
-    return v;
-  }
   async getUser(user: string): Promise<User | null> {
     const data = await this.collection.findOne({ user: user }).catch(() => {
       return null;
