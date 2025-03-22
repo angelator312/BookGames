@@ -9,15 +9,7 @@ export class UserStore {
   FixDatabase() {
     const defaultUser = getDefaultUser();
     //@ts-ignore
-    replaceNulls(defaultUser,this.collection);
-    const DefaultUserData = this.getDefaultUserData();
-    const uValues = Object.values(DefaultUserData);
-    Object.keys(DefaultUserData).forEach((key, i) => {
-      this.collection.updateMany(
-        { [`data.${key}`]: undefined },
-        { $set: { [`data.${key}`]: uValues[i] } }
-      );
-    });
+    replaceNulls(defaultUser,this.collection,{},[]);
   }
   collection!: Collection<User>;
   constructor(protected readonly collectionName: string) {}
