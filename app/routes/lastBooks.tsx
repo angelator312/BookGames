@@ -100,7 +100,7 @@ export default function AllBooksRoute() {
       </Row>
       <Row>
         <Col>
-          <RenderBooks books={books} dataInThem={dataNotMine} />
+          <RenderBooks searchUnit={false} books={books} dataInThem={dataNotMine} />
         </Col>
       </Row>
     </Container>
