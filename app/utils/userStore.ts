@@ -6,14 +6,14 @@ import { getDefaultSettings, getDefaultUser, getDefaultUserData } from "./User";
 import { getDefaultVariable } from "./VariableThings";
 export class UserStore {
   FixDatabase() {
-    this.collection.updateMany(
-      { settings: undefined },
-      { $set: { settings: getDefaultSettings() } }
-    );
-    this.collection.updateMany(
-      { admin: undefined },
-      { $set: { admin: false } }
-    );
+    const defaultUser = getDefaultUser();
+    const userValues = Object.values(defaultUser);
+    Object.keys(defaultUser).forEach((key, i) => {
+      this.collection.updateMany(
+        { [`${key}`]: undefined },
+        { $set: { [`${key}`]: userValues[i] } }
+      );
+    });
     const defaultSettings = getDefaultSettings();
     const sValues = Object.values(defaultSettings);
     Object.keys(defaultSettings).forEach((key, i) => {
@@ -74,7 +74,7 @@ export class UserStore {
     let v: User = {
       ...data,
     };
-    if(!v.glavi)v.glavi={};
+    if (!v.glavi) v.glavi = {};
     v.glavi[id] = glava;
     const i = await this.collection.replaceOne({ user }, v);
     v._id = i.upsertedId;

@@ -1,5 +1,6 @@
 import type { ObjectId } from "mongodb";
 import type { VariableCollection, VariableInterface } from "./VariableThings";
+import { get } from "http";
 
 export interface Turneta {
   _id?: ObjectId;
@@ -10,13 +11,14 @@ export interface Turneta {
 }
 
 export interface User {
-  _id?: ObjectId|string;
+  _id?: ObjectId | string;
   glavi?: any;
   user: string;
   passH: string;
   settings: SettingsInterface;
   data: UserData;
   admin: boolean;
+  lastBooks: string[];
   variables?: { [key: string]: VariableInterface };
 }
 export interface UserData {
@@ -46,15 +48,20 @@ export function getDefaultUserData(): UserData {
   return settings;
 }
 export function getDefaultUser(): User {
-  const settings: User = {
+  const user: User = {
     passH: "",
     user: "",
     data: getDefaultUserData(),
     admin: false,
     settings: getDefaultSettings(),
-    glavi:{},
+    glavi: {},
+    lastBooks: getDefaultLastBooks(),
   };
-  return settings;
+  return user;
+}
+
+export function getDefaultLastBooks(): string[] {
+  return [];
 }
 
 export function compileToString(
