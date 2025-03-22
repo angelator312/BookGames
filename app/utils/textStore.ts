@@ -46,7 +46,9 @@ export class BookStore {
   async FixDatabase() {
     const defaultBookData = this.getDefaultBook();
     //@ts-ignore
-    replaceNulls(defaultBookData,this.collection,{isBook:true},["isBook"]);
+    replaceNulls(defaultBookData, this.collection, { isBook: true }, [
+      "isBook",
+    ]);
     const books = await this.collection
       .find({ isBook: true, id: { $regex: /^Book/ } })
       .toArray();
@@ -344,6 +346,15 @@ export class BookStore {
     }
     // @ts-ignore
     return data;
+  }
+  async getBooks(names: string[]) {
+    let arr: BookInterface[] = [];
+    for (const name of names) {
+      const a = await this.collection.findOne({ isBook:true,text:name }, { sort: { time: -1 } });
+      //@ts-ignore
+      if (a) arr.push(a);
+    }
+    return arr;
   }
   collection!: Collection<TextInterface | BookInterface | SpecInterface>;
   // eslint-disable-next-line no-useless-constructor

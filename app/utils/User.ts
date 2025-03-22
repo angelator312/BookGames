@@ -18,7 +18,6 @@ export interface User {
   settings: SettingsInterface;
   data: UserData;
   admin: boolean;
-  lastBooks: string[];
   variables?: { [key: string]: VariableInterface };
 }
 export interface UserData {
@@ -55,7 +54,6 @@ export function getDefaultUser(): User {
     admin: false,
     settings: getDefaultSettings(),
     glavi: {},
-    lastBooks: getDefaultLastBooks(),
   };
   return user;
 }

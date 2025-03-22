@@ -17,7 +17,7 @@ function MenuForHome({
   user: User;
   isInBook?: boolean;
   timeIn?: number;
-  bookNow: string;
+  bookNow?: string;
 }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

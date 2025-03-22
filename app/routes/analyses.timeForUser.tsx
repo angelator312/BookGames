@@ -1,5 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import getLastTimeStore from "~/utils/lastTimeStore";
 import { requireUserId } from "~/utils/session.server";
 import getTextStore from "~/utils/textStore";
 
@@ -19,7 +20,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         if (bookName) {
           // console.log(Math.round(timeNumber / 1000));
           const tStore = await getTextStore();
+          const lastStore = await getLastTimeStore();
           await tStore.addTime(bookName, Math.round(timeNumber/1000), a);
+          await lastStore.addTime(a,bookName);
         }
       }
     }

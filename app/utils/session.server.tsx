@@ -3,6 +3,7 @@ import type { BookInterface } from "./textStore";
 import getTextStore from "./textStore";
 import getUserStore from "./userStore";
 import { getDefaultUserData } from "./User";
+import getLastTimeStore from "./lastTimeStore";
 
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
@@ -93,12 +94,25 @@ export async function getGorB(key: string) {
   // }
   return e;
 }
-export async function knigi(user: string, query: string | null) {
+export async function knigi(user: string, query: string|null) {
   const tStore = await getTextStore();
   const a = await tStore.getPublicBooks(user, query);
   const b = await tStore.getMyBooks(user);
   if (b) return [b, a];
   return [[], a];
+}
+export async function lastBooks(user: string, query: string) {
+  const tStore = await getTextStore();
+  const lastStore = await getLastTimeStore();
+  const times=await lastStore.getTimes(user);
+  let namesOfBooks=[];
+  for(const val of times) 
+  {
+    namesOfBooks.push(val.book);
+  }
+  const lastBooks=await tStore.getBooks(namesOfBooks);
+  return lastBooks;
+    
 }
 export async function loadSettings(user: string) {
   const tStore = await getUserStore();
