@@ -4,24 +4,12 @@ import bcrypt from "bcryptjs";
 import type { SettingsInterface, User, UserData } from "./User";
 import { getDefaultSettings, getDefaultUser, getDefaultUserData } from "./User";
 import { getDefaultVariable } from "./VariableThings";
+import { replaceNulls } from "./MongoUtils";
 export class UserStore {
   FixDatabase() {
     const defaultUser = getDefaultUser();
-    const userValues = Object.values(defaultUser);
-    Object.keys(defaultUser).forEach((key, i) => {
-      this.collection.updateMany(
-        { [`${key}`]: undefined },
-        { $set: { [`${key}`]: userValues[i] } }
-      );
-    });
-    const defaultSettings = getDefaultSettings();
-    const sValues = Object.values(defaultSettings);
-    Object.keys(defaultSettings).forEach((key, i) => {
-      this.collection.updateMany(
-        { [`settings.${key}`]: undefined },
-        { $set: { [`settings.${key}`]: sValues[i] } }
-      );
-    });
+    //@ts-ignore
+    replaceNulls(defaultUser,this.collection);
     const DefaultUserData = this.getDefaultUserData();
     const uValues = Object.values(DefaultUserData);
     Object.keys(DefaultUserData).forEach((key, i) => {
@@ -65,7 +53,7 @@ export class UserStore {
   }
   async editUserSGlava(
     user: string,
-    id: string,//id of book (gbX)
+    id: string, //id of book (gbX)
     glava: string
   ): Promise<User | null> {
     const data = await this.getUser(user);

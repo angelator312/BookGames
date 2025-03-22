@@ -1,6 +1,7 @@
 import type { Collection, WithId } from "mongodb";
 import { MongoClient } from "mongodb";
 import { getDefaultVariables, type VariableCollection } from "./VariableThings";
+import { replaceNulls } from "./MongoUtils";
 export interface TextInterface {
   _id?: string;
   id?: string;
@@ -44,15 +45,8 @@ export interface SpecInterface {
 export class BookStore {
   async FixDatabase() {
     const defaultBookData = this.getDefaultBook();
-    const defaultBookThings = Object.values(defaultBookData);
-    Object.keys(defaultBookData)
-      .filter((e) => e != "isBook")
-      .forEach((key, i) => {
-        this.collection.updateMany(
-          { isBook: true, [`${key}`]: undefined },
-          { $set: { [`${key}`]: defaultBookThings[i] } }
-        );
-      });
+    //@ts-ignore
+    replaceNulls(defaultBookData,this.collection);
     const books = await this.collection
       .find({ isBook: true, id: { $regex: /^Book/ } })
       .toArray();
