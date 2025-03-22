@@ -451,15 +451,11 @@ export class BookStore {
     if (Number.isNaN(timeM)) return;
     const book = await this.getBook(bookName);
     if (!book) return;
-    const v: BookInterface = {
-      ...book,
-      data: {
-        clicks: book.data?.clicks,
-        timeForUser: {
-          ...(book.data?.timeForUser ?? {}),
-        },
-      },
-    };
+    if(!book.data)
+    {
+      book.data = this.prototypeOfBookData();
+    }
+    const v: BookInterface = book;
     if (Number.isNaN(v.data.timeForUser[user])) v.data.timeForUser[user] = 0;
     v.data.timeForUser[user] = v.data.timeForUser[user] + timeM;
     await this.collection.replaceOne({ id: book.id }, v, {

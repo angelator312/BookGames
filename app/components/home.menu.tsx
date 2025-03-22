@@ -2,24 +2,57 @@ import menu from "~/helps/menu.png";
 import { useState } from "react";
 import { Button, Col, Offcanvas, Row } from "react-bootstrap";
 import type { SettingsInterface, User } from "~/utils/User";
+import { useNavigate } from "@remix-run/react";
 
 function MenuForHome({
   settings,
   user,
   logout = true,
+  isInBook = false,
+  timeIn,
+  bookNow = "",
 }: {
   logout?: boolean;
   settings?: SettingsInterface;
   user: User;
+  isInBook?: boolean;
+  timeIn?: number;
+  bookNow: string;
 }) {
-  //@ts-ignore
-  //console.log(settings);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
   };
+  const navigate = useNavigate();
+  const redirectToMy = (redirectTo: string) => {
+    setShow(false);
+    console.log("Redirect");
+    if (isInBook) {
+      fetch(
+        "/analyses/timeForUser?user=" +
+          user.user +
+          "&time=" +
+          timeIn +
+          "&book=" +
+          bookNow
+      );
+    }
+    navigate(redirectTo);
+  };
 
+  const handleRedirect = () => {
+    redirectToMy("/");
+  };
+  const handleRedirectProfil = () => {
+    redirectToMy("/profil");
+  };
+  const handleRedirectAdmin = () => {
+    redirectToMy("/admin");
+  };
+  const handleRedirectNewBook = () => {
+    redirectToMy("/newBook");
+  };
   return (
     <div>
       <Button
@@ -52,7 +85,11 @@ function MenuForHome({
           </Row>{" "}
           <Row>
             <Col className="mt-2">
-              <a href="/" className="">
+              <a
+                href="javascript:void(0);"
+                className=""
+                onClick={handleRedirect}
+              >
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Начало
                 </span>
@@ -61,7 +98,11 @@ function MenuForHome({
           </Row>
           <Row>
             <Col className="mt-2">
-              <a href="/Profil" className="">
+              <a
+                href="javascript:void(0);"
+                className=""
+                onClick={handleRedirectProfil}
+              >
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Профил
                 </span>
@@ -83,7 +124,11 @@ function MenuForHome({
           )} */}
           <Row>
             <Col className="mt-2">
-              <a href="/newBook" className="">
+              <a
+                href="javascript:void(0);"
+                className=""
+                onClick={handleRedirectNewBook}
+              >
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Нова книга
                 </span>
@@ -105,7 +150,11 @@ function MenuForHome({
           {user.admin ? (
             <Row>
               <Col className="mt-2">
-                <a href="/admin" className="">
+                <a
+                  href="javascript:void(0);"
+                  className=""
+                  onClick={handleRedirectAdmin}
+                >
                   <span className="text-slate-500 font-medium logo  text-primary">
                     Администрация
                   </span>

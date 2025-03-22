@@ -13,11 +13,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     if (a == searchParams.get("user")) {
       let time = searchParams.get("time");
       if (time) {
-        //console.log(Date.now(), parseInt(time) + 10);
-
+        
         let timeNumber = Date.now() - (parseInt(time) + 10);
         const bookName = searchParams.get("book");
         if (bookName) {
+          // console.log(Math.round(timeNumber / 1000));
           const tStore = await getTextStore();
           await tStore.addTime(bookName, Math.round(timeNumber/1000), a);
         }

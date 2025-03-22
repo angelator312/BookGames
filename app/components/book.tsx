@@ -31,7 +31,7 @@ export default function BookPreview({
     glava: "glava",
     text2: "This is not mandatory",
     user: getDefaultUser(),
-    book: { text: "Problem" },
+    book: { text: "Problem" },//{ text: Името на книгата },
     variables: {},
   },
 }: {
@@ -76,8 +76,10 @@ export default function BookPreview({
   return (
     <Container className="space-y-2 sm:text-left bg-i">
       <MenuForHome
-        //@ts-ignore
+        isInBook={true}
+        timeIn={timeIn}
         user={user}
+        bookNow={book.text}
         settings={user.settings ?? getDefaultSettings()}
       />
       <Row>
