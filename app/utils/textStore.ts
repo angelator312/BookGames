@@ -46,7 +46,7 @@ export class BookStore {
   async FixDatabase() {
     const defaultBookData = this.getDefaultBook();
     //@ts-ignore
-    replaceNulls(defaultBookData,this.collection);
+    replaceNulls(defaultBookData,this.collection,{isBook:true},["isBook"]);
     const books = await this.collection
       .find({ isBook: true, id: { $regex: /^Book/ } })
       .toArray();

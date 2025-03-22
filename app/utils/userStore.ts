@@ -20,7 +20,6 @@ export class UserStore {
     });
   }
   collection!: Collection<User>;
-  // eslint-disable-next-line no-useless-constructor
   constructor(protected readonly collectionName: string) {}
   protected hash(s: string) {
     const salt = bcrypt.genSaltSync(10);
