@@ -5,9 +5,9 @@ export interface CommentInterface {
   chapter:number;
   _id?:string;
   text:string;
-  title:string;
+  // title:string;
 }
 
 export function getDefaultComment(): CommentInterface {
-  return {_id:"-1", time: Date.now(), user: "", book: "",chapter:1,text:"",title:"" };
+  return {_id:"-1", time: Date.now(), user: "", book: "",chapter:1,text:"" };
 }

@@ -11,12 +11,10 @@ export async function action({request}:ActionFunctionArgs)
     {
         const bId = formData.get("bookId")?.toString();
         const chapter = formData.get("chapter")?.toString();
-        const title = formData.get("title")?.toString();
         const text = formData.get("text")?.toString();
         if (
           typeof bId === "string" &&
           typeof chapter === "string" &&
-          typeof title === "string" &&
           typeof text === "string"
         ) {
           const glava = parseInt(chapter, 10);
@@ -25,7 +23,7 @@ export async function action({request}:ActionFunctionArgs)
           const book = await tStore.getBook(bId);
           if (book) {
             const commStore = await getCommentsStore();
-            await commStore.addComment(a, bId, glava, title, text);
+            await commStore.addComment(a, bId, glava,  text);
             return redirect("/book/"+bId);
           }
         }

@@ -30,10 +30,9 @@ export class CommentsStore {
     user: string,
     book: string,
     chapter: number,
-    title: string,
     text: string
   ) {
-    const v = { ...getDefaultComment(), user, book, chapter, title, text };
+    const v = { ...getDefaultComment(), user, book, chapter, text };
     delete v._id;
     // console.log(v);
 
