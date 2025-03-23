@@ -34,7 +34,7 @@ export function CommentsVisualizer({
   if (!Array.isArray(comments)) comments = [];
   // console.log(comments);
   // console.log(autDatas);
-  
+
   return (
     <Container className="m-4">
       <Button onClick={togleHiddenForm}>
@@ -48,8 +48,8 @@ export function CommentsVisualizer({
                 <Col sm={2} className="text-center">
                   {/* img of author */}
                   <img
-                  height={100}
-                  width={100}
+                    height={100}
+                    width={100}
                     src={/*"/img/question_mark.png"*/ autDatas[i].authorImg}
                   />
                 </Col>
