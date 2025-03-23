@@ -93,7 +93,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         const commStore=await getCommentsStore();
         const comments=await commStore.getComments(parseInt(glava,10),bId);
         const datasOfUsers=await uStore.getUserDatas(comments.map((e)=>e.user));
-        console.log("comments:",comments);
+        // console.log("comments:",comments);
         
         return {
           text: segG,

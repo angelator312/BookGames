@@ -29,11 +29,11 @@ export function CommentsVisualizer({
   chapter: number;
   autDatas: UserData[];
 }) {
-  const [hiddenForm, setHiddenForm] = useState(false);
+  const [hiddenForm, setHiddenForm] = useState(true);
   const togleHiddenForm = () => setHiddenForm(!hiddenForm);
   if (!Array.isArray(comments)) comments = [];
-  console.log(comments);
-  console.log(autDatas);
+  // console.log(comments);
+  // console.log(autDatas);
   
   return (
     <Container className="m-4">
@@ -48,6 +48,8 @@ export function CommentsVisualizer({
                 <Col sm={2} className="text-center">
                   {/* img of author */}
                   <img
+                  height={100}
+                  width={100}
                     src={/*"/img/question_mark.png"*/ autDatas[i].authorImg}
                   />
                 </Col>

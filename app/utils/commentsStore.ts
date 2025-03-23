@@ -35,7 +35,7 @@ export class CommentsStore {
   ) {
     const v = { ...getDefaultComment(), user, book, chapter, title, text };
     delete v._id;
-    console.log(v);
+    // console.log(v);
 
     this.collection.insertOne(v);
   }
