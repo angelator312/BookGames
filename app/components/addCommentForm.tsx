@@ -13,9 +13,9 @@ export function AddCommentForm({bId,chapter}:{bId:string,chapter:number}) {
         ></textarea>
       </FormGroup>
       <FormGroup className="text-end">
-        <button className="btn btn-secondary comment-send" type="button">
+        <Button className="btn btn-secondary comment-send" type="submit">
           Коментирай
-        </button>
+        </Button>
       </FormGroup>
       <Form.Control type="hidden" name="bookId" value={bId} />
       <Form.Control type="hidden" name="text" value={text} />
