@@ -66,6 +66,14 @@ export default function AdminRoute() {
       </Row>
       <Row>
         <Col>
+          <Form method="POST" action="/admin/db/updateComments">
+            <Form.Control type="submit" value={"Update Comments"} />
+          </Form>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col>
           <Form method="POST" action="/admin/db/updateGp">
             <Form.Control type="submit" value={"Update Голямото приключение"} />
           </Form>
