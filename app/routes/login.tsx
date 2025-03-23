@@ -38,7 +38,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const url = request.url;
   const searchParams = new URL(url).searchParams;
   if (!userCheck) {
-    return redirect(`/login?redirectTo=${searchParams.get("redirectTo")??"/"}errCode=1`);
+    return redirect(`/login?redirectTo=${searchParams.get("redirectTo")??"/"}&errCode=1`);
   }
   // type UserWId=Omit(User,"_id",);
 

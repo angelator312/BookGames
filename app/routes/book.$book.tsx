@@ -92,6 +92,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         // console.log(vars);
         const commStore=await getCommentsStore();
         const comments=await commStore.getComments(parseInt(glava,10),bId);
+        const datasOfUsers=await uStore.getUserDatas(comments.map((e)=>e.user));
         console.log("comments:",comments);
         
         return {
@@ -103,6 +104,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
           user: user,
           variables: vars,
           comments,
+          datasOfUsers
         };
       }
     }
@@ -124,7 +126,7 @@ export default function Book1() {
         title={zagl ?? ""}
         almP={`/img/${objFromLoader.bookObj.text}-`}
         kr={true}
-        comments={objFromLoader.comments}
+        commentThings={{comInt:objFromLoader.comments,datas:objFromLoader.datasOfUsers}}
       />
     </div>
   );

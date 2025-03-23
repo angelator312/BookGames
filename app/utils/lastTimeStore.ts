@@ -28,13 +28,13 @@ export class LastTimeStore {
     let v=await this.getTime2(user,book);
     if(!v)
     {
-      v=await this.addTime(user,book);
+      v = {...await this.addTime(user, book),_id:"-1"};
     }
     // console.log(v);
     
     return v;
   }
-  async addTime(user: string, book: string) {
+  async addTime(user: string, book: string):Promise<LastTimeInterface> {
     const v: LastTimeInterface = { ...getDefaultLastTime(), user, book };
     const i = await this.collection.replaceOne({ user, book }, v, {
       upsert: true,

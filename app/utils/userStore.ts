@@ -9,7 +9,7 @@ export class UserStore {
   FixDatabase() {
     const defaultUser = getDefaultUser();
     //@ts-ignore
-    replaceNulls(defaultUser,this.collection,{},[]);
+    replaceNulls(defaultUser, this.collection, {}, []);
   }
   collection!: Collection<User>;
   constructor(protected readonly collectionName: string) {}
@@ -124,6 +124,13 @@ export class UserStore {
       }
     }
     return false;
+  }
+  async getUserDatas(names: string[]) {
+    const arr = [];
+    for (const e of names) {
+      arr.push((await this.collection.findOne({ user: e }))?.data);
+    }
+    return arr;
   }
   //Variables
   async editVariable(user: string, id: string, plusR: number) {

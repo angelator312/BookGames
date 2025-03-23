@@ -1,25 +1,25 @@
 import { useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Form, FormGroup, InputGroup } from "react-bootstrap";
 
 export function AddCommentForm({bId,chapter}:{bId:string,chapter:number}) {
   const [text, setText] = useState("");
   return (
-    <Form action="/addComment" method="POST">
-      <InputGroup>
-        <InputGroup.Text>Заглавие</InputGroup.Text>
-        <Form.Control name="title" type="text" />
-      </InputGroup>
-      <InputGroup>
-        <InputGroup.Text>Текст</InputGroup.Text>
-        <Form.Control
-          as="textarea"
+    <Form method="POST" action="/addComment">
+      <FormGroup>
+        <textarea
+          id="editor"
+          className="form-control"
           onChange={(e) => setText(e.target.value)}
-        ></Form.Control>
-      </InputGroup>
-      <Button type="submit">Коментирай</Button>
-      <input type="hidden" name="text" value={text} />
-      <input type="hidden" name="bookId" value={bId} />
-      <input type="hidden" name="chapter" value={chapter} />
+        ></textarea>
+      </FormGroup>
+      <FormGroup className="text-end">
+        <button className="btn btn-secondary comment-send" type="button">
+          Коментирай
+        </button>
+      </FormGroup>
+      <Form.Control type="hidden" name="bookId" value={bId} />
+      <Form.Control type="hidden" name="text" value={text} />
+      <Form.Control type="hidden" name="chapter" value={chapter} />
     </Form>
   );
 }

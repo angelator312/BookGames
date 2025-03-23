@@ -2,7 +2,7 @@
   --smoke-white: #eeeeec;
   --black: rgb(1, 2, 70);
   --book-c: #dc3545;
-  --color-links-hover: none !important;
+  --color-links-hover:none !important;
 }
 
 .btn-menu-my {
@@ -43,7 +43,7 @@
 }
 .text-bold {
   color: var(--black) !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
 }
 .text-black {
   color: var(--black) !important;
@@ -71,6 +71,6 @@
 }
 
 .offcanvas-without-linkProblems {
-  --color-links-hover: none !important;
-  --color-links: none !important;
-} /*# sourceMappingURL=main.css.map */
+  --color-links-hover:none !important;
+  --color-links:none !important;
+}/*# sourceMappingURL=main.css.map */

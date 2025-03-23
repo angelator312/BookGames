@@ -6,7 +6,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import type { loaderBook } from "~/utils/loaderTypes";
 import MenuForHome from "./home.menu";
-import type { User } from "~/utils/User";
+import type { User, UserData } from "~/utils/User";
 import { getDefaultSettings, getDefaultUser } from "~/utils/User";
 import type { VariableInterface } from "~/utils/VariableThings";
 import { getDefaultVariable } from "~/utils/VariableThings";
@@ -36,7 +36,7 @@ export default function BookPreview({
     book: { text: "Problem" }, //{ text: Името на книгата },
     variables: {},
   },
-  comments = [],
+  commentThings = {comInt:[],datas:[]},
 }: {
   url: string;
   title: string;
@@ -44,7 +44,7 @@ export default function BookPreview({
   kr?: boolean;
   flag?: number;
   params?: Params;
-  comments?: CommentInterface[];
+  commentThings?:{ comInt:CommentInterface[],datas:UserData[]};
 }) {
   const loaderData = useLoaderData<loaderBook>();
   if (!flag) {
@@ -102,7 +102,7 @@ export default function BookPreview({
       {kr ? (
         <Row>
           <Col>
-            <CommentsVisualizer comments={comments} bId={book.text} chapter={parseInt(glava,10)}/>
+            <CommentsVisualizer comments={commentThings.comInt} bId={book.text} chapter={parseInt(glava,10)} userName={user.user} autDatas={commentThings.datas}/>
           </Col>
         </Row>
       ) : (

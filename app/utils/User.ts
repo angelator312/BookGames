@@ -23,6 +23,7 @@ export interface UserData {
   forMe: string;
   isPro: boolean;
   verifiedAuthor: boolean;
+  authorImg:string;
 }
 export interface SettingsInterface {
   fontSize: number;
@@ -42,6 +43,7 @@ export function getDefaultUserData(): UserData {
     forMe: "",
     verifiedAuthor: false,
     isPro: false,
+    authorImg:"/img/question_mark.png"
   };
   return settings;
 }
