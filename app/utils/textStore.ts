@@ -476,6 +476,7 @@ export class BookStore {
     const v: BookInterface = book;
     if (Number.isNaN(v.data.timeForUser[user])) v.data.timeForUser[user] = 0;
     v.data.timeForUser[user] = v.data.timeForUser[user] + timeM;
+    delete v._id;
     await this.collection.replaceOne({ id: book.id }, v, {
       upsert: true,
     });
