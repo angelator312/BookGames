@@ -22,7 +22,9 @@ export class CommentsStore {
   }
   constructor(protected readonly collectionName: string) {}
   async getComments(chapter: number, book: string) {
-    return this.collection.find({ chapter, book }, { sort: { time: -1 } });
+    return (
+      this.collection.find({ chapter, book }, { sort: { time: -1 } }).toArray() ?? []
+    );
   }
   async addComment(
     user: string,
@@ -33,15 +35,17 @@ export class CommentsStore {
   ) {
     const v = { ...getDefaultComment(), user, book, chapter, title, text };
     delete v._id;
+    console.log(v);
+
     this.collection.insertOne(v);
   }
 }
 
 let ObUser: { [key: string]: CommentsStore } = {};
 
-export default async function getLastTimeStore(
+export default async function getCommentsStore(
   url: string | undefined = process.env.MONGO_URL,
-  collectionName: string = "LastTimes"
+  collectionName: string = "Comments"
 ) {
   if (!ObUser[collectionName]) {
     ObUser[collectionName] = new CommentsStore(collectionName);

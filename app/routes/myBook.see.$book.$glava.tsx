@@ -108,15 +108,15 @@ export default function Book1() {
 
   //   style={{ padding: 15.4 }}
   //   console.log(book);
-  const zagl = book.b.id;
+  const zagl = book.bookObj.id;
   // console.log(book.text2);
 
   return (
     <div style={{ fontSize: (book.settings.fontSize ?? 10) / 10 + "rem" }}>
       <BookPreview
-        url={`/myBook/see/${book.b.text}/${book.glava}`}
+        url={`/myBook/see/${book.bookObj.text}/${book.glava}`}
         title={zagl ?? ""}
-        almP={`/img/${book.b.text}-`}
+        almP={`/img/${book.bookObj.text}-`}
         kr={false}
       />
     </div>

@@ -9,6 +9,7 @@ import type { loaderBook } from "~/utils/loaderTypes";
 import getVariableStore from "~/utils/variableStore";
 import type { VariableCollection } from "~/utils/VariableThings";
 import getLastTimeStore from "~/utils/lastTimeStore";
+import getCommentsStore from "~/utils/commentsStore";
 export async function action({ params, request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const bId = params.book;
@@ -77,7 +78,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         if (!text || !glava) {
           //@ts-ignore
           tStore.addComment(bId, glava, uId, "Довършете си книгата");
-          (await getLastTimeStore()).editUserSChapter(uId, `${book.text}`, 1);
+          await lastStore.editUserSChapter(uId, `${book.text}`, 1);
           return redirect(`/?errCode=1`);
         }
         let segG = text?.text;
@@ -89,15 +90,19 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
         const vStore = await getVariableStore();
         const vars = await vStore.getVariables(uId, bId);
         // console.log(vars);
-
+        const commStore=await getCommentsStore();
+        const comments=await commStore.getComments(parseInt(glava,10),bId);
+        console.log("comments:",comments);
+        
         return {
           text: segG,
           glava,
           text2: spec,
-          b: book,
+          bookObj: book,
           settings,
           user: user,
           variables: vars,
+          comments,
         };
       }
     }
@@ -106,19 +111,20 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   return redirect("/login?redirectTo=" + request.url);
 }
 export default function Book1() {
-  const book = useLoaderData<loaderBook>();
+  const objFromLoader = useLoaderData<loaderBook>();
   //console.log(book.glava);
 
   //   style={{ padding: 15.4 }}
   //   console.log(book);
-  const zagl = book.b.id;
+  const zagl = objFromLoader.bookObj.id;
   return (
-    <div style={{ fontSize: (book.settings.fontSize ?? 10) / 10 + "rem" }}>
+    <div style={{ fontSize: (objFromLoader.settings.fontSize ?? 10) / 10 + "rem" }}>
       <BookPreview
-        url={`/book/${book.b.text}`}
+        url={`/book/${objFromLoader.bookObj.text}`}
         title={zagl ?? ""}
-        almP={`/img/${book.b.text}-`}
-        kr={false}
+        almP={`/img/${objFromLoader.bookObj.text}-`}
+        kr={true}
+        comments={objFromLoader.comments}
       />
     </div>
   );

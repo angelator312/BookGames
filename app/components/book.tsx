@@ -10,6 +10,8 @@ import type { User } from "~/utils/User";
 import { getDefaultSettings, getDefaultUser } from "~/utils/User";
 import type { VariableInterface } from "~/utils/VariableThings";
 import { getDefaultVariable } from "~/utils/VariableThings";
+import { CommentsVisualizer } from "./commentsVisualizer";
+import { CommentInterface } from "~/utils/comments";
 
 interface Params {
   text: string;
@@ -31,9 +33,10 @@ export default function BookPreview({
     glava: "glava",
     text2: "This is not mandatory",
     user: getDefaultUser(),
-    book: { text: "Problem" },//{ text: Името на книгата },
+    book: { text: "Problem" }, //{ text: Името на книгата },
     variables: {},
   },
+  comments = [],
 }: {
   url: string;
   title: string;
@@ -41,10 +44,11 @@ export default function BookPreview({
   kr?: boolean;
   flag?: number;
   params?: Params;
+  comments?: CommentInterface[];
 }) {
   const loaderData = useLoaderData<loaderBook>();
   if (!flag) {
-    var book = loaderData.b;
+    var book = loaderData.bookObj;
     var { text, glava, text2, user, variables } = loaderData;
   }
   //@ts-ignore
@@ -97,26 +101,8 @@ export default function BookPreview({
       </Row>
       {kr ? (
         <Row>
-          {/* <Col>
-                <FormComponent
-                  submitVariant="secondary"
-                  to={`${url}/${glava}/idea`}
-                  textForSubmit="Коментирай!"
-                />
-              </Col> */}
-          {/* <button type="submit" className="logo ">
-                Коментирай!
-              </button>
-            </form> */}
           <Col>
-            <FormComponent
-              submitVariant="danger"
-              to={"/analyses/timeForUser"}
-              method="GET"
-              textForSubmit="Начало"
-              namesHidden={["time", "user", "book"]}
-              textsHidden={[timeIn.toString(), user.user, book.text]}
-            />
+            <CommentsVisualizer comments={comments} bId={book.text} chapter={parseInt(glava,10)}/>
           </Col>
         </Row>
       ) : (
