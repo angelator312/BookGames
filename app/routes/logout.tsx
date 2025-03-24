@@ -27,7 +27,7 @@ export default function LogoutRoute() {
       <Row className="m-2">
         <Col>
           <h2 className="text-slate-500 text-center text-dark">
-            Сигурен ли си ,че искаш да излезеш от профила си?
+            Сигурен ли си, че искаш да излезеш от профила си?
           </h2>
         </Col>
       </Row>

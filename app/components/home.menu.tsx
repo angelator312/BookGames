@@ -80,7 +80,7 @@ function MenuForHome({
         >
           <Row>
             <Col className="mt-2">
-              <h3 className="font-medium text-dark">Здравей {user.user}</h3>
+              <h3 className="font-medium text-dark">Здравей, {user.user}</h3>
             </Col>
           </Row>{" "}
           <Row>
