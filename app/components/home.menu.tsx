@@ -153,6 +153,15 @@ function MenuForHome({
           </Row>
           <Row>
             <Col className="mt-2">
+              <a color="red" href="/videos/NOIT_project102.mp4" className="">
+                <span className="text-slate-500 font-medium logo text-primary">
+                  Примерно видео
+                </span>
+              </a>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="mt-2">
               <a
                 href="https://github.com/angelator312/Systezanie-1"
                 className=""
