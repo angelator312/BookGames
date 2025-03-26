@@ -53,6 +53,9 @@ function MenuForHome({
   const handleRedirectNewBook = () => {
     redirectToMy("/newBook");
   };
+  const handleRedirectLastBooks = () => {
+    redirectToMy("/lastBooks");
+  };
   return (
     <div>
       <Button
@@ -131,6 +134,19 @@ function MenuForHome({
               >
                 <span className="text-slate-500 font-medium logo  text-primary">
                   Нова книга
+                </span>
+              </a>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="mt-2">
+              <a
+                href="javascript:void(0);"
+                className=""
+                onClick={handleRedirectLastBooks}
+              >
+                <span className="text-slate-500 font-medium logo  text-primary">
+                  Последно четени
                 </span>
               </a>
             </Col>
