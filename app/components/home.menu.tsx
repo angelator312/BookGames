@@ -56,6 +56,21 @@ function MenuForHome({
   const handleRedirectLastBooks = () => {
     redirectToMy("/lastBooks");
   };
+  const handleRedirectVideo1 = () => {
+    setShow(false);
+    console.log("Redirect");
+    if (isInBook) {
+      fetch(
+        "/analyses/timeForUser?user=" +
+          user.user +
+          "&time=" +
+          timeIn +
+          "&book=" +
+          bookNow
+      );
+    }
+    window.open("/videos/1.mp4");
+  };
   return (
     <div>
       <Button
@@ -153,7 +168,12 @@ function MenuForHome({
           </Row>
           <Row>
             <Col className="mt-2">
-              <a color="red" href="https://youtu.be/AdBOz1uE7CI" className="">
+              <a
+                color="red"
+                href="javascript:void(0);"
+                onClick={handleRedirectVideo1}
+                className=""
+              >
                 <span className="text-slate-500 font-medium logo text-primary">
                   Примерно видео
                 </span>
