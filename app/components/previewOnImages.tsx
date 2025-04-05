@@ -24,22 +24,23 @@ export default function PreviewImages({
     <Row className="justify-content-center">
       {arrayOfMinimizedImages.map((e) => (
         <Col
-          sm={options.sm ?? "4"}
-          md={options.md ?? "3"}
-          lg={options.lg ?? "2"}
-          xxl={options.xxl ?? "1"}
+        sm="auto"
+          // sm={options.sm ?? "4"}
+          // md={options.md ?? "3"}
+          // lg={options.lg ?? "2"}
+          // xxl={options.xxl ?? "1"}
           key={e.id}
           className="m-2"
         >
-          <Card onClick={() => handleInsertImage(e.id)}>
+          <Card onClick={() => handleInsertImage(e.id)} className="p-2">
             <Card.Img
               // style={{ width: "128px", height: "128px" }}
               src={`data:image/png;base64,${e.thumbnail}`}
               alt="thumbnail"
+              // className="m-2"
             />
-            <Card.Body>
-              <Card.Title>{options.names ? e.name : ""}</Card.Title>
-              {options.delete ? (
+            {options.delete ? (
+              <Card.Body>
                 <Button
                   variant="danger"
                   //@ts-ignore
@@ -47,8 +48,8 @@ export default function PreviewImages({
                 >
                   Delete
                 </Button>
-              ) : null}
-            </Card.Body>
+              </Card.Body>
+            ) : null}
           </Card>
         </Col>
       ))}
