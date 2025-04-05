@@ -28,6 +28,8 @@ import type { SettingsInterface, User, UserData } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
 import { MAX_FILE_SIZE } from "../utils/Consts";
 import { AuthorDescription } from "~/components/authorDescription";
+import { useDropzone } from "react-dropzone";
+import GetImagesModal from "~/components/getImages";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const a = await requireUserId(request, false);
@@ -62,7 +64,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 type loaderType = [User, SettingsInterface, UserData, MiniInterface[]];
 export default function Settings() {
   const [user, settings, data] = useLoaderData<loaderType>();
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    maxFiles: 1,
+    onDrop(acceptedFiles, fileRejections, event) {},
+  });
   const [text, setText] = useState(data.forMe);
+  const [showInsertImage, setShowInsertImage] = useState(false);
+  const [reloadAuthorSeed, setReloadAuthorSeed] = useState(0);
+  const handleCloseInsertImage = () => setShowInsertImage(false);
+  const handleInsertImage = (imgId: string) => {
+    setShowInsertImage(false);
+    fetch(`/setAuthorImage/${imgId}`);
+    user.data.authorImg = "/getImage/" + imgId;
+    setReloadAuthorSeed(Math.random());
+  };
   const [fontSize, setFontSize] = useState(settings.fontSize);
   const [minis, setMinis] = useState<MiniInterface[]>([]);
   const [showImages, setShowImages] = useState<boolean>(false);
@@ -100,6 +115,10 @@ export default function Settings() {
         break;
       case "5":
         setErrorText("Грешка при промяна на паролата.");
+        setShowError(true);
+        break;
+      case "6":
+        setErrorText("Прекалено голяма картинка(най-много 5mb)!");
         setShowError(true);
         break;
       default:
@@ -150,6 +169,7 @@ export default function Settings() {
                 </Col>
                 <Col sm={4}>
                   <AuthorDescription
+                    key={reloadAuthorSeed}
                     avtorData={{
                       ...user.data,
                       forMe: text,
@@ -167,13 +187,20 @@ export default function Settings() {
                     namesHidden={["forMe", "toUrl"]}
                     textsHidden={[text, "/Profil?koe=1"]}
                   />
-                  {/* <Form.Control type="submit" value={"Запази"} />
+                </Col>
+                {/* <Form.Control type="submit" value={"Запази"} />
                     <Form.Control type="hidden" value={text} name="forMe" />
                     <Form.Control
-                      type="hidden"
-                      value="/Profil?koe=1"
-                      name="toUrl"
+                    type="hidden"
+                    value="/Profil?koe=1"
+                    name="toUrl"
                     /> */}
+              </Row>
+              <Row>
+                <Col>
+                  <Button onClick={() => setShowInsertImage(true)}>
+                    Избери профилна снимка
+                  </Button>
                 </Col>
               </Row>
               {/* </Form> */}
@@ -290,64 +317,28 @@ export default function Settings() {
               )}
             </Col>
           </Row>
-          <Form
-            action="/uploadImage"
-            encType="multipart/form-data"
-            method="post"
-          >
-            <InputGroup className="mb-3">
-              <InputGroup.Text>Изберете изображение за качване</InputGroup.Text>
-              <Form.Control
-                type="file"
-                name="file"
-                accept=".png,.jpeg,.jpg"
-                onChange={(e) => {
-                  setDisabled(false);
-                  if (e.target.files[0].size > MAX_FILE_SIZE) {
-                    setDisabled(true);
-                    e.target.setCustomValidity(
-                      "Файлът е твърде голям(най-много 5mb)!"
-                    );
-                    e.target.reportValidity();
-                  }
-                }}
-              />
-              <Form.Control type="hidden" value="/profil?koe=3" name="toUrl" />
-              {/* <Form.Control value="Качи" type="submit" disabled={disabled} /> */}
-              <Button type="submit" disabled={disabled}>
-                Качи
-              </Button>
-            </InputGroup>
-          </Form>
-          <Form
-            action="/uploadAuthorImage"
-            encType="multipart/form-data"
-            method="post"
-          >
-            <InputGroup className="mb-3">
-              <InputGroup.Text>Изберете профилна снимка</InputGroup.Text>
-              <Form.Control
-                type="file"
-                name="file"
-                accept=".png,.jpeg,.jpg"
-                onChange={(e) => {
-                  setDisabled(false);
-                  if (e.target.files[0].size > MAX_FILE_SIZE) {
-                    setDisabled(true);
-                    e.target.setCustomValidity(
-                      "Файлът е твърде голям(най-много 5mb)!"
-                    );
-                    e.target.reportValidity();
-                  }
-                }}
-              />
-              <Form.Control type="hidden" value="/profil?koe=3" name="toUrl" />
-              {/* <Form.Control value="Качи" type="submit" disabled={disabled} /> */}
-              <Button type="submit" disabled={disabled}>
-                Качи
-              </Button>
-            </InputGroup>
-          </Form>
+          <Row>
+            <Form
+              action="/uploadImage"
+              encType="multipart/form-data"
+              method="post"
+            >
+              <section>
+                <div {...getRootProps({ className: "dropzone" })}>
+                  <input name={"file"} {...getInputProps()} />
+                  <p>
+                    Дръпнете файл тук или кликнете за да изберете файл за
+                    качване.
+                  </p>
+                </div>
+              </section>
+              {acceptedFiles.length > 0 ? (
+                <Button type="submit" className="my-5">
+                  Качи
+                </Button>
+              ) : null}
+            </Form>
+          </Row>
           <Modal
             show={idDeleteModal != "ne"}
             onHide={() => setIdDeleteModal("ne")}
@@ -393,6 +384,11 @@ export default function Settings() {
           </Modal>
         </Tab>
       </Tabs>
+      <GetImagesModal
+        handleClose={handleCloseInsertImage}
+        show={showInsertImage}
+        handleInsertImage={handleInsertImage}
+      />
     </Container>
   );
 }
