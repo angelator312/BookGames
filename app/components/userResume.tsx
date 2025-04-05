@@ -3,6 +3,9 @@ import { Col, Modal, Row } from "react-bootstrap";
 import type { Turneta, UserData } from "~/utils/User";
 import IsProUser from "./IsPayUser";
 import Markdown from "react-markdown";
+/** 
+ *  @deprecated Use `AuthorDescription` instead.
+ */
 export function AuthorResume({
   authorName,
   authorData,

@@ -27,7 +27,7 @@ import { requireUserId } from "~/utils/session.server";
 import type { SettingsInterface, User, UserData } from "~/utils/User";
 import getUserStore from "~/utils/userStore";
 import { MAX_FILE_SIZE } from "../utils/Consts";
-
+import { AuthorDescription } from "~/components/authorDescription";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const a = await requireUserId(request, false);
@@ -39,7 +39,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     const user = await uStore.getUser(a);
     if (user) {
       const iStore = await getImageStore();
-      const gallery = await iStore.listImages(a);
+      const gallery = await iStore.listImagesForUser(a);
       // console.log([
       //   user,
       //   user.settings ?? uStore.getDefaultSettings(),
@@ -134,31 +134,27 @@ export default function Settings() {
               {/* <Form action="/zapaziForMe"> */}
               <Row>
                 <Col>
-                  {/* <Form.Label column sm={10}> */}
-                  <AuthorResume
-                    authorData={{
-                      ...user.data,
-                      forMe: text,
-                    }}
-                    authorName={"За мен(Преглед)"}
-                  />
-                  {/* </Form.Label> */}
-                </Col>
-              </Row>
-              <Row>
-                <Col>
                   <Editor
                     options={{
                       unicodeHighlight: {
                         ambiguousCharacters: false,
                       },
                     }}
-                    height="20vh"
+                    height="32vh"
                     defaultLanguage="bg"
                     onChange={handleEditorChange}
                     // name="text"
                     // placeholder="Здравей,Човече"
                     defaultValue={text == "" ? "Здравей,Човече" : text}
+                  />
+                </Col>
+                <Col sm={4}>
+                  <AuthorDescription
+                    avtorData={{
+                      ...user.data,
+                      forMe: text,
+                    }}
+                    avtor={user.user}
                   />
                 </Col>
               </Row>
@@ -305,17 +301,45 @@ export default function Settings() {
                 type="file"
                 name="file"
                 accept=".png,.jpeg,.jpg"
-                onChange={(e) =>
-                  {
-                    setDisabled(false)
-                    if(e.target.files[0].size>MAX_FILE_SIZE)
-                    {
-                      setDisabled(true)
-                      e.target.setCustomValidity("Файлът е твърде голям(най-много 5mb)!");
-                      e.target.reportValidity();
-                    }
-                  } 
-                }
+                onChange={(e) => {
+                  setDisabled(false);
+                  if (e.target.files[0].size > MAX_FILE_SIZE) {
+                    setDisabled(true);
+                    e.target.setCustomValidity(
+                      "Файлът е твърде голям(най-много 5mb)!"
+                    );
+                    e.target.reportValidity();
+                  }
+                }}
+              />
+              <Form.Control type="hidden" value="/profil?koe=3" name="toUrl" />
+              {/* <Form.Control value="Качи" type="submit" disabled={disabled} /> */}
+              <Button type="submit" disabled={disabled}>
+                Качи
+              </Button>
+            </InputGroup>
+          </Form>
+          <Form
+            action="/uploadAuthorImage"
+            encType="multipart/form-data"
+            method="post"
+          >
+            <InputGroup className="mb-3">
+              <InputGroup.Text>Изберете профилна снимка</InputGroup.Text>
+              <Form.Control
+                type="file"
+                name="file"
+                accept=".png,.jpeg,.jpg"
+                onChange={(e) => {
+                  setDisabled(false);
+                  if (e.target.files[0].size > MAX_FILE_SIZE) {
+                    setDisabled(true);
+                    e.target.setCustomValidity(
+                      "Файлът е твърде голям(най-много 5mb)!"
+                    );
+                    e.target.reportValidity();
+                  }
+                }}
               />
               <Form.Control type="hidden" value="/profil?koe=3" name="toUrl" />
               {/* <Form.Control value="Качи" type="submit" disabled={disabled} /> */}

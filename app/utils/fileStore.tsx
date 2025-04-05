@@ -45,15 +45,21 @@ class FileStore {
     //@ts-ignore
     return await this.collection.findOne({ _id });
   }
-  async listImages(user: string): Promise<MiniInterface[]> {
+  async listImagesForUser(user: string): Promise<MiniInterface[]> {
     const arr = await this.collection.find({ user }).toArray();
+    return arr.map((e) => {
+      return { thumbnail: e.thumbnail, id: e._id, name: e.name };
+    });
+  }
+  async listImages(): Promise<MiniInterface[]> {
+    const arr = await this.collection.find().toArray();
     return arr.map((e) => {
       return { thumbnail: e.thumbnail, id: e._id, name: e.name };
     });
   }
   async deleteImage(_id: string, user: string): Promise<boolean> {
     const img = await this.getImage(new ObjectId(_id));
-    
+
     if (img) {
       if (img.user === user) {
         return (await this.collection.deleteOne(img)).deletedCount == 1;

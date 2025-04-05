@@ -7,50 +7,50 @@ import { requireUserId } from "~/utils/session.server";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import RenderTextFrom1String from "~/components/renderText2";
 import BookIntro from "~/components/bookIntro";
+import getLastTimeStore from "~/utils/lastTimeStore";
+import { getDefaultUserData } from "~/utils/User";
 export async function action({ params, request }: ActionFunctionArgs) {
   return redirect(request.url);
 }
 export async function loader({ params, request }: LoaderFunctionArgs) {
   const bId = params.book;
   if (!bId) return redirect("/");
-  const a = await requireUserId(request, false);
+  const userId = await requireUserId(request, false);
   const tStore = await getTextStore();
   const uStore = await getUserStore();
+  const lStore = await getLastTimeStore();
   const b = await tStore.getBook2(bId ?? " ");
   // console.log(b);
   if (!b) return redirect("/");
   let settings = uStore.getDefaultSettings();
-  if (typeof a === "string") {
-    const user = await uStore.getUser(a);
+  if (typeof userId === "string") {
+    const user = await uStore.getUser(userId);
+    const glava = await lStore.getTime(userId, bId);
     if (user) {
-      if (user.glavi) {
-        let glava = user.glavi[`Book-${b.text}`];
-        if (glava&&a!=b.avtor) {
-          if (a != b.avtor)
-            // return redirect("/myBook/" + bId+"/"+glava);
-            return redirect("/book/" + bId);
-        }
+      if (glava.chapter == 1 && userId != b.avtor) {
+        return redirect("/book/" + bId);
       }
+
       settings = user.settings ?? settings;
     }
   }
 
   const author = await uStore.getUser(b.avtor);
-  if (b.public || a == b.avtor) {
+  if (b.public || userId == b.avtor) {
     // return a;
     //console.log(uStore.collection);
 
-    let authorDescription = "Author: " + b.avtor;
+    let authorData = {...getDefaultUserData(),forMe:"Author: " + b.avtor};
     if (author) {
-      authorDescription = author.data.forMe;
+      authorData = author.data;
     }
     return {
       b,
       settings,
-      user: a,
-      aDescr: authorDescription,
-      urlForImmage: "/img/question_mark.png",
-      isAvtor: a == b.avtor, 
+      user: userId,
+      aDescr: authorData,
+      urlForImage: "/img/question_mark.png",
+      isAvtor: userId == b.avtor,
     };
   }
   return redirect("/");
@@ -76,7 +76,7 @@ export default function Book1() {
     >
       <BookIntro
         smallDescription={smallDescription}
-        urlForImage={b.urlForImmage}
+        urlForImage={b.urlForImage}
         avtor={book.avtor}
         avtorDesc={b.aDescr}
         bName={book.id ?? ""}

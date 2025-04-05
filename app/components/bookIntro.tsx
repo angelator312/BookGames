@@ -2,6 +2,8 @@ import { Row, Col, Card } from "react-bootstrap";
 import book from "./book";
 import RenderTextFrom1String from "./renderText2";
 import Markdown from "react-markdown";
+import { AuthorDescription } from "./authorDescription";
+import { UserData } from "~/utils/User";
 
 export default function BookIntro({
   smallDescription,
@@ -14,7 +16,7 @@ export default function BookIntro({
   smallDescription: string;
   urlForImage: string;
   avtor: string;
-  avtorDesc: string;
+  avtorDesc: UserData;
   bName: string;
   show?: boolean;
 }) {
@@ -37,19 +39,10 @@ export default function BookIntro({
         </Col>
         <Col sm="4" className="centered">
           {/* Za Avtora */}
-          <Card>
-            <Card.Img
-              className="centered"
-              style={{ width: "102px", height: "118px" }}
-              src={urlForImage}
-            />
-            <Card.Body>
-              <Card.Title>{avtor}</Card.Title>
-              <Card.Text>
-                <Markdown>{avtorDescription}</Markdown>
-              </Card.Text>
-            </Card.Body>
-          </Card>
+          <AuthorDescription
+            avtor={avtor}
+            avtorData={avtorDescription}
+          />
         </Col>
       </Row>
     </>

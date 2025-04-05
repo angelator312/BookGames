@@ -7,15 +7,15 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const user = await requireUserId(request, false);
   if (!user) return redirect("/login");
   const imStore = await getImageStore();
-  const img = await imStore.listImages(user);
+  const img = await imStore.listImagesForUser(user);
   // console.log(img);
   return img;
 }
 export async function action({ request, params }: ActionFunctionArgs) {
   const user = await requireUserId(request, false);
   if (!user) return redirect("/login");
-  const imStore = await getImageStore();
-  const img = await imStore.listImages(user);
+  const imgStore = await getImageStore();
+  const img = await imgStore.listImagesForUser(user);
   // console.log(img);
   return img;
 }
