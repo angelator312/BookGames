@@ -50,7 +50,7 @@ export function getDefaultUserData(): UserData {
 export function getDefaultUser(): User {
   const user: User = {
     passH: "",
-    user: "",
+    user: "Анонимен",
     data: getDefaultUserData(),
     admin: false,
     settings: getDefaultSettings(),

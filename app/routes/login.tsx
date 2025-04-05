@@ -17,6 +17,8 @@ import stylesUrl from "~/styles/login.css";
 import getUserStore from "~/utils/userStore";
 import { Link, useSearchParams } from "@remix-run/react";
 import NavYesOrNo from "~/components/navbarYes";
+import MenuForHome from "~/components/home.menu";
+import { getDefaultSettings, getDefaultUser } from "~/utils/User";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
@@ -38,12 +40,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const url = request.url;
   const searchParams = new URL(url).searchParams;
   if (!userCheck) {
-    return redirect(`/login?redirectTo=${searchParams.get("redirectTo")??"/"}&errCode=1`);
+    return redirect(
+      `/login?redirectTo=${searchParams.get("redirectTo") ?? "/"}&errCode=1`
+    );
   }
   // type UserWId=Omit(User,"_id",);
 
   //console.log(searchParams);
-  
+
   return createUserSession(
     userCheck.user,
     searchParams.get("redirectTo") ?? "/"
@@ -113,6 +117,15 @@ function FormExample() {
       </Row>
       <Row>
         <Col>
+          <MenuForHome
+            user={getDefaultUser()}
+            settings={getDefaultSettings()}
+            logout={false}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Container>
             <Form
               noValidate
@@ -160,7 +173,11 @@ function FormExample() {
                       placeholder="Парола"
                       name="pass"
                     />
-                    <Form.Control type="hidden" name="redirectTo" value={searchParams.get("redirectTo")??"/"}/>
+                    <Form.Control
+                      type="hidden"
+                      name="redirectTo"
+                      value={searchParams.get("redirectTo") ?? "/"}
+                    />
                     <Form.Control.Feedback>Става!</Form.Control.Feedback>
                     <Form.Control.Feedback type="invalid">
                       Моля, напишете парола!
@@ -181,7 +198,12 @@ function FormExample() {
                 </Col>
                 <Col sm="1"></Col>
                 <Col sm="2" className="mb-3">
-                  <Link to={"/signup?redirectTo="+searchParams.get("redirectTo")}>
+                  <Link
+                    to={
+                      "/signup?redirectTo=" +
+                      (searchParams.get("redirectTo") ?? "/")
+                    }
+                  >
                     <Button variant="secondary">Регистрация</Button>
                   </Link>
                 </Col>

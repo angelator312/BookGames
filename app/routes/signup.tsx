@@ -19,6 +19,8 @@ import getUserStore from "~/utils/userStore";
 import { Link, useSearchParams } from "@remix-run/react";
 import { getUserId } from "~/utils/session.server";
 import NavYesOrNo from "~/components/navbarYes";
+import MenuForHome from "~/components/home.menu";
+import { getDefaultSettings, getDefaultUser } from "~/utils/User";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
@@ -44,7 +46,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (pass != pass2) return redirect(`/signup?errCode=2`);
   // console.log(username, pass);
   users.addUser(username, pass);
-  return redirect(`/login?feedCode=2&redirectTo=${form.get("redirectTo")?.toString()??""}`);
+  return redirect(
+    `/login?feedCode=2&redirectTo=${form.get("redirectTo")?.toString() ?? ""}`
+  );
 
   //const fields = { content, name };
 
@@ -97,6 +101,15 @@ function FormExample() {
       </Row>
       <Row>
         <Col>
+          <MenuForHome
+            user={getDefaultUser()}
+            settings={getDefaultSettings()}
+            logout={false}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Container>
             <Form
               noValidate
@@ -105,11 +118,15 @@ function FormExample() {
               method="POST"
               action="/signup"
             >
-              <Form.Control name="redirectTo" type="hidden" value={searchParams.get("redirectTo")?.toString()??""}/>
+              <Form.Control
+                name="redirectTo"
+                type="hidden"
+                value={searchParams.get("redirectTo")?.toString() ?? ""}
+              />
               <Row className="mb-3">
                 <NavYesOrNo text={err ?? ""} yes={false} />
               </Row>
-              <Row className="mb-3">
+              <Row className="">
                 <Form.Group
                   as={Row}
                   className="mb-3"
@@ -132,8 +149,6 @@ function FormExample() {
                     </Form.Control.Feedback>
                   </Col>
                 </Form.Group>
-              </Row>
-              <Row className="mb-3">
                 <Form.Group
                   as={Row}
                   className="mb-3"
@@ -157,16 +172,16 @@ function FormExample() {
                   </Col>
                 </Form.Group>
               </Row>
-              <Row className="mb-3">
+              <Row>
                 <Form.Group
                   as={Row}
                   className="mb-3"
                   controlId="validationCustom02"
                 >
-                  <Form.Label column sm="3">
-                    Потвърди парола
+                  <Form.Label column sm="2">
+                    Потвърди
                   </Form.Label>
-                  <Col >
+                  <Col>
                     <Form.Control
                       required
                       type="password"
@@ -192,7 +207,12 @@ function FormExample() {
                   </Button>
                 </Col>
                 <Col className="mb-3">
-                  <Link to="/login">
+                  <Link
+                    to={
+                      "/login?redirectTo=" +
+                      (searchParams.get("redirectTo") ?? "/")
+                    }
+                  >
                     <Button variant="secondary">Вход </Button>
                   </Link>
                 </Col>
