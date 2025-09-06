@@ -1,0 +1,14 @@
+name: Deploy to https://bookgames.angelator312.top/
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_URL: ${{ secrets.DEPLOY_URL }}
+    steps:
+      - name: Trigger deploy
+        shell: bash
+        run: curl "$DEPLOY_URL"
