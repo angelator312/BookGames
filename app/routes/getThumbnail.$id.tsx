@@ -1,5 +1,4 @@
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
-import { ObjectId } from "mongodb";
 import getImageStore from "~/utils/fileStore";
 import { requireUserId } from "~/utils/session.server";
 
@@ -8,13 +7,12 @@ export async function loader({request,params}:LoaderFunctionArgs)
     const user=await requireUserId(request);
     if (!user)return redirect("/");
     const imStore=await getImageStore();
-    const a = new ObjectId(params.id);
-    // console.log(params.id,user,a);
-    const img= await imStore.getImage(a);
+    // console.log(params.id,user);
+    const img= await imStore.getImageById(params.id ?? "");
     // console.log(img);
     if(img)
     {
-        return new Response(img.thumbnail.buffer, {
+        return new Response(img.thumbnail.buffer.slice(), {
             headers: {
                 "Content-Type":img.mimeType ,
             },

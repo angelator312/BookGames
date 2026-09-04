@@ -67,7 +67,7 @@ export default function MyBookSettingsComponent({
             smallDescription={text}
             urlForImage={"/img/question_mark.png"}
             avtor={user.user}
-            avtorDesc={user.data.forMe}
+            avtorDesc={user.data}
             bName={bookName}
           />
           <FormComponent

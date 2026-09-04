@@ -39,7 +39,7 @@ export class UserStore {
     const i = await this.collection.replaceOne({ user: user }, v, {
       upsert: true,
     });
-    v._id = i.upsertedId;
+    v._id = i.upsertedId ?? undefined;
     return v;
   }
   async getUser(user: string): Promise<User | null> {
@@ -69,7 +69,7 @@ export class UserStore {
     const i = await this.collection.replaceOne({ user: user }, v, {
       upsert: true,
     });
-    v._id = i.upsertedId;
+    v._id = i.upsertedId ?? undefined;
     return true;
   }
 
@@ -150,7 +150,7 @@ export class UserStore {
       v.variables[id].value += plusR;
     }
     const i = await this.collection.replaceOne({ user }, v);
-    v._id = i.upsertedId;
+    v._id = i.upsertedId ?? undefined;
     // console.log("vars updated:", v);
 
     return v;

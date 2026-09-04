@@ -45,6 +45,9 @@ class FileStore {
     //@ts-ignore
     return await this.collection.findOne({ _id });
   }
+  async getImageById(id: string): Promise<ImageInterface | null> {
+    return await this.getImage(new ObjectId(id));
+  }
   async listImagesForUser(user: string): Promise<MiniInterface[]> {
     const arr = await this.collection.find({ user }).toArray();
     return arr.map((e) => {

@@ -39,7 +39,7 @@ export class LastTimeStore {
     const i = await this.collection.replaceOne({ user, book }, v, {
       upsert: true,
     });
-    v._id = i.upsertedId;
+    v._id = i.upsertedId ?? undefined;
     return v;
   }
   async editUserSChapter(user: string, book: string, glava: number) {
