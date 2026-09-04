@@ -10,7 +10,8 @@ export function TabLang() {
       id="uncontrolled-tab-example"
       className="mb-3"
       onSelect={(e) => {
-        searchPar.set("default", e ?? ""), setSearchParams(searchPar);
+        searchPar.set("default", e ?? "");
+        setSearchParams(searchPar);
       }}
     >
       <Tab title={"Най-важно"} eventKey={"Най-важно"}>
