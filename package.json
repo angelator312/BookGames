@@ -4,7 +4,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "NODE_OPTIONS=--max-old-space-size=4096 remix build",
+    "build": "NODE_ENV=production NODE_OPTIONS=--max-old-space-size=4096 remix build",
     "dev": "remix dev",
     "start": "remix-serve ./build/index.js",
     "typecheck": "tsc",
